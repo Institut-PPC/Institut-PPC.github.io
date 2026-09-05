@@ -27,6 +27,7 @@ Lorsqu'un agent IA crée ou modifie de la documentation, il doit la rédiger en 
 Avant de modifier le projet, lire les spécifications pertinentes pour la tâche :
 
 - `docs/product/vision-et-perimetre.md`
+- `docs/product/architecture-information.md`
 - `docs/product/exigences-fonctionnelles.md`
 - `docs/contenu/contenu-et-cms.md`
 - `docs/technique/architecture.md`

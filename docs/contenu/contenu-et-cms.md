@@ -67,20 +67,22 @@ Les domaines de contenus structurés actuellement envisagés sont :
 - actualités/articles ;
 - événements ;
 - personnes ;
-- organisations/partenaires ;
+- ressources d'approfondissement ;
 - documents/référentiels ;
+- organisations/partenaires pour des usages futurs, sans rubrique publique dédiée dans le POC ;
 - contenus globaux du site lorsque pertinent.
 
 Les schémas détaillés ne sont **pas encore spécifiés** et seront conçus lors d'une phase ultérieure de modélisation des contenus.
+
+Les **ressources d'approfondissement** et les **référentiels** doivent rester conceptuellement distincts : les premières peuvent être internes ou externes et relèvent du centre Ressources ; les seconds constituent des contenus normatifs rattachés canoniquement à la Marque collective.
 
 ## Personnes et annuaire
 
 Concevoir les données personnes/organisations en gardant à l'esprit un éventuel futur annuaire public.
 
 Pour le POC, seule une présentation simple de l'association est requise, notamment :
-- co-présidence ;
-- Conseil d'administration ;
-- fondateurs.
+- co-présidence et Conseil d'administration avec photo, nom, rôle et lien LinkedIn ;
+- membres fondateurs sous une forme plus légère, afin de ne pas créer implicitement un annuaire public complet.
 
 Éviter de coder en dur de longues listes lorsqu'un contenu structuré géré par CMS peut raisonnablement les représenter.
 

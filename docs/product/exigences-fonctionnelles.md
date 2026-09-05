@@ -18,7 +18,7 @@ Périmètre fonctionnel initial du POC. Certaines exigences sont volontairement 
 | Dons | Lien externe |
 | Newsletter | CTA externe uniquement |
 | Présentation de l'association | Requise |
-| Annuaire membres / partenaires / organisations PPC | Préparé pour le futur ; page simple des personnes de l'association dans le POC |
+| Annuaire membres / partenaires / organisations PPC | Préparé pour le futur ; aucune rubrique d'annuaire dans le POC, seulement la gouvernance de l'association |
 | Recherche sur le site | Non implémentée ; architecture compatible avec un ajout futur |
 | Analytics | Non implémentés |
 | Page 404 personnalisée | Requise |
@@ -55,9 +55,12 @@ La fonctionnalité pourra être masquée ou retirée avant la production si l'as
 Les actualités et événements servent principalement de **preuve d'activité et de vitalité**, et non de fondation à une plateforme média.
 
 Exigences :
+- page centrale commune `/actualites-evenements` ;
+- actualités et événements conservés comme deux types de contenus distincts ;
+- pages de détail sous `/actualites/<slug>` et `/evenements/<slug>` ;
+- conservation des événements passés comme archive ;
 - publication structurée simple depuis le CMS ;
-- pages de liste et de détail adaptées ;
-- possibilité de faire remonter les contenus récents sur la page d'accueil ou dans des sections pertinentes.
+- possibilité de faire remonter les contenus récents ou pertinents sur la page d'accueil ou dans des sections contextuelles.
 
 Conserver un système éditorial simple.
 
@@ -136,6 +139,6 @@ Les URL publiques importantes doivent être :
 - aussi stables que raisonnablement possible ;
 - indépendantes du CMS ou des détails d'implémentation.
 
-Exemples de style visé : `/association`, `/marque-collective`, `/actualites/...`, `/evenements/...`, `/referentiels/...`.
+Exemples du sitemap retenu : `/association`, `/marque-collective`, `/marque-collective/referentiels`, `/actualites/<slug>`, `/evenements/<slug>`.
 
-L'architecture de l'information finale reste à concevoir.
+Le sitemap, la navigation et le rôle des pages sont spécifiés dans [`architecture-information.md`](architecture-information.md).

@@ -31,20 +31,23 @@ Ordre de priorité actuel :
 4. Organisations souhaitant utiliser ou obtenir la marque collective.
 5. Autres acteurs contribuant au développement de la PPC : mécènes, institutions publiques, chercheurs et parties prenantes associées.
 
-Un parcours conceptuel utile est :
+Un parcours conceptuel utile à long terme reste :
 
 **Comprendre → Adopter → Rejoindre → Utiliser la marque collective → Contribuer**
 
-Il ne s'agit pas d'une navigation figée. En particulier, « Adopter la PPC » n'est pas encore un parcours pleinement actionnable dans la V1.
+Il ne constitue pas la navigation du POC. En particulier, « Adopter la PPC » n'est pas encore un parcours pleinement actionnable et ne dispose pas d'une rubrique autonome dans le POC. L'architecture de l'information courante et les parcours effectivement testés sont définis dans [`architecture-information.md`](architecture-information.md).
 
 ## Appels à l'action initiaux
 
-Le POC/V1 comporte initialement deux appels à l'action pratiques :
+Le POC doit distinguer les CTA d'orientation propres à chaque page des actions pratiques de prise de contact ou de soutien.
 
-1. **Contactez-nous** — pour en savoir plus ou participer.
-2. **Adhérez ou faites un don** — pour soutenir l'association.
+Dans la navigation globale :
+- **Nous contacter** est le CTA distinct de l’en-tête ;
+- **Adhérer / faire un don** reste facilement accessible depuis l'univers Association et le pied de page, sans devenir un CTA dominant de l’en-tête.
 
-Ces appels à l'action évolueront avec la maturité de la PPC. De futurs appels pourront concerner la mise en œuvre de la PPC, l'utilisation de la marque collective ou la consultation de référentiels matures. L'architecture ne doit pas figer les CTA actuels.
+Sur la page d'accueil du POC, les CTA structurants sont **Comprendre la PPC** puis **Travailler avec nous**.
+
+Ces appels à l'action évolueront avec la maturité de PPC. De futurs appels pourront concerner la mise en œuvre de PPC, l'utilisation de la marque collective ou la consultation de référentiels matures. L'architecture ne doit pas inventer ni figer des processus qui ne sont pas encore définis. Voir [`architecture-information.md`](architecture-information.md) pour la répartition normative des CTA et parcours.
 
 ## Page d'accueil
 
@@ -62,7 +65,7 @@ La page d'accueil doit apporter quelques preuves sobres que la PPC est réelle e
 Pour le POC/V1, la marque collective constitue une **section spécialisée du site** expliquant :
 - son rôle ;
 - les référentiels disponibles ;
-- le mécanisme envisagé.
+- ce qui est aujourd'hui disponible ou encore en construction.
 
 Elle n'est pas encore un grand parcours transactionnel.
 
@@ -101,11 +104,12 @@ Les actualités importantes de PPC doivent exister comme contenus durables du si
 
 ## Travaux futurs
 
+L'architecture de l'information détaillée, le sitemap, la navigation, le rôle des pages et les parcours principaux sont désormais spécifiés dans [`architecture-information.md`](architecture-information.md).
+
 Restent à concevoir dans les phases suivantes :
-- architecture de l'information détaillée et sitemap ;
-- navigation ;
-- rôle et contenu détaillé des pages ;
 - modèles de contenu détaillés ;
 - choix final du CMS ;
 - design system / identité visuelle initiale ;
-- parcours détaillé de la marque collective lorsque les règles métier seront matures.
+- contenu éditorial final ;
+- parcours détaillé de la marque collective lorsque les règles métier seront matures ;
+- éventuel parcours « Adopter la PPC » lorsque son offre et ses règles seront suffisamment définies.

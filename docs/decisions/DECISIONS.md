@@ -155,3 +155,13 @@ Le journal des décisions est rédigé en français.
 **Décision :** Stocker dans GitHub le code, la configuration, les contenus, ressources pertinentes, spécifications, documentation d'exploitation et historique des décisions.
 
 **Pourquoi :** Une approche « tout en code/configuration » maximise traçabilité, portabilité, transmissibilité et facilité de travail pour les IA.
+
+### 2026-09-05 — Architecture de l'information du POC validée
+
+**Statut :** Acceptée
+
+**Décision :** Formaliser une architecture où PPC reste l'identité principale du site, avec une navigation courte centrée sur Comprendre la PPC, Marque collective, Ressources, Actualités & événements et Association ; conserver Travailler avec nous hors menu principal et rattacher canoniquement les référentiels à la Marque collective.
+
+**Pourquoi :** Permettre une découverte progressive — comprendre, approfondir, voir la formalisation concrète, puis éventuellement contribuer ou entrer en relation — sans donner à l'Association une place englobante ni créer prématurément des parcours métier non définis.
+
+**À réexaminer lorsque :** Les tests du POC ou les retours de la co-présidence remettent en cause les hypothèses de navigation documentées, ou lorsque des parcours aujourd'hui absents (par exemple Adopter la PPC, Consortium, Partenaires / Écosystème) deviennent réellement actionnables.

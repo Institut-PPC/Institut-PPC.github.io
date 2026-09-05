@@ -83,8 +83,9 @@ Prévoir une page 404 personnalisée, accessible, utile et légère, compatible 
 
 Le POC doit prévoir la structure pour :
 - les mentions légales ;
-- la politique de confidentialité.
+- la politique de confidentialité ;
+- une page Accessibilité cohérente avec le niveau réel de conformité et les démarches effectivement menées.
 
-Les textes juridiques définitifs pourront être complétés avant la production.
+Les textes juridiques définitifs et les informations formelles d'accessibilité pourront être complétés avant la production.
 
 Sans analytics ni formulaire de contact natif, le comportement lié à la vie privée doit rester volontairement simple.
