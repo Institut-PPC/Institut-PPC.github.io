@@ -65,7 +65,9 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 - Source, configuration et contenus : **dépôt Git hébergé sur GitHub**
 - Hébergement public : **GitHub Pages**
 - CI/CD : **GitHub Actions**
-- CMS : **pas encore définitivement choisi** ; DecapCMS est le candidat de référence.
+- CMS du POC : **DecapCMS**, utilisé comme interface d’édition au-dessus des contenus Git.
+- Authentification CMS cible : backend GitHub direct complété par un petit composant OAuth dédié ; **Git Gateway n’est pas retenu**.
+- Alternative future crédible : **Sveltia CMS**, sans migration structurante des contenus si un remplacement devient utile.
 - Langue de la V1/POC : **français**
 - Analytics : **aucun dans le POC**
 - Environnement de staging dédié : **aucun initialement**

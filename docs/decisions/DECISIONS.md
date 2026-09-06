@@ -102,17 +102,19 @@ Le journal des décisions est rédigé en français.
 
 ### 2026-09-04 — Le choix du CMS reste ouvert
 
-**Statut :** Provisoire
+**Statut :** Remplacée le 2026-09-06
 
 **Décision :** Considérer DecapCMS comme candidat de référence, pas comme décision finale.
 
-**Pourquoi :** Il est déjà connu et éprouvé dans un projet similaire, mais PPC doit encore comparer l'UX éditoriale, la modélisation, l'authentification, la preview, la portabilité et la maintenance.
+**Pourquoi :** Il est déjà connu et éprouvé dans un projet similaire, mais PPC devait encore comparer l'UX éditoriale, la modélisation, l'authentification, la preview, la portabilité et la maintenance.
+
+**Remplacée par :** la décision du 2026-09-06 retenant DecapCMS pour le POC.
 
 ### 2026-09-04 — La prévisualisation éditoriale est souhaitable mais doit rester simple
 
-**Statut :** Provisoire
+**Statut :** Acceptée
 
-**Décision :** Étudier les options légères de preview lors du choix du CMS. Ne pas introduire une infrastructure disproportionnée uniquement pour cette fonction.
+**Décision :** Utiliser une preview éditoriale lorsqu'elle apporte une aide utile, sans exiger une reproduction pixel-perfect du rendu public ni introduire une infrastructure disproportionnée uniquement pour cette fonction.
 
 ### 2026-09-04 — Pas de staging dédié initialement
 
@@ -165,3 +167,64 @@ Le journal des décisions est rédigé en français.
 **Pourquoi :** Permettre une découverte progressive — comprendre, approfondir, voir la formalisation concrète, puis éventuellement contribuer ou entrer en relation — sans donner à l'Association une place englobante ni créer prématurément des parcours métier non définis.
 
 **À réexaminer lorsque :** Les tests du POC ou les retours de la co-présidence remettent en cause les hypothèses de navigation documentées, ou lorsque des parcours aujourd'hui absents (par exemple Adopter la PPC, Consortium, Partenaires / Écosystème) deviennent réellement actionnables.
+
+### 2026-09-06 — Modèles de contenu structurés et singletons hybrides
+
+**Statut :** Acceptée
+
+**Décision :** Structurer les contenus récurrents autour des modèles `Actualité`, `Événement`, `Personne`, `Organisation`, `Ressource` et `Référentiel`. Représenter les pages éditoriales fixes comme des singletons hybrides, avec un singleton `Accueil` et un singleton de paramètres éditoriaux globaux. Conserver les entités canoniques sous forme de fichiers structurés manipulables indépendamment du CMS.
+
+**Pourquoi :** Obtenir des contenus portables, réutilisables, automatisables et compréhensibles sans transformer le CMS en page builder.
+
+### 2026-09-06 — Membres fondateurs représentés comme Personnes
+
+**Statut :** Acceptée
+
+**Décision :** Chaque membre fondateur présenté publiquement est une entité `Personne` portant le rôle `membre-fondateur`. Créer la route `/association/membres-fondateurs` avec une présentation visuelle incluant photo et LinkedIn.
+
+**Pourquoi :** Éviter les listes dupliquées, permettre une présentation publique cohérente et garder la gouvernance dérivable des rôles structurés.
+
+### 2026-09-06 — Ressources avec exposition hybride
+
+**Statut :** Acceptée
+
+**Décision :** Une `Ressource` choisit entre un mode lien direct et un mode page interne. La route `/ressources/<slug>` n'existe que pour les ressources configurées avec une page interne. La sélection de ressources de la homepage est manuelle et ordonnée dans le singleton `Accueil`.
+
+**Pourquoi :** Couvrir les ressources externes simples comme les contenus PPC nécessitant une présence éditoriale durable sans imposer une page de détail à toutes les ressources.
+
+### 2026-09-06 — Versionnement éditorial explicite des référentiels
+
+**Statut :** Acceptée
+
+**Décision :** Un `Référentiel` représente une identité durable contenant une liste structurée de versions et une `version_courante` désignée explicitement. La version courante n'est jamais déduite automatiquement de l'ordre, de la date ou du numéro.
+
+**Pourquoi :** Distinguer l'historique éditorial public de l'historique technique Git et préserver l'intention éditoriale de PPC.
+
+### 2026-09-06 — DecapCMS retenu pour le POC
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser DecapCMS comme interface d'édition du POC au-dessus des contenus Git. Conserver les modèles de contenu indépendants de Decap et permettre la suppression ou le remplacement du CMS sans migration structurante des contenus.
+
+**Pourquoi :** Decap couvre suffisamment les modèles PPC, respecte l'architecture Git/Astro/GitHub Pages et présente en 2026 un compromis de maturité, réversibilité et simplicité adapté au POC.
+
+**Alternative étudiée :** Sveltia CMS reste l'alternative future privilégiée si son niveau de maturité devient supérieur ou si l'expérience Decap est insuffisante.
+
+**À réexaminer lorsque :** l'expérience éditoriale réelle avec Decap devient limitante, Decap n'est plus suffisamment maintenu, ou Sveltia atteint une maturité et un modèle de maintenance jugés supérieurs.
+
+### 2026-09-06 — Authentification Decap par GitHub direct et OAuth minimal
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser le backend GitHub direct de Decap complété par un petit composant OAuth dédié. Ne pas utiliser Git Gateway dans la nouvelle architecture. Le composant OAuth ne doit pas devenir une dépendance runtime du site public.
+
+**Pourquoi :** Préserver l'architecture GitHub Pages, limiter les dépendances externes et garder la couche d'authentification minimale et remplaçable.
+
+### 2026-09-06 — Validation au build des contraintes insuffisamment garanties par le CMS
+
+**Statut :** Acceptée
+
+**Décision :** Garantir via schémas et/ou build les contraintes que Decap ne peut pas imposer proprement, notamment la cohérence de `Référentiel.version_courante`, la complétude de certaines `Personne` selon leurs rôles et les champs requis selon le mode d'exposition d'une `Ressource`.
+
+**Pourquoi :** Ne pas déformer les modèles fonctionnels pour contourner des limites ergonomiques du CMS et conserver une validation fiable indépendante de l'interface d'édition.
+

@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / cadrage produit**. Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
+Le projet est actuellement au stade **POC / spécifications, avant implémentation**. Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
 ## Socle prévu
 
@@ -19,7 +19,7 @@ Le projet est actuellement au stade **POC / cadrage produit**. Le POC n'est pas 
 - GitHub Pages
 - GitHub Actions pour validation, build et déploiement
 - contenus structurés versionnés dans Git
-- CMS à choisir ; DecapCMS est le candidat de référence
+- DecapCMS comme CMS du POC, avec contenus indépendants du CMS et backend GitHub direct + composant OAuth minimal
 - V1/POC uniquement en français
 - architecture statique, sobre, accessible et durable
 

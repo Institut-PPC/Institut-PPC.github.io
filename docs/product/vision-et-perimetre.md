@@ -2,7 +2,7 @@
 
 ## Statut
 
-Spécification produit initiale du POC du site PPC. Ce document décrit les décisions actuelles et signale explicitement les points restant à trancher.
+Spécification produit du POC du site PPC. Ce document décrit les décisions actuelles et signale explicitement les points restant à trancher.
 
 ## Identité du produit
 
@@ -77,12 +77,14 @@ Ne pas implémenter ce processus futur avant que ses règles métier n'existent.
 
 ## Section Association
 
-Le POC doit comporter une présentation simple de l'association, comprenant au minimum :
+Le POC doit comporter une présentation structurée de l'association, comprenant au minimum :
 - la co-présidence ;
 - le Conseil d'administration ;
-- les fondateurs.
+- les membres fondateurs.
 
-Les données doivent de préférence être structurées plutôt que codées en dur afin de pouvoir évoluer et éventuellement alimenter un futur annuaire public.
+Les personnes exposées publiquement sont représentées par des entités structurées `Personne` et les pages institutionnelles dérivent leur affichage de rôles PPC contrôlés. La co-présidence, le Conseil d'administration et les membres fondateurs présentés sur le site disposent d'une photo et d'un lien LinkedIn.
+
+Les membres fondateurs disposent d'une page dédiée `/association/membres-fondateurs`, afin de permettre une présentation visuelle claire sans transformer la page Association ou la page Gouvernance en annuaire exhaustif.
 
 Un annuaire public complet n'est **pas requis dans le POC**, mais l'architecture des contenus ne doit pas l'empêcher ultérieurement.
 
@@ -106,9 +108,10 @@ Les actualités importantes de PPC doivent exister comme contenus durables du si
 
 L'architecture de l'information détaillée, le sitemap, la navigation, le rôle des pages et les parcours principaux sont désormais spécifiés dans [`architecture-information.md`](architecture-information.md).
 
-Restent à concevoir dans les phases suivantes :
-- modèles de contenu détaillés ;
-- choix final du CMS ;
+Les modèles de contenu structurés et le choix du CMS sont désormais spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+
+Restent notamment à concevoir ou finaliser dans les phases suivantes :
+- conception technique détaillée des schémas, chemins de contenus et configuration Decap ;
 - design system / identité visuelle initiale ;
 - contenu éditorial final ;
 - parcours détaillé de la marque collective lorsque les règles métier seront matures ;

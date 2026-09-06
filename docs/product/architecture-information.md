@@ -32,6 +32,7 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 │       └── /marque-collective/referentiels/<slug>   [si nécessaire]
 │
 ├── /ressources
+│   └── /ressources/<slug>   [uniquement pour les ressources avec page interne]
 │
 ├── /actualites-evenements
 │   ├── /actualites/<slug>
@@ -39,6 +40,7 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 │
 ├── /association
 │   ├── /association/gouvernance
+│   ├── /association/membres-fondateurs
 │   └── /association/nous-soutenir
 │
 ├── /travailler-avec-nous
@@ -90,6 +92,7 @@ Les sous-menus sont présents dès le POC lorsqu'une rubrique possède de vraies
 **Association** :
 - Présentation ;
 - Gouvernance ;
+- Membres fondateurs ;
 - Nous soutenir / adhérer.
 
 **Comprendre la PPC** reste une entrée simple dans la navigation globale. Sa navigation interne éventuelle se fait par ancres dans la page elle-même.
@@ -156,8 +159,16 @@ Constituer le centre d'approfondissement PPC.
 Cette page peut agréger des ressources internes et externes, par exemple le Grand Cours Sator, le livre de Christian Bruère, des vidéos, des publications ou des travaux PPC. Le POC utilise une organisation simple par grands types, sans moteur de recherche ni filtres avancés.
 
 Le modèle est hybride :
-- certaines ressources peuvent renvoyer directement vers un site externe ;
-- d'autres peuvent disposer d'une présence durable sur le site ou d'un document hébergé avec le dépôt.
+- certaines ressources renvoient directement vers une URL externe ou un fichier local ;
+- d'autres disposent d'une page éditoriale durable sur le site.
+
+La décision est portée par chaque `Ressource` via son mode d'exposition. Les ressources et leur modèle sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+
+### `/ressources/<slug>` — Détail d'une ressource, selon son mode d'exposition
+
+Présenter une ressource uniquement lorsque celle-ci a été configurée en mode **page interne** et qu'un contexte éditorial durable sur le site apporte une valeur réelle.
+
+Cette route est facultative **par ressource**. Une ressource en mode lien direct ne génère pas de page de détail et renvoie directement vers sa destination.
 
 ### `/actualites-evenements` — Actualités & événements
 
@@ -188,13 +199,22 @@ Cette page ne doit pas transformer l'Association en identité englobante du site
 
 ### `/association/gouvernance` — Gouvernance
 
-Présenter la gouvernance de l'Association.
+Présenter la gouvernance actuelle de l'Association.
 
 Pour le POC :
 - co-présidence et Conseil d'administration avec **photo, nom, rôle et lien LinkedIn** ;
-- membres fondateurs présentés plus légèrement afin d'éviter la création implicite d'un quasi-annuaire public.
+- ces listes sont dérivées des entités `Personne` et de leurs rôles PPC contrôlés, sans duplication des noms dans le contenu de la page ;
+- les représentants du vivant et autres rôles de gouvernance sont également dérivés des rôles lorsque leur présentation est requise.
 
 Les règles de gouvernance elles-mêmes ne sont pas définies par le site : le contenu publié doit refléter les sources institutionnelles de l'Association.
+
+### `/association/membres-fondateurs` — Membres fondateurs
+
+Présenter le collège des membres fondateurs sur une page dédiée afin de ne pas surcharger la page Association ou la page Gouvernance.
+
+Chaque membre fondateur présenté est une entité `Personne` portant le rôle `membre-fondateur`. La présentation publique doit inclure **photo, nom et lien LinkedIn** et prendre une forme visuelle de type portraits/cartes, et non une simple liste textuelle ou un tableau de noms.
+
+La page `/association` présente synthétiquement le rôle du collège des membres fondateurs et renvoie vers cette page dédiée.
 
 ### `/association/nous-soutenir` — Nous soutenir / adhérer
 
@@ -266,16 +286,18 @@ La structure suivante est l'**hypothèse fonctionnelle retenue pour le POC**. Le
    - appel aux entreprises ou organisations souhaitant contribuer.
 
 6. **Pour approfondir**
-   - sélection de ressources.
+   - sélection manuelle et ordonnée de ressources, pilotée par le singleton `Accueil`.
 
 7. **PPC en mouvement**
-   - actualités récentes ;
-   - prochains événements pertinents.
+   - dernières actualités publiées, sélectionnées automatiquement ;
+   - prochains événements publiés, sélectionnés automatiquement.
 
 8. **Association / soutien**
    - présence plus discrète en bas de page.
 
 L'implémentation doit permettre de déplacer, ajouter ou supprimer ces blocs sans refonte structurelle après les tests du POC.
+
+La homepage n'est pas un page builder : sa structure et ses composants restent dans le code. Les contenus éditoriaux utiles sont pilotés par le singleton `Accueil`. Les Actualités et Événements ne portent aucun champ d'épinglage dans le POC ; les Ressources ne portent aucun champ `mise_en_avant_accueil`.
 
 ## Parcours utilisateurs principaux
 
@@ -408,7 +430,7 @@ Compréhension de l'activité récente ou passée de PPC et possibilité d'appro
 
 **Hypothèses POC à observer**
 - lisibilité d'une page centrale unique regroupant deux types de contenus distincts ;
-- utilité de faire remonter simultanément actualités récentes et événements pertinents sur l'accueil.
+- lisibilité de la remontée automatique des dernières actualités publiées et des prochains événements publiés sur l'accueil.
 
 ### P5 — Connaître ou soutenir l'Association
 
@@ -419,18 +441,20 @@ Personne qui veut comprendre qui porte PPC, connaître sa gouvernance, adhérer 
 - navigation principale **Association** ;
 - bloc Association / soutien en bas de l'accueil ;
 - pied de page ;
-- liens directs vers Gouvernance ou Nous soutenir / adhérer.
+- liens directs vers Gouvernance, Membres fondateurs ou Nous soutenir / adhérer.
 
 **Étapes attendues**
 1. Accéder à **Association**.
 2. Comprendre le rôle de l'Association par rapport à PPC et à la marque collective.
 3. Selon l'intention :
    - consulter **Gouvernance** ;
+   - consulter **Membres fondateurs** ;
    - ou ouvrir **Nous soutenir / adhérer**.
 4. Pour un soutien ou une adhésion, poursuivre vers le service externe effectivement utilisé.
 
 **CTA structurants**
 - Voir la gouvernance ;
+- Découvrir les membres fondateurs ;
 - Nous soutenir / adhérer ;
 - Adhérer / faire un don dans le pied de page ou les contextes appropriés.
 
@@ -443,7 +467,7 @@ Accès à l'information institutionnelle recherchée ou au service externe de so
 
 **Hypothèses POC à observer**
 - absence de CTA Adhérer / faire un don dans l’en-tête ;
-- niveau de détail approprié pour les membres fondateurs ;
+- lisibilité de l'articulation entre Association, Gouvernance et page dédiée des membres fondateurs ;
 - équilibre entre visibilité de l'Association et primauté de PPC dans l'identité globale du site.
 
 ## Règles d'architecture durables
@@ -456,7 +480,7 @@ Les règles suivantes doivent être considérées comme structurantes :
 4. **Les URL publiques sont sémantiques, lisibles, stables et indépendantes du CMS.**
 5. **Les référentiels appartiennent canoniquement à l'univers de la Marque collective.** Des liens transversaux directs restent autorisés.
 6. **Séparer les grandes natures de contenus.** En particulier : pédagogie PPC, contenus normatifs/référentiels, ressources d'approfondissement, vie institutionnelle de l'Association, actualités et événements.
-7. **Structurer les contenus qui évoluent.** Les contenus récurrents ou appelés à être gérés par des contributeurs non techniques doivent rester compatibles avec les principes de contenu structuré et de portabilité du dépôt.
+7. **Structurer les contenus qui évoluent.** Les contenus récurrents ou appelés à être gérés par des contributeurs non techniques doivent rester compatibles avec les principes de contenu structuré et de portabilité du dépôt. Les listes institutionnelles dérivables, notamment la gouvernance et les membres fondateurs, sont produites à partir des entités canoniques plutôt que recopiées dans les pages.
 8. **Ne pas inventer de règles métier PPC.** Une architecture peut prévoir l'évolution future d'un parcours sans définir à l'avance ses critères, statuts, processus ou droits.
 9. **Préserver l'évolutivité sans sur-concevoir.** L'architecture doit permettre d'ajouter plus tard des parcours ou rubriques justifiés, sans implémenter aujourd'hui des structures spéculatives.
 10. **Sobriété, accessibilité, performance et pérennité restent des contraintes transversales.** Les choix de navigation, de médias et d'interaction doivent respecter les spécifications techniques et qualité du dépôt.
@@ -479,10 +503,12 @@ Faire évoluer un de ces éléments à la suite d'un test ne constitue pas, à l
 
 ## Frontière avec les phases suivantes
 
-Cette spécification fixe l'architecture de l'information, mais ne fixe pas encore :
+Cette spécification fixe l'architecture de l'information. Les modèles de contenu et le CMS retenu sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+
+Elle ne fixe pas :
 - le contenu éditorial final de chaque page ;
-- les schémas de données détaillés de tous les types de contenus ;
-- le choix final du CMS ;
+- les chemins physiques ou formats de fichiers exacts des collections ;
+- la configuration Decap détaillée ;
 - le design system détaillé ;
 - les mécanismes métier futurs d'attribution, de candidature, de contrôle ou d'audit de la marque collective ;
 - un éventuel parcours futur « Adopter la PPC ».
