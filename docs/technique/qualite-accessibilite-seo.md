@@ -107,7 +107,7 @@ Les normalisations syntaxiques équivalentes (`*` vs `_`, type de puce, lignes v
 
 ## Accessibilité
 
-L'accessibilité doit être traitée dans le HTML, les composants et le design, et pas uniquement par un outil de test.
+L'accessibilité doit être traitée dans le HTML, les composants et le design, et pas uniquement par un outil de test. Les règles visuelles et interactives complémentaires sont normées dans [`design-system.md`](design-system.md).
 
 Principes :
 - HTML sémantique ;
@@ -116,10 +116,16 @@ Principes :
 - hiérarchie cohérente des titres ;
 - landmarks natifs ;
 - navigation clavier ;
-- focus visible ;
+- focus nettement visible avec `:focus-visible` lorsque pertinent ;
 - liens et boutons sémantiquement corrects ;
 - labels explicites ;
-- contrastes suffisants ;
+- liens éditoriaux reconnaissables autrement que par la couleur seule ;
+- information et états non portés uniquement par la couleur ;
+- contrastes conformes au minimum aux critères WCAG AA applicables pour les combinaisons réellement utilisées ;
+- cibles interactives confortables, en visant environ 44 × 44 CSS px lorsque la nature du contrôle le permet ;
+- aucune information essentielle révélée uniquement au `hover` ;
+- respect de `prefers-reduced-motion` ;
+- comportement robuste au zoom et à l'agrandissement du texte ;
 - composants utilisables sans dépendance client inutile.
 
 Les contrôles automatisés d'accessibilité doivent être bloquants pour les violations sérieuses, déterministes et actionnables. Les heuristiques ambiguës nécessitent une revue humaine plutôt qu'un faux sentiment de conformité.
@@ -176,8 +182,10 @@ Principes :
 - dimensions d'images connues lorsque possible pour limiter les décalages de mise en page ;
 - lazy-loading hors contenus prioritaires lorsque pertinent ;
 - aucun tracker tiers par défaut ;
-- polices système pour le POC ;
-- si une police de marque devient nécessaire, privilégier l'auto-hébergement sous réserve de sa licence.
+- polices système pour le POC, conformément à [`design-system.md`](design-system.md) ;
+- si la future identité de marque rend une police spécifique nécessaire, privilégier l'auto-hébergement sous réserve de sa licence ;
+- CSS natif sans framework CSS pour le POC, avec styles et design tokens centralisés ;
+- animations décoratives évitées et transitions limitées aux retours d'interaction utiles.
 
 Une fois des pages représentatives disponibles :
 1. mesurer ;

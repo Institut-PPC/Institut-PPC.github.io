@@ -31,6 +31,7 @@ Avant de modifier le projet, lire les spécifications pertinentes pour la tâche
 - `docs/product/exigences-fonctionnelles.md`
 - `docs/contenu/contenu-et-cms.md`
 - `docs/technique/architecture.md`
+- `docs/technique/design-system.md`
 - `docs/technique/qualite-accessibilite-seo.md`
 - `docs/exploitation/exploitation.md`
 
@@ -69,6 +70,8 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 - Authentification CMS cible : backend GitHub direct complété par **deux Netlify Functions OAuth minimales** ; **Git Gateway n’est pas retenu**.
 - Alternative future crédible : **Sveltia CMS**, sans migration structurante des contenus si un remplacement devient utile.
 - Langue de la V1/POC : **français**
+- Styles du POC : **CSS natif moderne et conservateur**, sans Tailwind, avec design tokens centraux et styles Astro scopés.
+- Identité visuelle du POC : **« Ingénierie sensible »**, volontairement transitoire et réversible en vue de la future identité de marque PPC.
 - Analytics : **aucun dans le POC**
 - Environnement de staging dédié : **aucun initialement**
 - Pull Requests : **facultatives initialement**

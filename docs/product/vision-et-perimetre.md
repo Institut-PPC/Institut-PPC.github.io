@@ -108,11 +108,11 @@ Les actualités importantes de PPC doivent exister comme contenus durables du si
 
 L'architecture de l'information détaillée, le sitemap, la navigation, le rôle des pages et les parcours principaux sont désormais spécifiés dans [`architecture-information.md`](architecture-information.md).
 
-Les modèles de contenu structurés et le choix du CMS sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). La conception technique détaillée est désormais spécifiée dans [`../technique/architecture.md`](../technique/architecture.md), [`../technique/qualite-accessibilite-seo.md`](../technique/qualite-accessibilite-seo.md) et [`../exploitation/exploitation.md`](../exploitation/exploitation.md).
+Les modèles de contenu structurés et le choix du CMS sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). La conception technique détaillée est désormais spécifiée dans [`../technique/architecture.md`](../technique/architecture.md), le design system et l'identité visuelle initiale dans [`../technique/design-system.md`](../technique/design-system.md), les exigences qualité dans [`../technique/qualite-accessibilite-seo.md`](../technique/qualite-accessibilite-seo.md), et l'exploitation dans [`../exploitation/exploitation.md`](../exploitation/exploitation.md).
 
 Restent notamment à concevoir, finaliser ou implémenter dans les phases suivantes :
 - implémentation du socle Astro, de Decap, des validations et du pipeline décrits par les spécifications techniques ;
-- design system / identité visuelle initiale ;
+- implémentation du design system et de l'identité visuelle transitoire spécifiés dans [`../technique/design-system.md`](../technique/design-system.md) ;
 - contenu éditorial final ;
 - parcours détaillé de la marque collective lorsque les règles métier seront matures ;
 - éventuel parcours « Adopter la PPC » lorsque son offre et ses règles seront suffisamment définies.

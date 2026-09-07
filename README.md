@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / spécifications, conception technique détaillée terminée, avant implémentation**. Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
+Le projet est actuellement au stade **POC / spécifications, conception technique détaillée et design system initial terminés, avant implémentation**. Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
 ## Socle prévu
 
@@ -22,13 +22,15 @@ Le projet est actuellement au stade **POC / spécifications, conception techniqu
 - DecapCMS comme CMS du POC, avec contenus indépendants du CMS, backend GitHub direct et OAuth via deux Netlify Functions minimales
 - V1/POC uniquement en français
 - architecture statique, sobre, accessible et durable
+- CSS natif avec design tokens centraux, sans Tailwind pour le POC
+- identité visuelle transitoire « Ingénierie sensible », conçue pour être remplacée facilement par la future identité de marque PPC
 - rebuild/déploiement GitHub Pages quotidien à 01:00 `Europe/Paris`, en plus des déploiements sur `main`
 
 ## Documentation
 
 Commencer par [`AGENTS.md`](AGENTS.md).
 
-Les spécifications normatives se trouvent sous `docs/`. L'historique des décisions est volontairement séparé dans `docs/decisions/`.
+Les spécifications normatives se trouvent sous `docs/`. Le design system du POC est décrit dans [`docs/technique/design-system.md`](docs/technique/design-system.md). L'historique des décisions est volontairement séparé dans `docs/decisions/`.
 
 ## Développement
 

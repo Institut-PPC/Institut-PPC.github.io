@@ -291,3 +291,19 @@ Le journal des décisions est rédigé en français.
 **Décision :** Séparer dans GitHub Actions la qualité/build du déploiement GitHub Pages. Les pushes sur `main` construisent et déploient ; les Pull Requests valident sans déployer ; un rebuild et redéploiement complet est également planifié tous les jours à **01:00 `Europe/Paris`**. Tout contrôle normatif en échec empêche le déploiement. Les tests ciblent les schémas, règles transverses, build Astro et contrôles du site généré sans seuil artificiel de couverture ni suite E2E lourde par défaut.
 
 **Pourquoi :** Garantir que seules des versions valides sont publiées et que les contenus dépendant de la date courante — notamment les prochains événements — restent corrects même sans commit récent, tout en gardant un coût de maintenance raisonnable.
+
+### 2026-09-07 — Identité visuelle transitoire « Ingénierie sensible »
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser pour le POC une identité visuelle transitoire « Ingénierie sensible » : précise sans être froide, industrielle mais inscrite dans le vivant, sobre, intemporelle et prioritairement explicative. Utiliser le logo actuel de l'Association et l'illustration « Révéler la valeur invisible » comme références visuelles de départ, sans les considérer comme une charte de marque définitive. La future identité de la marque PPC doit pouvoir remplacer cette direction sans restructuration du site.
+
+**Pourquoi :** Obtenir rapidement un POC crédible et cohérent sans investir excessivement dans une identité appelée à évoluer, tout en préservant la capacité de la future démarche de marque à refondre la charte.
+
+### 2026-09-07 — CSS natif et design tokens centraux, sans Tailwind pour le POC
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser CSS natif moderne et volontairement conservateur, sans Tailwind CSS, avec `src/styles/tokens.css` pour les fondations et tokens sémantiques, `src/styles/global.css` pour les règles réellement globales et du CSS scopé dans les composants Astro. Privilégier les standards Web largement disponibles et l'amélioration progressive.
+
+**Pourquoi :** Le site PPC est petit, essentiellement statique et éditorial. Dans ce contexte, CSS natif maximise la lisibilité, limite les dépendances et facilite une future refonte de charte en concentrant les décisions visuelles dans les tokens et quelques primitives. Tailwind 4 a été considéré comme une solution mature, performante et compatible avec Astro, mais son abstraction supplémentaire n'apporte pas ici une valeur suffisante pour justifier sa dépendance et la distribution d'une partie des choix de présentation dans le markup.

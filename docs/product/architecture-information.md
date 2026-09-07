@@ -503,10 +503,9 @@ Faire évoluer un de ces éléments à la suite d'un test ne constitue pas, à l
 
 ## Frontière avec les phases suivantes
 
-Cette spécification fixe l'architecture de l'information. Les modèles de contenu et le CMS retenu sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md), et leur conception technique dans [`../technique/architecture.md`](../technique/architecture.md).
+Cette spécification fixe l'architecture de l'information. Les modèles de contenu et le CMS retenu sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md), leur conception technique dans [`../technique/architecture.md`](../technique/architecture.md), et le design system dans [`../technique/design-system.md`](../technique/design-system.md).
 
-Ce document d'architecture de l'information ne redéfinit donc pas les chemins physiques, formats de fichiers ou la configuration Decap, désormais normés ailleurs. Restent hors de son périmètre :
+Ce document d'architecture de l'information ne redéfinit donc pas les chemins physiques, formats de fichiers, la configuration Decap ou les règles visuelles détaillées, désormais normés ailleurs. Restent hors de son périmètre :
 - le contenu éditorial final de chaque page ;
-- le design system détaillé ;
 - les mécanismes métier futurs d'attribution, de candidature, de contrôle ou d'audit de la marque collective ;
 - un éventuel parcours futur « Adopter la PPC ».

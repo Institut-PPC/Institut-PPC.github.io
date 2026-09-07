@@ -6,7 +6,7 @@ Spécification normative de l'architecture technique du POC du site PPC.
 
 La conception technique détaillée est stabilisée. Les choix laissés à l'implémentation concernent la factorisation interne du code et le choix précis de certains outils de test, pas l'architecture des contenus, le workflow éditorial, l'authentification, la validation ou le déploiement.
 
-Les modèles fonctionnels de contenu sont définis dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+Les modèles fonctionnels de contenu sont définis dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). L'identité visuelle, les design tokens, l'architecture CSS et les primitives de rendu sont normés dans [`design-system.md`](design-system.md).
 
 ## Socle technique
 
@@ -54,6 +54,11 @@ Organisation cible :
 │   ├── pages/
 │   ├── layouts/
 │   ├── components/
+│   ├── styles/
+│   │   ├── tokens.css
+│   │   └── global.css
+│   ├── assets/
+│   │   └── identite/
 │   └── ... schémas et validation
 │
 ├── public/
@@ -313,11 +318,13 @@ Le site doit rester léger côté client comme en infrastructure :
 - images optimisées ;
 - aucun tracker par défaut ;
 - pas de fournisseur de polices externe par défaut ;
-- polices système pour le POC sauf besoin d'identité visuelle démontré ; en cas de police spécifique, privilégier l'auto-hébergement si la licence le permet.
+- polices système pour le POC ; si la future identité de marque impose une police spécifique, privilégier l'auto-hébergement si la licence le permet ;
+- CSS natif moderne et volontairement conservateur, sans Tailwind CSS pour le POC ;
+- design tokens centraux dans `src/styles/tokens.css`, règles globales dans `src/styles/global.css` et styles spécifiques scopés dans les composants Astro.
 
 Aucun budget chiffré arbitraire de JavaScript, poids de page ou score Lighthouse n'est fixé avant mesure de pages représentatives.
 
-Les variables de design doivent être centralisées et les composants réutilisables afin que l'identité visuelle puisse évoluer sans restructuration du site.
+Les règles détaillées de centralisation, responsive, langage graphique et réversibilité de la charte sont définies dans [`design-system.md`](design-system.md). Une future identité de marque doit pouvoir être appliquée principalement via les tokens, les assets d'identité et un petit nombre de primitives, sans réécriture page par page.
 
 ## Environnements
 
@@ -329,7 +336,7 @@ Aucun analytics dans le POC. Ne pas introduire indirectement de tracking via une
 
 ## Navigateurs et terminaux
 
-Support responsive mobile, tablette et desktop. Privilégier les standards Web éprouvés, l'amélioration progressive et la dégradation élégante. Le site doit rester utilisable sur des terminaux raisonnablement anciens et des connexions modestes sans maintenir indéfiniment des navigateurs réellement obsolètes.
+Support responsive mobile, tablette et desktop. Privilégier les standards Web éprouvés, l'amélioration progressive et la dégradation élégante. Le site doit rester utilisable sur des terminaux raisonnablement anciens et des connexions modestes sans maintenir indéfiniment des navigateurs réellement obsolètes. Les fonctions CSS récentes ne doivent pas conditionner l'accès au contenu ou à une fonction essentielle lorsqu'une solution plus simple et largement disponible suffit ; voir [`design-system.md`](design-system.md).
 
 ## Détails laissés à l'implémentation
 
