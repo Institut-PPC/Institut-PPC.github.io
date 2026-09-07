@@ -100,7 +100,7 @@ La ressource renvoie directement vers :
 - une URL externe ; ou
 - un fichier local associé.
 
-La destination directe est alors obligatoire.
+La destination directe est alors obligatoire. Le slug, le lien principal associé et le corps Markdown ne sont pas utilisés dans ce mode.
 
 ### Page interne
 
@@ -108,7 +108,7 @@ La ressource dispose d'une page éditoriale durable sous :
 
 `/ressources/<slug>`
 
-Le slug et les éléments de contenu requis par la page interne sont alors obligatoires. Un lien principal associé peut renvoyer vers la vidéo, l'ouvrage, la publication ou le document d'origine.
+Le slug est obligatoire. Le corps Markdown et le lien principal associé sont facultatifs : les champs structurés peuvent suffire à produire une page interne utile. La destination directe n'est pas utilisée dans ce mode. Un lien principal associé peut renvoyer vers la vidéo, l'ouvrage, la publication ou le document d'origine.
 
 La route `/ressources/<slug>` est donc facultative **par ressource**, et non obligatoire pour toutes les ressources.
 
@@ -122,7 +122,7 @@ Un `Référentiel` représente une identité durable rattachée canoniquement à
 
 Exigences :
 - liste sous `/marque-collective/referentiels` ;
-- détail facultatif sous `/marque-collective/referentiels/<slug>` lorsqu'une page apporte une valeur réelle ;
+- détail facultatif sous `/marque-collective/referentiels/<slug>` ; la présence du slug indique explicitement qu'une page dédiée existe ;
 - conservation explicite de plusieurs versions au sein du référentiel lorsque nécessaire ;
 - chaque version dispose d'un identifiant stable ;
 - `version_courante` désigne explicitement l'identifiant de la version courante ;

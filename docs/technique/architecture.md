@@ -2,278 +2,345 @@
 
 ## Statut
 
-Spécification de l'architecture technique du POC du site PPC.
+Spécification normative de l'architecture technique du POC du site PPC.
 
-Elle fixe les principes et choix déjà stabilisés. Les chemins physiques des contenus, schémas Astro définitifs, configuration Decap et détails du composant OAuth restent volontairement à préciser lors de la conception technique et de l'implémentation.
+La conception technique détaillée est stabilisée. Les choix laissés à l'implémentation concernent la factorisation interne du code et le choix précis de certains outils de test, pas l'architecture des contenus, le workflow éditorial, l'authentification, la validation ou le déploiement.
+
+Les modèles fonctionnels de contenu sont définis dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
 
 ## Socle technique
 
 Le socle retenu est :
-
-- **Astro** pour le site statique ;
-- **GitHub** pour l'hébergement du dépôt et le versionnement ;
+- **Astro** pour la génération statique ;
+- **GitHub** pour le dépôt et le versionnement ;
 - **GitHub Pages** pour l'hébergement public ;
-- **GitHub Actions** pour validation, build, tests de non-régression et déploiement ;
-- **DecapCMS** comme interface d'édition du POC au-dessus des contenus Git.
+- **GitHub Actions** pour validation, tests, build et déploiement ;
+- **DecapCMS** comme interface d'édition ;
+- **deux Netlify Functions minimales** pour le flux OAuth GitHub utilisé par Decap.
 
-Ne pas remettre ce socle en concurrence sans besoin PPC concret le justifiant.
+Git Gateway n'est pas utilisé.
+
+Ne pas remettre ce socle en concurrence sans besoin PPC concret et décision explicite.
 
 ## Architecture statique par défaut
 
-Une raison majeure du choix statique est de minimiser :
-- la surface d'attaque ;
-- la complexité à l'exécution ;
-- l'infrastructure ;
-- la logique serveur ;
-- les secrets ;
-- la charge de maintenance.
+Une raison majeure du choix statique est de minimiser la surface d'attaque, la complexité à l'exécution, l'infrastructure, la logique serveur, les secrets et la charge de maintenance.
 
-Privilégier la génération statique et une approche HTML/CSS d'abord. Ajouter du JavaScript côté client uniquement lorsqu'il apporte une valeur utilisateur réelle.
+Privilégier HTML/CSS et la génération statique. Ajouter du JavaScript côté client uniquement lorsqu'il apporte une valeur utilisateur réelle. Aucun framework front-end client n'est introduit par défaut.
 
-Le site public ne dépend pas de DecapCMS ni du composant OAuth à l'exécution.
+Le site public ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth.
 
-## Sobriété numérique par conception
+## Structure physique du dépôt
 
-La sobriété numérique est un principe technique central, cohérent avec les objectifs de pérennité de PPC.
+Organisation cible :
 
-Le site doit rester léger en ressources côté client comme en infrastructure, fonctionner correctement sur des terminaux raisonnablement anciens et des connexions modestes, et éviter les choix techniques favorisant inutilement le renouvellement matériel.
+```text
+/
+├── contenu/                     # contenus canoniques éditables
+│   ├── actualites/
+│   ├── evenements/
+│   ├── personnes/
+│   ├── organisations/
+│   ├── ressources/
+│   ├── referentiels/
+│   ├── pages/
+│   ├── configuration/
+│   │   └── site.yaml
+│   └── medias/
+│       └── images/
+│
+├── src/                         # application Astro
+│   ├── content.config.ts
+│   ├── pages/
+│   ├── layouts/
+│   ├── components/
+│   └── ... schémas et validation
+│
+├── public/
+│   ├── admin/                   # interface Decap
+│   ├── documents/               # fichiers publics servis tels quels
+│   ├── CNAME                    # lorsque le domaine personnalisé est activé
+│   └── robots.txt
+│
+├── scripts/                     # validation et automatisations ponctuelles
+├── tests/                       # lorsque des fixtures/tests hors src le justifient
+└── docs/                        # spécifications et exploitation
+```
 
-Conséquences pratiques :
-- JavaScript client minimal ;
-- dépendances limitées ;
-- images optimisées ;
-- pas de framework client lourd inutile ;
-- pages statiques lorsque possible ;
-- pas de tracking intrusif ;
-- pas de services runtime gratuits ou inutiles.
+`contenu/` est indépendant du code Astro et du CMS. `src/` contient la logique du site. `public/` ne doit accueillir une image éditoriale que si elle doit volontairement être servie sans traitement ; les images éditoriales normales restent dans `contenu/medias/images/` pour profiter du pipeline Astro.
 
-Aucun budget de performance chiffré n'est fixé avant de disposer de pages représentatives. Mesurer avant de décider si des budgets explicites sont utiles.
+## Formats et identifiants
 
-## Dépendances tierces à l'exécution
+La répartition Markdown/YAML, les conventions de nommage et les identifiants sont normés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
 
-**Le fonctionnement essentiel du site public ne doit pas dépendre de services tiers à l'exécution.**
+Principes techniques :
+- une entité répétable = un fichier ;
+- dossier de collection plat ;
+- nom de fichier sans extension = identifiant PPC canonique ;
+- `slug` public indépendant de l'identifiant ;
+- relations stockées comme identifiants canoniques ;
+- `Actualité` et `Événement` utilisent un préfixe de date de création `YYYY-MM-DD-`, sans sémantique métier après création.
 
-Des dépendances externes restent acceptables au cas par cas lorsqu'elles :
-- répondent à un besoin réel ;
-- sont légères et compréhensibles ;
-- apportent une valeur supérieure à leur coût en complexité et dépendance ;
-- sont raisonnablement remplaçables ;
-- n'empêchent pas l'accès aux contenus essentiels en cas de panne.
+## Content Layer Astro
 
-Le composant OAuth nécessaire à l'authentification Decap est une dépendance d'administration, pas une dépendance du site public.
+Tous les contenus canoniques sont consommés par l'application à travers le **Content Layer Astro**. Le code de rendu ne lit pas directement les YAML/Markdown avec `fs` ou un parseur parallèle.
 
-## Données et architecture des contenus
+### Collections
 
-Git est la source durable des contenus du site.
+Déclarer dans `src/content.config.ts` une collection logique par modèle :
+- `actualites` ;
+- `evenements` ;
+- `personnes` ;
+- `organisations` ;
+- `ressources` ;
+- `referentiels` ;
+- `pages` ;
+- `accueil` ;
+- `configurationSite`.
 
-Les contenus canoniques doivent :
-- être stockés dans des formats simples et ouverts ;
-- rester lisibles et modifiables hors du CMS ;
-- être consommables directement par Astro ;
-- pouvoir être manipulés par scripts ;
-- être versionnés avec le dépôt.
+Utiliser les loaders officiels Astro, principalement `glob()`. Aucun loader personnalisé n'est introduit dans le POC.
 
-Les modèles normatifs sont définis dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+Les collections récurrentes utilisent `glob()` sur leur dossier. Les singletons YAML `accueil.yaml` et `site.yaml` utilisent également un `glob()` ciblé sur leur fichier unique, plutôt que `file()`, car chaque fichier représente une seule entrée.
 
-### Organisation conceptuelle
+### Schémas et typage
 
-L'architecture doit pouvoir représenter :
-- collections récurrentes : Actualité, Événement, Personne, Organisation, Ressource, Référentiel ;
-- singletons de pages éditoriales fixes ;
-- singleton `Accueil` ;
-- singleton de paramètres éditoriaux globaux.
+Les schémas Zod sont explicites et constituent le contrat structurel des contenus.
 
-Pour les entités canoniques comme `Personne` et `Organisation`, l'orientation retenue est un **fichier structuré par entité**, de préférence YAML pour les données purement structurées. Les extensions et chemins exacts ne sont pas fixés à ce stade.
+Une **définition canonique** des règles locales doit être partagée entre Astro et l'outillage de validation. De fins adaptateurs Astro peuvent compléter cette définition pour les éléments propres au Content Layer, notamment les images et références. Ne pas dupliquer une règle métier dans deux implémentations indépendantes.
 
-Les contenus longs utilisent du Markdown standard. Aucun MDX éditorial, page builder ou collection générique `Document` n'est requis.
+Utiliser les helpers Astro appropriés, notamment pour les images locales et les références typées lorsque cela améliore le typage. La validation transverse PPC reste néanmoins l'autorité sur l'intégrité globale du graphe de contenus.
 
-### Relations et identifiants
+### Accès applicatif
 
-Les entités structurées servant de cibles de relation disposent d'identifiants PPC stables indépendants du CMS et des fournisseurs tiers.
-
-L'implémentation doit préserver la lisibilité des relations et permettre leur validation automatisée sans lier le modèle à Decap.
+Les pages et composants passent par les API du Content Layer (`getCollection()`, `getEntry()` ou mécanismes équivalents de la version Astro retenue). Les contenus `publie: false` sont chargés et validés mais filtrés avant toute exposition publique.
 
 ## Validation des contenus
 
-Les schémas Astro et/ou les contrôles de build doivent garantir les contraintes que le CMS ne peut pas assurer suffisamment.
+La validation comporte trois niveaux distincts.
 
-Ils doivent notamment permettre de contrôler :
-- la conformité des contenus à leurs modèles ;
-- la cohérence des références entre entités ;
-- la complétude requise de certaines `Personne` selon leurs rôles ;
-- la cohérence de `Référentiel.version_courante` avec `versions[].id` ;
-- les champs requis selon le `mode_exposition` d'une `Ressource` ;
-- les règles de qualité éditoriale documentées lorsque leur automatisation est fiable.
+### Niveau 1 — Schémas locaux
 
-Les schémas exacts, messages d'erreur et détails de validation seront définis lors de l'implémentation.
+Une règle qui peut être vérifiée avec une seule entrée appartient au schéma, par exemple :
+- types, champs obligatoires, enums, formats d'URL et de slug ;
+- contrat discriminé de `Ressource.mode_exposition` ;
+- photo + LinkedIn requis selon les rôles publics d'une `Personne` ;
+- cohérence de `Référentiel.version_courante` avec `versions[].id` au sein du même fichier ;
+- cohérence locale image / `image_alt` lorsque applicable.
+
+### Niveau 2 — Validateur transverse PPC
+
+Un validateur TypeScript dédié contrôle ce qui nécessite plusieurs entrées ou l'état global du dépôt. Il réutilise la définition canonique des schémas et ne redéfinit pas les modèles.
+
+Il couvre au minimum :
+- existence des cibles de relations ;
+- références publiques vers des contenus publiables ;
+- sélections explicites vers des contenus `publie: true` ;
+- unicité et collisions de slugs dans leurs espaces de routes ;
+- existence réelle des documents locaux référencés sous `public/` ;
+- cohérence des redirections et de leurs cibles ;
+- conventions de noms de fichiers et identifiants lorsque vérifiables globalement.
+
+Les erreurs sont **agrégées**, bloquantes et formulées de façon actionnable avec le chemin du fichier, l'identifiant concerné et la correction attendue. Éviter les warnings pour les règles normatives ; réserver les warnings aux recommandations réellement non bloquantes.
+
+Le point d'entrée peut vivre dans `scripts/`, avec la logique réutilisable factorisée dans `src/` ou un module partagé. Le nom exact des fichiers reste un détail d'implémentation.
+
+### Niveau 3 — Site construit
+
+Après `astro build`, des contrôles vérifient les propriétés qui dépendent du rendu : routes, liens internes, sitemap, métadonnées et accessibilité automatisable. La stratégie est détaillée dans [`qualite-accessibilite-seo.md`](qualite-accessibilite-seo.md).
+
+## Règles de visibilité
+
+`publie` est un interrupteur d'exposition, pas un workflow.
+
+Un contenu non publié :
+- ne génère pas de route publique ;
+- n'apparaît dans aucune liste ou sélection automatique ;
+- n'apparaît pas dans le sitemap ou les métadonnées publiques.
+
+Les sélections automatiques filtrent les contenus non publiés. Une référence éditoriale explicite destinée au public vers un contenu publiable non publié constitue une erreur de validation.
+
+`Personne` et `Organisation` n'utilisent pas `publie`; leur visibilité est dérivée des rôles et relations.
+
+## Routes et changements de slug
+
+Les slugs sont stables après première publication. Un changement exceptionnel doit s'accompagner d'une redirection explicite conservée côté configuration technique du site.
+
+Sur GitHub Pages, ces redirections sont générées statiquement par Astro ; elles ne doivent pas être présentées comme une garantie de réponse HTTP serveur 301. La configuration de redirection doit être testable et vérifier que la cible existe et qu'elle n'entre pas en conflit avec une route actuelle.
+
+## Médias et documents
+
+### Images
+
+Les images éditoriales locales vivent dans `contenu/medias/images/`. Les champs de contenu référencent le fichier source ; Astro est responsable de leur import, de leur validation et de leur optimisation au build.
+
+L'intégration initiale doit effectuer un smoke test de la chaîne :
+
+```text
+Decap → chemin média enregistré → Content Layer → image Astro optimisée
+```
+
+Ce test confirme la syntaxe précise des chemins relatifs et la configuration Decap, sans modifier l'architecture canonique.
+
+### Documents
+
+Les documents locaux téléchargeables vivent sous `public/documents/` et sont servis tels quels. Les contenus stockent leur chemin public explicitement. Le validateur transverse vérifie l'existence de tout fichier local référencé.
+
+Les ressources tierces restent externes lorsque leur hébergement externe est naturel.
 
 ## Manipulation par scripts
 
-Les contenus, en particulier `Personne` et `Organisation`, doivent pouvoir être créés ou mis à jour sans DecapCMS.
+Les contenus doivent pouvoir être créés ou mis à jour sans Decap.
 
-Flux conceptuel possible :
+Tout script écrivant dans `contenu/` doit :
+- produire uniquement les formats canoniques ;
+- réutiliser les schémas/validateurs du dépôt ;
+- être idempotent autant que possible ;
+- préserver les identifiants PPC existants ;
+- n'importer que les données destinées au Web ;
+- valider les données avant écriture lorsque cela est raisonnablement possible.
 
-```text
-SI associatif / source externe
-        ↓
-normalisation / filtrage des données publiques
-        ↓
-modèle canonique PPC du site
-        ↓
-écriture / mise à jour de fichiers structurés
-        ↓
-Git
-```
+Les scripts modifient le **working tree** uniquement. Ils ne créent pas automatiquement de commit, ne poussent pas sur GitHub et ne fusionnent pas de branche. L'opérateur examine le `git diff` avant commit.
 
-Les scripts éventuels doivent privilégier des mises à jour idempotentes et ne synchroniser que les données destinées au Web. Le dépôt du site ne doit pas devenir une base exhaustive des adhérents.
-
-Aucun script de synchronisation concret n'est défini à ce stade.
+Aucun connecteur AssoConnect, HelloAsso ou autre SI associatif n'est implémenté dans le POC.
 
 ## Intégration DecapCMS
 
-DecapCMS est l'interface d'édition retenue pour le POC.
+Decap lit et modifie les mêmes fichiers canoniques que le site. Sa configuration s'adapte aux modèles PPC et ne crée aucune structure propriétaire indispensable au rendu.
 
-Principes :
-- Decap lit et modifie les mêmes fichiers canoniques que le site ;
-- la configuration du CMS doit s'adapter aux modèles PPC ;
-- aucune structure propriétaire Decap ne doit devenir nécessaire au fonctionnement du site ;
-- supprimer ou remplacer Decap ne doit pas nécessiter de migration structurante des contenus.
+L'interface est disponible sous `/admin` et sa configuration mappe directement les collections et singletons décrits dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
 
-La configuration exacte des collections, file collections, widgets, relations, médias et previews reste à écrire après fixation des chemins, formats et schémas.
+Le backend cible est `github`, branche `main`, en mode simple. Les utilisateurs Decap doivent posséder les droits GitHub leur permettant de pousser sur le dépôt.
 
 ## Authentification du CMS
 
 L'architecture cible est :
 
-**DecapCMS + backend GitHub direct + petit composant OAuth dédié**.
+**DecapCMS + backend GitHub direct + deux Netlify Functions OAuth minimales**.
 
-Règles :
-- les contributeurs CMS disposent des droits GitHub nécessaires sur le dépôt ;
-- le composant OAuth complète uniquement le flux d'authentification GitHub ;
-- il doit rester minimal, documenté et remplaçable ;
-- il ne stocke ni ne possède les contenus ;
-- il ne doit jamais devenir une dépendance runtime du site public ;
-- ses secrets ne sont jamais exposés côté client ni committés dans le dépôt.
+Le dépôt étant public, le flux OAuth demande uniquement le scope GitHub nécessaire aux repositories publics, cible `public_repo`, sans scope général `repo` pour les dépôts privés.
 
-**Git Gateway n'est pas retenu** pour la nouvelle architecture.
+### Rôle des fonctions
 
-La technologie, l'hébergement, le déploiement et la gestion exacte des secrets du composant OAuth restent à définir.
+Les deux fonctions assurent uniquement le flux OAuth attendu par Decap :
+- `/auth` : redirection vers l'autorisation GitHub ;
+- `/callback` : échange du code temporaire contre le token puis retour du résultat à Decap.
 
-## Sécurité
+Elles ne lisent ni n'écrivent les contenus, ne gèrent aucune base utilisateur, ne stockent aucun token durablement et ne participent jamais au rendu public.
 
-Privilégier une **sécurité par simplicité architecturale**, pas des mécanismes de sécurité maison.
+### Secrets et sécurité
 
-Principes :
-- minimiser les services exposés et la logique runtime ;
-- minimiser les secrets ;
-- ne jamais exposer d'identifiants ou secrets côté client ;
-- limiter les droits des contributeurs au strict nécessaire ;
-- s'appuyer sur les mécanismes éprouvés de GitHub et des services retenus ;
-- documenter onboarding, offboarding et rotation des secrets lorsque l'implémentation les rend concrets.
+Les secrets OAuth restent exclusivement dans la configuration de secrets Netlify :
+- `GITHUB_CLIENT_ID` ;
+- `GITHUB_CLIENT_SECRET`.
 
-## Preview éditoriale
+Le secret n'est jamais commité, injecté dans le build Astro ou exposé côté client.
 
-La preview native de Decap peut être utilisée lorsqu'elle apporte une aide utile, mais elle ne doit pas chercher à reproduire pixel-perfect le rendu Astro.
+Le flux doit au minimum :
+- utiliser et vérifier `state` ;
+- limiter précisément l'URL de callback ;
+- contrôler l'origine des échanges `postMessage` ;
+- ne jamais journaliser les tokens ou secrets ;
+- désactiver le cache sur les réponses sensibles ;
+- fonctionner uniquement en HTTPS ;
+- éviter un CORS permissif générique ;
+- conserver des dépendances minimales.
 
-Ne pas dupliquer fortement le design ou la logique de rendu et ne pas ajouter une infrastructure disproportionnée uniquement pour cette fonction.
+Les permissions GitHub du repository restent l'autorité d'accès. Retirer l'accès GitHub d'un contributeur doit suffire à empêcher de nouvelles écritures via Decap.
 
-Une preview du vrai site après commit/build peut être envisagée indépendamment si une solution légère apporte une valeur suffisante.
+**Git Gateway est explicitement exclu.** Netlify n'est utilisé que pour les deux fonctions OAuth ; le site reste hébergé sur GitHub Pages.
 
-## Rich text et Markdown
+## Rich text et preview
 
-Decap étant en transition sur son expérience rich text, l'implémentation doit tester les round-trips Markdown avant validation du widget retenu.
+Le widget `richtext` Decap est utilisé avec modes visuel et Markdown brut, limité au sous-ensemble Markdown PPC. Un smoke test de round-trip est obligatoire avant de considérer l'intégration CMS terminée.
 
-Le Markdown généré doit rester :
-- standard ;
-- lisible ;
-- stable après édition/enregistrement ;
-- compatible Astro ;
-- sans format propriétaire.
+La preview Decap reste légère et non pixel-perfect. Elle ne doit ni dupliquer le moteur de rendu Astro, ni imposer un framework client au site public, ni devenir un chemin critique du build.
 
-Le widget Decap exact reste à fixer après ces tests.
+## Workflow Git éditorial
 
-## Workflow Git et publication
+Decap écrit directement sur `main` en mode simple :
 
-Conserver initialement un workflow léger.
+```text
+édition Decap
+→ sauvegarde
+→ commit sur main
+→ GitHub Actions
+→ validation/tests/build
+→ déploiement seulement si tout réussit
+```
 
-Le travail direct sur `main` reste autorisé lorsque pertinent. Les branches et Pull Requests sont facultatives et recommandées pour les changements plus importants ou risqués.
+Chaque sauvegarde déclenche donc la CI, y compris pour `publie: false`.
 
-Le POC n'active pas par défaut un `editorial_workflow` Decap complexe.
+Le POC n'active pas `editorial_workflow`. La protection de branche ne doit pas imposer une Pull Request d'une manière qui empêcherait le fonctionnement normal de Decap pour les contributeurs autorisés.
 
-L'état `publie: true/false` appartient au modèle de contenu et contrôle l'exposition publique. Il ne constitue pas un système de révisions.
+Les conflits d'édition simultanée restent des conflits Git ordinaires ; aucun système PPC de fusion collaborative n'est construit.
 
-La procédure précise pour modifier sur plusieurs sessions un contenu déjà publié tout en conservant l'ancienne version publique reste à définir pendant l'implémentation et l'exploitation.
+Pour une refonte longue ou sensible d'un contenu déjà publié, une branche/PR peut être utilisée exceptionnellement hors du workflow Decap normal afin de conserver l'ancienne version publique jusqu'au merge.
+
+Le rollback utilise Git (`revert` ou opération équivalente) puis repasse par la CI.
 
 ## CI/CD
 
-GitHub Actions constitue la chaîne officielle de validation, build et déploiement.
+GitHub Actions constitue la chaîne officielle de qualité, build et déploiement.
 
-La chaîne doit :
-1. exécuter les contrôles automatisés et tests de non-régression pertinents, y compris les validations de contenu ;
-2. construire le site Astro ;
-3. déployer les builds valides sur GitHub Pages selon le workflow retenu.
+### Déclencheurs
 
-Les commandes de validation utilisées en CI doivent aussi être exécutables localement par un humain ou une IA.
+- **push sur `main`** : validation + tests + build + déploiement ;
+- **Pull Request** : même validation et build, sans déploiement production ;
+- **schedule quotidien à 01:00, fuseau `Europe/Paris`** : validation + tests + build + déploiement ;
+- **`workflow_dispatch`** : relance manuelle lorsque nécessaire.
 
-## Implémentation du design
+Le build quotidien est une exigence fonctionnelle : les listes dérivées de la date courante, notamment les « prochains événements », doivent rester justes même en l'absence de commit récent. Le calcul reste au build plutôt que d'introduire une dépendance serveur ou du JavaScript client pour actualiser ces listes.
 
-Le POC doit déjà avoir une personnalité visuelle assez affirmée tout en restant facile à modifier après le futur travail approfondi sur l'identité de marque PPC.
+Sur un dépôt public, GitHub peut désactiver automatiquement les workflows planifiés après une longue période sans activité du dépôt. Cette limitation doit être documentée et surveillée en exploitation ; ne pas générer de faux commits uniquement pour contourner ce mécanisme.
 
-En conséquence :
-- découpler identité visuelle et structure de l'information ;
-- centraliser les variables de design : couleurs, typographies, espacements, rayons, etc. ;
-- utiliser des composants réutilisables ;
-- éviter les styles arbitraires dispersés page par page.
+### Jobs
 
-L'identité visuelle du POC est une proposition, pas un système de marque immuable.
+Le workflow cible sépare au moins :
+
+1. **qualité et build**, avec uniquement des droits de lecture : checkout, installation reproductible, validation des contenus, tests, contrôles Astro/TypeScript, build statique, contrôles du site généré, puis création de l'artefact Pages ;
+2. **déploiement**, dépendant du premier job et seul détenteur des permissions GitHub Pages nécessaires.
+
+Aucun artefact n'est déployé si un contrôle normatif échoue.
+
+Les commandes utilisées dans la CI doivent être reproductibles localement. Le gestionnaire de paquets exact peut être choisi à l'implémentation, mais un seul gestionnaire et son lockfile doivent être committés.
+
+## Sobriété, dépendances et design
+
+Le site doit rester léger côté client comme en infrastructure :
+- JavaScript client minimal ;
+- pas de framework client par défaut ;
+- dépendances limitées et justifiées ;
+- images optimisées ;
+- aucun tracker par défaut ;
+- pas de fournisseur de polices externe par défaut ;
+- polices système pour le POC sauf besoin d'identité visuelle démontré ; en cas de police spécifique, privilégier l'auto-hébergement si la licence le permet.
+
+Aucun budget chiffré arbitraire de JavaScript, poids de page ou score Lighthouse n'est fixé avant mesure de pages représentatives.
+
+Les variables de design doivent être centralisées et les composants réutilisables afin que l'identité visuelle puisse évoluer sans restructuration du site.
 
 ## Environnements
 
-Pas d'environnement de staging dédié initialement.
+Pas de staging dédié initialement. Le développement et la vérification se font localement ; les Pull Requests peuvent fournir un contexte de validation sans devenir obligatoires pour l'édition courante.
 
-Le développement et la vérification technique se font localement.
+## Analytics, cookies et vie privée
 
-Une preview distante pourra être envisagée plus tard si une solution légère apporte une valeur réelle.
-
-## Analytics
-
-Aucun analytics n'est implémenté dans le POC.
-
-Ne pas introduire indirectement de scripts de tracking via des dépendances sans rapport avec ce besoin.
-
-Une solution future légère et respectueuse de la vie privée pourra être étudiée si l'équipe décide que la mesure est utile.
-
-## Cookies et vie privée
-
-L'architecture doit éviter les trackers et services nécessitant un consentement tant qu'un besoin futur ne les justifie pas.
-
-L'objectif initial est d'éviter une bannière cookies puisque le site n'a pas besoin de cookies de tracking.
-
-Réévaluer les aspects juridiques à chaque introduction d'une intégration tierce.
+Aucun analytics dans le POC. Ne pas introduire indirectement de tracking via une dépendance. Réévaluer les implications juridiques lors de toute future intégration tierce.
 
 ## Navigateurs et terminaux
 
-Supporter les usages responsive mobile, tablette et desktop.
+Support responsive mobile, tablette et desktop. Privilégier les standards Web éprouvés, l'amélioration progressive et la dégradation élégante. Le site doit rester utilisable sur des terminaux raisonnablement anciens et des connexions modestes sans maintenir indéfiniment des navigateurs réellement obsolètes.
 
-Le site doit rester utilisable sur des terminaux raisonnablement anciens et des connexions modestes, sans chercher à maintenir indéfiniment des navigateurs réellement obsolètes.
+## Détails laissés à l'implémentation
 
-Privilégier les standards Web éprouvés, l'amélioration progressive et la dégradation élégante.
+Restent volontairement à l'implémentation :
+- gestionnaire de paquets et lockfile correspondant ;
+- noms exacts des modules TypeScript et organisation fine des helpers ;
+- bibliothèque de tests et outils concrets de contrôle des liens/accessibilité ;
+- YAML complet de Decap ;
+- code exact des deux Netlify Functions ;
+- CSS précis des previews ;
+- formulation fine des messages d'erreur et de commit ;
+- éventuels budgets quantifiés après mesure réelle.
 
-Ne pas dépendre inutilement des toutes dernières fonctionnalités des navigateurs.
-
-## Décisions techniques restant ouvertes
-
-Restent à trancher pendant la conception technique / l'implémentation :
-- chemins physiques exacts des collections, singletons et médias ;
-- extensions et formats exacts collection par collection ;
-- schémas Astro définitifs ;
-- configuration YAML Decap et widgets exacts ;
-- technologie et hébergement du composant OAuth ;
-- règles précises de droits GitHub pour les contributeurs ;
-- conventions de commits ;
-- procédure des modifications longues d'un contenu déjà publié ;
-- scripts de synchronisation éventuels ;
-- limites éventuelles de taille des médias ;
-- détails fins de preview ;
-- éventuels analytics futurs ;
-- éventuels budgets de performance après mesure.
+Ces choix ne doivent pas modifier les contrats de données, le workflow, l'authentification ou le pipeline normés ci-dessus.

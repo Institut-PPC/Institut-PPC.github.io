@@ -108,10 +108,10 @@ Les actualités importantes de PPC doivent exister comme contenus durables du si
 
 L'architecture de l'information détaillée, le sitemap, la navigation, le rôle des pages et les parcours principaux sont désormais spécifiés dans [`architecture-information.md`](architecture-information.md).
 
-Les modèles de contenu structurés et le choix du CMS sont désormais spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
+Les modèles de contenu structurés et le choix du CMS sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). La conception technique détaillée est désormais spécifiée dans [`../technique/architecture.md`](../technique/architecture.md), [`../technique/qualite-accessibilite-seo.md`](../technique/qualite-accessibilite-seo.md) et [`../exploitation/exploitation.md`](../exploitation/exploitation.md).
 
-Restent notamment à concevoir ou finaliser dans les phases suivantes :
-- conception technique détaillée des schémas, chemins de contenus et configuration Decap ;
+Restent notamment à concevoir, finaliser ou implémenter dans les phases suivantes :
+- implémentation du socle Astro, de Decap, des validations et du pipeline décrits par les spécifications techniques ;
 - design system / identité visuelle initiale ;
 - contenu éditorial final ;
 - parcours détaillé de la marque collective lorsque les règles métier seront matures ;

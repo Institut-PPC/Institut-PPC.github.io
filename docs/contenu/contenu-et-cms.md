@@ -14,7 +14,7 @@ Elle définit :
 - l'expérience éditoriale attendue ;
 - DecapCMS comme CMS retenu pour le POC et les contraintes qui en découlent.
 
-Les routes et le rôle des pages sont décrits dans [`../product/architecture-information.md`](../product/architecture-information.md). Les détails physiques des fichiers, schémas Astro et de la configuration Decap restent à préciser pendant la conception technique.
+Les routes et le rôle des pages sont décrits dans [`../product/architecture-information.md`](../product/architecture-information.md). L'organisation technique des collections, leur chargement par Astro, la validation et le pipeline sont détaillés dans [`../technique/architecture.md`](../technique/architecture.md).
 
 ## Principes directeurs
 
@@ -40,21 +40,89 @@ Les routes et le rôle des pages sont décrits dans [`../product/architecture-in
 
 Aucune collection générique `Document` ni système générique de blocs de page n'est introduit dans le POC.
 
+
+## Organisation physique et formats canoniques
+
+Les contenus canoniques sont stockés dans un répertoire **`contenu/` à la racine du dépôt**, distinct de `src/`. Cette séparation exprime trois responsabilités différentes :
+- `contenu/` : données et textes éditoriaux canoniques ;
+- `src/` : application Astro, schémas, règles de rendu et composants ;
+- `public/` : fichiers servis tels quels, documents téléchargeables et interface `/admin`.
+
+Les collections récurrentes sont **plates** : une collection correspond à un dossier et une entité à un fichier directement dans ce dossier. La date, la catégorie, le rôle ou toute autre taxonomie métier ne crée pas de sous-arborescence.
+
+Répartition normative :
+
+| Famille | Emplacement | Format canonique |
+|---|---|---|
+| Actualité | `contenu/actualites/` | Markdown `.md` + front matter YAML |
+| Événement | `contenu/evenements/` | Markdown `.md` + front matter YAML |
+| Personne | `contenu/personnes/` | YAML `.yaml` |
+| Organisation | `contenu/organisations/` | YAML `.yaml` |
+| Ressource | `contenu/ressources/` | Markdown `.md` + front matter YAML, corps éventuellement vide |
+| Référentiel | `contenu/referentiels/` | Markdown `.md` + front matter YAML, corps éventuellement vide |
+| Pages institutionnelles | `contenu/pages/` | Markdown `.md` + front matter YAML |
+| Accueil | `contenu/pages/accueil.yaml` | YAML |
+| Paramètres éditoriaux globaux | `contenu/configuration/site.yaml` | YAML |
+| Images éditoriales | `contenu/medias/images/` | fichiers image sources |
+| Documents téléchargeables | `public/documents/` | fichiers servis tels quels |
+
+Le répertoire `contenu/pages/` reste plat et **ne reproduit pas les URL**. Le lien entre un singleton et sa route appartient au code Astro. La navigation structurelle appartient également au code, pas au singleton de configuration.
+
+Les images et documents sont détaillés plus loin dans ce document et dans [`../technique/architecture.md`](../technique/architecture.md).
+
 ## Conventions transversales
 
-### Identifiants stables
+### Identifiants stables et noms de fichiers
 
-Les entités structurées servant de cible de relation disposent d'un **identifiant PPC stable**, indépendant :
-- du nom affiché ;
-- du slug lorsqu'il peut évoluer ;
-- de DecapCMS ;
-- d'un outil associatif ou fournisseur externe.
+Pour toute entité représentée par un fichier, **le nom de fichier sans extension constitue l'identifiant PPC canonique et stable**. Aucun champ `id` redondant n'est stocké dans le fichier.
 
-Les relations utilisent ces identifiants stables ou le mécanisme équivalent retenu lors de l'implémentation.
+Exemples :
+
+```text
+contenu/personnes/christian-bruere.yaml        → id `christian-bruere`
+contenu/organisations/atemis.yaml              → id `atemis`
+contenu/ressources/livre-blanc-ppc.md          → id `livre-blanc-ppc`
+contenu/referentiels/conception-ppc.md          → id `conception-ppc`
+```
+
+Les identifiants sont uniques dans leur collection, en ASCII minuscule et `kebab-case`. Ils ne dépendent ni du CMS, ni du slug public, ni d'un système externe. Une fois l'entité créée, l'identifiant est considéré comme immuable ; un renommage de fichier est une migration d'identifiant nécessitant la mise à jour explicite de ses relations.
+
+Exception de nommage pour `Actualité` et `Événement` :
+
+```text
+YYYY-MM-DD-<identifiant-lisible>.md
+```
+
+Le préfixe `YYYY-MM-DD` correspond à la **date de création du fichier**. Il facilite le repérage humain dans Git et n'a aucune sémantique métier après création. Il n'est jamais resynchronisé avec `date_publication`, `date_debut` ou toute correction ultérieure de date.
+
+Les sous-entités qui ne possèdent pas de fichier propre portent leur propre identifiant local. C'est notamment le cas des versions d'un `Référentiel`.
+
+### Slugs et pérennité des URL
+
+Le `slug` public est distinct de l'identifiant canonique. Modifier un slug ne modifie donc pas les relations internes.
+
+Après première publication, un slug est considéré comme stable. Un changement reste possible lorsqu'il est justifié, mais il doit s'accompagner d'une **redirection explicite** de l'ancienne URL vers la nouvelle, conservée dans la configuration technique du site. L'historique des slugs n'est pas stocké dans les contenus.
+
+### Relations
+
+Une relation stocke l'identifiant canonique de la cible, pas son nom affiché ni son slug public.
+
+Exemple :
+
+```yaml
+organisation: atemis
+personnes_liees:
+  - christian-bruere
+  - stephanie-flacher
+```
+
+Le type de la relation est défini par le schéma du champ. Une relation multiple est une liste YAML ordinaire d'identifiants.
+
+L'existence des cibles, les références cassées et les contraintes de visibilité sont vérifiées automatiquement par la validation du dépôt. Decap peut afficher des libellés humains tout en enregistrant ces identifiants.
 
 ### Visibilité publique
 
-Lorsqu'un contenu porte un état de publication, il utilise un booléen léger :
+`Actualité`, `Événement`, `Ressource` et `Référentiel` utilisent un booléen :
 
 ```yaml
 publie: false
@@ -66,29 +134,47 @@ ou :
 publie: true
 ```
 
-`publie: false` permet de conserver un contenu dans Git sans l'exposer publiquement. Cet état ne constitue ni un workflow éditorial, ni un historique métier, ni un système de révisions d'un contenu déjà publié.
+`publie` est uniquement un **interrupteur d'exposition publique**. Il ne constitue ni workflow éditorial, ni historique métier, ni système de révisions.
 
-### Markdown
+Tous les contenus sont chargés et validés, y compris avec `publie: false`. Un contenu non publié :
+- ne génère aucune page publique ;
+- est absent des listes et sélections automatiques ;
+- est absent des flux éventuels, du sitemap et des métadonnées SEO publiques.
 
-Les corps éditoriaux utilisent du Markdown standard. Les besoins minimums sont :
+Les sélections automatiques filtrent silencieusement les contenus non publiés. En revanche, une **sélection ou relation éditoriale explicite destinée à être rendue publiquement** ne peut pas pointer vers une entité publiable ayant `publie: false` : cette incohérence doit bloquer la validation.
+
+`Personne` et `Organisation` n'ont pas de champ `publie`. Leur simple existence dans le dépôt ne crée ni page ni annuaire. Leur exposition est dérivée des rôles et relations effectivement utilisés par les pages du produit.
+
+### Markdown PPC
+
+Les corps éditoriaux utilisent un sous-ensemble volontairement restreint de Markdown standard :
 - paragraphes ;
-- titres ;
-- listes ;
+- titres `H2`, `H3` et `H4` ;
+- gras et italique ;
 - liens ;
-- emphase ;
+- listes à puces ;
+- listes numérotées ;
 - citations ;
-- images ;
-- éventuellement séparateurs simples.
+- images avec texte alternatif lorsque nécessaire.
+
+Le `H1` appartient au template Astro et ne doit pas être saisi dans le corps éditorial.
 
 Ne pas introduire dans le POC :
-- MDX accessible aux contributeurs ;
-- composants arbitraires dans le corps des contenus ;
-- système générique de blocs ;
-- page builder.
+- HTML brut éditorial ;
+- MDX ;
+- composants ou shortcodes dans le corps ;
+- tableaux Markdown ;
+- notes de bas de page ;
+- blocs de code ;
+- `H5`/`H6` ;
+- syntaxe propriétaire Decap ;
+- page builder ou système générique de blocs.
 
 Lorsqu'un rendu spécifique est nécessaire, préférer **champ structuré dédié + composant dans le code**.
 
 ## Modèles de contenus structurés
+
+Dans les tableaux ci-dessous, « identifiant stable » désigne la propriété canonique dérivée du nom de fichier ; **ce n’est pas un champ à stocker dans le YAML/front matter**.
 
 ### Actualité
 
@@ -100,14 +186,14 @@ Lorsqu'un rendu spécifique est nécessaire, préférer **champ structuré dédi
 
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant stable | obligatoire | Identifiant PPC durable, indépendant du CMS |
+| Identifiant stable (nom de fichier) | obligatoire | Identifiant PPC durable, indépendant du CMS |
 | Titre | obligatoire | Titre visible et base du titre SEO |
 | Slug | obligatoire | URL stable après publication initiale |
 | Résumé / chapô | obligatoire | Cartes, hub et métadescription par défaut |
 | Date de publication | obligatoire | Sert au tri |
 | Date de mise à jour | facultatif | Seulement si utile publiquement |
 | Image principale | facultatif | Aucune obligation d'illustrer chaque actualité |
-| Texte alternatif | conditionnel | Requis lorsque l'image porte une information |
+| `image_alt` | facultatif | Renseigner lorsque l’image apporte une information utile ; peut rester vide si elle est décorative dans le contexte de rendu |
 | Contenu | obligatoire | Markdown standard |
 | `publie` | obligatoire | Visibilité publique |
 
@@ -126,7 +212,7 @@ Règles POC :
 
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant stable | obligatoire | Indépendant du CMS |
+| Identifiant stable (nom de fichier) | obligatoire | Indépendant du CMS |
 | Titre | obligatoire | |
 | Slug | obligatoire | |
 | Résumé | obligatoire | |
@@ -136,6 +222,7 @@ Règles POC :
 | Lieu | facultatif | Texte simple |
 | Lien externe | facultatif | Inscription, site organisateur, visioconférence, etc. |
 | Image | facultatif | |
+| `image_alt` | facultatif | Renseigner lorsque l’image apporte une information utile |
 | Contenu | obligatoire | Markdown standard |
 | Organisations liées | facultatif, multiple | Références vers `Organisation` |
 | Personnes liées | facultatif, multiple | Références vers `Personne` |
@@ -157,7 +244,7 @@ Règles POC :
 
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant PPC stable | obligatoire | Indépendant de tout fournisseur externe |
+| Identifiant PPC stable (nom de fichier) | obligatoire | Indépendant de tout fournisseur externe |
 | Prénom | obligatoire | |
 | Nom | obligatoire | |
 | Organisation | facultatif | Référence vers `Organisation` |
@@ -194,7 +281,7 @@ Ces contraintes doivent être contrôlées par les schémas ou le build lorsque 
 
 #### Stockage et automatisation
 
-Le stockage cible est **un fichier structuré par entité**, de préférence YAML pour les données purement structurées. Le format et le chemin exacts restent à fixer lors de l'implémentation.
+Chaque `Personne` est stockée dans `contenu/personnes/<id>.yaml`. Le nom de fichier est son identifiant PPC canonique ; aucun champ `id` redondant n’est stocké.
 
 Ce choix doit permettre :
 - des diffs Git lisibles ;
@@ -214,7 +301,7 @@ Les scripts éventuels doivent pouvoir effectuer des mises à jour idempotentes.
 
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant PPC stable | obligatoire | Indépendant d'un fournisseur externe |
+| Identifiant PPC stable (nom de fichier) | obligatoire | Indépendant d'un fournisseur externe |
 | Nom | obligatoire | |
 | Site Web | facultatif | |
 | Logo | facultatif | |
@@ -223,7 +310,7 @@ Les scripts éventuels doivent pouvoir effectuer des mises à jour idempotentes.
 
 Une `Personne` peut référencer une `Organisation`.
 
-Comme pour `Personne`, le stockage cible est un fichier structuré par entité, facilement manipulable par le CMS ou par script ; le format et le chemin exacts restent à fixer.
+Chaque `Organisation` est stockée dans `contenu/organisations/<id>.yaml`. Le nom de fichier est son identifiant PPC canonique ; aucun champ `id` redondant n’est stocké.
 
 ### Membres fondateurs
 
@@ -253,35 +340,52 @@ Origine :
 - `ppc`
 - `externe`
 
+Chaque Ressource est stockée dans `contenu/ressources/<id>.md`, quel que soit son mode d'exposition. Une ressource en lien direct possède simplement un corps Markdown vide.
+
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant stable | obligatoire | |
+| Identifiant stable (nom de fichier) | obligatoire | Nom de fichier sans extension |
 | Titre | obligatoire | |
 | Type | obligatoire | Vocabulaire contrôlé |
 | Origine | obligatoire | `ppc` ou `externe` |
 | Résumé | obligatoire | |
-| Image / vignette | facultatif | |
+| Image / vignette | facultatif | Image éditoriale locale lorsque pertinent |
+| `image_alt` | facultatif | Renseigner lorsque l'image apporte une information utile |
 | Date | facultatif | Seulement lorsqu'elle a un sens |
-| Mode d'exposition | obligatoire | Lien direct ou page interne |
-| Destination directe | conditionnel | URL externe ou fichier local pour le mode lien direct |
-| Slug | conditionnel | Requis pour une page interne |
-| Contenu éditorial | conditionnel | Markdown standard pour une page interne lorsque requis |
-| Lien principal associé | facultatif | Vidéo, livre, publication ou autre source principale |
+| Mode d'exposition | obligatoire | `lien-direct` ou `page-interne` |
+| Destination directe | conditionnel | Requise uniquement en mode lien direct |
+| Slug | conditionnel | Requis uniquement en mode page interne |
+| Contenu éditorial | conditionnel | Corps Markdown facultatif en mode page interne, vide en lien direct |
+| Lien principal associé | facultatif | Possible uniquement en mode page interne |
 | `publie` | obligatoire | Visibilité publique |
 
 #### Mode lien direct
 
-Le clic principal renvoie directement vers une URL externe ou un fichier local. Une destination directe valide est obligatoire.
+Le clic principal renvoie directement vers une URL externe ou un fichier local.
+
+Contrat :
+- `destination_directe` : obligatoire ;
+- `slug` : interdit ;
+- `lien_principal_associe` : interdit ;
+- corps Markdown : vide.
+
+L'image, le titre, le résumé et les autres métadonnées peuvent néanmoins être utilisés pour produire une carte riche dans `/ressources` ou sur l'accueil.
 
 #### Mode page interne
 
-La ressource possède une page durable sous `/ressources/<slug>`. Le slug et les éléments nécessaires au rendu de cette page sont obligatoires.
+La Ressource possède une page durable sous `/ressources/<slug>`.
 
-La route est facultative **par ressource**.
+Contrat :
+- `slug` : obligatoire ;
+- `destination_directe` : interdite ;
+- `lien_principal_associe` : facultatif ;
+- corps Markdown : facultatif.
+
+L'existence de la page dépend du mode et du slug, jamais de la présence d'un corps Markdown. Une page peut être utile avec ses seules données structurées et un lien principal associé.
 
 #### Homepage
 
-La sélection de ressources de la homepage est manuelle et ordonnée dans le singleton `Accueil`. Une ressource ne porte pas de champ `mise_en_avant_accueil`.
+La sélection de ressources de la homepage est manuelle et ordonnée dans le singleton `Accueil`. Une Ressource ne porte pas de champ `mise_en_avant_accueil`. Toute Ressource explicitement sélectionnée pour l'accueil doit être publiée.
 
 ### Référentiel
 
@@ -291,92 +395,110 @@ Le modèle du site n'invente aucune règle métier relative à l'attribution, la
 
 **Exposition publique :**
 - liste : `/marque-collective/referentiels` ;
-- détail facultatif : `/marque-collective/referentiels/<slug>` lorsqu'une page apporte une valeur réelle.
+- détail facultatif : `/marque-collective/referentiels/<slug>`.
+
+Chaque Référentiel est stocké dans `contenu/referentiels/<id>.md`. La présence du `slug` est le **signal canonique** indiquant qu'une page de détail existe. L'absence de slug signifie qu'aucune route de détail n'est générée, indépendamment de la présence éventuelle de Markdown.
 
 Un `Référentiel` représente une identité durable contenant une liste structurée de versions. Une version n'est pas une collection autonome dans le POC.
 
 Structure conceptuelle :
 
 ```yaml
-id: referentiel-exemple
 titre: Référentiel exemple
+slug: referentiel-exemple
 version_courante: v1-2
 versions:
   - id: v1-1
     version: "1.1"
-    date: 2026-05-10
+    date_publication: 2026-05-10
+    document: /documents/referentiels/referentiel-exemple/v1-1.pdf
   - id: v1-2
     version: "1.2"
-    date: 2026-09-01
+    date_publication: 2026-09-01
+    document: /documents/referentiels/referentiel-exemple/v1-2.pdf
+publie: true
 ```
 
 #### Champs au niveau du référentiel
 
 | Champ | Statut | Règle |
 |---|---|---|
-| Identifiant stable | obligatoire | |
+| Identifiant stable (nom de fichier) | obligatoire | Nom de fichier sans extension |
 | Titre | obligatoire | |
-| Slug | conditionnel | Si une page dédiée existe |
+| Slug | facultatif | Sa présence crée la page de détail |
 | Résumé | obligatoire | |
 | Statut public | facultatif, lorsque pertinent | Ne pas confondre avec `publie` |
 | Version courante | obligatoire dès qu'il existe des versions | Référence explicite vers `versions[].id` |
-| Contenu de présentation | facultatif | Markdown standard si une page dédiée le nécessite |
-| `publie` | obligatoire | Visibilité publique, sous forme d’état technique léger |
+| Contenu de présentation | facultatif | Corps Markdown ; ne détermine jamais l'existence de la route |
+| `publie` | obligatoire | Visibilité publique |
 
 #### Champs d'une version
 
-Le modèle reste minimal. Une version peut comporter :
-- identifiant de version stable ;
-- libellé / numéro de version ;
-- date lorsqu'elle est pertinente ;
-- document principal ;
+Une version peut comporter :
+- `id` stable, unique à l'intérieur du Référentiel ;
+- libellé / numéro `version`, distinct de l'identifiant technique ;
+- date de publication lorsqu'elle est pertinente ;
+- document principal local ou externe ;
 - documents ou liens associés éventuels.
 
 Règles :
+- `version_courante` référence l'`id` stable d'une version, pas son libellé ;
+- l'identifiant de version est stable même si son libellé éditorial évolue ;
 - plusieurs versions peuvent être conservées explicitement ;
-- `version_courante` est désignée explicitement ;
-- elle n'est jamais déduite de l'ordre, du numéro ou de la date ;
+- la version courante n'est jamais déduite de l'ordre, du numéro ou de la date ;
 - les anciennes versions peuvent rester accessibles lorsque PPC le souhaite ;
 - Git reste l'historique technique, distinct de cet historique éditorial ;
-- aucun workflow métier d'approbation n'est modélisé.
+- aucun workflow métier d'approbation n'est modélisé ;
+- une évolution normative significative d'une version déjà publiée crée normalement une **nouvelle version** plutôt qu'un écrasement silencieux du document précédent.
 
-La cohérence de `version_courante` avec `versions[].id` doit être contrôlée au build.
+Pour un document local, la convention privilégiée est :
+
+```text
+public/documents/referentiels/<id-referentiel>/<id-version>.<extension>
+```
+
+Le chemin reste néanmoins stocké explicitement dans la version ; il n'est pas reconstruit implicitement par le code. La validation vérifie que `version_courante` existe réellement et que tout document local référencé existe dans `public/`.
 
 ## Pages éditoriales fixes et singletons
 
 ### Principe hybride
 
-Les pages institutionnelles et éditoriales fixes sont des **singletons connus du code**.
+Les pages institutionnelles et éditoriales fixes sont des **singletons connus du code**. Elles vivent dans `contenu/pages/`, sans reproduire l'arborescence des URL.
 
 Leur modèle combine selon le besoin :
 - quelques champs structurés lorsqu'une information possède une sémantique fonctionnelle ;
-- un ou plusieurs contenus Markdown pour les parties narratives ;
+- un corps Markdown principal pour les parties narratives ;
 - des relations vers les collections structurées.
 
-La route, la composition générale, les composants et la logique de rendu restent dans le code. Le CMS ne permet pas de créer arbitrairement de nouvelles pages, de construire librement des sections ni de réordonner une page comme dans un page builder.
+La route, la composition générale, l'ordre des sections, les composants, la navigation et la logique de rendu restent dans le code. Le CMS ne permet pas de créer arbitrairement de nouvelles pages, de construire librement des sections ni de réordonner une page comme dans un page builder.
 
 Les informations dérivables ne sont pas dupliquées :
 - co-présidence, CA, représentants du vivant, équipe opérationnelle et membres fondateurs proviennent des rôles des `Personne` ;
 - les référentiels proviennent de la collection `Référentiel`.
 
-L'exacte granularité des champs de chaque singleton est définie pendant l'implémentation selon la règle : **ne structurer que ce que le site a réellement besoin de comprendre**.
+Un champ structuré supplémentaire n'est créé que lorsque le code a réellement besoin d'en connaître la sémantique ou le placement. Éviter de découper artificiellement chaque paragraphe ou section narrative en champs de front matter.
+
+La page 404 reste dans le code pour le POC, sauf apparition ultérieure d'un besoin réel d'édition via CMS.
 
 ### Singleton `Accueil`
 
-`Accueil` pilote uniquement les contenus éditoriaux utiles de la homepage, sans devenir un page builder.
+`Accueil` est stocké dans `contenu/pages/accueil.yaml` et possède un schéma dédié. Il pilote uniquement les contenus éditoriaux utiles de la homepage, sans devenir un page builder.
 
 Règles :
 - structure et composants des blocs : code ;
 - textes et visuels éditoriaux pertinents : éditables lorsque nécessaire ;
 - actualités : dernières actualités publiées, sélection automatique ;
 - événements : prochains événements publiés, sélection automatique ;
-- ressources : liste **manuelle et ordonnée de références vers `Ressource`**.
+- ressources : liste **manuelle et ordonnée de références vers `Ressource`** ;
+- toute Ressource explicitement sélectionnée doit exister et être publiée.
 
 Aucun mécanisme d'épinglage des actualités ou événements n'est introduit dans le POC.
 
 ### Singleton de paramètres éditoriaux globaux
 
-Un singleton spécifique contient uniquement les informations transverses réellement éditoriales et modifiables sans développement, par exemple :
+Les paramètres éditoriaux globaux sont stockés dans `contenu/configuration/site.yaml`.
+
+Ce singleton contient uniquement les informations transverses réellement éditoriales et modifiables sans développement, par exemple :
 - adresse postale ;
 - adresse e-mail publique ;
 - réseaux sociaux ;
@@ -406,26 +528,58 @@ Un fichier est rattaché au contenu qui lui donne son sens :
 
 Le dépôt ne doit pas devenir une GED généraliste.
 
+### Images éditoriales
+
+Les images éditoriales locales vivent sous :
+
+```text
+contenu/medias/images/
+```
+
+avec des sous-dossiers lisibles par famille lorsque cela aide la reprise, par exemple `personnes/`, `organisations/`, `ressources/`, `actualites/`, `evenements/` et `referentiels/`.
+
+Les contenus stockent une référence vers le **fichier source**, idéalement relative au fichier de contenu. Astro est responsable de l'import, de la validation et de l'optimisation de l'image au build.
+
+Les noms de fichiers sources sont humains, en ASCII minuscule et `kebab-case`. Aucun UUID ou hash n'est imposé dans le patrimoine source ; Astro peut naturellement produire des fichiers optimisés fingerprintés dans `dist`.
+
+### Documents téléchargeables
+
+Les PDF et autres documents locaux qui doivent être servis tels quels vivent sous :
+
+```text
+public/documents/
+```
+
+Le contenu stocke leur URL publique explicite, par exemple :
+
+```yaml
+document: /documents/referentiels/conception-ppc/v1-2.pdf
+```
+
+Les ressources réellement externes restent des URL externes. PPC ne rapatrie pas automatiquement dans le dépôt des fichiers appartenant à des tiers.
+
 ### Politique de stockage hybride
-
-Orientation :
-- fichiers PPC légers et canoniques → dépôt lorsque pertinent ;
-- médias lourds ou contenus tiers naturellement hébergés ailleurs → URL externe.
-
-Exemples :
 
 | Contenu | Stockage par défaut |
 |---|---|
-| Photo d'une personne | dépôt |
-| Logo d'une organisation | dépôt |
-| Image d'actualité / événement | dépôt |
-| Illustration éditoriale | dépôt |
-| PDF d'un référentiel | dépôt |
-| Livre blanc PPC finalisé | dépôt |
+| Photo d'une personne | `contenu/medias/images/personnes/` |
+| Logo d'une organisation | `contenu/medias/images/organisations/` |
+| Image d'actualité / événement | `contenu/medias/images/...` |
+| Illustration éditoriale | `contenu/medias/images/...` |
+| PDF d'un référentiel | `public/documents/referentiels/...` |
+| Livre blanc PPC finalisé | `public/documents/ressources/...` lorsque servi localement |
 | Vidéo hébergée sur une plateforme adaptée | URL externe |
 | Formation ou ressource tierce | URL externe |
 
-Aucune limite arbitraire de taille n'est fixée à ce stade ; elle pourra être définie après mesure des volumes réels et des contraintes Git/GitHub Pages.
+Aucune limite arbitraire de taille n'est fixée. Une alerte CI non bloquante pourra être ajoutée pour des sources manifestement volumineuses si les usages réels le justifient.
+
+### Textes alternatifs
+
+`Actualité`, `Événement` et `Ressource` disposent d'un champ `image_alt` facultatif. Il doit être renseigné lorsqu'une image apporte une information utile qui n'est pas déjà exprimée par le contexte ; il peut rester vide pour une image décorative.
+
+`Personne.photo` et `Organisation.logo` n'ont pas de champ alt redondant : le rendu accessible est dérivé du nom de l'entité et du contexte d'utilisation. Le composant Astro reste responsable de choisir entre une alternative textuelle utile et `alt=""` lorsque l'image est décorative dans son contexte.
+
+Les images insérées dans le corps Markdown portent leur alternative dans la syntaxe Markdown.
 
 ## SEO éditorial
 
@@ -473,86 +627,81 @@ Le contributeur ouvre le singleton connu et modifie uniquement les champs et con
 
 **DecapCMS est retenu pour le POC.**
 
-Decap est une interface d'édition au-dessus des fichiers du dépôt Git. Il ne devient ni la source canonique ni le propriétaire des contenus.
+Decap est une interface d'édition au-dessus des fichiers du dépôt Git. Il ne devient ni la source canonique ni le propriétaire des contenus. Le site public doit continuer à fonctionner si Decap est supprimé.
 
-Le site public doit continuer à fonctionner si Decap est supprimé. Astro et les scripts doivent continuer à lire et manipuler les mêmes fichiers.
+L'interface CMS est servie sous `/admin`, depuis les fichiers dédiés placés dans `public/admin/`.
 
-### Couverture attendue
+### Mapping des modèles PPC
 
-La configuration Decap devra représenter les modèles canoniques ci-dessus :
-- collections structurées ;
-- singletons ;
-- relations simples et multiples ;
-- listes ordonnées ;
-- rôles multivalués contrôlés ;
-- Markdown standard ;
-- images et fichiers ;
-- `publie: true/false`.
+La configuration Decap projette directement les modèles canoniques :
 
-La configuration YAML exacte, les widgets exacts et les chemins physiques restent à définir pendant l'implémentation.
+| Modèle PPC | Type Decap | Création de nouvelles entrées |
+|---|---|---|
+| Actualité | `folder collection` Markdown | oui |
+| Événement | `folder collection` Markdown | oui |
+| Personne | `folder collection` YAML | oui |
+| Organisation | `folder collection` YAML | oui |
+| Ressource | `folder collection` Markdown | oui |
+| Référentiel | `folder collection` Markdown | oui |
+| Pages institutionnelles | `file collection` | non |
+| Accueil | `file collection` | non |
+| Configuration éditoriale globale | `file collection` | non |
 
-### Authentification
+Aucune collection ou structure propre à Decap n'est ajoutée au modèle canonique.
 
-L'architecture cible est :
+Les relations Decap affichent un libellé humain mais stockent l'identifiant dérivé du nom de fichier, conceptuellement via `value_field: "{{slug}}"`. Les relations multiples sont enregistrées comme listes d'identifiants.
 
-**DecapCMS + backend GitHub direct + petit composant OAuth dédié**.
+Pour les nouvelles entrées, Decap génère le nom de fichier à partir des champs humains sans exposer de champ `id` technique. Pour `Actualité` et `Événement`, le nom suit `YYYY-MM-DD-<slug>.md`, avec la date de création du fichier comme préfixe non métier.
 
-Conséquences :
-- les contributeurs CMS disposent des droits GitHub nécessaires sur le dépôt ;
-- le composant OAuth sert uniquement à compléter le flux d'authentification GitHub ;
-- il reste minimal, documenté et remplaçable ;
-- il ne possède aucun contenu ;
-- le site public n'en dépend pas à l'exécution.
+### État `publie`
 
-**Git Gateway n'est pas retenu** pour cette architecture. L'hébergement et la technologie exacts du composant OAuth restent à définir lors de l'implémentation.
+Pour les collections qui portent `publie`, une nouvelle entrée Decap utilise `publie: false` par défaut. Cela évite une exposition accidentelle au premier enregistrement sans introduire de workflow éditorial supplémentaire.
 
-### Champs conditionnels et validations
+### Ressource et Référentiel
 
-Decap ne garantit pas de manière suffisamment générale toutes les contraintes conditionnelles du modèle, notamment pour `Ressource.mode_exposition`.
+Pour `Ressource`, Decap présente les champs des deux modes avec des libellés et aides clairs. Aucun widget React PPC spécifique n'est introduit uniquement pour masquer dynamiquement des champs ; les schémas canoniques restent l'autorité sur les combinaisons permises.
 
-Décision :
-- conserver le modèle canonique ;
-- utiliser des libellés et aides éditoriales clairs ;
-- garantir par les schémas ou le build les règles que le CMS ne peut pas imposer proprement.
+Pour `Référentiel`, `versions` est représenté comme une liste structurée. `version_courante` saisit l'identifiant de la version explicitement désignée ; la validation garantit qu'il correspond à une entrée de `versions`. Ne pas déformer le modèle pour créer un sélecteur dynamique spécifique au CMS.
 
-Contrôles déjà requis :
-- `Référentiel.version_courante` doit exister dans `versions[].id` ;
-- photo et LinkedIn requis pour les rôles `co-presidence`, `conseil-administration` et `membre-fondateur` ;
-- destination directe requise pour une Ressource en mode lien direct ;
-- slug et éléments nécessaires à la page requis pour une Ressource en mode page interne.
+### Rich text
 
-Ne pas introduire un widget PPC spécifique sans nécessité démontrée.
+Le POC utilise le widget Decap **`richtext`**, avec modes visuel et Markdown brut, et une barre d'outils limitée au sous-ensemble Markdown PPC : H2-H4, gras, italique, liens, listes, citations et images.
 
-### Rich text et round-trip Markdown
+Ne pas exposer les fonctions exclues par le contrat Markdown, notamment H1, H5/H6, blocs de code et constructions propriétaires.
 
-L'implémentation doit tester concrètement le widget rich text actuellement proposé par Decap et ses round-trips Markdown avant de le considérer comme fiable pour le POC.
+Avant de considérer l'intégration éditoriale comme terminée, exécuter un **smoke test de round-trip** sur un corpus représentatif : ouverture, sauvegarde sans modification, modifications visuelles, bascule visuel ↔ brut, liens, titres, listes, citations, images/alt et caractères français. Le critère est la préservation sémantique et la lisibilité du diff Git, pas l'identité octet par octet.
 
-Les tests doivent couvrir au minimum :
-- ouverture d'un contenu existant ;
-- modification ;
-- enregistrement ;
-- relecture du Markdown généré ;
-- titres ;
-- liens ;
-- images ;
-- citations ;
-- listes.
+Le widget `richtext` étant encore susceptible d'évoluer, épingler la version de Decap ayant passé ce smoke test plutôt que dépendre d'une version flottante.
 
-Le résultat doit rester lisible, stable, sobre, compatible Astro et exempt de format propriétaire. Le choix exact du widget Decap reste une décision d'implémentation tant que ces tests ne sont pas réalisés.
+### Médias dans Decap
+
+La configuration médias doit permettre à Decap d'écrire les images dans `contenu/medias/images/...` tout en enregistrant dans les contenus une référence exploitable par Astro. Privilégier la configuration média au niveau collection lorsque cela simplifie les chemins relatifs.
+
+Un **smoke test médias** doit vérifier au démarrage de l'implémentation la chaîne exacte Decap → chemin enregistré → Content Layer → optimisation Astro. Si une friction technique réelle apparaît, elle doit être résolue sans déformer les modèles fonctionnels.
 
 ### Preview
 
-La preview Decap est une aide éditoriale souhaitable, pas une reproduction pixel-perfect du site Astro.
+La preview Decap est une aide éditoriale légère et non pixel-perfect. Elle peut reproduire utilement : titre, résumé, image, métadonnées importantes, corps Markdown et lien principal lorsqu'il existe.
 
-Ne pas dupliquer fortement le design ou la logique de rendu et ne pas introduire une infrastructure disproportionnée uniquement pour la preview. Une prévisualisation du vrai site après commit/build peut exister indépendamment.
+Elle ne doit pas dupliquer le header, footer, navigation, responsive exact, SEO ou toute la logique des données dérivées. Pour l'Accueil, les blocs automatiques peuvent être représentés par des indications simples plutôt que recalculés dans Decap.
 
-### Publication et travail en cours
+La preview est prioritaire pour Actualité, Événement, Ressource, Référentiel et pages institutionnelles. Aucune preview spécifique n'est requise au départ pour Personne, Organisation ou la configuration globale.
 
-Le POC n'active pas par défaut un `editorial_workflow` complexe basé sur branches / Pull Requests.
+Une régression mineure de preview ne doit pas bloquer le build public.
 
-L'état `publie` permet de préparer un nouveau contenu sans exposition publique, mais ne résout pas le cas d'une modification longue d'un contenu déjà publié dont l'ancienne version doit rester publique.
+### Authentification
 
-La procédure opérationnelle de ce cas reste à définir pendant l'implémentation/exploitation. Ne pas introduire un double système métier « version publiée + version de travail » dans les contenus.
+L'authentification utilise le **backend GitHub direct** de Decap et le composant OAuth défini dans [`../technique/architecture.md`](../technique/architecture.md) et [`../exploitation/exploitation.md`](../exploitation/exploitation.md).
+
+Git Gateway n'est pas utilisé.
+
+### Publication et branche Git
+
+Decap utilise le mode simple et écrit directement sur `main`. Chaque sauvegarde produit un commit Git et déclenche la CI.
+
+Le POC n'active pas `editorial_workflow`. `publie` reste la seule notion métier de visibilité.
+
+Pour une modification courte d'un contenu déjà publié, le flux normal Decap convient. Pour une refonte longue ou sensible qui doit laisser l'ancienne version publique jusqu'à validation, utiliser exceptionnellement une branche Git et une Pull Request hors du workflow Decap normal plutôt que créer un double modèle de contenu.
 
 ## Réversibilité et alternative future
 
@@ -571,17 +720,19 @@ et non sur une migration structurante des contenus.
 
 Sveltia n'est pas un composant de l'architecture du POC.
 
-## Points volontairement ouverts pour l'implémentation
+## Détails laissés à l'implémentation
 
-Restent à définir sans rouvrir les modèles fonctionnels sauf contrainte réellement bloquante :
-- chemins physiques exacts des collections et singletons ;
-- extensions et formats exacts collection par collection ;
-- schémas Astro définitifs ;
-- configuration YAML Decap ;
-- widgets Decap exacts ;
-- technologie et hébergement du composant OAuth ;
-- conventions de commits ;
-- procédure détaillée des modifications longues d'un contenu publié ;
-- scripts de synchronisation éventuels ;
-- limites de taille des médias ;
-- détails fins de la preview.
+Les décisions structurantes de contenu et de CMS sont fermées. Restent volontairement au niveau de l'implémentation :
+- noms exacts des modules TypeScript et factorisation interne des schémas ;
+- YAML Decap complet et libellés fins de l'interface ;
+- CSS précis des previews ;
+- outil concret de tests et de contrôle des liens/accessibilité ;
+- formulation exacte des messages de commit et erreurs de validation ;
+- éventuels scripts futurs de synchronisation avec un SI associatif ;
+- limites de taille des médias uniquement si des mesures réelles en démontrent le besoin.
+
+Deux smoke tests font partie de la définition de terminé de l'intégration CMS :
+1. round-trip `richtext` ↔ Markdown PPC ;
+2. chemin média Decap ↔ `contenu/medias/images/` ↔ pipeline image Astro.
+
+Ces tests ne rouvrent pas les modèles fonctionnels sauf contrainte réellement bloquante démontrée.

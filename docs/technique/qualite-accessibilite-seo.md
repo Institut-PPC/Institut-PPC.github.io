@@ -2,151 +2,210 @@
 
 ## Philosophie qualité
 
-Les tests automatisés servent à protéger la confiance et prévenir les régressions significatives, pas à maximiser artificiellement un pourcentage de couverture.
+La qualité du POC repose sur des protections proportionnées aux risques concrets du site, pas sur une couverture artificielle ou une suite de tests exhaustive.
 
-Un humain ou un agent IA doit pouvoir modifier le site et déterminer rapidement s'il a cassé quelque chose d'important.
+Les objectifs sont :
+- empêcher les contenus incohérents d'être publiés ;
+- garantir qu'un build complet reste possible ;
+- protéger les routes, liens, métadonnées et comportements publics essentiels ;
+- conserver une base accessible, performante et sobre ;
+- rendre les erreurs compréhensibles par un humain ou une IA reprenant le projet.
 
-## Validation automatisée
+## Chaîne de validation
 
-L'outillage exact sera choisi pendant l'implémentation, mais le périmètre visé comprend selon pertinence :
-- build de production Astro ;
-- contrôles TypeScript/statiques ;
-- linting et validation du formatage ;
-- validation des liens internes ;
-- validation des contenus structurés et de leurs relations ;
-- tests de non-régression des comportements fonctionnels importants ;
-- contrôles d'accessibilité apportant un signal utile.
+La validation est organisée en quatre niveaux complémentaires.
 
-N'ajouter des tests navigateur/end-to-end plus lourds que lorsque des parcours importants justifient leur coût de maintenance.
+### 1. Tests des schémas
 
-Les tests et validations doivent être exécutables localement et via GitHub Actions.
+Tester les cas où une logique locale mérite réellement d'être protégée, notamment :
+- variantes de `Ressource.mode_exposition` ;
+- complétude de `Personne` selon ses rôles ;
+- cohérence de `Référentiel.version_courante` ;
+- formats de slugs, URLs, dates et enums lorsque non triviaux.
 
-## Validation des contenus structurés
+Ne pas écrire un test pour chaque champ simple uniquement pour augmenter un pourcentage de couverture.
 
-Les schémas et/ou le build doivent empêcher les incohérences connues que le CMS ne garantit pas suffisamment.
+### 2. Tests du validateur transverse
 
-Contrôles attendus au minimum :
-- conformité de chaque contenu à son modèle ;
-- identifiants stables présents et cohérents pour les entités concernées ;
-- références entre contenus résolubles lorsque présentes ;
-- pour une `Personne` portant `co-presidence`, `conseil-administration` ou `membre-fondateur` : présence d'une photo et d'un lien LinkedIn ;
-- pour un `Référentiel` : `version_courante` correspond à un identifiant existant dans `versions[].id` ;
-- pour une `Ressource` en mode lien direct : présence d'une destination directe valide ;
-- pour une `Ressource` en mode page interne : présence du slug et des éléments de contenu requis par le modèle ;
-- respect de l'état `publie` dans la génération des pages, listes et sélections publiques.
+Utiliser de petites fixtures dédiées pour protéger notamment :
+- relation valide / relation cassée ;
+- sélection publique vers un contenu publié / non publié ;
+- document local présent / absent ;
+- collision de slugs ;
+- redirection valide / incohérente.
 
-Ces contrôles sont des garanties techniques du modèle documenté, pas des règles métier PPC supplémentaires.
+Les tests ne doivent pas dépendre exclusivement du contenu éditorial réel du site.
+
+### 3. Build Astro complet
+
+`astro build` constitue un test d'intégration obligatoire. Il doit vérifier compilation, typage, rendu Markdown, imports d'images et génération complète des routes.
+
+### 4. Contrôles sur le site généré
+
+Après build, contrôler au minimum :
+- liens internes cassés ;
+- routes publiques attendues ;
+- absence de route pour les contenus `publie: false` ;
+- sitemap ;
+- métadonnées essentielles ;
+- quelques contrôles d'accessibilité automatisables sur des pages représentatives.
+
+L'outil précis reste un choix d'implémentation.
+
+## Stratégie de tests
+
+### Composants
+
+Tester les composants qui portent une vraie logique ou un risque : images accessibles, liens externes/internes, métadonnées, comportement lié aux modes d'exposition, etc.
+
+Éviter les tests qui reproduisent simplement l'implémentation (`<div>`, texte statique, structure triviale).
+
+### E2E
+
+Aucune suite E2E lourde couvrant tout le site n'est introduite par défaut. Le site est statique et ne comporte ni compte public, ni panier, ni transaction métier nécessitant une orchestration navigateur exhaustive.
+
+Un navigateur automatisé peut être ajouté ponctuellement lorsqu'un comportement concret le justifie.
+
+### Decap
+
+Ne pas automatiser toute l'interface Decap en CI. Les deux smoke tests de conception/acceptation sont :
+1. round-trip `richtext` ↔ Markdown ;
+2. médias Decap ↔ chemin local ↔ pipeline image Astro.
+
+Une fois validés, documenter les invariants et protéger surtout le contrat de données résultant, pas les clics de l'interface CMS.
+
+### Couverture
+
+Aucun seuil minimal de couverture de code n'est imposé. Les règles capables de casser l'intégrité des contenus, les routes, l'accessibilité essentielle ou le déploiement doivent disposer d'une protection appropriée.
+
+## Commandes locales
+
+L'implémentation doit fournir des commandes simples permettant de reproduire localement les contrôles de la CI, conceptuellement :
+
+```text
+npm run dev
+npm run validate
+npm run test
+npm run build
+npm run check
+```
+
+Les noms exacts peuvent varier avec le gestionnaire de paquets retenu, mais une commande agrégée de contrôle local doit fournir une réponse proche de la CI.
 
 ## Markdown
 
-Les contenus éditoriaux du POC utilisent du Markdown standard et sobre, sans MDX éditorial ni page builder.
+Le sous-ensemble Markdown canonique est défini dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
 
-Les tests d'intégration du CMS doivent vérifier qu'un cycle lecture → modification → enregistrement ne transforme pas le Markdown de manière indésirable.
+La validation et le smoke test Decap doivent protéger :
+- hiérarchie H2-H4 ;
+- paragraphes, listes, liens, emphase et citations ;
+- images et textes alternatifs ;
+- caractères français et typographie usuelle ;
+- absence de syntaxe propriétaire ou HTML inattendu.
 
-Le round-trip Decap doit être testé au minimum sur :
-- titres ;
-- paragraphes ;
-- listes ;
-- liens ;
-- emphase ;
-- citations ;
-- images.
-
-Le Markdown enregistré doit rester lisible directement dans le dépôt et exploitable hors du CMS.
+Les normalisations syntaxiques équivalentes (`*` vs `_`, type de puce, lignes vides) ne constituent pas à elles seules une régression si la sémantique et la lisibilité du diff sont préservées.
 
 ## Accessibilité
 
-Viser **WCAG 2.2 AA et les bonnes pratiques RGAA dès la conception**, sans faire de la certification formelle du POC un objectif.
+L'accessibilité doit être traitée dans le HTML, les composants et le design, et pas uniquement par un outil de test.
 
-L'accessibilité est une exigence architecturale, pas une finition.
-
-Porter notamment attention à :
+Principes :
 - HTML sémantique ;
+- `lang="fr"` ;
+- un H1 déterminé par le template ;
+- hiérarchie cohérente des titres ;
+- landmarks natifs ;
 - navigation clavier ;
-- focus visibles ;
+- focus visible ;
+- liens et boutons sémantiquement corrects ;
+- labels explicites ;
 - contrastes suffisants ;
-- textes alternatifs pertinents ;
-- hiérarchie des titres ;
-- contrôles interactifs accessibles ;
-- formulaires accessibles si des formulaires sont ajoutés ;
-- limitation des mouvements et des informations uniquement visuelles.
+- composants utilisables sans dépendance client inutile.
+
+Les contrôles automatisés d'accessibilité doivent être bloquants pour les violations sérieuses, déterministes et actionnables. Les heuristiques ambiguës nécessitent une revue humaine plutôt qu'un faux sentiment de conformité.
 
 ### Images et textes alternatifs
 
-Lorsqu'une image porte une information, un texte alternatif pertinent est requis. Les images purement décoratives doivent être traitées conformément aux bonnes pratiques d'accessibilité et ne pas recevoir un texte alternatif artificiel.
+Pour `Actualité`, `Événement` et `Ressource`, `image_alt` est facultatif et décrit l'information éditoriale disponible. Le composant Astro décide de l'usage accessible dans son contexte : utiliser cette alternative lorsque l'image apporte une information autonome, ou `alt=""` lorsque la même image est décorative à cet emplacement.
 
-Les modèles de contenu doivent permettre de fournir les textes alternatifs nécessaires sans forcer un champ inutile lorsque l'image est décorative ou absente.
+Pour `Personne.photo` et `Organisation.logo`, ne pas dupliquer le nom dans un champ alt. Le composant dérive le nom accessible depuis l'entité lorsque nécessaire.
 
-Un audit ou une démarche de conformité formelle pourra être envisagé séparément lorsque pertinent.
+Les images Markdown utilisent leur alternative Markdown.
 
 ## SEO
 
-Mettre en place un socle SEO technique sain dans le POC sans construire une stratégie SEO avancée.
-
-Le socle doit inclure selon pertinence :
-- HTML sémantique ;
-- titres et descriptions significatifs ;
-- URL propres, stables et lisibles ;
+Les fondamentaux SEO sont structurels et intégrés aux layouts :
+- `<title>` ;
+- métadescription lorsque pertinente ;
+- URL canonique ;
+- métadonnées Open Graph minimales lorsque pertinentes ;
 - sitemap ;
-- URL canoniques ;
-- métadonnées Open Graph/sociales ;
-- données structurées uniquement lorsqu'elles ont un sens réel ;
-- bonnes performances ;
-- contenus publics indexables.
+- `robots.txt` ;
+- structure de titres cohérente.
+
+Le domaine public canonique doit être configuré dans Astro via `site` afin de générer correctement les URL absolues, sitemap et canonical.
+
+Les contenus `publie: false` ne génèrent aucune route et ne doivent donc pas être gérés via `noindex`.
 
 ### Métadonnées dérivées dans le POC
 
-Aucun champ d'override SEO spécifique n'est prévu.
-
-Par défaut :
-- titre du contenu → titre SEO ;
+Aucun override SEO générique n'est ajouté :
+- titre de contenu → titre SEO ;
 - résumé / chapô → métadescription ;
 - image principale → image sociale lorsque pertinente ;
-- URL → route canonique définie par le site.
+- route du site → canonical.
 
-Ne pas ajouter `titre_seo`, `description_seo`, `og_title`, `og_description` ou équivalents sans besoin démontré.
+Un besoin réel pourra justifier plus tard un champ spécifique ; ne pas anticiper avec `titre_seo`, `og_title`, etc.
 
-Aucun analytics n'étant disponible initialement, l'optimisation SEO pilotée par la donnée et la mesure continue sont hors périmètre du POC.
+## URL et redirections
 
-La qualité du SEO technique ne dépend pas des analytics et doit être correcte dès le départ.
+Les slugs sont considérés stables après première publication. Un changement exceptionnel nécessite une redirection explicite de l'ancienne route vers la nouvelle.
+
+La CI doit pouvoir détecter les redirections incohérentes ou dont la cible n'existe pas. Sur GitHub Pages, une redirection statique générée par Astro n'est pas présentée comme une garantie de réponse HTTP serveur 301.
 
 ## Performance et sobriété
 
-La performance est une exigence architecturale forte, mais aucun budget numérique arbitraire n'est imposé avant de disposer de pages représentatives.
+La performance est une exigence architecturale forte, mais aucun budget chiffré arbitraire n'est imposé avant mesure de pages représentatives.
 
-Une fois ces pages construites :
-1. les mesurer ;
+Principes :
+- HTML statique par défaut ;
+- pas de framework client par défaut ;
+- JavaScript client seulement pour un besoin fonctionnel réel ;
+- dépendances limitées et justifiées ;
+- images optimisées par Astro ;
+- dimensions d'images connues lorsque possible pour limiter les décalages de mise en page ;
+- lazy-loading hors contenus prioritaires lorsque pertinent ;
+- aucun tracker tiers par défaut ;
+- polices système pour le POC ;
+- si une police de marque devient nécessaire, privilégier l'auto-hébergement sous réserve de sa licence.
+
+Une fois des pages représentatives disponibles :
+1. mesurer ;
 2. identifier les vrais goulets d'étranglement ;
-3. décider si des budgets explicites de poids de page, JavaScript ou performance amélioreraient la qualité à long terme.
-
-Optimiser pour une expérience réelle utile, y compris sur connexions modestes et terminaux plus anciens.
+3. décider seulement alors si des budgets explicites de poids, JavaScript ou performance améliorent réellement la maintenabilité.
 
 ## Médias
 
-Utiliser les capacités d'Astro et du build statique pour assurer une optimisation raisonnable des images et leur diffusion responsive.
+Les images éditoriales locales sont des sources sous `contenu/medias/images/` et doivent utiliser le pipeline Astro lorsque pertinent. Les documents téléchargés sous `public/documents/` sont servis tels quels.
 
-Objectifs selon pertinence :
+Objectifs pour les images :
 - dimensions adaptées ;
-- variantes responsives ;
-- formats modernes utiles ;
-- chargement différé hors contenus prioritaires ;
+- variantes responsives lorsque utiles ;
+- formats modernes lorsque cela apporte un bénéfice ;
+- chargement différé hors contenu prioritaire ;
 - absence de médias décoratifs inutilement lourds.
 
-La politique de stockage reste hybride : fichiers PPC légers et canoniques dans le dépôt lorsque pertinent ; médias lourds ou tiers via URL externe.
-
-Ne pas introduire de plateforme média complexe pendant le POC sans besoin démontré.
+Aucune limite de poids globale arbitraire n'est imposée. Un warning non bloquant peut être ajouté plus tard pour détecter des sources manifestement disproportionnées.
 
 ## Page 404
 
-Prévoir une page 404 personnalisée, accessible, utile et légère, compatible avec GitHub Pages.
+Prévoir une page 404 personnalisée, accessible, utile et légère, compatible avec GitHub Pages. Elle reste dans le code pour le POC.
 
 ## Pages légales et vie privée
 
-Le POC doit prévoir la structure pour :
-- les mentions légales ;
-- la politique de confidentialité ;
-- une page Accessibilité cohérente avec le niveau réel de conformité et les démarches effectivement menées.
-
-Les textes juridiques définitifs et les informations formelles d'accessibilité pourront être complétés avant la production.
+Le POC doit prévoir :
+- mentions légales ;
+- politique de confidentialité ;
+- page Accessibilité cohérente avec le niveau réel de conformité et les démarches effectivement menées.
 
 Sans analytics ni formulaire de contact natif, le comportement lié à la vie privée doit rester volontairement simple.

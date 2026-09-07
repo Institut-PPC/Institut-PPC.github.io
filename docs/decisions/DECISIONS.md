@@ -228,3 +228,66 @@ Le journal des décisions est rédigé en français.
 
 **Pourquoi :** Ne pas déformer les modèles fonctionnels pour contourner des limites ergonomiques du CMS et conserver une validation fiable indépendante de l'interface d'édition.
 
+### 2026-09-07 — Organisation physique canonique des contenus et identifiants par nom de fichier
+
+**Statut :** Acceptée
+
+**Décision :** Stocker les contenus canoniques sous `contenu/` à la racine du dépôt. Utiliser Markdown + front matter pour Actualité, Événement, Ressource, Référentiel et pages narratives ; YAML pour Personne, Organisation, Accueil et configuration éditoriale globale. Le nom de fichier sans extension est l'identifiant PPC canonique stable ; les relations stockent ces identifiants et les slugs publics restent indépendants. Les Actualités et Événements utilisent un préfixe `YYYY-MM-DD-` correspondant à la date de création du fichier, sans sémantique métier ultérieure.
+
+**Pourquoi :** Séparer clairement patrimoine éditorial, code Astro et CMS ; conserver des fichiers humains, portables et simples à manipuler ; exploiter naturellement les identifiants du Content Layer et les relations Decap sans champ `id` redondant.
+
+### 2026-09-07 — Content Layer Astro et validation PPC en trois niveaux
+
+**Statut :** Acceptée
+
+**Décision :** Faire du Content Layer Astro l'interface unique de consommation applicative des contenus, avec loaders officiels `glob()` et schémas Zod. Garantir l'intégrité par : schémas locaux, validateur TypeScript transverse PPC, puis contrôles sur le site construit. Aucun loader personnalisé ni lecture applicative directe des YAML/Markdown n'est introduit dans le POC.
+
+**Pourquoi :** Obtenir un modèle typé et déterministe tout en conservant des règles PPC indépendantes du rendu Astro, avec des erreurs de build lisibles et actionnables.
+
+### 2026-09-07 — Contrats de publication, ressources, référentiels et URL
+
+**Statut :** Acceptée
+
+**Décision :** Considérer `publie` comme un simple interrupteur d'exposition publique ; valider également les contenus non publiés ; interdire les sélections publiques explicites vers une cible non publiée. `Personne` et `Organisation` n'utilisent pas `publie`. Pour `Ressource`, rendre stricts les contrats `lien-direct` et `page-interne`, avec corps Markdown facultatif pour une page interne. Pour `Référentiel`, la présence du slug crée la page de détail et `version_courante` référence un identifiant de version interne stable. Considérer les slugs publiés comme stables et exiger une redirection explicite lors d'un changement exceptionnel.
+
+**Pourquoi :** Éliminer les configurations ambiguës, préserver des relations stables et maintenir des URL durables sans transformer les contenus en workflow métier.
+
+### 2026-09-07 — Politique technique des médias et documents
+
+**Statut :** Acceptée
+
+**Décision :** Stocker les images éditoriales locales sous `contenu/medias/images/` afin qu'Astro puisse les optimiser, et les documents téléchargeables servis tels quels sous `public/documents/`. Conserver les ressources tierces sous forme d'URL externe. Ne pas imposer de limite de poids arbitraire avant mesure réelle.
+
+**Pourquoi :** Distinguer clairement les sources image qui bénéficient du pipeline Astro des fichiers publics stables, tout en gardant une politique simple et Git-based.
+
+### 2026-09-07 — Intégration Decap minimale, richtext limité et preview légère
+
+**Statut :** Acceptée
+
+**Décision :** Mapper directement les modèles PPC en `folder collections` et `file collections` Decap, enregistrer les relations sur les identifiants dérivés des noms de fichiers, utiliser `publie: false` par défaut à la création et ne pas introduire de widget PPC spécifique pour le POC. Utiliser le widget `richtext` avec modes visuel/brut et un sous-ensemble Markdown limité à H2-H4, paragraphes, emphase, liens, listes, citations et images. La preview reste légère et non pixel-perfect. Deux smoke tests doivent valider le round-trip Markdown et la chaîne médias Decap → Astro.
+
+**Pourquoi :** Garder Decap comme interface remplaçable, réduire la dette CMS et préserver le Markdown standard et lisible.
+
+### 2026-09-07 — OAuth GitHub Decap via deux Netlify Functions
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser le backend GitHub direct de Decap et deux Netlify Functions minimales `/auth` et `/callback` pour le flux OAuth. Le repository étant public, limiter le scope OAuth à `public_repo`. Ne pas utiliser Git Gateway. Netlify ne participe jamais au rendu public et ne stocke aucun contenu ou token durable.
+
+**Pourquoi :** Cette architecture est légère, connue et déjà éprouvée par l'administrateur du projet, tout en maintenant GitHub comme autorité d'accès et le site public indépendant du service OAuth.
+
+### 2026-09-07 — Decap écrit sur main et Git reste le mécanisme de rollback
+
+**Statut :** Acceptée
+
+**Décision :** Utiliser Decap en mode simple directement sur `main`. Chaque sauvegarde crée un commit et déclenche la CI. Ne pas activer `editorial_workflow`. Utiliser exceptionnellement une branche/PR pour une refonte longue ou sensible d'un contenu déjà publié. Utiliser Git pour le rollback et laisser la CI contrôler toute nouvelle publication.
+
+**Pourquoi :** Préserver un workflow compréhensible pour une petite association sans sacrifier traçabilité, réversibilité ou possibilité de revue ponctuelle.
+
+### 2026-09-07 — Pipeline qualité explicite et rebuild quotidien à 01:00 Europe/Paris
+
+**Statut :** Acceptée
+
+**Décision :** Séparer dans GitHub Actions la qualité/build du déploiement GitHub Pages. Les pushes sur `main` construisent et déploient ; les Pull Requests valident sans déployer ; un rebuild et redéploiement complet est également planifié tous les jours à **01:00 `Europe/Paris`**. Tout contrôle normatif en échec empêche le déploiement. Les tests ciblent les schémas, règles transverses, build Astro et contrôles du site généré sans seuil artificiel de couverture ni suite E2E lourde par défaut.
+
+**Pourquoi :** Garantir que seules des versions valides sont publiées et que les contenus dépendant de la date courante — notamment les prochains événements — restent corrects même sans commit récent, tout en gardant un coût de maintenance raisonnable.

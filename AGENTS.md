@@ -66,12 +66,14 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 - Hébergement public : **GitHub Pages**
 - CI/CD : **GitHub Actions**
 - CMS du POC : **DecapCMS**, utilisé comme interface d’édition au-dessus des contenus Git.
-- Authentification CMS cible : backend GitHub direct complété par un petit composant OAuth dédié ; **Git Gateway n’est pas retenu**.
+- Authentification CMS cible : backend GitHub direct complété par **deux Netlify Functions OAuth minimales** ; **Git Gateway n’est pas retenu**.
 - Alternative future crédible : **Sveltia CMS**, sans migration structurante des contenus si un remplacement devient utile.
 - Langue de la V1/POC : **français**
 - Analytics : **aucun dans le POC**
 - Environnement de staging dédié : **aucun initialement**
 - Pull Requests : **facultatives initialement**
+- Decap écrit directement sur `main` en mode simple ; les branches/PR restent disponibles pour les changements longs ou sensibles.
+- GitHub Actions rebuild et redéploie également le site **tous les jours à 01:00 `Europe/Paris`** afin d’actualiser les contenus dépendants de la date.
 - Les tests locaux constituent le mode normal de vérification avant publication.
 
 Ne pas remplacer ces choix sans besoin concret et décision explicite.
