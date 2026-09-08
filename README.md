@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications, la conception technique détaillée et le design system initial sont terminés, et le socle Astro minimal est initialisé. Les contenus structurés, le design system, le CMS, les validations complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés.
+Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications, la conception technique détaillée et le design system initial sont terminés, et le socle Astro minimal est initialisé. Le Content Layer et les modèles de contenu sont en cours d’implémentation : seule la collection `Personne` est actuellement branchée. Le design system, le CMS, les validations complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -54,6 +54,12 @@ Contrôler le projet avec Astro et TypeScript :
 
 ```sh
 npm run check
+```
+
+Exécuter les tests unitaires :
+
+```sh
+npm run test
 ```
 
 Construire le site statique dans `dist/` :
