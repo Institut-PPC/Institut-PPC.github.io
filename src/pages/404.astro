@@ -1,9 +1,8 @@
 ---
+import ActionLink from '../components/ActionLink.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Page introuvable — PPC">
-  <h1>Page introuvable</h1>
-  <p>Cette page d’erreur provisoire indique que l’adresse demandée ne correspond à aucune page.</p>
-  <p><a href="/">Revenir à l’accueil</a></p>
+<BaseLayout title="Page introuvable — PPC" description="La page demandée n’existe pas ou plus.">
+  <section class="not-found"><p class="code">404</p><h1>Cette page reste introuvable.</h1><p>L’adresse est peut-être incomplète ou la page a été déplacée. Vous pouvez revenir à l’accueil ou reprendre votre découverte de PPC.</p><div class="actions"><ActionLink href="/">Revenir à l’accueil <span aria-hidden="true">→</span></ActionLink><ActionLink href="/comprendre-la-ppc" secondary>Comprendre la PPC</ActionLink></div><nav aria-label="Accès utiles"><a href="/ressources">Ressources</a><a href="/actualites-evenements">Actualités & événements</a><a href="/contact">Contact</a></nav></section>
 </BaseLayout>
+<style>.not-found{max-width:var(--width-reading);padding-block:clamp(var(--space-7),10vw,var(--space-8))}.code{margin-bottom:var(--space-3);color:var(--color-accent);font-weight:var(--font-weight-interface);letter-spacing:.12em}.not-found h1{color:var(--color-brand);font-family:var(--font-display);font-size:var(--font-size-display);font-weight:400}.not-found>p{font-size:var(--font-size-lg)}.actions{display:flex;flex-direction:column;gap:var(--space-3);margin-block:var(--space-7)}nav{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-6);padding-top:var(--space-5);border-top:var(--border-width) solid var(--color-border)}@media(min-width:48rem){.actions{flex-direction:row;align-items:flex-start}}</style>

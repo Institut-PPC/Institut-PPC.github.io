@@ -10,7 +10,9 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les premiers modèles du Content Layer, les fondations CSS du design system avec Tailwind, le shell commun et les routes fixes sont maintenant implémentés. Les pages utilisent encore un contenu technique provisoire : les contenus éditoriaux, les routes dynamiques, les autres modèles, le CMS, les validations transverses et le déploiement décrits dans les spécifications restent à venir.
+Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les premiers modèles du Content Layer, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
+
+Le CMS, les singletons éditoriaux, les validations transverses complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -40,7 +42,9 @@ Tailwind CSS 4 est compilé par `@tailwindcss/vite` dans la configuration Astro.
 
 Le Header utilise un panneau modal natif en dessous de **80 rem**, tablette comprise. Ce seuil local laisse la place aux cinq rubriques et au CTA sur une ligne en mode desktop. Une seule navigation est déplacée entre le panneau et le Header par `src/components/navigation.ts`, sans framework ni hydratation. Le panneau gère le focus, le défilement et le retour au bouton Menu ; Échap ferme d’abord une sous-rubrique ouverte, puis le panneau. Sur desktop, les sous-menus se ferment aussi au clic extérieur ou lorsque le focus les quitte. Sans JavaScript ou sans support de `showModal`, un menu HTML `details` donne accès aux mêmes liens.
 
-Les 16 routes fixes restent des squelettes techniques. La signature PPC est textuelle en attendant un logo local approuvé. La revue visuelle de cette refonte reste à effectuer manuellement, notamment à 360–390 px, au zoom et autour du seuil de navigation.
+Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment un parcours démontrable. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources et référentiels, uniquement lorsque leur modèle demande une page interne.
+
+La signature PPC reste textuelle en attendant un logo local approuvé. Les coordonnées publiques, liens d’adhésion et de don, mentions juridiques complètes et profils institutionnels réels restent volontairement absents tant que leurs données validées ne sont pas disponibles dans le dépôt.
 
 ## Développement
 

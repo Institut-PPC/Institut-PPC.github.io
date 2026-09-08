@@ -1,8 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
+import EmptyState from '../components/EmptyState.astro';
+import PageIntro from '../components/PageIntro.astro';
+import RessourceItem from '../components/RessourceItem.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+const ressources=(await getCollection('ressources',({data})=>data.publie)).sort((a,b)=>(b.data.date??'').localeCompare(a.data.date??''));
 ---
-
-<BaseLayout title="Ressources — PPC">
-  <h1>Ressources</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Ressources — PPC" description="Ouvrages, publications, vidéos, formations et travaux pour approfondir la PPC.">
+  <PageIntro eyebrow="Approfondir" title="Ressources" intro="Une sélection de contenus PPC ou externes pour prolonger la découverte : ouvrages, publications, vidéos, formations et travaux PPC." />
+  <section class="listing" aria-labelledby="liste-ressources"><h2 id="liste-ressources" class="visually-hidden">Liste des ressources</h2>{ressources.length?ressources.map((ressource)=><RessourceItem ressource={ressource}/>):<EmptyState title="La bibliothèque se prépare" message="Aucune ressource réelle n’est encore publiée dans le dépôt. Le listing accueillera directement les contenus dès leur ajout." />}</section>
 </BaseLayout>
+<style>.listing{padding-block:var(--space-5) var(--space-section);border-top:var(--border-width) solid var(--color-border)}</style>

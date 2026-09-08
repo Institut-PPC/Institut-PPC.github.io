@@ -1,8 +1,20 @@
 ---
+import ActionLink from '../components/ActionLink.astro';
+import PageIntro from '../components/PageIntro.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Comprendre la PPC — PPC">
-  <h1>Comprendre la PPC</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Comprendre la PPC — PPC" description="Découvrir la Pérennité Programmée Circulaire, sa formalisation et les manières d’approfondir la démarche.">
+  <PageIntro eyebrow="Comprendre" title="Découvrir la démarche PPC" intro="La Pérennité Programmée Circulaire est une démarche en cours de structuration, portée par une association d’intérêt général et formalisée progressivement par une marque collective et des référentiels." />
+  <nav class="page-nav" aria-label="Dans cette page"><span>Dans cette page</span><a href="#demarche">La démarche</a><a href="#structure">Sa structure</a><a href="#cadre">Un cadre concret</a></nav>
+  <section id="demarche" class="narrative"><SectionHeading eyebrow="01" title="Une découverte progressive" /><div><p>Le site PPC est conçu pour permettre de comprendre la démarche avant d’envisager de l’adopter, de rejoindre l’Association, d’utiliser la marque collective ou de contribuer.</p><p>Ces étapes décrivent un parcours conceptuel à long terme. Elles ne constituent pas encore un processus transactionnel.</p></div></section>
+  <section id="structure" class="narrative"><SectionHeading eyebrow="02" title="PPC d’abord, l’Association comme organisation porteuse" /><div><p>Le site présente d’abord la Pérennité Programmée Circulaire. L’Association pour la Pérennité Programmée Circulaire en porte, protège, structure et développe la démarche et la marque collective.</p><p>Cette distinction permet d’expliquer le concept, ses travaux et son organisation sans les confondre.</p></div></section>
+  <section id="cadre" class="narrative"><SectionHeading eyebrow="03" title="Du concept à la formalisation" /><div><p>La marque collective rend la démarche identifiable. Les référentiels constituent sa formalisation documentée et peuvent présenter leurs versions et documents disponibles.</p><p>Le site montre le cadre existant sans anticiper les règles d’un futur parcours d’utilisation de la marque.</p><ActionLink href="/marque-collective">Découvrir la marque collective <span aria-hidden="true">→</span></ActionLink></div></section>
+  <section class="next"><p class="eyebrow">Poursuivre</p><h2>Approfondir avec les ressources</h2><p>Ouvrages, publications, vidéos, formations et travaux PPC complètent cette introduction.</p><ActionLink href="/ressources" secondary>Parcourir les ressources</ActionLink></section>
 </BaseLayout>
+<style>
+  .page-nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); border-block: var(--border-width) solid var(--color-border); }.page-nav span { width: 100%; color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
+  .narrative { display: grid; gap: var(--space-5); padding-block: var(--space-section); border-bottom: var(--border-width) solid var(--color-border); scroll-margin-top: var(--space-7); }.narrative > div { font-size: var(--font-size-lg); }
+  .next { margin-top: var(--space-section); padding: var(--space-6); background: var(--color-surface-muted); }.next h2 { color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
+  @media (min-width: 48rem) { .page-nav span { width: auto; margin-right: auto; }.narrative { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); } }
+</style>

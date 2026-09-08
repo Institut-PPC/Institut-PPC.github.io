@@ -1,8 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import ReferentielItem from '../../components/ReferentielItem.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+const referentiels=(await getCollection('referentiels',({data})=>data.publie)).sort((a,b)=>a.data.titre.localeCompare(b.data.titre,'fr'));
 ---
-
-<BaseLayout title="Référentiels — PPC">
-  <h1>Référentiels</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Référentiels — PPC" description="Consulter les référentiels publiés de la marque collective PPC et leurs versions.">
+  <Breadcrumb items={[{label:'Marque collective',href:'/marque-collective'},{label:'Référentiels'}]} />
+  <PageIntro eyebrow="Marque collective" title="Référentiels" intro="Les référentiels formalisent le cadre de la démarche. Chaque entrée publiée présente son statut, sa version courante et les documents disponibles." />
+  <section class="listing" aria-labelledby="liste-referentiels"><h2 id="liste-referentiels" class="visually-hidden">Liste des référentiels</h2>{referentiels.length?referentiels.map((referentiel)=><ReferentielItem referentiel={referentiel}/>):<EmptyState title="Aucun référentiel publié" message="Les référentiels apparaîtront ici avec leurs versions et documents dès leur publication." />}</section>
 </BaseLayout>
+<style>.listing{padding-block:var(--space-5) var(--space-section);border-top:var(--border-width) solid var(--color-border)}</style>

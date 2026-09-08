@@ -1,8 +1,13 @@
 ---
+import ActionLink from '../../components/ActionLink.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Marque collective — PPC">
-  <h1>Marque collective</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Marque collective — PPC" description="Comprendre le rôle de la marque collective PPC et son articulation avec les référentiels.">
+  <PageIntro eyebrow="Marque collective" title="Rendre la démarche identifiable et préserver son intégrité" intro="La marque collective porte l’identité de la Pérennité Programmée Circulaire. Elle s’appuie sur des référentiels qui formalisent progressivement le cadre de la démarche." primaryHref="/marque-collective/referentiels" primaryLabel="Consulter les référentiels" />
+  <section class="editorial"><SectionHeading eyebrow="Un repère commun" title="Une marque au service de la démarche" /><div><p>La marque collective relie une identité partagée à un cadre documenté. Elle permet de présenter ce qui est aujourd’hui disponible et ce qui reste encore en construction.</p><p>Le site n’anticipe pas de règles d’attribution, de candidature ou de contrôle qui ne sont pas encore définies par PPC.</p></div></section>
+  <section class="editorial"><SectionHeading eyebrow="Formalisation" title="Le rôle des référentiels" /><div><p>Chaque référentiel représente une identité durable. Ses versions, leur date de publication et leurs documents peuvent être rendus accessibles de façon explicite.</p><p>La version courante est indiquée par PPC ; elle n’est jamais déduite automatiquement d’un numéro, d’une date ou de l’ordre de publication.</p></div></section>
+  <section class="callout"><h2>Accéder au cadre disponible</h2><p>La liste des référentiels distingue clairement leur statut public, leur version courante et les documents accessibles.</p><ActionLink href="/marque-collective/referentiels">Voir les référentiels <span aria-hidden="true">→</span></ActionLink></section>
 </BaseLayout>
+<style>.editorial{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.editorial>div{font-size:var(--font-size-lg)}.callout{margin-top:var(--space-section);padding:var(--space-6);background:var(--color-brand);color:var(--color-on-brand)}.callout h2{font-family:var(--font-display);font-weight:400}.callout p{margin-bottom:var(--space-6)}@media(min-width:48rem){.editorial{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}} </style>

@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import ContentMeta from './ContentMeta.astro';
+import { formaterDate } from '../lib/contenus';
+
+interface Props { actualite: CollectionEntry<'actualites'>; }
+const { actualite } = Astro.props;
+---
+<article class="content-item">
+  {actualite.data.image_principale && <Image src={actualite.data.image_principale} alt={actualite.data.image_alt ?? ''} widths={[480, 768]} sizes="(min-width: 48rem) 18rem, 100vw" />}
+  <div>
+    <ContentMeta items={[formaterDate(actualite.data.date_publication)]} />
+    <h3><a href={`/actualites/${actualite.data.slug}`}>{actualite.data.titre}</a></h3>
+    <p>{actualite.data.resume}</p>
+    <a class="more" href={`/actualites/${actualite.data.slug}`}>Lire l’actualité <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<style>
+  .content-item { display: grid; gap: var(--space-5); padding-block: var(--space-6); border-top: var(--border-width) solid var(--color-border); }
+  img { aspect-ratio: 3 / 2; width: 100%; object-fit: cover; border-radius: var(--radius-surface); }
+  h3 { margin-bottom: var(--space-3); }
+  h3 a { color: var(--color-brand); }
+  p { color: var(--color-text-muted); }
+  .more { font-weight: var(--font-weight-interface); }
+  @media (min-width: 48rem) { .content-item:has(img) { grid-template-columns: 18rem 1fr; } }
+</style>

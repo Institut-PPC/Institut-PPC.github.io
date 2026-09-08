@@ -1,8 +1,12 @@
 ---
+import ActionLink from '../../components/ActionLink.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PageIntro from '../../components/PageIntro.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Nous soutenir / adhérer — PPC">
-  <h1>Nous soutenir / adhérer</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Nous soutenir — PPC" description="Découvrir les manières de soutenir l’Association pour la Pérennité Programmée Circulaire.">
+  <Breadcrumb items={[{label:'Association',href:'/association'},{label:'Nous soutenir'}]} />
+  <PageIntro eyebrow="Association" title="Soutenir la démarche PPC" intro="L’adhésion, le don et les autres contributions à l’Association ont vocation à s’appuyer sur les services effectivement retenus, sans réimplémenter de transaction sur ce site." />
+  <div class="ways"><section><span>01</span><h2>Adhérer</h2><p>L’adhésion permet de rejoindre l’Association. Le lien vers le service d’adhésion sera publié lorsque sa destination aura été validée.</p></section><section><span>02</span><h2>Faire un don</h2><p>Le don constitue une autre forme de soutien. Aucun paiement n’est collecté directement sur ce site.</p></section><section><span>03</span><h2>Contribuer autrement</h2><p>Pour proposer une contribution, un partenariat ou un échange autour des travaux PPC, prenez contact en indiquant clairement votre démarche.</p><ActionLink href="/contact" secondary>Nous contacter</ActionLink></section></div>
 </BaseLayout>
+<style>.ways{display:grid;gap:var(--space-7);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}section{padding-top:var(--space-4);border-top:2px solid var(--color-brand)}section>span{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface)}h2{margin-block:var(--space-4) var(--space-3);color:var(--color-brand);font-family:var(--font-body);font-size:var(--font-size-xl)}p{color:var(--color-text-muted)}@media(min-width:48rem){.ways{grid-template-columns:repeat(3,1fr)}} </style>

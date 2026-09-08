@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import ContentMeta from './ContentMeta.astro';
+import { formaterDate, libellesRessource } from '../lib/contenus';
+
+interface Props { ressource: CollectionEntry<'ressources'>; }
+const { ressource } = Astro.props;
+const href = ressource.data.mode_exposition === 'lien-direct' ? ressource.data.destination_directe : `/ressources/${ressource.data.slug}`;
+const externe = href.startsWith('http');
+---
+<article class="resource-item">
+  {ressource.data.image && <Image src={ressource.data.image} alt={ressource.data.image_alt ?? ''} widths={[480, 768]} sizes="(min-width: 48rem) 16rem, 100vw" />}
+  <div>
+    <ContentMeta items={[libellesRessource[ressource.data.type], ressource.data.origine === 'ppc' ? 'PPC' : 'Source externe', ressource.data.date ? formaterDate(ressource.data.date) : '']} />
+    <h2><a href={href}>{ressource.data.titre}</a></h2>
+    <p>{ressource.data.resume}</p>
+    <a class="more" href={href}>{ressource.data.mode_exposition === 'lien-direct' ? 'Accéder à la ressource' : 'Découvrir la ressource'} <span aria-hidden="true">{externe ? '↗' : '→'}</span></a>
+  </div>
+</article>
+<style>
+  .resource-item { display: grid; gap: var(--space-5); padding-block: var(--space-6); border-top: var(--border-width) solid var(--color-border); }
+  img { aspect-ratio: 3 / 2; width: 100%; object-fit: cover; border-radius: var(--radius-surface); }
+  h2 { margin-bottom: var(--space-3); font-family: var(--font-body); font-size: var(--font-size-xl); }
+  h2 a { color: var(--color-brand); }
+  p { color: var(--color-text-muted); }
+  .more { font-weight: var(--font-weight-interface); }
+  @media (min-width: 48rem) { .resource-item:has(img) { grid-template-columns: 16rem 1fr; } }
+</style>

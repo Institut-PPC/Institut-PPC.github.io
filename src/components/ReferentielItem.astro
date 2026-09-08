@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ContentMeta from './ContentMeta.astro';
+
+interface Props { referentiel: CollectionEntry<'referentiels'>; }
+const { referentiel } = Astro.props;
+const versionCourante = referentiel.data.versions.find((version) => version.id === referentiel.data.version_courante);
+---
+<article class="referentiel-item">
+  <ContentMeta items={[referentiel.data.statut_public ?? '', versionCourante ? `Version ${versionCourante.version}` : '']} />
+  <h2>
+    {referentiel.data.slug ? <a href={`/marque-collective/referentiels/${referentiel.data.slug}`}>{referentiel.data.titre}</a> : referentiel.data.titre}
+  </h2>
+  <p>{referentiel.data.resume}</p>
+  <div class="links">
+    {referentiel.data.slug && <a href={`/marque-collective/referentiels/${referentiel.data.slug}`}>Consulter la présentation <span aria-hidden="true">→</span></a>}
+    {versionCourante?.document && <a href={versionCourante.document}>Accéder à la version courante <span aria-hidden="true">↗</span></a>}
+  </div>
+</article>
+<style>
+  .referentiel-item { padding-block: var(--space-6); border-top: var(--border-width) solid var(--color-border); }
+  h2 { margin-bottom: var(--space-3); font-family: var(--font-body); font-size: var(--font-size-xl); }
+  h2 a { color: var(--color-brand); }
+  p { color: var(--color-text-muted); }
+  .links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); }
+  .links a { font-weight: var(--font-weight-interface); }
+</style>

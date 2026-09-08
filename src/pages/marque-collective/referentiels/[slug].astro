@@ -1,0 +1,16 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ContentMeta from '../../../components/ContentMeta.astro';
+import EditorialContent from '../../../components/EditorialContent.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { formaterDate } from '../../../lib/contenus';
+export async function getStaticPaths(){const entries=await getCollection('referentiels',({data})=>data.publie&&Boolean(data.slug));return entries.map((entry)=>({params:{slug:entry.data.slug},props:{entry}}));}
+interface Props{entry:CollectionEntry<'referentiels'>}
+const {entry}=Astro.props;const {Content}=await render(entry);const versionCourante=entry.data.versions.find((version)=>version.id===entry.data.version_courante);
+---
+<BaseLayout title={`${entry.data.titre} — Référentiels PPC`} description={entry.data.resume}>
+  <Breadcrumb items={[{label:'Marque collective',href:'/marque-collective'},{label:'Référentiels',href:'/marque-collective/referentiels'},{label:entry.data.titre}]} />
+  <article><header class="content-header"><p class="eyebrow">Référentiel PPC</p><h1>{entry.data.titre}</h1><p class="lead">{entry.data.resume}</p><ContentMeta items={[entry.data.statut_public??'',versionCourante?`Version courante : ${versionCourante.version}`:'']} />{versionCourante?.document&&<a class="document" href={versionCourante.document}>Accéder à la version courante <span aria-hidden="true">↗</span></a>}</header><EditorialContent><Content /></EditorialContent>{entry.data.versions.length>0&&<section class="versions"><h2>Versions publiées</h2><ol>{entry.data.versions.map((version)=><li class:list={[{'current':version.id===entry.data.version_courante}]}><div><strong>Version {version.version}</strong>{version.id===entry.data.version_courante&&<span>Version courante</span>}</div>{version.date_publication&&<time datetime={version.date_publication}>{formaterDate(version.date_publication)}</time>}{version.document&&<a href={version.document}>Consulter le document <span aria-hidden="true">↗</span></a>}</li>)}</ol></section>}</article>
+</BaseLayout>
+<style>.content-header{max-width:var(--width-reading);padding-block:var(--space-4) var(--space-7)}.eyebrow{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface);text-transform:uppercase;letter-spacing:.08em}h1{color:var(--color-brand);font-family:var(--font-display);font-size:var(--font-size-display);font-weight:400}.lead{font-size:var(--font-size-lg)}.document{font-weight:var(--font-weight-interface)}.versions{max-width:var(--width-reading);margin-top:var(--space-section);padding-top:var(--space-7);border-top:var(--border-width) solid var(--color-border)}.versions h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.versions ol{padding:0;list-style:none}.versions li{display:grid;gap:var(--space-2);padding-block:var(--space-4);border-top:var(--border-width) solid var(--color-border)}.versions li div{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}.versions span{padding:var(--space-1) var(--space-2);background:var(--color-brand-soft);font-size:var(--font-size-sm)}.versions time{color:var(--color-text-muted)}</style>

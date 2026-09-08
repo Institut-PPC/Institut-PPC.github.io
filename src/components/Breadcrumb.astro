@@ -1,0 +1,21 @@
+---
+interface Item { label: string; href?: string; }
+interface Props { items: Item[]; }
+const { items } = Astro.props;
+---
+<nav class="breadcrumb" aria-label="Fil d’Ariane">
+  <ol>
+    {items.map((item, index) => (
+      <li>
+        {item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+        {index < items.length - 1 && <span class="separator" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<style>
+  ol { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; margin: 0 0 var(--space-5); list-style: none; font-size: var(--font-size-sm); }
+  li { display: flex; gap: var(--space-2); }
+  .separator { color: var(--color-border-strong); }
+  [aria-current='page'] { color: var(--color-text-muted); }
+</style>

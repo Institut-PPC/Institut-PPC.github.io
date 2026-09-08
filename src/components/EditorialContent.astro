@@ -1,0 +1,9 @@
+<div class="editorial-content"><slot /></div>
+<style>
+  .editorial-content { max-width: var(--width-reading); font-size: var(--font-size-lg); }
+  .editorial-content :global(h2) { margin-top: var(--space-8); color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }
+  .editorial-content :global(h3), .editorial-content :global(h4) { margin-top: var(--space-7); }
+  .editorial-content :global(a) { font-weight: var(--font-weight-interface); }
+  .editorial-content :global(li + li) { margin-top: var(--space-2); }
+  .editorial-content :global(img) { margin-block: var(--space-6); border-radius: var(--radius-surface); }
+</style>

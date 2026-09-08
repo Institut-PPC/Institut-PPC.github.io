@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ContentMeta from '../../components/ContentMeta.astro';
+import EditorialContent from '../../components/EditorialContent.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { evenementAVenir, formaterDateHeure } from '../../lib/contenus';
+export async function getStaticPaths(){const entries=await getCollection('evenements',({data})=>data.publie);return entries.map((entry)=>({params:{slug:entry.data.slug},props:{entry}}));}
+interface Props{entry:CollectionEntry<'evenements'>}
+const {entry}=Astro.props;const {Content}=await render(entry);const aVenir=evenementAVenir(entry.data.date_fin,entry.data.date_debut);const personnes=await getCollection('personnes');const personnesLiees=personnes.filter(({id})=>entry.data.personnes_liees?.includes(id));
+---
+<BaseLayout title={`${entry.data.titre} — PPC`} description={entry.data.resume}>
+  <Breadcrumb items={[{label:'Actualités & événements',href:'/actualites-evenements'},{label:entry.data.titre}]} />
+  <article><header class="content-header"><p class="eyebrow">{aVenir?'Événement à venir':'Événement passé'}</p><h1>{entry.data.titre}</h1><p class="lead">{entry.data.resume}</p><ContentMeta items={[formaterDateHeure(entry.data.date_debut),entry.data.date_fin?`Fin : ${formaterDateHeure(entry.data.date_fin)}`:'',entry.data.lieu??'',entry.data.relation_ppc==='organise-par-ppc'?'Organisé par PPC':'Événement externe auquel PPC participe']} />{entry.data.lien_externe&&<a class="external" href={entry.data.lien_externe}>Accéder au site de l’événement <span aria-hidden="true">↗</span></a>}</header>{entry.data.image&&<Image class="hero-image" src={entry.data.image} alt={entry.data.image_alt??''} widths={[720,1152]} sizes="(min-width:72rem) 72rem,100vw"/>}<EditorialContent><Content /></EditorialContent>{personnesLiees.length>0&&<aside><h2>Personnes liées</h2><ul>{personnesLiees.map(({data})=><li>{data.prenom} {data.nom}</li>)}</ul></aside>}</article>
+</BaseLayout>
+<style>.content-header{max-width:var(--width-reading);padding-block:var(--space-4) var(--space-7)}.eyebrow{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface);text-transform:uppercase;letter-spacing:.08em}h1{color:var(--color-brand);font-family:var(--font-display);font-size:var(--font-size-display);font-weight:400}.lead{font-size:var(--font-size-lg)}.external{display:inline-block;margin-bottom:var(--space-4);font-weight:var(--font-weight-interface)}.hero-image{width:100%;margin-bottom:var(--space-8);border-radius:var(--radius-surface)}aside{max-width:var(--width-reading);margin-top:var(--space-8);padding-top:var(--space-6);border-top:var(--border-width) solid var(--color-border)}aside h2{font-size:var(--font-size-lg)}</style>

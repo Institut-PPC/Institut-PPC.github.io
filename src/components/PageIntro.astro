@@ -1,0 +1,47 @@
+---
+import ActionLink from './ActionLink.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const { eyebrow, title, intro, primaryHref, primaryLabel, secondaryHref, secondaryLabel } = Astro.props;
+---
+
+<header class="page-intro">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h1>{title}</h1>
+  <p class="lead">{intro}</p>
+  {(primaryHref || secondaryHref) && (
+    <div class="actions">
+      {primaryHref && primaryLabel && <ActionLink href={primaryHref}>{primaryLabel} <span aria-hidden="true">→</span></ActionLink>}
+      {secondaryHref && secondaryLabel && <ActionLink href={secondaryHref} secondary>{secondaryLabel}</ActionLink>}
+    </div>
+  )}
+</header>
+
+<style>
+  .page-intro { max-width: 55rem; padding-block: var(--space-4) var(--space-8); }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-interface);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before { content: ''; width: var(--space-6); height: 2px; background: var(--color-accent); }
+  h1 { max-width: 52rem; margin-bottom: var(--space-5); color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-display); font-weight: 400; }
+  .lead { max-width: 48rem; margin: 0; font-size: var(--font-size-lg); }
+  .actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: stretch; margin-top: var(--space-6); }
+  @media (min-width: 48rem) { .actions { flex-direction: row; align-items: flex-start; } }
+</style>

@@ -1,8 +1,10 @@
 ---
+import PageIntro from '../components/PageIntro.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Contact — PPC">
-  <h1>Contact</h1>
-  <p>Cette page est un squelette technique provisoire. Aucun formulaire ni moyen de contact n’est encore publié.</p>
+<BaseLayout title="Contact — PPC" description="Préparer une prise de contact avec la Pérennité Programmée Circulaire.">
+  <PageIntro eyebrow="Nous contacter" title="Orienter votre demande" intro="Le site ne collecte aucune donnée par formulaire. Les coordonnées publiques de l’Association seront affichées ici dès qu’elles auront été intégrées et validées dans le dépôt." />
+  <section class="contact-status"><h2>Coordonnées</h2><p><strong>Adresse e-mail et adresse postale à compléter avant la publication définitive.</strong></p><p>Aucune coordonnée n’est inventée pour les besoins de cette démonstration.</p></section>
+  <section class="requests"><h2>Informations utiles à préparer</h2><div class="request-list"><article><h3>Information générale</h3><p>Précisez votre question et le contexte dans lequel vous avez découvert PPC.</p></article><article><h3>Contribution ou partenariat</h3><p>Présentez votre organisation, votre activité et la forme de collaboration envisagée.</p></article><article><h3>Marque ou référentiels</h3><p>Indiquez le référentiel concerné et la nature de votre demande, sans supposer l’existence d’une procédure d’attribution.</p></article><article><h3>Presse ou intervention</h3><p>Ajoutez le média ou l’organisation, le sujet, le format et l’échéance souhaitée.</p></article></div></section>
 </BaseLayout>
+<style>.contact-status{padding:var(--space-6);background:var(--color-surface-muted)}.contact-status h2,.requests>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.requests{padding-block:var(--space-section)}.request-list{display:grid;gap:var(--space-6)}article{padding-top:var(--space-4);border-top:var(--border-width) solid var(--color-border)}article h3{font-size:var(--font-size-lg)}article p{color:var(--color-text-muted)}@media(min-width:48rem){.request-list{grid-template-columns:1fr 1fr}} </style>

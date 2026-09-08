@@ -1,8 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
+import ActualiteItem from '../components/ActualiteItem.astro';
+import EmptyState from '../components/EmptyState.astro';
+import EvenementItem from '../components/EvenementItem.astro';
+import PageIntro from '../components/PageIntro.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { evenementAVenir } from '../lib/contenus';
+const actualites=(await getCollection('actualites',({data})=>data.publie)).sort((a,b)=>b.data.date_publication.localeCompare(a.data.date_publication));
+const evenements=(await getCollection('evenements',({data})=>data.publie)).sort((a,b)=>b.data.date_debut.localeCompare(a.data.date_debut));
+const aVenir=evenements.filter(({data})=>evenementAVenir(data.date_fin,data.date_debut)).reverse();
+const passes=evenements.filter(({data})=>!evenementAVenir(data.date_fin,data.date_debut));
 ---
-
-<BaseLayout title="Actualités & événements — PPC">
-  <h1>Actualités & événements</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Actualités & événements — PPC" description="Suivre les publications et les rendez-vous de la Pérennité Programmée Circulaire.">
+  <PageIntro eyebrow="PPC en mouvement" title="Actualités & événements" intro="Un point d’entrée commun pour suivre les publications de PPC et les événements qu’elle organise ou auxquels elle participe." />
+  <section class="stream" aria-labelledby="actualites"><h2 id="actualites">Actualités</h2><p class="intro">Les publications éditoriales de PPC, de la plus récente à la plus ancienne.</p>{actualites.length?actualites.map((actualite)=><ActualiteItem actualite={actualite}/>):<EmptyState title="Aucune actualité publiée" message="Les prochaines publications apparaîtront ici dès qu’elles seront disponibles." />}</section>
+  <section class="stream" aria-labelledby="evenements"><h2 id="evenements">Événements</h2><p class="intro">Les rendez-vous à venir puis les événements passés qui constituent l’archive de l’activité.</p>{aVenir.length>0&&<><h3 class="subheading">À venir</h3>{aVenir.map((evenement)=><EvenementItem evenement={evenement}/>)}</>}{passes.length>0&&<><h3 class="subheading">Événements passés</h3>{passes.map((evenement)=><EvenementItem evenement={evenement}/>)}</>}{!evenements.length&&<EmptyState title="Aucun événement publié" message="Les rendez-vous seront présentés ici lorsqu’ils auront été annoncés." />}</section>
 </BaseLayout>
+<style>.stream{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.stream>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.intro{margin-bottom:var(--space-7);font-size:var(--font-size-lg);color:var(--color-text-muted)}.subheading{margin-top:var(--space-7);font-size:var(--font-size-lg);text-transform:uppercase;letter-spacing:.06em}</style>

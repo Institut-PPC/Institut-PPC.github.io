@@ -1,0 +1,58 @@
+<figure class="blueprint">
+  <svg viewBox="0 0 640 540" role="img" aria-labelledby="blueprint-title blueprint-description">
+    <title id="blueprint-title">Construction en perspective vers un horizon cuivre</title>
+    <desc id="blueprint-description">Un dessin technique évoque une structure durable dont les lignes convergent vers un axe lumineux.</desc>
+    <defs>
+      <linearGradient id="axe-cuivre" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="var(--color-accent)" />
+        <stop offset="1" stop-color="var(--color-accent)" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+
+    <g class="construction">
+      <path d="M24 52H616M24 488H616M52 24V516M588 24V516" />
+      <path d="M320 18V522M18 270H622" />
+      <path d="M40 40h42M40 40v42M600 40h-42M600 40v42M40 500h42M40 500v-42M600 500h-42M600 500v-42" />
+      <path d="M114 132V456M526 132V456M88 228H552M88 400H552" />
+    </g>
+
+    <g class="structure">
+      <path d="M126 434L248 222H392L514 434" />
+      <path d="M178 434L270 246H370L462 434" />
+      <path d="M238 434L294 270H346L402 434" />
+      <path d="M126 434H514M178 434H462M238 434H402" />
+      <path d="M126 434L320 282L514 434M178 434L320 282L462 434M238 434L320 282L402 434" />
+      <path d="M248 222L320 282L392 222M270 246L320 282L370 246M294 270L320 282L346 270" />
+      <path d="M126 434L248 222M150 434L259 234M178 434L270 246M208 434L282 258M238 434L294 270" />
+      <path d="M514 434L392 222M490 434L381 234M462 434L370 246M432 434L358 258M402 434L346 270" />
+      <path d="M104 434L238 340M86 434L224 350M536 434L402 340M554 434L416 350" />
+      <path d="M104 434V374L238 314M536 434V374L402 314" />
+      <path d="M104 374L224 350M536 374L416 350" />
+      <path d="M120 366v68M144 350v84M168 334v100M192 320v114M216 304v130" />
+      <path d="M520 366v68M496 350v84M472 334v100M448 320v114M424 304v130" />
+      <path d="M248 222v212M270 246v188M294 270v164M392 222v212M370 246v188M346 270v164" />
+      <path d="M248 222H392M259 234H381M270 246H370M282 258H358M294 270H346" />
+    </g>
+
+    <g class="traverse">
+      <path d="M262 434L320 282L378 434" />
+      <path d="M270 420H370M274 408H366M279 396H361M284 384H356M288 372H352M293 360H347M298 348H342M302 336H338M307 324H333M312 312H328" />
+    </g>
+
+    <path class="axis" d="M280 488L320 282L360 488Z" />
+    <circle class="horizon" cx="320" cy="282" r="5" />
+  </svg>
+  <figcaption>Révéler ce qui donne de la valeur dans le temps long.</figcaption>
+</figure>
+
+<style>
+  .blueprint { margin: 0; }
+  svg { width: 100%; color: var(--color-text-muted); }
+  .construction, .structure, .traverse { fill: none; stroke: currentColor; stroke-linecap: square; stroke-linejoin: round; }
+  .construction { opacity: .27; stroke-width: 1; }
+  .structure { opacity: .72; stroke-width: 1.5; }
+  .traverse { opacity: .55; stroke-width: 1; }
+  .axis { fill: url(#axe-cuivre); opacity: .95; }
+  .horizon { fill: var(--color-accent); }
+  figcaption { max-width: 24rem; margin: var(--space-3) auto 0; color: var(--color-text-muted); font-size: var(--font-size-sm); text-align: center; }
+</style>

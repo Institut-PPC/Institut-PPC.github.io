@@ -1,8 +1,13 @@
 ---
+import ActionLink from '../../components/ActionLink.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Association — PPC">
-  <h1>Association</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Association — PPC" description="Découvrir la mission et les responsabilités de l’Association pour la Pérennité Programmée Circulaire.">
+  <PageIntro eyebrow="L’Association" title="L’organisation qui porte, protège et développe PPC" intro="L’Association pour la Pérennité Programmée Circulaire est une organisation d’intérêt général. Elle structure la démarche et sa marque collective sans se confondre avec PPC elle-même." />
+  <section class="mission"><SectionHeading eyebrow="Mission" title="Donner à la démarche un cadre collectif durable" /><p>Le rôle de l’Association est de porter la PPC, de protéger son intégrité, de structurer son développement et celui de la marque collective.</p></section>
+  <section class="pathways" aria-labelledby="titre-responsabilites"><h2 id="titre-responsabilites">Découvrir l’Association</h2><div class="links"><article><span>01</span><h3>Gouvernance</h3><p>Comprendre les organes et principes qui structurent l’Association.</p><a href="/association/gouvernance">Voir la gouvernance <span aria-hidden="true">→</span></a></article><article><span>02</span><h3>Membres fondateurs</h3><p>Présenter le collège qui a contribué à fonder la démarche.</p><a href="/association/membres-fondateurs">Découvrir les membres fondateurs <span aria-hidden="true">→</span></a></article><article><span>03</span><h3>Nous soutenir</h3><p>Contribuer à l’Association par l’adhésion, le don ou une prise de contact.</p><a href="/association/nous-soutenir">Voir les manières de soutenir <span aria-hidden="true">→</span></a></article></div></section>
+  <section class="contact"><h2>Entrer en relation avec PPC</h2><p>Pour une contribution, un partenariat ou une question sur la démarche, la page Contact indique les informations utiles à transmettre.</p><ActionLink href="/contact">Nous contacter <span aria-hidden="true">→</span></ActionLink></section>
 </BaseLayout>
+<style>.mission{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.mission>p{font-size:var(--font-size-lg)}.pathways{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.pathways>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.links{display:grid;gap:var(--space-6);margin-top:var(--space-7)}article{padding-top:var(--space-4);border-top:2px solid var(--color-brand)}article>span{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface)}article h3{margin-block:var(--space-4) var(--space-3)}article p{color:var(--color-text-muted)}article a{font-weight:var(--font-weight-interface)}.contact{padding:var(--space-6);background:var(--color-surface-muted)}.contact h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}@media(min-width:48rem){.mission{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}.links{grid-template-columns:repeat(3,1fr)}} </style>

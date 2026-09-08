@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ContentMeta from '../../components/ContentMeta.astro';
+import EditorialContent from '../../components/EditorialContent.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formaterDate } from '../../lib/contenus';
+export async function getStaticPaths(){const entries=await getCollection('actualites',({data})=>data.publie);return entries.map((entry)=>({params:{slug:entry.data.slug},props:{entry}}));}
+interface Props{entry:CollectionEntry<'actualites'>}
+const {entry}=Astro.props;const {Content}=await render(entry);
+---
+<BaseLayout title={`${entry.data.titre} — PPC`} description={entry.data.resume}>
+  <Breadcrumb items={[{label:'Actualités & événements',href:'/actualites-evenements'},{label:entry.data.titre}]} />
+  <article><header class="content-header"><p class="eyebrow">Actualité</p><h1>{entry.data.titre}</h1><p class="lead">{entry.data.resume}</p><ContentMeta items={[`Publié le ${formaterDate(entry.data.date_publication)}`,entry.data.date_mise_a_jour?`Mis à jour le ${formaterDate(entry.data.date_mise_a_jour)}`:'']} /></header>{entry.data.image_principale&&<Image class="hero-image" src={entry.data.image_principale} alt={entry.data.image_alt??''} widths={[720,1152]} sizes="(min-width:72rem) 72rem,100vw"/>}<EditorialContent><Content /></EditorialContent></article>
+</BaseLayout>
+<style>.content-header{max-width:var(--width-reading);padding-block:var(--space-4) var(--space-7)}.eyebrow{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface);text-transform:uppercase;letter-spacing:.08em}h1{color:var(--color-brand);font-family:var(--font-display);font-size:var(--font-size-display);font-weight:400}.lead{font-size:var(--font-size-lg)}.hero-image{width:100%;margin-bottom:var(--space-8);border-radius:var(--radius-surface)}</style>

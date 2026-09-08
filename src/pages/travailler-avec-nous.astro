@@ -1,8 +1,13 @@
 ---
+import ActionLink from '../components/ActionLink.astro';
+import PageIntro from '../components/PageIntro.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<BaseLayout title="Travailler avec nous — PPC">
-  <h1>Travailler avec nous</h1>
-  <p>Cette page est un squelette technique provisoire. Son contenu éditorial sera intégré ultérieurement.</p>
+<BaseLayout title="Travailler avec nous — PPC" description="Participer aux travaux collectifs autour de la PPC et de ses référentiels.">
+  <PageIntro eyebrow="Collaborer" title="Prendre part à la construction de PPC" intro="Cette page s’adresse aux entreprises, acteurs industriels et organisations qui souhaitent comprendre les travaux en cours et envisager une contribution à la démarche ou au consortium." primaryHref="/contact" primaryLabel="Échanger avec PPC" />
+  <section class="collaboration"><SectionHeading eyebrow="Une démarche collective" title="Contribuer avant de prétendre adopter" /><div><p>PPC et ses référentiels se construisent avec les acteurs concernés. La collaboration peut commencer par un échange sur votre activité, vos enjeux et les travaux auxquels vous souhaitez contribuer.</p><p>Cette prise de contact ne constitue pas une procédure immédiate d’adoption ou d’utilisation de la marque collective.</p></div></section>
+  <section class="prepare"><h2>Préparer l’échange</h2><p>Pour permettre un premier échange utile, présentez sobrement :</p><ol><li>votre organisation et votre activité ;</li><li>le sujet PPC qui motive votre prise de contact ;</li><li>la forme de contribution ou de collaboration envisagée ;</li><li>les coordonnées de la personne à recontacter.</li></ol><ActionLink href="/contact">Voir les consignes de contact <span aria-hidden="true">→</span></ActionLink></section>
+  <section class="related"><h2>Avant de nous écrire</h2><div><a href="/comprendre-la-ppc">Comprendre les principes de PPC <span aria-hidden="true">→</span></a><a href="/marque-collective/referentiels">Consulter les référentiels disponibles <span aria-hidden="true">→</span></a></div></section>
 </BaseLayout>
+<style>.collaboration{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.collaboration>div{font-size:var(--font-size-lg)}.prepare{padding:var(--space-6);background:var(--color-surface-muted)}.prepare h2,.related h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.prepare li+li{margin-top:var(--space-2)}.related{padding-block:var(--space-section)}.related>div{display:flex;flex-direction:column;gap:var(--space-4);font-weight:var(--font-weight-interface)}@media(min-width:48rem){.collaboration{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}.related>div{flex-direction:row;gap:var(--space-7)}} </style>

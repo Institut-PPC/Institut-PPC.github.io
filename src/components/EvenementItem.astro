@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import ContentMeta from './ContentMeta.astro';
+import { evenementAVenir, formaterDateHeure } from '../lib/contenus';
+
+interface Props { evenement: CollectionEntry<'evenements'>; }
+const { evenement } = Astro.props;
+const aVenir = evenementAVenir(evenement.data.date_fin, evenement.data.date_debut);
+const relation = evenement.data.relation_ppc === 'organise-par-ppc' ? 'Organisé par PPC' : 'Événement externe';
+---
+<article class="content-item">
+  {evenement.data.image && <Image src={evenement.data.image} alt={evenement.data.image_alt ?? ''} widths={[480, 768]} sizes="(min-width: 48rem) 18rem, 100vw" />}
+  <div>
+    <ContentMeta items={[aVenir ? 'À venir' : 'Passé', relation, formaterDateHeure(evenement.data.date_debut), evenement.data.lieu ?? '']} />
+    <h3><a href={`/evenements/${evenement.data.slug}`}>{evenement.data.titre}</a></h3>
+    <p>{evenement.data.resume}</p>
+    <a class="more" href={`/evenements/${evenement.data.slug}`}>Voir l’événement <span aria-hidden="true">→</span></a>
+  </div>
+</article>
+<style>
+  .content-item { display: grid; gap: var(--space-5); padding-block: var(--space-6); border-top: var(--border-width) solid var(--color-border); }
+  img { aspect-ratio: 3 / 2; width: 100%; object-fit: cover; border-radius: var(--radius-surface); }
+  h3 { margin-bottom: var(--space-3); }
+  h3 a { color: var(--color-brand); }
+  p { color: var(--color-text-muted); }
+  .more { font-weight: var(--font-weight-interface); }
+  @media (min-width: 48rem) { .content-item:has(img) { grid-template-columns: 18rem 1fr; } }
+</style>

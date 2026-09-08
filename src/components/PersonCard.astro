@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { personne: CollectionEntry<'personnes'>; role?: string; }
+const { personne, role } = Astro.props;
+const nom = `${personne.data.prenom} ${personne.data.nom}`;
+---
+<article class="person-card">
+  {personne.data.photo && <Image src={personne.data.photo} alt="" widths={[320, 480]} sizes="(min-width: 48rem) 16rem, 75vw" />}
+  <div>
+    <h3>{nom}</h3>
+    {role && <p class="role">{role}</p>}
+    {personne.data.fonction_organisation && <p>{personne.data.fonction_organisation}</p>}
+    {personne.data.linkedin && <a href={personne.data.linkedin}>Profil LinkedIn de {nom} <span aria-hidden="true">↗</span></a>}
+  </div>
+</article>
+<style>
+  .person-card { border-top: var(--border-width) solid var(--color-border); padding-top: var(--space-4); }
+  img { aspect-ratio: 4 / 5; width: 100%; margin-bottom: var(--space-4); object-fit: cover; border-radius: var(--radius-surface); }
+  h3 { margin-bottom: var(--space-2); color: var(--color-brand); }
+  p { margin-bottom: var(--space-2); color: var(--color-text-muted); }
+  .role { color: var(--color-text); font-weight: var(--font-weight-interface); }
+  a { display: inline-block; margin-top: var(--space-2); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+</style>
