@@ -1,9 +1,20 @@
+---
+interface Props {
+  identite: {
+    nom_court: string;
+    nom_complet: string;
+  };
+}
+
+const { identite } = Astro.props;
+---
+
 <footer class="site-footer py-7">
   <div class="w-full max-w-content mx-auto px-gutter">
     <div class="footer-top grid gap-6 md:gap-7">
       <div class="footer-signature">
-        <strong>PPC</strong>
-        <p class="text-ppc-sm mt-2 mb-0">Pérennité Programmée Circulaire</p>
+        <strong>{identite.nom_court}</strong>
+        <p class="text-ppc-sm mt-2 mb-0">{identite.nom_complet}</p>
       </div>
       <nav aria-label="Navigation secondaire" class="footer-navigation grid grid-cols-2 gap-5 md:gap-7">
         <section aria-labelledby="footer-decouvrir">

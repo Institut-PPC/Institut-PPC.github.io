@@ -1,10 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import ActionLink from '../components/ActionLink.astro';
 import ActualiteItem from '../components/ActualiteItem.astro';
 import EmptyState from '../components/EmptyState.astro';
 import EvenementItem from '../components/EvenementItem.astro';
 import HeroBlueprint from '../components/HeroBlueprint.astro';
+import RessourceItem from '../components/RessourceItem.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { evenementAVenir } from '../lib/contenus';
@@ -14,27 +15,39 @@ const actualites = (await getCollection('actualites', ({ data }) => data.publie)
 const evenements = (await getCollection('evenements', ({ data }) => data.publie))
   .filter(({ data }) => evenementAVenir(data.date_fin, data.date_debut))
   .sort((a, b) => a.data.date_debut.localeCompare(b.data.date_debut)).slice(0, 2);
+const accueil = await getEntry('accueil', 'accueil');
+
+if (!accueil) {
+  throw new Error('Le singleton contenu/pages/accueil.yaml est introuvable.');
+}
+
+const ressourcesParId = new Map(
+  (await getCollection('ressources', ({ data }) => data.publie)).map((ressource) => [ressource.id, ressource]),
+);
+const ressourcesMisesEnAvant = accueil.data.ressources_mises_en_avant
+  .map((id) => ressourcesParId.get(id))
+  .filter((ressource) => ressource !== undefined);
 ---
-<BaseLayout title="Pérennité Programmée Circulaire — PPC" description="Découvrir la Pérennité Programmée Circulaire, sa marque collective, ses référentiels et les manières de contribuer à la démarche.">
+<BaseLayout title={accueil.data.titre_page} description={accueil.data.description}>
   <section class="hero" aria-labelledby="titre-accueil">
     <div class="hero-copy">
-      <p class="eyebrow">Une démarche collective en construction</p>
-      <h1 id="titre-accueil">Pérennité<br />Programmée<br /><em>Circulaire</em></h1>
-      <p class="lead">Découvrir la Pérennité Programmée Circulaire, sa formalisation par une marque collective et des référentiels, et les manières de contribuer à son développement.</p>
+      <p class="eyebrow">{accueil.data.hero.surtitre}</p>
+      <h1 id="titre-accueil">{accueil.data.hero.titre_lignes[0]}<br />{accueil.data.hero.titre_lignes[1]}<br /><em>{accueil.data.hero.titre_lignes[2]}</em></h1>
+      <p class="lead">{accueil.data.hero.introduction}</p>
       <div class="actions"><ActionLink href="/comprendre-la-ppc">Comprendre la PPC <span aria-hidden="true">→</span></ActionLink><ActionLink href="/travailler-avec-nous" secondary>Travailler avec nous</ActionLink></div>
     </div>
     <HeroBlueprint />
   </section>
   <section class="section why">
-    <SectionHeading eyebrow="Pourquoi" title="Comprendre une démarche qui se construit dans le temps" intro="Le site propose une découverte progressive de PPC : comprendre le concept, voir sa formalisation concrète, puis approfondir ou entrer en relation." />
-    <div class="principles"><article><span>01</span><h3>Comprendre</h3><p>Découvrir simplement ce qu’est la PPC et le cadre actuel de la démarche.</p></article><article><span>02</span><h3>Approfondir</h3><p>Consulter les ressources, référentiels et travaux rendus publics.</p></article><article><span>03</span><h3>Contribuer</h3><p>Envisager une participation aux travaux collectifs avant de prendre contact.</p></article></div>
+    <SectionHeading eyebrow={accueil.data.pourquoi.surtitre} title={accueil.data.pourquoi.titre} intro={accueil.data.pourquoi.introduction} />
+    <div class="principles">{accueil.data.pourquoi.principes.map((principe) => <article><span>{principe.numero}</span><h3>{principe.titre}</h3><p>{principe.texte}</p></article>)}</div>
     <p class="section-link"><a href="/comprendre-la-ppc">Explorer les grands principes <span aria-hidden="true">→</span></a></p>
   </section>
-  <section class="section framework"><div><p class="eyebrow">Du concept au cadre concret</p><h2>Une marque collective appuyée sur des référentiels</h2></div><div><p>La marque collective rend la démarche identifiable. Les référentiels en formalisent le cadre et permettent de rendre disponibles leurs versions et documents.</p><p class="section-link"><a href="/marque-collective">Découvrir la marque collective <span aria-hidden="true">→</span></a></p></div></section>
-  <section class="section collaboration-call"><SectionHeading eyebrow="Contribuer" title="Construire la démarche avec les acteurs concernés" intro="Entreprises, acteurs industriels et organisations peuvent prendre part aux travaux collectifs autour de PPC et de ses référentiels." /><ActionLink href="/travailler-avec-nous">Voir comment travailler avec PPC <span aria-hidden="true">→</span></ActionLink></section>
-  <section class="section deeper"><SectionHeading eyebrow="Pour approfondir" title="Des ressources pour aller plus loin" intro="Les ressources réunissent des ouvrages, publications, vidéos, formations et travaux PPC, qu’ils soient hébergés ici ou accessibles à leur source." /><p class="section-link"><a href="/ressources">Parcourir les ressources <span aria-hidden="true">→</span></a></p></section>
-  <section class="section movement"><SectionHeading eyebrow="PPC en mouvement" title="Actualités et rendez-vous" intro="Suivre les publications de PPC et les événements qu’elle organise ou auxquels elle participe." /><div class="movement-grid"><div><h3>Dernières actualités</h3>{actualites.length ? actualites.map((actualite) => <ActualiteItem actualite={actualite} />) : <EmptyState title="Les actualités seront publiées ici" message="La structure est prête à accueillir les prochaines publications de PPC." />}</div><div><h3>Prochains événements</h3>{evenements.length ? evenements.map((evenement) => <EvenementItem evenement={evenement} />) : <EmptyState title="Aucun rendez-vous annoncé" message="Les prochains événements apparaîtront ici dès leur publication." />}</div></div><p class="section-link"><a href="/actualites-evenements">Voir toutes les actualités et tous les événements <span aria-hidden="true">→</span></a></p></section>
-  <section class="section association-call"><div><p class="eyebrow">L’Association</p><h2>Porter, protéger et développer la PPC</h2></div><div><p>L’Association pour la Pérennité Programmée Circulaire est l’organisation d’intérêt général qui structure la démarche et sa marque collective.</p><div class="inline-links"><a href="/association">Découvrir l’Association</a><a href="/association/nous-soutenir">Nous soutenir</a></div></div></section>
+  <section class="section framework"><div><p class="eyebrow">{accueil.data.cadre_concret.surtitre}</p><h2>{accueil.data.cadre_concret.titre}</h2></div><div><p>{accueil.data.cadre_concret.texte}</p><p class="section-link"><a href="/marque-collective">Découvrir la marque collective <span aria-hidden="true">→</span></a></p></div></section>
+  <section class="section collaboration-call"><SectionHeading eyebrow={accueil.data.contribuer.surtitre} title={accueil.data.contribuer.titre} intro={accueil.data.contribuer.introduction} /><ActionLink href="/travailler-avec-nous">Voir comment travailler avec PPC <span aria-hidden="true">→</span></ActionLink></section>
+  <section class="section deeper"><SectionHeading eyebrow={accueil.data.approfondir.surtitre} title={accueil.data.approfondir.titre} intro={accueil.data.approfondir.introduction} />{ressourcesMisesEnAvant.map((ressource) => <RessourceItem ressource={ressource} />)}<p class="section-link"><a href="/ressources">Parcourir les ressources <span aria-hidden="true">→</span></a></p></section>
+  <section class="section movement"><SectionHeading eyebrow={accueil.data.mouvement.surtitre} title={accueil.data.mouvement.titre} intro={accueil.data.mouvement.introduction} /><div class="movement-grid"><div><h3>Dernières actualités</h3>{actualites.length ? actualites.map((actualite) => <ActualiteItem actualite={actualite} />) : <EmptyState title="Les actualités seront publiées ici" message="La structure est prête à accueillir les prochaines publications de PPC." />}</div><div><h3>Prochains événements</h3>{evenements.length ? evenements.map((evenement) => <EvenementItem evenement={evenement} />) : <EmptyState title="Aucun rendez-vous annoncé" message="Les prochains événements apparaîtront ici dès leur publication." />}</div></div><p class="section-link"><a href="/actualites-evenements">Voir toutes les actualités et tous les événements <span aria-hidden="true">→</span></a></p></section>
+  <section class="section association-call"><div><p class="eyebrow">{accueil.data.association.surtitre}</p><h2>{accueil.data.association.titre}</h2></div><div><p>{accueil.data.association.texte}</p><div class="inline-links"><a href="/association">Découvrir l’Association</a><a href="/association/nous-soutenir">Nous soutenir</a></div></div></section>
 </BaseLayout>
 <style>
   .hero { display: grid; gap: var(--space-8); min-height: min(47rem, calc(100vh - 6rem)); padding-block: var(--space-4) var(--space-section); align-items: center; }

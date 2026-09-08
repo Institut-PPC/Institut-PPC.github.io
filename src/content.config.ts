@@ -6,6 +6,9 @@ import { creerSchemaEvenement } from './modeles/evenement';
 import { creerSchemaPersonne } from './modeles/personne';
 import { creerSchemaRessource } from './modeles/ressource';
 import { schemaReferentiel } from './modeles/referentiel';
+import { schemaAccueil } from './modeles/accueil';
+import { schemaConfigurationSite } from './modeles/configuration-site';
+import { schemaPageEditoriale } from './modeles/page-editoriale';
 
 const actualites = defineCollection({
   loader: glob({
@@ -47,4 +50,37 @@ const referentiels = defineCollection({
   schema: schemaReferentiel,
 });
 
-export const collections = { actualites, evenements, personnes, ressources, referentiels };
+const pages = defineCollection({
+  loader: glob({
+    base: './contenu/pages',
+    pattern: '*.md',
+  }),
+  schema: schemaPageEditoriale,
+});
+
+const accueil = defineCollection({
+  loader: glob({
+    base: './contenu/pages',
+    pattern: 'accueil.yaml',
+  }),
+  schema: schemaAccueil,
+});
+
+const configurationSite = defineCollection({
+  loader: glob({
+    base: './contenu/configuration',
+    pattern: 'site.yaml',
+  }),
+  schema: schemaConfigurationSite,
+});
+
+export const collections = {
+  actualites,
+  evenements,
+  personnes,
+  ressources,
+  referentiels,
+  pages,
+  accueil,
+  configurationSite,
+};

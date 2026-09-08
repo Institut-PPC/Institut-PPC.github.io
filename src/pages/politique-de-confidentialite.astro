@@ -1,9 +1,17 @@
 ---
+import { getEntry, render } from 'astro:content';
+import EditorialContent from '../components/EditorialContent.astro';
 import PageIntro from '../components/PageIntro.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaPageMarkdown } from '../modeles/page-editoriale';
+
+const entree = await getEntry('pages', 'politique-de-confidentialite');
+if (!entree) throw new Error('Le singleton politique-de-confidentialite est introuvable.');
+const page = schemaPageMarkdown.parse(entree.data);
+const { Content } = await render(entree);
 ---
-<BaseLayout title="Politique de confidentialité — PPC" description="Informations sur les traitements de données du POC PPC.">
-  <PageIntro eyebrow="Informations du site" title="Politique de confidentialité" intro="Ce POC public est volontairement simple : il ne comporte ni analytics, ni compte utilisateur, ni formulaire de contact." />
-  <div class="legal"><h2>Données collectées par le site</h2><p>Le POC ne met en œuvre aucun outil de mesure d’audience et ne collecte aucune donnée au moyen d’un formulaire natif.</p><h2>Liens vers des services externes</h2><p>Certains contenus pourront renvoyer vers leur source, vers un événement ou vers les services externes retenus pour l’adhésion et le don. Leur propre politique de confidentialité s’applique après avoir quitté ce site.</p><h2>Informations à compléter</h2><p>La politique devra être revue avant la publication définitive afin de refléter exactement les coordonnées de l’éditeur, de l’hébergeur et tout service externe alors effectivement utilisé.</p></div>
+<BaseLayout title="Politique de confidentialité — PPC" description={page.description}>
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+  <div class="legal"><EditorialContent><Content /></EditorialContent></div>
 </BaseLayout>
-<style>.legal{max-width:var(--width-reading);font-size:var(--font-size-lg)}.legal h2{margin-top:var(--space-8);color:var(--color-brand);font-family:var(--font-display);font-weight:400}</style>
+<style>.legal{max-width:var(--width-reading)}</style>

@@ -1,0 +1,59 @@
+titre_page: Pérennité Programmée Circulaire — PPC
+description: >-
+  Découvrir la Pérennité Programmée Circulaire, sa marque collective, ses
+  référentiels et les manières de contribuer à la démarche.
+hero:
+  surtitre: Une démarche collective en construction
+  titre_lignes:
+    - Pérennité
+    - Programmée
+    - Circulaire
+  introduction: >-
+    Découvrir la Pérennité Programmée Circulaire, sa formalisation par une marque
+    collective et des référentiels, et les manières de contribuer à son développement.
+pourquoi:
+  surtitre: Pourquoi
+  titre: Comprendre une démarche qui se construit dans le temps
+  introduction: >-
+    Le site propose une découverte progressive de PPC : comprendre le concept, voir
+    sa formalisation concrète, puis approfondir ou entrer en relation.
+  principes:
+    - numero: "01"
+      titre: Comprendre
+      texte: Découvrir simplement ce qu’est la PPC et le cadre actuel de la démarche.
+    - numero: "02"
+      titre: Approfondir
+      texte: Consulter les ressources, référentiels et travaux rendus publics.
+    - numero: "03"
+      titre: Contribuer
+      texte: Envisager une participation aux travaux collectifs avant de prendre contact.
+cadre_concret:
+  surtitre: Du concept au cadre concret
+  titre: Une marque collective appuyée sur des référentiels
+  texte: >-
+    La marque collective rend la démarche identifiable. Les référentiels en formalisent
+    le cadre et permettent de rendre disponibles leurs versions et documents.
+contribuer:
+  surtitre: Contribuer
+  titre: Construire la démarche avec les acteurs concernés
+  introduction: >-
+    Entreprises, acteurs industriels et organisations peuvent prendre part aux travaux
+    collectifs autour de PPC et de ses référentiels.
+approfondir:
+  surtitre: Pour approfondir
+  titre: Des ressources pour aller plus loin
+  introduction: >-
+    Les ressources réunissent des ouvrages, publications, vidéos, formations et travaux
+    PPC, qu’ils soient hébergés ici ou accessibles à leur source.
+ressources_mises_en_avant: []
+mouvement:
+  surtitre: PPC en mouvement
+  titre: Actualités et rendez-vous
+  introduction: >-
+    Suivre les publications de PPC et les événements qu’elle organise ou auxquels elle participe.
+association:
+  surtitre: L’Association
+  titre: Porter, protéger et développer la PPC
+  texte: >-
+    L’Association pour la Pérennité Programmée Circulaire est l’organisation d’intérêt
+    général qui structure la démarche et sa marque collective.

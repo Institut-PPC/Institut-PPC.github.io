@@ -1,18 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import EmptyState from '../../components/EmptyState.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import PersonCard from '../../components/PersonCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { schemaPageGouvernance } from '../../modeles/page-editoriale';
 const personnes = await getCollection('personnes');
 const copresidence = personnes.filter(({data})=>data.roles_ppc?.includes('co-presidence'));
 const conseil = personnes.filter(({data})=>data.roles_ppc?.includes('conseil-administration')||data.roles_ppc?.includes('conseil-administration-representant-vivant'));
+const entree = await getEntry('pages', 'gouvernance');
+if (!entree) throw new Error('Le singleton gouvernance est introuvable.');
+const page = schemaPageGouvernance.parse(entree.data);
 ---
-<BaseLayout title="Gouvernance — PPC" description="Présentation de la structure de gouvernance de l’Association pour la Pérennité Programmée Circulaire.">
+<BaseLayout title="Gouvernance — PPC" description={page.description}>
   <Breadcrumb items={[{label:'Association',href:'/association'},{label:'Gouvernance'}]} />
-  <PageIntro eyebrow="Association" title="Une gouvernance au service de la démarche" intro="La gouvernance de l’Association est présentée à partir de ses organes et des rôles PPC structurés. Les personnes apparaissent uniquement lorsque leurs données publiques complètes sont disponibles." />
-  <section class="governance"><h2>Co-présidence</h2><p>La co-présidence fait partie de la gouvernance présentée publiquement par l’Association.</p>{copresidence.length?<div class="people">{copresidence.map((personne)=><PersonCard personne={personne} role="Co-présidence" />)}</div>:<EmptyState title="Composition à publier" message="Les profils seront affichés ici lorsque les données institutionnelles validées seront disponibles dans le dépôt." />}</section>
-  <section class="governance"><h2>Conseil d’administration</h2><p>Le Conseil d’administration constitue un organe de gouvernance de l’Association. Sa composition publique sera dérivée directement des rôles attribués aux personnes.</p>{conseil.length?<div class="people">{conseil.map((personne)=><PersonCard personne={personne} role={personne.data.roles_ppc?.includes('conseil-administration-representant-vivant')?'Représentation du vivant — Conseil d’administration':'Conseil d’administration'} />)}</div>:<EmptyState title="Composition à publier" message="Aucun annuaire fictif n’est présenté : les profils apparaîtront dès que les données réelles seront intégrées." />}</section>
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+  <section class="governance"><h2>{page.copresidence.titre}</h2><p>{page.copresidence.texte}</p>{copresidence.length?<div class="people">{copresidence.map((personne)=><PersonCard personne={personne} role="Co-présidence" />)}</div>:<EmptyState title={page.copresidence.titre_vide} message={page.copresidence.message_vide} />}</section>
+  <section class="governance"><h2>{page.conseil_administration.titre}</h2><p>{page.conseil_administration.texte}</p>{conseil.length?<div class="people">{conseil.map((personne)=><PersonCard personne={personne} role={personne.data.roles_ppc?.includes('conseil-administration-representant-vivant')?'Représentation du vivant — Conseil d’administration':'Conseil d’administration'} />)}</div>:<EmptyState title={page.conseil_administration.titre_vide} message={page.conseil_administration.message_vide} />}</section>
 </BaseLayout>
 <style>.governance{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.governance>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.governance>p{font-size:var(--font-size-lg)}.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:var(--space-6);margin-top:var(--space-7)}</style>

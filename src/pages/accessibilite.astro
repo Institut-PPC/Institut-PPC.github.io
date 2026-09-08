@@ -1,9 +1,17 @@
 ---
+import { getEntry, render } from 'astro:content';
+import EditorialContent from '../components/EditorialContent.astro';
 import PageIntro from '../components/PageIntro.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaPageMarkdown } from '../modeles/page-editoriale';
+
+const entree = await getEntry('pages', 'accessibilite');
+if (!entree) throw new Error('Le singleton accessibilite est introuvable.');
+const page = schemaPageMarkdown.parse(entree.data);
+const { Content } = await render(entree);
 ---
-<BaseLayout title="Accessibilité — PPC" description="Engagements d’accessibilité appliqués au POC du site PPC.">
-  <PageIntro eyebrow="Informations du site" title="Accessibilité" intro="L’accessibilité est intégrée à la conception technique et éditoriale de ce POC. Aucune déclaration formelle de conformité n’est formulée avant la réalisation d’un audit approprié." />
-  <div class="legal"><h2>Principes appliqués</h2><p>Le site privilégie un HTML sémantique, une hiérarchie de titres cohérente, la navigation au clavier, un focus visible, des liens explicites et des contrastes adaptés.</p><p>La navigation responsive est utilisable au clavier et au tactile. Les mises en page sont conçues pour céder avant le contenu, afin de rester lisibles au zoom et à l’agrandissement du texte.</p><h2>Contenus et mouvement</h2><p>Les textes alternatifs sont utilisés selon la fonction des images. Aucune information essentielle n’est portée uniquement par la couleur, le survol ou une animation. Les préférences de réduction du mouvement sont respectées.</p><h2>État de conformité</h2><p>Le POC ne revendique à ce stade ni certification ni conformité formelle. L’état de conformité et un moyen de signaler une difficulté devront être complétés avant la publication publique définitive.</p></div>
+<BaseLayout title="Accessibilité — PPC" description={page.description}>
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+  <div class="legal"><EditorialContent><Content /></EditorialContent></div>
 </BaseLayout>
-<style>.legal{max-width:var(--width-reading);font-size:var(--font-size-lg)}.legal h2{margin-top:var(--space-8);color:var(--color-brand);font-family:var(--font-display);font-weight:400}</style>
+<style>.legal{max-width:var(--width-reading)}</style>

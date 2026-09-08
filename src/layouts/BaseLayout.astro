@@ -1,4 +1,5 @@
 ---
+import { getEntry } from 'astro:content';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import '../styles/global.css';
@@ -9,6 +10,11 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+const configuration = await getEntry('configurationSite', 'site');
+
+if (!configuration) {
+  throw new Error('Le singleton contenu/configuration/site.yaml est introuvable.');
+}
 ---
 
 <!doctype html>
@@ -22,13 +28,13 @@ const { title, description } = Astro.props;
   <body>
     <a class="skip-link" href="#contenu-principal">Aller au contenu principal</a>
     <div class="site-shell grid">
-      <Header />
+      <Header identite={configuration.data.identite} />
       <main id="contenu-principal" class="py-section" tabindex="-1">
         <div class="w-full max-w-content mx-auto px-gutter">
           <slot />
         </div>
       </main>
-      <Footer />
+      <Footer identite={configuration.data.identite} />
     </div>
   </body>
 </html>

@@ -3,11 +3,19 @@ import { Image } from 'astro:assets';
 
 import logoAssociationPpc from '../assets/identite/logo-association-ppc.webp';
 import Navigation from './Navigation.astro';
+
+interface Props {
+  identite: {
+    nom_association: string;
+  };
+}
+
+const { identite } = Astro.props;
 ---
 
 <header class="site-header">
   <div class="header-inner flex items-center justify-between gap-4 px-gutter py-3">
-    <a class="signature inline-flex items-center min-h-control" href="/" aria-label="Association pour la Pérennité Programmée Circulaire — Accueil">
+    <a class="signature inline-flex items-center min-h-control" href="/" aria-label={`${identite.nom_association} — Accueil`}>
       <Image src={logoAssociationPpc} alt="" loading="eager" decoding="async" />
     </a>
     <button class="menu-control" type="button" data-menu-open aria-controls="menu-mobile" aria-expanded="false" hidden>

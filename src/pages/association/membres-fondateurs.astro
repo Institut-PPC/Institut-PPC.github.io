@@ -1,15 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import EmptyState from '../../components/EmptyState.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import PersonCard from '../../components/PersonCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { schemaPageMembresFondateurs } from '../../modeles/page-editoriale';
 const membres = (await getCollection('personnes')).filter(({data})=>data.roles_ppc?.includes('membre-fondateur'));
+const entree = await getEntry('pages', 'membres-fondateurs');
+if (!entree) throw new Error('Le singleton membres-fondateurs est introuvable.');
+const page = schemaPageMembresFondateurs.parse(entree.data);
 ---
-<BaseLayout title="Membres fondateurs — PPC" description="Présentation du collège des membres fondateurs de l’Association PPC.">
+<BaseLayout title="Membres fondateurs — PPC" description={page.description}>
   <Breadcrumb items={[{label:'Association',href:'/association'},{label:'Membres fondateurs'}]} />
-  <PageIntro eyebrow="Association" title="Les membres fondateurs" intro="Cette page est conçue pour présenter le collège des membres fondateurs de manière claire, à partir de profils réels et structurés." />
-  <section class="founders"><h2>Un collège à l’origine de la démarche</h2><p>Les membres fondateurs disposent d’un rôle institutionnel identifié au sein de l’Association. Leur présentation publique associe une photo, leur nom et un lien LinkedIn.</p>{membres.length?<div class="people">{membres.map((personne)=><PersonCard personne={personne} role="Membre fondateur" />)}</div>:<EmptyState title="Les portraits seront publiés ici" message="Aucune personne réelle n’est encore renseignée dans le dépôt. Cette page n’affiche donc aucun profil fictif." />}</section>
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+  <section class="founders"><h2>{page.presentation.titre}</h2><p>{page.presentation.texte}</p>{membres.length?<div class="people">{membres.map((personne)=><PersonCard personne={personne} role="Membre fondateur" />)}</div>:<EmptyState title={page.presentation.titre_vide} message={page.presentation.message_vide} />}</section>
 </BaseLayout>
 <style>.founders{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.founders>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.founders>p{font-size:var(--font-size-lg)}.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:var(--space-6);margin-top:var(--space-7)}</style>
