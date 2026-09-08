@@ -302,8 +302,20 @@ Le journal des décisions est rédigé en français.
 
 ### 2026-09-07 — CSS natif et design tokens centraux, sans Tailwind pour le POC
 
-**Statut :** Acceptée
+**Statut :** Remplacée le 2026-09-08
 
 **Décision :** Utiliser CSS natif moderne et volontairement conservateur, sans Tailwind CSS, avec `src/styles/tokens.css` pour les fondations et tokens sémantiques, `src/styles/global.css` pour les règles réellement globales et du CSS scopé dans les composants Astro. Privilégier les standards Web largement disponibles et l'amélioration progressive.
 
 **Pourquoi :** Le site PPC est petit, essentiellement statique et éditorial. Dans ce contexte, CSS natif maximise la lisibilité, limite les dépendances et facilite une future refonte de charte en concentrant les décisions visuelles dans les tokens et quelques primitives. Tailwind 4 a été considéré comme une solution mature, performante et compatible avec Astro, mais son abstraction supplémentaire n'apporte pas ici une valeur suffisante pour justifier sa dépendance et la distribution d'une partie des choix de présentation dans le markup.
+
+**Remplacée par :** la décision du 2026-09-08 retenant Tailwind CSS comme couche utilitaire de composition du POC.
+
+### 2026-09-08 — Tailwind pour la composition et JavaScript local proportionné
+
+**Statut :** Acceptée
+
+**Décision :** Cette décision remplace et supersède l'arbitrage du 2026-09-07 « CSS natif et design tokens centraux, sans Tailwind pour le POC ». Retenir Tailwind CSS comme couche utilitaire du POC pour la composition courante, notamment le layout, le responsive, les espacements et les états d'interaction. Maintenir `src/styles/tokens.css` comme source de vérité de la charte et autoriser le CSS Astro scopé lorsqu'il améliore la lisibilité ou exprime une logique propre au composant. Autoriser du TypeScript/JavaScript client local lorsqu'il apporte une vraie valeur fonctionnelle ou UX, sans introduire de framework front client par défaut, de SPA ni d'hydratation globale.
+
+**Pourquoi :** Le retour d'implémentation du POC a montré un coût disproportionné pour réaliser des patterns responsive courants avec la doctrine précédente, une tendance à surcontraindre Codex et un premier résultat visuel insuffisant, notamment pour la navigation mobile. Tailwind accélère la composition sans devenir propriétaire des choix de marque ; les tokens centraux préservent la cohérence et la réversibilité de la future charte.
+
+**À réexaminer lorsque :** Tailwind rendrait une refonte de charte coûteuse, conduirait à multiplier des valeurs de marque arbitraires dans les templates ou augmenterait sans justification le poids CSS produit.

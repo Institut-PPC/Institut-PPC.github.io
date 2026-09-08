@@ -26,7 +26,9 @@ Ne pas remettre ce socle en concurrence sans besoin PPC concret et décision exp
 
 Une raison majeure du choix statique est de minimiser la surface d'attaque, la complexité à l'exécution, l'infrastructure, la logique serveur, les secrets et la charge de maintenance.
 
-Privilégier HTML/CSS et la génération statique. Ajouter du JavaScript côté client uniquement lorsqu'il apporte une valeur utilisateur réelle. Aucun framework front-end client n'est introduit par défaut.
+Le HTML statique et la génération statique constituent le défaut. Ajouter du JavaScript côté client uniquement lorsqu'il répond à un besoin fonctionnel ou UX réel et proportionné. Une petite interaction TypeScript/JavaScript locale est acceptable, notamment pour un menu mobile, un disclosure ou une navigation, lorsque HTML/CSS seul produirait une UX sensiblement moins bonne ou une implémentation artificiellement complexe. Ne pas introduire de contorsion architecturale uniquement pour économiser quelques lignes de JavaScript justifié.
+
+Le site n'est pas une SPA, ne reçoit pas d'hydratation globale et n'introduit aucun framework front-end client par défaut. React, Vue, Svelte ou équivalent ne peut être ajouté que si un besoin fonctionnel futur suffisamment riche le justifie explicitement. Le JavaScript décoratif gratuit reste exclu.
 
 Le site public ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth.
 
@@ -73,6 +75,8 @@ Organisation cible :
 ```
 
 `contenu/` est indépendant du code Astro et du CMS. `src/` contient la logique du site. `public/` ne doit accueillir une image éditoriale que si elle doit volontairement être servie sans traitement ; les images éditoriales normales restent dans `contenu/medias/images/` pour profiter du pipeline Astro.
+
+Dans l'application Astro, `src/styles/tokens.css` contient les fondations et tokens sémantiques et reste la source de vérité de la charte. `src/styles/global.css` se limite au reset léger et aux styles réellement globaux. Tailwind CSS fournit la couche utilitaire de composition courante — layout, responsive, espacements, dimensions, visibilité, positionnement et états d'interaction. Le CSS Astro scopé reste adapté aux structures ou comportements propres à un composant lorsque du CSS dédié est plus lisible que des utilitaires.
 
 ## Formats et identifiants
 
@@ -312,17 +316,20 @@ Les commandes utilisées dans la CI doivent être reproductibles localement. Le 
 ## Sobriété, dépendances et design
 
 Le site doit rester léger côté client comme en infrastructure :
-- JavaScript client minimal ;
+- HTML statique par défaut et JavaScript client ciblé sur les interactions fonctionnelles ou UX qui le justifient ;
 - pas de framework client par défaut ;
 - dépendances limitées et justifiées ;
 - images optimisées ;
 - aucun tracker par défaut ;
 - pas de fournisseur de polices externe par défaut ;
 - polices système pour le POC ; si la future identité de marque impose une police spécifique, privilégier l'auto-hébergement si la licence le permet ;
-- CSS natif moderne et volontairement conservateur, sans Tailwind CSS pour le POC ;
-- design tokens centraux dans `src/styles/tokens.css`, règles globales dans `src/styles/global.css` et styles spécifiques scopés dans les composants Astro.
+- Tailwind CSS comme couche utilitaire de composition du POC, sans en faire la source de vérité de l'identité visuelle ;
+- design tokens centraux dans `src/styles/tokens.css`, règles réellement globales dans `src/styles/global.css` et styles spécifiques scopés dans les composants Astro lorsque cela améliore la lisibilité ou exprime une logique propre au composant ;
+- CSS produit limité aux règles réellement nécessaires au site.
 
 Aucun budget chiffré arbitraire de JavaScript, poids de page ou score Lighthouse n'est fixé avant mesure de pages représentatives.
+
+Tailwind et les composants Astro constituent le socle du POC. Aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être ajouté uniquement pour accélérer des composants simples ; une bibliothèque spécialisée ne peut être réévaluée que face à un besoin réel.
 
 Les règles détaillées de centralisation, responsive, langage graphique et réversibilité de la charte sont définies dans [`design-system.md`](design-system.md). Une future identité de marque doit pouvoir être appliquée principalement via les tokens, les assets d'identité et un petit nombre de primitives, sans réécriture page par page.
 

@@ -126,7 +126,8 @@ Principes :
 - aucune information essentielle révélée uniquement au `hover` ;
 - respect de `prefers-reduced-motion` ;
 - comportement robuste au zoom et à l'agrandissement du texte ;
-- composants utilisables sans dépendance client inutile.
+- composants utilisables sans dépendance client inutile ;
+- navigation responsive utilisable au clavier et au tactile, sans dépendre uniquement du `hover`, avec un bouton de menu qui expose son nom et son état lorsque pertinent.
 
 Les contrôles automatisés d'accessibilité doivent être bloquants pour les violations sérieuses, déterministes et actionnables. Les heuristiques ambiguës nécessitent une revue humaine plutôt qu'un faux sentiment de conformité.
 
@@ -176,7 +177,8 @@ La performance est une exigence architecturale forte, mais aucun budget chiffré
 Principes :
 - HTML statique par défaut ;
 - pas de framework client par défaut ;
-- JavaScript client seulement pour un besoin fonctionnel réel ;
+- JavaScript client ciblé sur les besoins fonctionnels ou UX réels et proportionnés, y compris une interaction locale de navigation lorsque celle-ci améliore sensiblement l'expérience ;
+- pas de SPA ni d'hydratation globale ;
 - dépendances limitées et justifiées ;
 - images optimisées par Astro ;
 - dimensions d'images connues lorsque possible pour limiter les décalages de mise en page ;
@@ -184,7 +186,8 @@ Principes :
 - aucun tracker tiers par défaut ;
 - polices système pour le POC, conformément à [`design-system.md`](design-system.md) ;
 - si la future identité de marque rend une police spécifique nécessaire, privilégier l'auto-hébergement sous réserve de sa licence ;
-- CSS natif sans framework CSS pour le POC, avec styles et design tokens centralisés ;
+- Tailwind CSS limité à son rôle de couche utilitaire de composition, avec un CSS produit limité au nécessaire ;
+- design tokens PPC centralisés comme source de vérité de la charte et CSS Astro scopé lorsque pertinent ;
 - animations décoratives évitées et transitions limitées aux retours d'interaction utiles.
 
 Une fois des pages représentatives disponibles :

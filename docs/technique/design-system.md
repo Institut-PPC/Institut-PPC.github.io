@@ -53,18 +53,15 @@ Formule de référence pour l'implémentation :
 
 ### Choix retenu
 
-Le POC utilise **CSS natif moderne et volontairement conservateur**, sans Tailwind CSS et sans framework d'utilitaires maison.
+Le POC utilise la doctrine suivante :
 
-Ce choix repose sur le contexte du site :
+> design tokens centraux + Tailwind CSS pour la composition courante + CSS Astro scopé lorsque cela améliore réellement la lisibilité ou exprime une logique propre au composant.
 
-- site essentiellement statique et éditorial ;
-- nombre limité de composants ;
-- volonté de limiter les dépendances ;
-- priorité donnée à la lisibilité, la pérennité et la reprise par une autre personne ;
-- future refonte graphique probable ;
-- encapsulation CSS déjà fournie par les composants Astro.
+Tailwind constitue la couche utilitaire de composition de l'interface. Il sert notamment au layout, à Flexbox et Grid, au responsive, aux espacements, aux dimensions, à la visibilité, au positionnement et aux états d'interaction. Il ne devient pas la source de vérité de l'identité visuelle.
 
-Tailwind CSS n'est pas écarté pour des raisons de performance ou d'incompatibilité avec Astro. Il constitue une solution mature et adaptée à d'autres contextes, mais son niveau d'abstraction et la distribution des choix de présentation dans le markup n'apportent pas ici une valeur suffisante pour justifier la dépendance et la convention supplémentaires.
+Les couleurs, typographies, rayons, espacements de charte et autres décisions de marque restent centralisés dans les design tokens PPC. Les composants et utilitaires Tailwind consomment ces tokens ou leurs mappings plutôt que de répéter des valeurs de marque arbitraires dans les templates.
+
+Le projet n'ajoute pas de framework d'utilitaires maison en parallèle. Tailwind et les composants Astro restent le socle du POC ; aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être introduit uniquement pour accélérer la réalisation de composants simples. Une bibliothèque spécialisée pourra être réévaluée ultérieurement si un besoin réel apparaît.
 
 ### Compatibilité et amélioration progressive
 
@@ -93,8 +90,10 @@ src/
 │   ├── tokens.css              # fondations et tokens sémantiques centraux
 │   └── global.css              # règles réellement globales
 └── components/
-    └── ...                     # styles scopés propres aux composants Astro
+    └── ...                     # composants Astro et styles scopés lorsque pertinents
 ```
+
+Tailwind s'intègre à cette organisation comme couche de composition, sans déplacer la source de vérité de la charte hors de `tokens.css`.
 
 ### `tokens.css`
 
@@ -124,15 +123,21 @@ Contient seulement les règles réellement globales :
 - prise en compte de `prefers-reduced-motion` ;
 - primitives rares et justifiées comme `.visually-hidden` et éventuellement `.container`.
 
-Ne pas reconstruire un framework d'utilitaires (`.mt-4`, `.flex`, `.grid`, etc.).
+Ne pas y reconstruire un framework d'utilitaires (`.mt-4`, `.flex`, `.grid`, etc.) en parallèle de Tailwind.
+
+### Tailwind CSS
+
+Tailwind prend en charge la composition courante : layout, Flexbox, Grid, responsive, espacements, dimensions, visibilité, positionnement et états d'interaction. Sa configuration ou ses mappings exposent les design tokens PPC lorsque ceux-ci portent un choix de charte.
+
+Ne pas multiplier les valeurs arbitraires de couleur, typographie, rayon ou espacement de charte dans les templates. Une valeur arbitraire reste acceptable lorsqu'elle exprime une contrainte structurelle réellement locale et non une décision de marque.
 
 ### Styles des composants
 
-Les composants Astro possèdent leurs styles spécifiques dans leurs blocs `<style>` scopés. Ils définissent leur structure et leur comportement de layout, tout en consommant les tokens centraux pour les choix de charte.
+Les composants Astro peuvent utiliser leurs blocs `<style>` scopés pour une structure complexe, un comportement spécifique ou une logique propre au composant lorsque ce CSS dédié reste plus lisible qu'une accumulation d'utilitaires. Ils consomment les tokens centraux pour les choix de charte.
 
 Règle normative :
 
-> Les composants ne doivent pas définir localement les choix constitutifs de l'identité visuelle lorsqu'un token central peut raisonnablement les représenter. Les tokens restent volontairement limités aux valeurs globales ou sémantiques susceptibles d'évoluer avec la charte. Les choix purement structurels ou propres à un composant restent définis dans son CSS scopé.
+> Les composants ne doivent pas définir localement les choix constitutifs de l'identité visuelle lorsqu'un token central peut raisonnablement les représenter. Les tokens restent volontairement limités aux valeurs globales ou sémantiques susceptibles d'évoluer avec la charte. Les choix de composition courante utilisent Tailwind ; les choix complexes ou propres à un composant peuvent rester définis dans son CSS scopé lorsque cela améliore la lisibilité.
 
 Les composants consomment en priorité des tokens **sémantiques** (`--color-text`, `--color-surface`, `--radius-surface`, etc.) plutôt que des noms de teintes ou des valeurs brutes.
 
@@ -309,18 +314,20 @@ Les transitions CSS courtes peuvent accompagner un retour d'interaction sur coul
 
 ### Stratégie
 
-Le site est **mobile-first**, principalement fluide et intrinsèque. Le rendu de base fonctionne sur petite largeur ; les media queries enrichissent la composition lorsque l'espace disponible le permet.
+Le site est **mobile-first**, principalement fluide et intrinsèque. La petite largeur constitue le cas de conception de référence : elle doit être conçue comme une interface à part entière, et non comme une version desktop simplement empilée. Le rendu de base fonctionne sur petite largeur ; les media queries enrichissent la composition lorsque l'espace disponible le permet.
+
+Une largeur de l'ordre de **360 à 390 CSS px** fait partie des vérifications manuelles ordinaires du POC. Cette référence de conception ne remplace pas les exigences d'accessibilité et de reflow applicables aux largeurs plus faibles, au zoom et à l'agrandissement du texte.
 
 Grid et Flexbox doivent résoudre les adaptations naturelles avant d'ajouter une media query.
 
 ### Breakpoints de référence
 
-Utiliser seulement deux breakpoints globaux de référence :
+Utiliser seulement deux breakpoints globaux de référence, y compris à travers Tailwind :
 
 - `48rem` : espace suffisant pour certaines compositions à deux colonnes ;
 - `72rem` : enrichissement éventuel des grands layouts.
 
-Les custom properties ordinaires n'étant pas utilisables dans les conditions de media queries classiques, ces deux valeurs peuvent être répétées explicitement dans les styles concernés. Cette duplication limitée est préférée à l'ajout d'un préprocesseur ou d'une abstraction uniquement pour centraliser les breakpoints.
+Ces valeurs structurantes doivent être exposées ou utilisées par Tailwind plutôt que de remplacer la stratégie PPC par l'ensemble des breakpoints par défaut de l'outil. Dans le CSS scopé, les custom properties ordinaires n'étant pas utilisables dans les conditions de media queries classiques, ces deux valeurs peuvent être répétées explicitement dans les styles concernés.
 
 Un composant peut ajouter exceptionnellement un breakpoint local si son contenu le justifie réellement. Les breakpoints répondent au contenu, pas à une liste de modèles d'appareils.
 
@@ -423,13 +430,26 @@ Un badge informatif ne ressemble pas à un bouton s'il n'est pas interactif. Les
 
 ### Menu mobile
 
-Le menu mobile reste simple et nécessite au plus une petite interaction JavaScript native si le HTML seul ne suffit pas. Il doit notamment :
+À petite largeur, lorsque le menu est fermé :
 
-- utiliser un vrai bouton pour l'ouverture/fermeture ;
-- exposer un nom accessible ;
-- exposer l'état ouvert/fermé avec `aria-expanded` lorsque pertinent ;
-- conserver un ordre logique du DOM et un focus visible ;
-- ne pas dépendre d'une animation pour être compréhensible ou utilisable.
+- le Header reste compact ;
+- l'identité PPC reste visible ;
+- un vrai bouton de menu accessible permet d'ouvrir la navigation ;
+- la liste complète des rubriques n'occupe pas en permanence le premier viewport ;
+- une part significative du contenu principal devient rapidement visible.
+
+Lorsque le menu est ouvert :
+
+- la navigation peut apparaître dans un panneau, un drawer ou un autre pattern responsive conventionnel et accessible ;
+- le bouton expose correctement son nom et son état avec `aria-expanded` lorsque pertinent ;
+- le menu est utilisable au clavier et au tactile, avec un focus toujours visible ;
+- les sous-rubriques peuvent être repliables ;
+- aucun comportement ne dépend uniquement du `hover` ;
+- le mécanisme reste simple et proportionné.
+
+Une petite interaction TypeScript/JavaScript locale est parfaitement acceptable si elle apporte une meilleure UX ou évite une implémentation HTML/CSS artificiellement complexe. Le menu ne dépend pas d'une animation pour être compréhensible ou utilisable.
+
+À largeur desktop, la navigation principale reste compacte. Les rubriques ayant des enfants peuvent utiliser un dropdown ou un disclosure approprié ; leurs sous-rubriques ne sont pas affichées en permanence si cela augmente inutilement la hauteur du Header. La spécification ne fige pas le choix exact du panneau, drawer, dropdown ou disclosure dès lors que le pattern retenu respecte ces exigences.
 
 ### Images et personnes
 
@@ -473,10 +493,12 @@ Ces évolutions doivent être concentrées dans `tokens.css`, `global.css`, les 
 Avant de considérer le front du POC conforme à cette spécification :
 
 - `tokens.css` et `global.css` existent et respectent leurs responsabilités ;
-- aucune dépendance Tailwind ou framework CSS équivalent n'est ajoutée sans nouvel arbitrage explicite ;
+- Tailwind est utilisé comme couche utilitaire de composition sans devenir la source de vérité de la charte ;
 - les composants Astro consomment les tokens de charte plutôt que des valeurs locales dupliquées ;
-- les styles spécifiques aux composants sont scopés autant que possible ;
-- le rendu est mobile-first et reste utilisable sur petites largeurs ;
+- les styles spécifiques complexes ou propres aux composants restent scopés lorsque cela améliore la lisibilité ;
+- le rendu est conçu mobile-first, vérifié ordinairement autour de 360–390 CSS px et reste utilisable aux largeurs plus faibles requises par le reflow ;
+- le Header mobile fermé reste compact, conserve l'identité PPC et donne accès à la navigation par un bouton accessible ;
+- le menu ouvert et les sous-rubriques restent utilisables au clavier et au tactile sans dépendre du `hover` ;
 - les deux breakpoints de référence suffisent par défaut ;
 - les principaux composants sont utilisables au clavier et exposent un focus visible ;
 - les liens éditoriaux sont reconnaissables autrement que par la couleur seule ;

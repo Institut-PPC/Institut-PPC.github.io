@@ -24,7 +24,7 @@ Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pou
 - DecapCMS comme CMS du POC, avec contenus indépendants du CMS, backend GitHub direct et OAuth via deux Netlify Functions minimales
 - V1/POC uniquement en français
 - architecture statique, sobre, accessible et durable
-- CSS natif avec design tokens centraux, sans Tailwind pour le POC
+- design tokens PPC centraux, Tailwind CSS pour la composition courante et CSS Astro scopé lorsque pertinent
 - identité visuelle transitoire « Ingénierie sensible », conçue pour être remplacée facilement par la future identité de marque PPC
 - rebuild/déploiement GitHub Pages quotidien à 01:00 `Europe/Paris`, en plus des déploiements sur `main`
 

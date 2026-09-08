@@ -50,7 +50,7 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 ## Principes d'ingénierie
 
 1. Privilégier une architecture statique, simple et durable.
-2. Minimiser la surface d'attaque, les dépendances à l'exécution, le JavaScript côté client, l'infrastructure et les secrets.
+2. Minimiser la surface d'attaque, les dépendances à l'exécution, l'infrastructure et les secrets. Le HTML statique reste le défaut ; le JavaScript côté client reste ciblé sur les besoins fonctionnels ou UX réels et proportionnés.
 3. Le fonctionnement essentiel du site public ne doit pas dépendre de services tiers à l'exécution.
 4. Les dépendances externes sont acceptables au cas par cas lorsque leur valeur justifie clairement leur coût en complexité, pérennité, sobriété, sécurité et dépendance fournisseur.
 5. Les contenus doivent rester dans des formats simples, ouverts et versionnés, indépendants du CMS.
@@ -70,7 +70,7 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 - Authentification CMS cible : backend GitHub direct complété par **deux Netlify Functions OAuth minimales** ; **Git Gateway n’est pas retenu**.
 - Alternative future crédible : **Sveltia CMS**, sans migration structurante des contenus si un remplacement devient utile.
 - Langue de la V1/POC : **français**
-- Styles du POC : **CSS natif moderne et conservateur**, sans Tailwind, avec design tokens centraux et styles Astro scopés.
+- Styles du POC : **design tokens PPC centraux + Tailwind CSS pour la composition courante + CSS Astro scopé lorsque cela améliore la lisibilité ou exprime une logique propre au composant**. `src/styles/tokens.css` reste la source de vérité de la charte.
 - Identité visuelle du POC : **« Ingénierie sensible »**, volontairement transitoire et réversible en vue de la future identité de marque PPC.
 - Analytics : **aucun dans le POC**
 - Environnement de staging dédié : **aucun initialement**
