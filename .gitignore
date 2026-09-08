@@ -1,0 +1,14 @@
+# Dépendances
+node_modules/
+
+# Fichiers générés par Astro
+.astro/
+dist/
+
+# Configuration locale et secrets
+.env
+.env.*
+!.env.example
+
+# Fichiers propres au système d’exploitation
+.DS_Store

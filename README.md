@@ -10,7 +10,9 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / spécifications, conception technique détaillée et design system initial terminés, avant implémentation**. Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
+Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications, la conception technique détaillée et le design system initial sont terminés, et le socle Astro minimal est initialisé. Les contenus structurés, le design system, le CMS, les validations complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés.
+
+Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
 ## Socle prévu
 
@@ -34,6 +36,30 @@ Les spécifications normatives se trouvent sous `docs/`. Le design system du POC
 
 ## Développement
 
-Les commandes d'installation, développement, test et build seront documentées ici une fois le projet Astro initialisé.
+Prérequis : Node.js 22.12.0 ou une version ultérieure, et npm.
+
+Installer les dépendances :
+
+```sh
+npm install
+```
+
+Lancer le serveur de développement :
+
+```sh
+npm run dev
+```
+
+Contrôler le projet avec Astro et TypeScript :
+
+```sh
+npm run check
+```
+
+Construire le site statique dans `dist/` :
+
+```sh
+npm run build
+```
 
 L'objectif est qu'un nouveau mainteneur humain ou un agent IA puisse cloner le dépôt, lire la documentation, installer les dépendances, lancer le site, valider ses modifications et le déployer sans dépendre de connaissances non documentées détenues par le mainteneur initial.
