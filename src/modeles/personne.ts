@@ -27,6 +27,11 @@ export const schemaIdentifiantPpc = z
 
 export const schemaRolePpc = z.enum(rolesPpc);
 
+const schemaUrlLinkedin = z.url({
+  protocol: /^https$/,
+  hostname: /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*linkedin\.com$/i,
+});
+
 export function creerSchemaPersonne<TPhoto extends z.ZodType>(schemaPhoto: TPhoto) {
   return z
     .object({
@@ -36,7 +41,7 @@ export function creerSchemaPersonne<TPhoto extends z.ZodType>(schemaPhoto: TPhot
       fonction_organisation: z.string().optional(),
       roles_ppc: z.array(schemaRolePpc).optional(),
       photo: schemaPhoto.optional(),
-      linkedin: z.url({ protocol: /^https?$/ }).optional(),
+      linkedin: schemaUrlLinkedin.optional(),
     })
     .strict()
     .superRefine((personne, contexte) => {

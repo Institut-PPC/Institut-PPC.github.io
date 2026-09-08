@@ -106,6 +106,34 @@ describe('schemaPersonne', () => {
     );
   });
 
+  it('accepte une URL LinkedIn HTTPS valide', () => {
+    expect(
+      schemaPersonne.safeParse({
+        prenom: 'Camille',
+        nom: 'Durand',
+        linkedin: 'https://fr.linkedin.com/in/camille-durand',
+      }).success,
+    ).toBe(true);
+  });
+
+  it.each(['https://example.com/profil', 'https://linkedin.com.example.org/profil'])(
+    'refuse une URL HTTPS hors du domaine LinkedIn : %s',
+    (linkedin) => {
+      attendreErreurSur({ prenom: 'Camille', nom: 'Durand', linkedin }, 'linkedin');
+    },
+  );
+
+  it('refuse une URL LinkedIn en HTTP', () => {
+    attendreErreurSur(
+      {
+        prenom: 'Camille',
+        nom: 'Durand',
+        linkedin: 'http://linkedin.com/in/camille-durand',
+      },
+      'linkedin',
+    );
+  });
+
   it('refuse une URL LinkedIn invalide', () => {
     attendreErreurSur(
       {
