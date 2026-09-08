@@ -44,7 +44,7 @@ Le Header utilise un panneau modal natif en dessous de **80 rem**, tablette comp
 
 Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment un parcours démontrable. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources et référentiels, uniquement lorsque leur modèle demande une page interne.
 
-La signature PPC reste textuelle en attendant un logo local approuvé. Les coordonnées publiques, liens d’adhésion et de don, mentions juridiques complètes et profils institutionnels réels restent volontairement absents tant que leurs données validées ne sont pas disponibles dans le dépôt.
+Le Header utilise temporairement un asset local du logo actuel de l’Association, en attendant le travail sur l’identité de marque PPC. Les coordonnées publiques, liens d’adhésion et de don, mentions juridiques complètes et profils institutionnels réels restent volontairement absents tant que leurs données validées ne sont pas disponibles dans le dépôt.
 
 ## Développement
 

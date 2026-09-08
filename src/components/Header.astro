@@ -1,11 +1,14 @@
 ---
+import { Image } from 'astro:assets';
+
+import logoAssociationPpc from '../assets/identite/logo-association-ppc.webp';
 import Navigation from './Navigation.astro';
 ---
 
 <header class="site-header">
   <div class="header-inner flex items-center justify-between gap-4 px-gutter py-3">
-    <a class="signature inline-flex items-center gap-3 min-h-control" href="/" aria-label="PPC — Accueil">
-      <strong>PPC</strong><span>Pérennité Programmée Circulaire</span>
+    <a class="signature inline-flex items-center min-h-control" href="/" aria-label="Association pour la Pérennité Programmée Circulaire — Accueil">
+      <Image src={logoAssociationPpc} alt="" loading="eager" decoding="async" />
     </a>
     <button class="menu-control" type="button" data-menu-open aria-controls="menu-mobile" aria-expanded="false" hidden>
       Menu
@@ -43,16 +46,8 @@ import Navigation from './Navigation.astro';
 <style>
   .site-header { background: var(--color-surface); border-bottom: var(--border-width) solid var(--color-border); }
   .header-inner { max-width: var(--width-wide); margin-inline: auto; flex-wrap: wrap; }
-  .signature { color: var(--color-brand); text-decoration: none; }
-  .signature strong { font-size: var(--font-size-xl); line-height: 1; }
-  .signature span {
-    max-width: 8.5rem;
-    padding-left: var(--space-3);
-    border-left: var(--border-width) solid var(--color-accent);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-heading);
-  }
+  .signature { flex: 0 1 auto; color: var(--color-brand); text-decoration: none; }
+  .signature img { width: clamp(8.6rem, 40vw, 12rem); }
   .menu-control {
     display: inline-flex;
     align-items: center;
@@ -94,7 +89,6 @@ import Navigation from './Navigation.astro';
   /* Même seuil local que Navigation.astro et navigation.ts. */
   @media (min-width: 80rem) {
     .header-inner { flex-wrap: nowrap; gap: var(--space-6); }
-    .signature span { display: none; }
     [data-enhanced] .navigation-home { display: block; flex: 1; min-width: 0; }
   }
 </style>
