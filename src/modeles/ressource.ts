@@ -6,7 +6,7 @@ import {
   schemaSlug,
   schemaTexteObligatoire,
   verifierAlternativeImage,
-} from './primitives';
+} from './primitives.ts';
 
 export const typesRessource = ['video', 'ouvrage', 'publication', 'formation', 'travail-ppc', 'autre'] as const;
 export const originesRessource = ['ppc', 'externe'] as const;

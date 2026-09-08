@@ -12,7 +12,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les modèles canoniques nécessaires aux contenus actuellement rendus, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
 
-L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. Le CMS, le modèle `Organisation`, les validations transverses complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
+L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre les contrats actuellement implémentés. Le CMS, le modèle `Organisation` et le déploiement décrits dans les spécifications ne sont pas encore implémentés ; les contrôles dépendant d’`Organisation` ou d’une future configuration de redirections restent donc à compléter avec ces contrats. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -73,6 +73,14 @@ Exécuter les tests unitaires :
 ```sh
 npm run test
 ```
+
+Valider l’intégrité transverse de tous les contenus (schémas, noms de fichiers, slugs, relations, sélections publiques, documents locaux et corps Markdown concernés) :
+
+```sh
+npm run validate
+```
+
+Cette commande agrège les erreurs avec leur fichier source et doit être exécutée après toute modification manuelle, via le futur CMS ou par un script d’import. Les relations vers `Organisation` seront ajoutées à ce contrôle lorsque le modèle, encore non implémenté, aura été finalisé.
 
 Construire le site statique dans `dist/` :
 

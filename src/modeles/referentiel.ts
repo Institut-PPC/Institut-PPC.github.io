@@ -6,7 +6,7 @@ import {
   schemaIdentifiantPpc,
   schemaSlug,
   schemaTexteObligatoire,
-} from './primitives';
+} from './primitives.ts';
 
 export const schemaVersionReferentiel = z
   .object({

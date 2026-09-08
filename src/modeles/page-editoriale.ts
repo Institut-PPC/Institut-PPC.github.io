@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { schemaTexteObligatoire } from './primitives';
+import { schemaTexteObligatoire } from './primitives.ts';
 
 const schemaBasePage = z.object({
   titre: schemaTexteObligatoire,

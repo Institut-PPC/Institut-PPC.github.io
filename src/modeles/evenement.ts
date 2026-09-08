@@ -7,7 +7,7 @@ import {
   schemaTexteObligatoire,
   schemaUrlHttp,
   verifierAlternativeImage,
-} from './primitives';
+} from './primitives.ts';
 
 export const relationsPpcEvenement = ['organise-par-ppc', 'evenement-externe'] as const;
 

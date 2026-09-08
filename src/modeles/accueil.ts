@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { schemaIdentifiantPpc, schemaTexteObligatoire } from './primitives';
+import { schemaIdentifiantPpc, schemaTexteObligatoire } from './primitives.ts';
 
 const schemaEnteteSection = z
   .object({

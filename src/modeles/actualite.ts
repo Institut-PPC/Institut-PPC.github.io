@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { schemaDate, schemaSlug, schemaTexteObligatoire, verifierAlternativeImage } from './primitives';
+import { schemaDate, schemaSlug, schemaTexteObligatoire, verifierAlternativeImage } from './primitives.ts';
 
 export function creerSchemaActualite<TImage extends z.ZodType>(schemaImage: TImage) {
   return z

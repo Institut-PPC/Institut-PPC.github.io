@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { schemaTexteObligatoire, schemaUrlHttp } from './primitives';
+import { schemaTexteObligatoire, schemaUrlHttp } from './primitives.ts';
 
 const schemaIdentiteSite = z
   .object({
