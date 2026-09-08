@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { schemaIdentifiantPpc, schemaTexteObligatoire } from './primitives';
+
 export const rolesPpc = [
   'co-presidence',
   'conseil-administration',
@@ -18,12 +20,6 @@ const rolesAvecInformationsPubliquesObligatoires = new Set<RolePpc>([
   'conseil-administration-representant-vivant',
   'membre-fondateur',
 ]);
-
-const schemaTexteObligatoire = z.string().trim().min(1, 'Ce champ ne peut pas être vide.');
-
-export const schemaIdentifiantPpc = z
-  .string()
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'L’identifiant doit être en ASCII minuscule et en kebab-case.');
 
 export const schemaRolePpc = z.enum(rolesPpc);
 
