@@ -12,7 +12,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les modèles canoniques nécessaires aux contenus actuellement rendus, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
 
-L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre les contrats actuellement implémentés. Le CMS, le modèle `Organisation` et le déploiement décrits dans les spécifications ne sont pas encore implémentés ; les contrôles dépendant d’`Organisation` ou d’une future configuration de redirections restent donc à compléter avec ces contrats. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
+L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre les contrats actuellement implémentés. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Le CMS et le modèle `Organisation` ne sont pas encore implémentés ; les contrôles dépendant d’`Organisation` ou d’une future configuration de redirections restent donc à compléter avec ces contrats. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -87,5 +87,17 @@ Construire le site statique dans `dist/` :
 ```sh
 npm run build
 ```
+
+Reproduire localement toute la phase de qualité et de build de la CI :
+
+```sh
+npm run ci
+```
+
+## Déploiement GitHub Pages
+
+Le workflow `.github/workflows/deploy-pages.yml` exécute les tests, la validation transverse, le contrôle Astro/TypeScript et le build avant de publier exclusivement l’artifact Astro `dist/`. GitHub Pages doit être configuré dans **Settings → Pages → Build and deployment → Source** avec la valeur **GitHub Actions** ; la publication depuis une branche déclencherait à tort un build Jekyll sur les sources Astro.
+
+Le remote actuel `Institut-PPC/Institut-PPC.github.io` correspond au dépôt Pages spécial de l’organisation. Son URL technique temporaire est donc `https://Institut-PPC.github.io/`. `SITE_URL` pilote cette origine au build afin de ne pas figer un futur domaine canonique PPC dans le code.
 
 L'objectif est qu'un nouveau mainteneur humain ou un agent IA puisse cloner le dépôt, lire la documentation, installer les dépendances, lancer le site, valider ses modifications et le déployer sans dépendre de connaissances non documentées détenues par le mainteneur initial.

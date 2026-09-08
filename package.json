@@ -11,7 +11,8 @@
     "check": "astro check",
     "test": "vitest run",
     "validate": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/validate-contenus.ts",
-    "build": "astro build"
+    "build": "astro build",
+    "ci": "npm run test && npm run validate && npm run check && npm run build"
   },
   "dependencies": {
     "astro": "^7.3.1",
