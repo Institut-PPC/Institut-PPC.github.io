@@ -1,21 +1,46 @@
 ---
-const title = 'Socle technique — PPC';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ActionLink from '../components/ActionLink.astro';
 ---
 
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>Socle technique du site PPC</h1>
-      <p>
-        Cette page provisoire vérifie uniquement le fonctionnement du projet Astro. Elle ne constitue pas le futur
-        contenu éditorial de la page d’accueil.
+<BaseLayout title="PPC — Accueil provisoire">
+  <section class="hero" aria-labelledby="titre-accueil">
+    <p class="status text-ppc-sm text-ppc-muted mb-5">Fondation technique provisoire</p>
+    <h1 id="titre-accueil" class="font-ppc-display text-ppc-brand">Pérennité<br />Programmée<br />Circulaire</h1>
+    <div class="hero-bottom grid gap-6 mt-6 md:mt-7">
+      <p class="introduction text-ppc-lg m-0">
+        Cette introduction sert uniquement à vérifier le shell commun et les fondations visuelles.
+        Elle ne constitue pas le futur contenu éditorial de l’accueil.
       </p>
-    </main>
-  </body>
-</html>
+      <div class="actions flex flex-col gap-3 md:flex-row md:flex-wrap md:items-start">
+        <ActionLink href="/comprendre-la-ppc">
+          Comprendre la PPC <span aria-hidden="true">→</span>
+        </ActionLink>
+        <ActionLink href="/travailler-avec-nous" secondary>Travailler avec nous</ActionLink>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding-block: var(--space-4) var(--space-6); }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-weight: var(--font-weight-interface);
+  }
+  .status::before { content: ''; width: var(--space-6); height: var(--border-width); background: var(--color-accent); }
+  h1 {
+    margin: 0;
+    font-size: var(--font-size-display);
+    font-weight: 400;
+    line-height: var(--line-height-display);
+  }
+  .hero-bottom { padding-top: var(--space-5); border-top: var(--border-width) solid var(--color-border); }
+  .introduction { max-width: 38rem; }
+  @media (min-width: 72rem) {
+    .hero-bottom { grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: start; }
+    .actions { justify-content: flex-end; }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  href: string;
+  secondary?: boolean;
+  current?: boolean;
+}
+const { href, secondary = false, current = false } = Astro.props;
+---
+
+<a class:list={['action inline-flex items-center justify-center gap-3 px-5 py-3 min-h-control', { secondary }]}
+  href={href} aria-current={current ? 'page' : undefined}>
+  <slot />
+</a>
+
+<style>
+  .action {
+    color: var(--color-on-brand);
+    background: var(--color-brand);
+    border: var(--border-width) solid var(--color-brand);
+    border-radius: var(--radius-control);
+    font-weight: var(--font-weight-interface);
+    line-height: var(--line-height-heading);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color var(--interaction-duration), color var(--interaction-duration);
+  }
+  .action:hover { background: var(--color-link-hover); }
+  .secondary { color: var(--color-brand); background: transparent; }
+  .secondary:hover { color: var(--color-on-brand); background: var(--color-brand); }
+  .action[aria-current='page'] { text-decoration: underline; }
+</style>

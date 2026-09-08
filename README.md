@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications, la conception technique détaillée et le design system initial sont terminés, et le socle Astro minimal est initialisé. Le Content Layer et les modèles de contenu sont en cours d’implémentation : les collections `Actualité`, `Événement`, `Personne`, `Ressource` et `Référentiel` sont actuellement branchées. `Organisation`, les pages éditoriales et les singletons restent à venir. Le design system, le CMS, les validations complètes et le déploiement décrits dans les spécifications ne sont pas encore implémentés.
+Le projet est actuellement au stade **POC / début d’implémentation**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les premiers modèles du Content Layer, les fondations CSS du design system avec Tailwind, le shell commun et les routes fixes sont maintenant implémentés. Les pages utilisent encore un contenu technique provisoire : les contenus éditoriaux, les routes dynamiques, les autres modèles, le CMS, les validations transverses et le déploiement décrits dans les spécifications restent à venir.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -33,6 +33,14 @@ Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pou
 Commencer par [`AGENTS.md`](AGENTS.md).
 
 Les spécifications normatives se trouvent sous `docs/`. Le design system du POC est décrit dans [`docs/technique/design-system.md`](docs/technique/design-system.md). L'historique des décisions est volontairement séparé dans `docs/decisions/`.
+
+## Front actuellement implémenté
+
+Tailwind CSS 4 est compilé par `@tailwindcss/vite` dans la configuration Astro. Les deux dépendances sont réservées au développement et au build ; aucun moteur Tailwind ne tourne dans le navigateur. `src/styles/tailwind.css` expose les tokens PPC aux utilitaires et remplace le thème par défaut, avec les breakpoints globaux de 48 et 72 rem. Le reset léger reste dans `global.css` ; `tokens.css` conserve les valeurs de charte. Les CTA partagent le composant `ActionLink`.
+
+Le Header utilise un panneau modal natif en dessous de **80 rem**, tablette comprise. Ce seuil local laisse la place aux cinq rubriques et au CTA sur une ligne en mode desktop. Une seule navigation est déplacée entre le panneau et le Header par `src/components/navigation.ts`, sans framework ni hydratation. Le panneau gère le focus, le défilement et le retour au bouton Menu ; Échap ferme d’abord une sous-rubrique ouverte, puis le panneau. Sur desktop, les sous-menus se ferment aussi au clic extérieur ou lorsque le focus les quitte. Sans JavaScript ou sans support de `showModal`, un menu HTML `details` donne accès aux mêmes liens.
+
+Les 16 routes fixes restent des squelettes techniques. La signature PPC est textuelle en attendant un logo local approuvé. La revue visuelle de cette refonte reste à effectuer manuellement, notamment à 360–390 px, au zoom et autour du seuil de navigation.
 
 ## Développement
 

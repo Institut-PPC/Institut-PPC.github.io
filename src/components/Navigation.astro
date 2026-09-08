@@ -1,0 +1,125 @@
+---
+import ActionLink from './ActionLink.astro';
+
+const currentPath = Astro.url.pathname;
+
+const primaryLinks = [
+  { label: 'Comprendre la PPC', href: '/comprendre-la-ppc' },
+  {
+    label: 'Marque collective',
+    href: '/marque-collective',
+    children: [
+      { label: 'Présentation', href: '/marque-collective' },
+      { label: 'Référentiels', href: '/marque-collective/referentiels' },
+    ],
+  },
+  { label: 'Ressources', href: '/ressources' },
+  { label: 'Actualités & événements', href: '/actualites-evenements' },
+  {
+    label: 'Association',
+    href: '/association',
+    children: [
+      { label: 'Présentation', href: '/association' },
+      { label: 'Gouvernance', href: '/association/gouvernance' },
+      { label: 'Membres fondateurs', href: '/association/membres-fondateurs' },
+      { label: 'Nous soutenir / adhérer', href: '/association/nous-soutenir' },
+    ],
+  },
+];
+
+const isCurrent = (href: string) => currentPath === href || currentPath === `${href}/`;
+---
+
+<nav class="site-navigation" aria-label="Navigation principale">
+  <div class="navigation-inner grid gap-5">
+    <ul class="primary-list">
+      {primaryLinks.map((link) => (
+        <li>
+          {link.children ? (
+            <details class:list={[{ 'contains-current': link.children.some((child) => isCurrent(child.href)) }]}>
+              <summary>
+                {link.label}
+                <svg class="disclosure-indicator" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </summary>
+              <ul class="secondary-list">
+                {link.children.map((child) => (
+                  <li><a href={child.href} aria-current={isCurrent(child.href) ? 'page' : undefined}>{child.label}</a></li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>{link.label}</a>
+          )}
+        </li>
+      ))}
+    </ul>
+    <ActionLink href="/contact" current={isCurrent('/contact')}>Nous contacter</ActionLink>
+  </div>
+</nav>
+
+<style>
+  .site-navigation { min-width: 0; }
+  ul { padding: 0; margin: 0; list-style: none; }
+  .primary-list > li { border-bottom: var(--border-width) solid var(--color-border); }
+  .primary-list > li > a, summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: var(--size-control);
+    padding-block: var(--space-4);
+    color: var(--color-text);
+    font-weight: var(--font-weight-interface);
+    text-decoration: none;
+  }
+  summary { cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  .disclosure-indicator { flex: 0 0 1rem; }
+  details[open] .disclosure-indicator { transform: rotate(180deg); }
+  a[aria-current='page'], .contains-current > summary {
+    text-decoration: underline;
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.3em;
+  }
+  .secondary-list {
+    margin-block: var(--space-1) var(--space-4);
+    padding-left: var(--space-4);
+    border-left: var(--border-width) solid var(--color-border-strong);
+  }
+  .secondary-list a {
+    display: flex;
+    align-items: center;
+    min-height: var(--size-control);
+    padding-block: var(--space-2);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  a:hover, summary:hover { color: var(--color-link-hover); }
+  .secondary-list a:hover, .secondary-list a[aria-current='page'] { text-decoration: underline; }
+
+  /* Seuil local : les cinq libellés et le CTA doivent tenir sans compression. */
+  @media (min-width: 80rem) {
+    .navigation-inner { display: flex; align-items: center; justify-content: flex-end; }
+    .primary-list { display: flex; align-items: center; gap: var(--space-5); }
+    .primary-list > li { position: relative; border: 0; }
+    .primary-list > li > a, summary { padding-block: var(--space-3); font-size: var(--font-size-sm); }
+    .secondary-list {
+      position: absolute;
+      z-index: 2;
+      top: 100%;
+      left: 0;
+      width: 17rem;
+      max-height: 70vh;
+      overflow-y: auto;
+      margin: 0;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-surface);
+      border: var(--border-width) solid var(--color-border);
+      border-radius: var(--radius-surface);
+      font-size: var(--font-size-sm);
+    }
+    .primary-list > li:last-child .secondary-list { left: auto; right: 0; }
+  }
+</style>

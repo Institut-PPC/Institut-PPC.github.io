@@ -1,0 +1,100 @@
+---
+import Navigation from './Navigation.astro';
+---
+
+<header class="site-header">
+  <div class="header-inner flex items-center justify-between gap-4 px-gutter py-3">
+    <a class="signature inline-flex items-center gap-3 min-h-control" href="/" aria-label="PPC — Accueil">
+      <strong>PPC</strong><span>Pérennité Programmée Circulaire</span>
+    </a>
+    <button class="menu-control" type="button" data-menu-open aria-controls="menu-mobile" aria-expanded="false" hidden>
+      Menu
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M3 6h14M3 14h14" fill="none" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+    <div class="navigation-home" data-navigation-home>
+      <details class="fallback" data-navigation-fallback>
+        <summary>Menu</summary>
+        <Navigation />
+      </details>
+    </div>
+  </div>
+  <dialog id="menu-mobile" aria-labelledby="menu-title">
+    <div class="panel-header flex items-center justify-between gap-4 pb-5">
+      <span id="menu-title">Navigation PPC</span>
+      <button class="menu-control" type="button" data-menu-close autofocus>
+        Fermer
+        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="m5 5 10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      </button>
+    </div>
+    <div data-navigation-panel></div>
+  </dialog>
+</header>
+
+<script>
+  import { initNavigation } from './navigation';
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (header) initNavigation(header);
+</script>
+
+<style>
+  .site-header { background: var(--color-surface); border-bottom: var(--border-width) solid var(--color-border); }
+  .header-inner { max-width: var(--width-wide); margin-inline: auto; flex-wrap: wrap; }
+  .signature { color: var(--color-brand); text-decoration: none; }
+  .signature strong { font-size: var(--font-size-xl); line-height: 1; }
+  .signature span {
+    max-width: 8.5rem;
+    padding-left: var(--space-3);
+    border-left: var(--border-width) solid var(--color-accent);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-heading);
+  }
+  .menu-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--size-control);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    color: var(--color-brand);
+    font-weight: var(--font-weight-interface);
+    cursor: pointer;
+  }
+  .menu-control:hover { background: var(--color-background); }
+  [hidden] { display: none !important; }
+  .navigation-home { width: 100%; }
+  .fallback > summary { min-height: var(--size-control); padding-block: var(--space-2); cursor: pointer; }
+  dialog {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(100%, 30rem);
+    height: 100%;
+    height: 100dvh;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: var(--space-4) var(--page-gutter);
+    padding-bottom: max(var(--space-6), env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+  dialog:not([open]) { display: none; }
+  dialog::backdrop { background: var(--color-text); opacity: 0.45; }
+  .panel-header { border-bottom: var(--border-width) solid var(--color-border); font-weight: var(--font-weight-interface); }
+  /* Même seuil local que Navigation.astro et navigation.ts. */
+  @media (min-width: 80rem) {
+    .header-inner { flex-wrap: nowrap; gap: var(--space-6); }
+    .signature span { display: none; }
+    [data-enhanced] .navigation-home { display: block; flex: 1; min-width: 0; }
+  }
+</style>

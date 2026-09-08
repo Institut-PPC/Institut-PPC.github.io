@@ -1,0 +1,57 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu-principal">Aller au contenu principal</a>
+    <div class="site-shell grid">
+      <Header />
+      <main id="contenu-principal" class="py-section" tabindex="-1">
+        <div class="w-full max-w-content mx-auto px-gutter">
+          <slot />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+  .site-shell {
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+
+  .skip-link {
+    position: fixed;
+    z-index: 10;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-on-brand);
+    background: var(--color-brand);
+    border-radius: var(--radius-control);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+</style>

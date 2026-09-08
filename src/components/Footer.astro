@@ -1,0 +1,67 @@
+<footer class="site-footer py-7">
+  <div class="w-full max-w-content mx-auto px-gutter">
+    <div class="footer-top grid gap-6 md:gap-7">
+      <div class="footer-signature">
+        <strong>PPC</strong>
+        <p class="text-ppc-sm mt-2 mb-0">Pérennité Programmée Circulaire</p>
+      </div>
+      <nav aria-label="Navigation secondaire" class="footer-navigation grid grid-cols-2 gap-5 md:gap-7">
+        <section aria-labelledby="footer-decouvrir">
+          <h2 id="footer-decouvrir">Découvrir</h2>
+          <ul>
+            <li><a href="/comprendre-la-ppc">Comprendre la PPC</a></li>
+            <li><a href="/marque-collective">Marque collective</a></li>
+            <li><a href="/marque-collective/referentiels">Référentiels</a></li>
+            <li><a href="/ressources">Ressources</a></li>
+            <li><a href="/actualites-evenements">Actualités & événements</a></li>
+          </ul>
+        </section>
+        <section aria-labelledby="footer-association">
+          <h2 id="footer-association">Association</h2>
+          <ul>
+            <li><a href="/association">Présentation</a></li>
+            <li><a href="/association/gouvernance">Gouvernance</a></li>
+            <li><a href="/association/membres-fondateurs">Membres fondateurs</a></li>
+            <li><a href="/association/nous-soutenir">Adhérer / faire un don</a></li>
+          </ul>
+        </section>
+      </nav>
+    </div>
+    <nav aria-label="Collaborer et contacter" class="footer-contact flex flex-col gap-2 md:flex-row md:gap-6 py-5 mt-6">
+      <a href="/travailler-avec-nous">Travailler avec nous <span aria-hidden="true">↗</span></a>
+      <a href="/contact">Nous contacter <span aria-hidden="true">↗</span></a>
+    </nav>
+    <nav aria-label="Informations du site" class="footer-legal flex flex-wrap gap-x-5 gap-y-1 pt-4">
+      <a href="/mentions-legales">Mentions légales</a>
+      <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+      <a href="/accessibilite">Accessibilité</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer { color: var(--color-on-brand); background: var(--color-brand); }
+  .footer-signature strong { font-size: var(--font-size-xl); }
+  .footer-signature p { max-width: 16rem; }
+  h2 { margin-bottom: var(--space-2); font-size: var(--font-size-md); }
+  ul { padding: 0; margin: 0; list-style: none; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--size-control);
+    padding-block: var(--space-2);
+    color: var(--color-on-brand);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+  }
+  a:hover { color: var(--color-on-brand); text-decoration: underline; }
+  a:focus-visible { outline-color: var(--color-on-brand); }
+  .footer-contact { border-block: var(--border-width) solid var(--color-border-strong); }
+  .footer-contact a { font-size: var(--font-size-md); font-weight: var(--font-weight-interface); }
+  .footer-legal a { text-decoration: underline; }
+  @media (min-width: 48rem) {
+    .footer-top { grid-template-columns: 1fr 2fr; }
+    .footer-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

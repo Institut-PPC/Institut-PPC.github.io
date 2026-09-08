@@ -1,0 +1,35 @@
+/* Le reset léger reste dans global.css ; aucun thème de marque Tailwind n'est utilisé. */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source('../');
+
+@theme {
+  --*: initial;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 72rem;
+}
+
+/* Ces alias consomment la charte PPC sans recopier ses valeurs. */
+@theme inline {
+  --color-ppc-brand: var(--color-brand);
+  --color-ppc-surface: var(--color-surface);
+  --color-ppc-muted: var(--color-text-muted);
+  --color-ppc-on-brand: var(--color-on-brand);
+  --font-ppc-display: var(--font-display);
+  --text-ppc-sm: var(--font-size-sm);
+  --text-ppc-lg: var(--font-size-lg);
+  --spacing-0: 0px;
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-7: var(--space-7);
+  --spacing-8: var(--space-8);
+  --spacing-section: var(--space-section);
+  --spacing-gutter: var(--page-gutter);
+  --spacing-control: var(--size-control);
+  --container-reading: var(--width-reading);
+  --container-content: var(--width-content);
+}
