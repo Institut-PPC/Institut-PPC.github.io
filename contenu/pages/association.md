@@ -1,29 +1,41 @@
 ---
-titre: L’organisation qui porte, protège et développe PPC
+titre: L’Association pour la Pérennité Programmée Circulaire
 description: >-
-  Découvrir la mission et les responsabilités de l’Association pour la Pérennité
-  Programmée Circulaire.
+  Découvrir la mission de l’Association pour la Pérennité Programmée Circulaire,
+  son rôle dans le développement de PPC et la protection de sa marque collective.
 surtitre: L’Association
 introduction: >-
-  L’Association pour la Pérennité Programmée Circulaire est une organisation d’intérêt
-  général. Elle structure la démarche et sa marque collective sans se confondre avec PPC elle-même.
+  L’Association pour la Pérennité Programmée Circulaire rassemble des professionnels, experts, institutions et acteurs publics ou privés autour d’un
+  objectif commun : promouvoir, développer et diffuser les principes de la PPC
+  dans l’industrie et les services.
 mission:
   surtitre: Mission
-  titre: Donner à la démarche un cadre collectif durable
+  titre: Structurer un commun au service de la pérennité
   texte: >-
-    Le rôle de l’Association est de porter la PPC, de protéger son intégrité, de
-    structurer son développement et celui de la marque collective.
+    L’Association contribue à élaborer, structurer et diffuser un corpus méthodologique,
+    scientifique et technique consacré à la durabilité des biens, à leur réparabilité,
+    leur réemploi et leur robustesse, ainsi qu’aux conditions économiques, comptables,
+    organisationnelles et technologiques permettant d’assurer leur pérennité dans
+    le temps long. Elle assure également la protection, la cohérence et
+    l’administration de la marque collective « Pérennité Programmée Circulaire ».
 titre_liens: Découvrir l’Association
 liens:
   - titre: Gouvernance
-    texte: Comprendre les organes et principes qui structurent l’Association.
+    texte: >-
+      Découvrir la co-présidence, le Conseil d’administration et les principes
+      qui structurent la gouvernance de l’Association.
   - titre: Membres fondateurs
-    texte: Présenter le collège qui a contribué à fonder la démarche.
+    texte: >-
+      Découvrir les personnes qui ont participé à la création de l’Association
+      et constituent le collège des membres fondateurs.
   - titre: Nous soutenir
-    texte: Contribuer à l’Association par l’adhésion, le don ou une prise de contact.
+    texte: >-
+      Découvrir les possibilités pour adhérer à l’Association, soutenir ses
+      missions ou contribuer à ses travaux.
 contact:
   titre: Entrer en relation avec PPC
   texte: >-
-    Pour une contribution, un partenariat ou une question sur la démarche, la page
-    Contact indique les informations utiles à transmettre.
+    Entreprises, institutions, experts, chercheurs, associations ou citoyens :
+    contactez-nous pour toute question, proposition de coopération ou contribution
+    aux travaux portés autour de la Pérennité Programmée Circulaire.
 ---

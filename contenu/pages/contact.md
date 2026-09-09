@@ -1,23 +1,31 @@
 ---
-titre: Orienter votre demande
-description: Préparer une prise de contact avec la Pérennité Programmée Circulaire.
-surtitre: Nous contacter
+titre: Nous contacter
+description: Contacter l’Association pour la Pérennité Programmée Circulaire.
+surtitre: Contact
 introduction: >-
-  Le site ne collecte aucune donnée par formulaire. Les coordonnées publiques de
-  l’Association seront affichées ici dès qu’elles auront été intégrées et validées dans le dépôt.
+  Vous souhaitez en savoir plus sur la Pérennité Programmée Circulaire,
+  contribuer à ses travaux ou échanger avec l’Association ? Écrivez-nous en
+  précisant le contexte et l’objet de votre demande.
 coordonnees_absentes:
-  titre: Adresse e-mail et adresse postale à compléter avant la publication définitive.
-  texte: Aucune coordonnée n’est inventée pour les besoins de cette démonstration.
-titre_demandes: Informations utiles à préparer
+  titre: Coordonnées temporairement indisponibles.
+  texte: Les coordonnées publiques de l’Association seront prochainement disponibles.
+titre_demandes: Pour nous aider à orienter votre demande
 demandes:
   - titre: Information générale
-    texte: Précisez votre question et le contexte dans lequel vous avez découvert PPC.
-  - titre: Contribution ou partenariat
-    texte: Présentez votre organisation, votre activité et la forme de collaboration envisagée.
-  - titre: Marque ou référentiels
     texte: >-
-      Indiquez le référentiel concerné et la nature de votre demande, sans supposer
-      l’existence d’une procédure d’attribution.
+      Indiquez votre question et, si utile, le contexte dans lequel vous avez
+      découvert la Pérennité Programmée Circulaire.
+  - titre: Contribution ou partenariat
+    texte: >-
+      Présentez votre organisation ou votre activité, les sujets qui vous
+      intéressent et la forme de contribution ou de coopération envisagée.
+  - titre: Marque collective ou référentiels
+    texte: >-
+      Précisez le sujet concerné et la nature de votre demande. Les conditions
+      d’usage de la marque et des référentiels restent celles définies par
+      l’Association.
   - titre: Presse ou intervention
-    texte: Ajoutez le média ou l’organisation, le sujet, le format et l’échéance souhaitée.
+    texte: >-
+      Indiquez le média ou l’organisation concernée, le sujet, le format,
+      l’échéance souhaitée et vos coordonnées.
 ---

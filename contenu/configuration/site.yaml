@@ -2,3 +2,15 @@ identite:
   nom_court: PPC
   nom_complet: Pérennité Programmée Circulaire
   nom_association: Association pour la Pérennité Programmée Circulaire
+
+adresse_postale:
+  - Institut PPC - Association pour la Pérennité Programmée Circulaire
+  - Campus Arts et Métiers de Paris
+  - 151 Boulevard de l'Hôpital
+  - 75013 Paris
+
+email_public: perennite.programmee.circulaire@gmail.com
+
+reseaux_sociaux:
+  - nom: LinkedIn
+    url: https://www.linkedin.com/company/association-pour-la-perennite-programmee-circulaire/
