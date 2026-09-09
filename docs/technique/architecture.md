@@ -66,7 +66,7 @@ Organisation cible :
 ├── public/
 │   ├── admin/                   # interface Decap
 │   ├── documents/               # fichiers publics servis tels quels
-│   ├── CNAME                    # lorsque le domaine personnalisé est activé
+│   ├── CNAME                    # domaine personnalisé GitHub Pages
 │   └── robots.txt
 │
 ├── scripts/                     # validation et automatisations ponctuelles

@@ -150,7 +150,7 @@ Les fondamentaux SEO sont structurels et intégrés aux layouts :
 - `robots.txt` ;
 - structure de titres cohérente.
 
-Le domaine public canonique doit être configuré dans Astro via `site` afin de générer correctement les URL absolues, sitemap et canonical.
+Le domaine public canonique `https://www.perennite-programmee-circulaire.org` doit être configuré dans Astro via `site` afin de générer correctement les URL absolues, sitemap et canonical. Le site est servi à la racine de ce domaine, sans préfixe de chemin.
 
 Les contenus `publie: false` ne génèrent aucune route et ne doivent donc pas être gérés via `noindex`.
 

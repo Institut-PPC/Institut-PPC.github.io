@@ -114,6 +114,6 @@ npm run ci
 
 Le workflow `.github/workflows/deploy-pages.yml` exécute les tests, la validation transverse, le contrôle Astro/TypeScript et le build avant de publier exclusivement l’artifact Astro `dist/`. GitHub Pages doit être configuré dans **Settings → Pages → Build and deployment → Source** avec la valeur **GitHub Actions** ; la publication depuis une branche déclencherait à tort un build Jekyll sur les sources Astro.
 
-Le remote actuel `Institut-PPC/Institut-PPC.github.io` correspond au dépôt Pages spécial de l’organisation. Son URL technique temporaire est donc `https://Institut-PPC.github.io/`. `SITE_URL` pilote cette origine au build afin de ne pas figer un futur domaine canonique PPC dans le code.
+Le remote `Institut-PPC/Institut-PPC.github.io` correspond au dépôt Pages spécial de l’organisation. Le site reste déployé par GitHub Pages, avec `https://www.perennite-programmee-circulaire.org/` comme domaine public canonique configuré dans Astro et dans `public/CNAME`.
 
 L'objectif est qu'un nouveau mainteneur humain ou un agent IA puisse cloner le dépôt, lire la documentation, installer les dépendances, lancer le site, valider ses modifications et le déployer sans dépendre de connaissances non documentées détenues par le mainteneur initial.

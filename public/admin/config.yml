@@ -11,8 +11,8 @@ backend:
 local_backend: true
 publish_mode: simple
 locale: fr
-site_url: https://Institut-PPC.github.io/
-display_url: https://Institut-PPC.github.io/
+site_url: https://www.perennite-programmee-circulaire.org/
+display_url: https://www.perennite-programmee-circulaire.org/
 show_preview_links: false
 
 slug:

@@ -30,9 +30,6 @@ jobs:
           node-version: 22.12.0
           package-manager: npm
           build-cmd: npm run ci
-        env:
-          SITE_URL: https://${{ github.repository_owner }}.github.io
-
   deploy:
     name: Déployer sur GitHub Pages
     if: github.event_name != 'pull_request'
