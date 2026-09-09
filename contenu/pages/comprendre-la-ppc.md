@@ -1,47 +1,73 @@
 ---
-titre: Découvrir la démarche PPC
+titre: Comprendre la Pérennité Programmée Circulaire
 description: >-
-  Découvrir la Pérennité Programmée Circulaire, sa formalisation et les manières
-  d’approfondir la démarche.
-surtitre: Comprendre
+  Comprendre les principes de la Pérennité Programmée Circulaire : concevoir
+  pour durer, préserver la valeur des ressources et faire de la pérennité un
+  moteur de performance économique.
+surtitre: Comprendre la PPC
 introduction: >-
-  La Pérennité Programmée Circulaire est une démarche en cours de structuration,
-  portée par une association d’intérêt général et formalisée progressivement par
-  une marque collective et des référentiels.
+  La Pérennité Programmée Circulaire propose de faire de la durée de vie des
+  biens, des infrastructures et des savoirs un levier de création de valeur.
+  Elle articule conception, usage, coopération, gestion et financement afin de
+  préserver dans le temps les ressources, les performances et les patrimoines
+  déjà constitués.
+
 sections:
   - surtitre: "01"
-    titre: Une découverte progressive
+    titre: Passer du renouvellement à la conservation de la valeur
     paragraphes:
       - >-
-        Le site PPC est conçu pour permettre de comprendre la démarche avant
-        d’envisager de l’adopter, de rejoindre l’Association, d’utiliser la marque
-        collective ou de contribuer.
+        Une grande partie de nos modèles industriels et économiques repose encore
+        sur la production, la vente puis le renouvellement régulier des biens.
+        Dans un contexte de raréfaction de certaines ressources, de hausse du coût
+        de l’énergie, de décarbonation et de souveraineté industrielle, cette
+        logique atteint ses limites.
       - >-
-        Ces étapes décrivent un parcours conceptuel à long terme. Elles ne
-        constituent pas encore un processus transactionnel.
+        La PPC explore une autre voie : créer de la valeur en faisant durer les
+        biens et les infrastructures, en maintenant leurs performances, en les
+        réparant, en les faisant évoluer et en réemployant au maximum les
+        composants, les matières et les savoirs déjà mobilisés.
+
   - surtitre: "02"
-    titre: PPC d’abord, l’Association comme organisation porteuse
+    titre: Faire de la durabilité un intérêt économique
     paragraphes:
       - >-
-        Le site présente d’abord la Pérennité Programmée Circulaire. L’Association
-        pour la Pérennité Programmée Circulaire en porte, protège, structure et
-        développe la démarche et la marque collective.
+        Pour qu’un produit durable devienne aussi un modèle économique durable,
+        la manière de créer du revenu doit évoluer. La PPC s’inscrit ainsi dans
+        des modèles serviciels où la valeur repose davantage sur la performance
+        d’usage et la qualité du service rendu que sur la multiplication des ventes
+        de biens neufs.
       - >-
-        Cette distinction permet d’expliquer le concept, ses travaux et son
-        organisation sans les confondre.
+        Cette logique rapproche l’intérêt économique du fabricant ou de
+        l’opérateur de celui de l’utilisateur : un équipement robuste, maintenable
+        et utilisé longtemps devient une source de valeur plutôt qu’un obstacle au
+        renouvellement des ventes. Elle suppose également d’organiser la
+        coopération entre les acteurs nécessaires à sa maintenance, son
+        remanufacturage, son réemploi et son évolution.
+
   - surtitre: "03"
-    titre: Du concept à la formalisation
+    titre: Une approche intégrée de la pérennité
     paragraphes:
       - >-
-        La marque collective rend la démarche identifiable. Les référentiels
-        constituent sa formalisation documentée et peuvent présenter leurs versions
-        et documents disponibles.
+        La PPC articule quatre dimensions complémentaires : concevoir des produits
+        modulaires, démontables, réparables et évolutifs ; développer des modèles
+        économiques fondés sur l’usage ; organiser des chaînes de valeur circulaires
+        capables de maintenir et de remettre les équipements en service ; et gérer
+        dans le temps les composants, les matières, les infrastructures et les
+        savoirs nécessaires à leur pérennité.
       - >-
-        Le site montre le cadre existant sans anticiper les règles d’un futur parcours
-        d’utilisation de la marque.
+        Cette dernière dimension conduit notamment à questionner la manière dont
+        la comptabilité et le financement représentent la valeur conservée dans le
+        temps. L’Association travaille ainsi à la définition et à la reconnaissance
+        d’une Classe d’Actifs Durables, avec des travaux portant notamment sur les
+        Matières Premières Pérennes (MPP), le Génie Civil Pérenne (GCP) et les
+        Savoirs Opérationnels Pérennes (SOP).
+
 poursuivre:
-  surtitre: Poursuivre
-  titre: Approfondir avec les ressources
+  surtitre: Pour aller plus loin
+  titre: Des principes aux référentiels et aux travaux PPC
   texte: >-
-    Ouvrages, publications, vidéos, formations et travaux PPC complètent cette introduction.
+    La marque collective et les référentiels ont vocation à formaliser la démarche
+    PPC. Les publications, études et autres ressources permettent d’en approfondir
+    les fondements, les applications et les travaux en cours.
 ---
