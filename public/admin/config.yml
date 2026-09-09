@@ -1,0 +1,690 @@
+backend:
+  name: github
+  repo: Institut-PPC/Institut-PPC.github.io
+  branch: main
+
+# Le proxy local intercepte ce backend sans authentification. L'URL OAuth de
+# production sera ajoutée dans la tranche suivante.
+local_backend: true
+publish_mode: simple
+locale: fr
+site_url: https://Institut-PPC.github.io/
+display_url: https://Institut-PPC.github.io/
+show_preview_links: false
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+# Dossier par défaut des widgets documentaires. Les collections qui portent
+# des images définissent ci-dessous leurs chemins relatifs dédiés.
+media_folder: public/documents
+public_folder: /documents
+
+collections:
+  - name: actualites
+    label: Actualités
+    label_singular: Actualité
+    description: Publications éditoriales affichées dans le hub et, lorsqu'elles sont publiées, sur leur page propre.
+    folder: contenu/actualites
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: titre
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{titre}} — {{date_publication}}'
+    media_folder: ../medias/images/actualites
+    public_folder: ../medias/images/actualites
+    editor:
+      preview: false
+    fields:
+      - { label: Titre, name: titre, widget: string }
+      - label: Slug public
+        name: slug
+        widget: string
+        hint: Identifiant durable de l’URL, en minuscules ASCII et kebab-case. À stabiliser dès la première publication.
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser uniquement des minuscules ASCII, des chiffres et des tirets.']
+      - { label: Résumé, name: resume, widget: text }
+      - label: Date de publication
+        name: date_publication
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+        picker_utc: true
+      - label: Date de mise à jour
+        name: date_mise_a_jour
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+        picker_utc: true
+        required: false
+        default: ''
+      - { label: Image principale, name: image_principale, widget: image, required: false }
+      - { label: Texte alternatif de l’image, name: image_alt, widget: string, required: false, hint: À renseigner si l’image apporte une information qui n’est pas déjà exprimée par le contexte. }
+      - { label: Publié, name: publie, widget: boolean, default: false, hint: Active la visibilité publique après validation du contenu. }
+      - &corps_markdown_obligatoire
+        label: Contenu
+        name: body
+        widget: richtext
+        modes: [rich_text, raw]
+        buttons: [bold, italic, link, heading-two, heading-three, heading-four, quote, bulleted-list, numbered-list]
+        editor_components: [image]
+
+  - name: evenements
+    label: Événements
+    label_singular: Événement
+    description: Rendez-vous organisés par PPC ou événements externes auxquels PPC participe.
+    folder: contenu/evenements
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: titre
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{titre}} — {{date_debut}}'
+    media_folder: ../medias/images/evenements
+    public_folder: ../medias/images/evenements
+    editor:
+      preview: false
+    fields:
+      - { label: Titre, name: titre, widget: string }
+      - label: Slug public
+        name: slug
+        widget: string
+        hint: Identifiant durable de l’URL, en minuscules ASCII et kebab-case.
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser uniquement des minuscules ASCII, des chiffres et des tirets.']
+      - { label: Résumé, name: resume, widget: text }
+      - label: Date et heure de début
+        name: date_debut
+        widget: datetime
+        format: YYYY-MM-DDTHH:mm:ssZ
+        date_format: DD/MM/YYYY
+        time_format: HH:mm
+        picker_utc: false
+        hint: L’heure est enregistrée avec le fuseau de l’éditeur.
+      - label: Date et heure de fin
+        name: date_fin
+        widget: datetime
+        format: YYYY-MM-DDTHH:mm:ssZ
+        date_format: DD/MM/YYYY
+        time_format: HH:mm
+        picker_utc: false
+        required: false
+        default: ''
+      - label: Relation à PPC
+        name: relation_ppc
+        widget: select
+        options:
+          - { label: Organisé par PPC, value: organise-par-ppc }
+          - { label: Événement externe auquel PPC participe, value: evenement-externe }
+      - { label: Lieu, name: lieu, widget: string, required: false }
+      - { label: Lien externe, name: lien_externe, widget: string, required: false, hint: URL complète en http ou https. }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Texte alternatif de l’image, name: image_alt, widget: string, required: false, hint: À renseigner si l’image apporte une information utile. }
+      - label: Organisations liées
+        name: organisations_liees
+        widget: relation
+        collection: organisations
+        multiple: true
+        required: false
+        search_fields: [nom]
+        display_fields: [nom]
+        value_field: '{{slug}}'
+      - label: Personnes liées
+        name: personnes_liees
+        widget: relation
+        collection: personnes
+        multiple: true
+        required: false
+        search_fields: [prenom, nom]
+        display_fields: ['{{prenom}} {{nom}}']
+        value_field: '{{slug}}'
+      - { label: Publié, name: publie, widget: boolean, default: false, hint: Active la visibilité publique après validation du contenu. }
+      - *corps_markdown_obligatoire
+
+  - name: personnes
+    label: Personnes
+    label_singular: Personne
+    description: Profils publics réutilisés par la gouvernance, les membres fondateurs et les événements.
+    folder: contenu/personnes
+    create: true
+    extension: yaml
+    format: yaml
+    identifier_field: nom
+    slug: '{{prenom}}-{{nom}}'
+    summary: '{{prenom}} {{nom}}'
+    media_folder: ../medias/images/personnes
+    public_folder: ../medias/images/personnes
+    editor:
+      preview: false
+    fields:
+      - { label: Prénom, name: prenom, widget: string }
+      - label: Nom
+        name: nom
+        widget: string
+        hint: Le nom de fichier créé à partir de ce champ devient l’identifiant PPC canonique et ne doit ensuite pas être renommé sans migration.
+      - label: Organisation
+        name: organisation
+        widget: relation
+        collection: organisations
+        required: false
+        search_fields: [nom]
+        display_fields: [nom]
+        value_field: '{{slug}}'
+        hint: La valeur enregistrée est l’identifiant PPC de l’organisation.
+      - { label: Fonction dans l’organisation, name: fonction_organisation, widget: string, required: false }
+      - label: Rôles PPC
+        name: roles_ppc
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - { label: Co-présidence, value: co-presidence }
+          - { label: Conseil d’administration, value: conseil-administration }
+          - { label: Conseil d’administration — représentant du vivant, value: conseil-administration-representant-vivant }
+          - { label: Équipe opérationnelle, value: equipe-operationnelle }
+          - { label: Membre fondateur, value: membre-fondateur }
+          - { label: Partenaire, value: partenaire }
+          - { label: Mécène, value: mecene }
+        hint: Photo et LinkedIn sont obligatoires pour la co-présidence, le conseil d’administration et les membres fondateurs.
+      - { label: Photo, name: photo, widget: image, required: false }
+      - { label: Profil LinkedIn, name: linkedin, widget: string, required: false, hint: URL https complète sur linkedin.com. }
+
+  - name: organisations
+    label: Organisations
+    label_singular: Organisation
+    description: Organisations référencées par des personnes, événements ou rôles publics PPC.
+    folder: contenu/organisations
+    create: true
+    extension: yaml
+    format: yaml
+    identifier_field: nom
+    slug: '{{slug}}'
+    summary: '{{nom}}'
+    media_folder: ../medias/images/organisations
+    public_folder: ../medias/images/organisations
+    editor:
+      preview: false
+    fields:
+      - label: Nom
+        name: nom
+        widget: string
+        hint: Le nom de fichier créé à partir de ce champ devient l’identifiant PPC canonique et ne doit ensuite pas être renommé sans migration.
+      - { label: Site Web, name: site_web, widget: string, required: false, hint: URL complète en http ou https. }
+      - { label: Logo, name: logo, widget: image, required: false }
+      - { label: Courte description, name: description_courte, widget: text, required: false }
+      - label: Rôles PPC
+        name: roles_ppc
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - { label: Partenaire, value: partenaire }
+          - { label: Mécène, value: mecene }
+
+  - name: ressources
+    label: Ressources
+    label_singular: Ressource
+    description: Contenus d’approfondissement internes ou liens directs vers une source externe ou un document local.
+    folder: contenu/ressources
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: titre
+    slug: '{{slug}}'
+    summary: '{{titre}} — {{mode_exposition}}'
+    media_folder: ../medias/images/ressources
+    public_folder: ../medias/images/ressources
+    editor:
+      preview: false
+    fields:
+      - { label: Titre, name: titre, widget: string, hint: Le nom de fichier créé à partir de ce titre devient l’identifiant PPC canonique. }
+      - label: Type
+        name: type
+        widget: select
+        options:
+          - { label: Vidéo, value: video }
+          - { label: Ouvrage, value: ouvrage }
+          - { label: Publication, value: publication }
+          - { label: Formation, value: formation }
+          - { label: Travail PPC, value: travail-ppc }
+          - { label: Autre, value: autre }
+      - label: Origine
+        name: origine
+        widget: select
+        options:
+          - { label: PPC, value: ppc }
+          - { label: Externe, value: externe }
+      - { label: Résumé, name: resume, widget: text }
+      - { label: Image, name: image, widget: image, required: false }
+      - { label: Texte alternatif de l’image, name: image_alt, widget: string, required: false }
+      - label: Date
+        name: date
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+        picker_utc: true
+        required: false
+        default: ''
+      - label: Mode d’exposition
+        name: mode_exposition
+        widget: select
+        options:
+          - { label: Lien direct, value: lien-direct }
+          - { label: Page interne, value: page-interne }
+        hint: « Lien direct » exige destination_directe et un corps vide. « Page interne » exige slug, autorise un corps Markdown et un lien principal associé.
+      - label: Destination directe
+        name: destination_directe
+        widget: string
+        required: false
+        hint: 'Uniquement pour « lien-direct » : URL http(s) ou chemin d’un document ajouté via « Media », sous /documents/. Laisser vide en « page-interne ».'
+      - label: Slug public
+        name: slug
+        widget: string
+        required: false
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser uniquement des minuscules ASCII, des chiffres et des tirets.']
+        hint: Obligatoire uniquement pour « page-interne ». Laisser vide en « lien-direct ».
+      - label: Lien principal associé
+        name: lien_principal_associe
+        widget: string
+        required: false
+        hint: 'Facultatif et uniquement pour « page-interne » : URL http(s) ou chemin d’un document ajouté via « Media », sous /documents/.'
+      - { label: Publié, name: publie, widget: boolean, default: false, hint: Active la visibilité publique après validation du contenu. }
+      - label: Contenu
+        name: body
+        widget: richtext
+        required: false
+        hint: Doit rester vide en « lien-direct » ; facultatif en « page-interne ».
+        modes: [rich_text, raw]
+        buttons: [bold, italic, link, heading-two, heading-three, heading-four, quote, bulleted-list, numbered-list]
+        editor_components: [image]
+
+  - name: referentiels
+    label: Référentiels
+    label_singular: Référentiel
+    description: Référentiels de la marque collective et historique explicite de leurs versions.
+    folder: contenu/referentiels
+    create: true
+    extension: md
+    format: frontmatter
+    identifier_field: titre
+    slug: '{{slug}}'
+    summary: '{{titre}} — {{version_courante}}'
+    media_folder: ../medias/images/referentiels
+    public_folder: ../medias/images/referentiels
+    editor:
+      preview: false
+    fields:
+      - { label: Titre, name: titre, widget: string, hint: Le nom de fichier créé à partir de ce titre devient l’identifiant PPC canonique. }
+      - label: Slug public
+        name: slug
+        widget: string
+        required: false
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser uniquement des minuscules ASCII, des chiffres et des tirets.']
+        hint: Sa présence crée une page de détail publique ; son absence laisse le référentiel dans la liste uniquement.
+      - { label: Résumé, name: resume, widget: text }
+      - { label: Statut public, name: statut_public, widget: string, required: false, hint: Information éditoriale distincte de l’état « Publié ». }
+      - label: Version courante
+        name: version_courante
+        widget: string
+        required: false
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser l’identifiant d’une version, en minuscules ASCII et kebab-case.']
+        hint: Obligatoire dès qu’une version existe et doit correspondre exactement à l’un des identifiants ci-dessous.
+      - label: Versions
+        name: versions
+        widget: list
+        required: true
+        summary: '{{fields.version}} — {{fields.id}}'
+        fields:
+          - label: Identifiant de version
+            name: id
+            widget: string
+            pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Utiliser uniquement des minuscules ASCII, des chiffres et des tirets.']
+            hint: Identifiant stable et unique dans ce référentiel, distinct du libellé de version.
+          - { label: Libellé ou numéro de version, name: version, widget: string }
+          - label: Date de publication
+            name: date_publication
+            widget: datetime
+            format: YYYY-MM-DD
+            date_format: DD/MM/YYYY
+            time_format: false
+            picker_utc: true
+            required: false
+            default: ''
+          - label: Document principal
+            name: document
+            widget: string
+            required: false
+            hint: URL http(s) ou chemin d’un document ajouté via « Media », idéalement /documents/referentiels/<identifiant>/<version>.<extension>.
+      - { label: Publié, name: publie, widget: boolean, default: false, hint: Active la visibilité publique après validation du contenu. }
+      - label: Contenu de présentation
+        name: body
+        widget: richtext
+        required: false
+        modes: [rich_text, raw]
+        buttons: [bold, italic, link, heading-two, heading-three, heading-four, quote, bulleted-list, numbered-list]
+        editor_components: [image]
+
+  - name: pages_fixes
+    label: Pages fixes
+    description: Singletons éditoriaux connus du code. Il n’est pas possible d’en créer de nouveaux depuis le CMS.
+    editor:
+      preview: false
+    files:
+      - name: accueil
+        label: Accueil
+        file: contenu/pages/accueil.yaml
+        fields:
+          - { label: Titre de page, name: titre_page, widget: string }
+          - { label: Description, name: description, widget: text }
+          - label: Bloc principal
+            name: hero
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Lignes du titre, name: titre_lignes, widget: list, min: 3, max: 3, field: { label: Ligne, name: ligne, widget: string } }
+              - { label: Introduction, name: introduction, widget: text }
+          - label: Pourquoi
+            name: pourquoi
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+              - label: Principes
+                name: principes
+                widget: list
+                min: 3
+                max: 3
+                fields:
+                  - { label: Numéro, name: numero, widget: string }
+                  - { label: Titre, name: titre, widget: string }
+                  - { label: Texte, name: texte, widget: text }
+          - label: Du concept au cadre concret
+            name: cadre_concret
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+              - { label: Texte, name: texte, widget: text }
+          - &entete_contribuer
+            label: Contribuer
+            name: contribuer
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+          - label: Pour approfondir
+            name: approfondir
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+          - label: Ressources mises en avant
+            name: ressources_mises_en_avant
+            widget: relation
+            collection: ressources
+            multiple: true
+            required: false
+            search_fields: [titre]
+            display_fields: [titre]
+            value_field: '{{slug}}'
+            filters:
+              - { field: publie, values: [true] }
+            hint: Liste ordonnée d’identifiants PPC. Seules des ressources publiées peuvent être sélectionnées.
+          - label: PPC en mouvement
+            name: mouvement
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+          - label: Association
+            name: association
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text, required: false }
+              - { label: Texte, name: texte, widget: text }
+
+      - name: configuration_site
+        label: Configuration globale du site
+        file: contenu/configuration/site.yaml
+        fields:
+          - label: Identité
+            name: identite
+            widget: object
+            fields:
+              - { label: Nom court, name: nom_court, widget: string }
+              - { label: Nom complet, name: nom_complet, widget: string }
+              - { label: Nom de l’association, name: nom_association, widget: string }
+          - { label: Adresse postale, name: adresse_postale, widget: list, required: false, field: { label: Ligne, name: ligne, widget: string } }
+          - { label: Adresse e-mail publique, name: email_public, widget: string, required: false }
+          - label: Réseaux sociaux
+            name: reseaux_sociaux
+            widget: list
+            required: false
+            fields:
+              - { label: Nom, name: nom, widget: string }
+              - { label: URL, name: url, widget: string }
+          - { label: URL d’adhésion, name: url_adhesion, widget: string, required: false }
+          - { label: URL de don, name: url_don, widget: string, required: false }
+          - { label: URL de newsletter, name: url_newsletter, widget: string, required: false }
+
+      - &page_comprendre
+        name: comprendre_la_ppc
+        label: Comprendre la PPC
+        file: contenu/pages/comprendre-la-ppc.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Sections
+            name: sections
+            widget: list
+            min: 3
+            max: 3
+            fields: &champs_section_narrative
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Paragraphes, name: paragraphes, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
+          - label: Poursuivre
+            name: poursuivre
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - &corps_markdown_facultatif
+            label: Contenu complémentaire
+            name: body
+            widget: richtext
+            required: false
+            modes: [rich_text, raw]
+            buttons: [bold, italic, link, heading-two, heading-three, heading-four, quote, bulleted-list, numbered-list]
+            editor_components: [image]
+
+      - name: marque_collective
+        label: Marque collective
+        file: contenu/pages/marque-collective.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - { label: Sections, name: sections, widget: list, min: 2, max: 2, fields: *champs_section_narrative }
+          - label: Appel
+            name: appel
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: association
+        label: Association
+        file: contenu/pages/association.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Mission
+            name: mission
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - { label: Titre des liens, name: titre_liens, widget: string }
+          - label: Liens éditoriaux
+            name: liens
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: gouvernance
+        label: Gouvernance
+        file: contenu/pages/gouvernance.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - &bloc_liste_personnes
+            label: Co-présidence
+            name: copresidence
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+              - { label: Titre de l’état vide, name: titre_vide, widget: string }
+              - { label: Message de l’état vide, name: message_vide, widget: text }
+          - label: Conseil d’administration
+            name: conseil_administration
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+              - { label: Titre de l’état vide, name: titre_vide, widget: string }
+              - { label: Message de l’état vide, name: message_vide, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: membres_fondateurs
+        label: Membres fondateurs
+        file: contenu/pages/membres-fondateurs.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Présentation
+            name: presentation
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+              - { label: Titre de l’état vide, name: titre_vide, widget: string }
+              - { label: Message de l’état vide, name: message_vide, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: nous_soutenir
+        label: Nous soutenir
+        file: contenu/pages/nous-soutenir.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Manières de soutenir
+            name: manieres
+            widget: list
+            min: 3
+            max: 3
+            fields:
+              - { label: Numéro, name: numero, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: travailler_avec_nous
+        label: Travailler avec nous
+        file: contenu/pages/travailler-avec-nous.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - { label: Collaboration, name: collaboration, widget: object, fields: *champs_section_narrative }
+          - label: Préparation
+            name: preparation
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text }
+              - { label: Informations, name: informations, widget: list, min: 1, field: { label: Information, name: information, widget: string } }
+          - { label: Titre des liens, name: titre_liens, widget: string }
+          - *corps_markdown_facultatif
+
+      - name: contact
+        label: Contact
+        file: contenu/pages/contact.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Coordonnées absentes
+            name: coordonnees_absentes
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - { label: Titre des demandes, name: titre_demandes, widget: string }
+          - label: Demandes
+            name: demandes
+            widget: list
+            min: 1
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - *corps_markdown_facultatif
+
+      - &page_markdown
+        name: mentions_legales
+        label: Mentions légales
+        file: contenu/pages/mentions-legales.md
+        fields: &champs_page_markdown
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - *corps_markdown_facultatif
+
+      - name: politique_confidentialite
+        label: Politique de confidentialité
+        file: contenu/pages/politique-de-confidentialite.md
+        fields: *champs_page_markdown
+
+      - name: accessibilite
+        label: Accessibilité
+        file: contenu/pages/accessibilite.md
+        fields: *champs_page_markdown
