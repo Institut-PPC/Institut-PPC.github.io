@@ -20,7 +20,7 @@ copresidence:
     Les profils de la co-présidence seront affichés ici lorsque leurs données
     publiques seront disponibles.
 conseil_administration:
-  titre: Conseil d’administration
+  titre: Conseil d’administration paritaire
   texte: >-
     Le Conseil d’administration est composé de douze membres, dont six femmes et
     six hommes, co-présidence comprise. Deux de ses membres, une femme et un homme,

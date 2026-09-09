@@ -2,24 +2,33 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
-interface Props { personne: CollectionEntry<'personnes'>; role?: string; }
-const { personne, role } = Astro.props;
+interface Props { personne: CollectionEntry<'personnes'>; role?: string; compact?: boolean; }
+const { personne, role, compact = false } = Astro.props;
 const nom = `${personne.data.prenom} ${personne.data.nom}`;
 ---
-<article class="person-card">
-  {personne.data.photo && <Image src={personne.data.photo} alt="" widths={[320, 480]} sizes="(min-width: 48rem) 16rem, 75vw" />}
+<article class:list={['person-card', { 'person-card--compact': compact }]}>
+  {personne.data.photo && <Image src={personne.data.photo} alt="" widths={compact ? [112, 224] : [320, 480]} sizes={compact ? 'clamp(5rem, 18vw, 7rem)' : '(min-width: 48rem) 16rem, 75vw'} />}
   <div>
     <h3>{nom}</h3>
     {role && <p class="role">{role}</p>}
     {personne.data.fonction_organisation && <p>{personne.data.fonction_organisation}</p>}
-    {personne.data.linkedin && <a href={personne.data.linkedin}>Profil LinkedIn de {nom} <span aria-hidden="true">↗</span></a>}
+    {personne.data.linkedin && (compact
+      ? <a class="linkedin-link linkedin-link--icon" href={personne.data.linkedin} aria-label={`Profil LinkedIn de ${nom}`}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M6.5 8.25H3.25V21H6.5V8.25ZM6.72 4.31A1.86 1.86 0 0 0 4.86 2.45 1.86 1.86 0 0 0 3 4.31a1.86 1.86 0 0 0 1.86 1.86 1.86 1.86 0 0 0 1.86-1.86ZM21 13.69c0-3.84-2.05-5.63-4.79-5.63a4.13 4.13 0 0 0-3.74 2.06V8.25H9.22V21h3.25v-6.31c0-1.66.32-3.27 2.38-3.27 2.04 0 2.06 1.9 2.06 3.38V21H21v-7.31Z" />
+          </svg>
+        </a>
+      : <a class="linkedin-link" href={personne.data.linkedin}>Profil LinkedIn de {nom} <span aria-hidden="true">↗</span></a>)}
   </div>
 </article>
 <style>
   .person-card { border-top: var(--border-width) solid var(--color-border); padding-top: var(--space-4); }
   img { aspect-ratio: 4 / 5; width: 100%; margin-bottom: var(--space-4); object-fit: cover; border-radius: var(--radius-surface); }
+  .person-card--compact img { aspect-ratio: 1; width: clamp(5rem, 18vw, 7rem); border-radius: 50%; }
   h3 { margin-bottom: var(--space-2); color: var(--color-brand); }
   p { margin-bottom: var(--space-2); color: var(--color-text-muted); }
   .role { color: var(--color-text); font-weight: var(--font-weight-interface); }
-  a { display: inline-block; margin-top: var(--space-2); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  .linkedin-link { display: inline-block; margin-top: var(--space-2); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  .linkedin-link--icon { display: inline-flex; align-items: center; justify-content: center; width: var(--size-control); height: var(--size-control); border: var(--border-width) solid currentColor; border-radius: 50%; }
+  .linkedin-link--icon:hover { background: var(--color-brand-soft); }
 </style>
