@@ -52,8 +52,7 @@ export function analyserOriginesAutorisees(valeur: string): string[] {
         url.password ||
         url.pathname !== '/' ||
         url.search ||
-        url.hash ||
-        url.origin !== origine
+        url.hash
       ) {
         throw new Error(`Origine CMS invalide : ${origine}`);
       }

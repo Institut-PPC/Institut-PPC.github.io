@@ -33,6 +33,10 @@ describe('configuration des origines OAuth', () => {
     ).toEqual(['https://institut-ppc.github.io', 'https://ppc.example']);
   });
 
+  it('accepte une casse différente et normalise le hostname', () => {
+    expect(analyserOriginesAutorisees('https://Institut-PPC.github.io')).toEqual([ORIGINE_PAGES]);
+  });
+
   it.each([
     'http://institut-ppc.github.io',
     'https://institut-ppc.github.io/admin/',

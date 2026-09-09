@@ -1,6 +1,7 @@
 import {
   FOURNISSEUR,
   PORTEE_GITHUB,
+  type ConfigurationOAuth,
   choisirOrigineCms,
   construireUrlAutorisation,
   creerEtatOAuth,
@@ -20,10 +21,18 @@ export default async function auth(request: Request): Promise<Response> {
     });
   }
 
+  let configuration: ConfigurationOAuth;
   try {
-    const configuration = lireConfigurationOAuth();
+    configuration = lireConfigurationOAuth();
+  } catch {
+    return new Response(
+      'Configuration OAuth Netlify incomplète ou CMS_ALLOWED_ORIGINS invalide.',
+      { status: 500, headers: entetesSansCache() },
+    );
+  }
+
+  try {
     const url = new URL(request.url);
-    const origineCms = choisirOrigineCms(url.searchParams.get('site_id'), configuration.originesAutorisees);
 
     if (url.searchParams.get('provider') !== FOURNISSEUR) {
       return new Response('Fournisseur OAuth non autorisé.', {
@@ -31,6 +40,8 @@ export default async function auth(request: Request): Promise<Response> {
         headers: entetesSansCache(),
       });
     }
+
+    const origineCms = choisirOrigineCms(url.searchParams.get('site_id'), configuration.originesAutorisees);
 
     const porteeDemandee = url.searchParams.get('scope');
     if (porteeDemandee && porteeDemandee !== PORTEE_GITHUB) {
@@ -55,7 +66,7 @@ export default async function auth(request: Request): Promise<Response> {
 
     return new Response(null, { status: 302, headers: entetes });
   } catch {
-    return new Response('Configuration ou requête OAuth invalide.', {
+    return new Response('Requête OAuth invalide ou origine CMS non autorisée.', {
       status: 400,
       headers: entetesSansCache(),
     });
