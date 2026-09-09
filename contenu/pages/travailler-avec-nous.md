@@ -1,29 +1,42 @@
 ---
-titre: Prendre part à la construction de PPC
-description: Participer aux travaux collectifs autour de la PPC et de ses référentiels.
-surtitre: Collaborer
+titre: Travailler avec nous
+description: >-
+  Entreprises, industriels, institutions et experts : contribuer aux travaux
+  de la Pérennité Programmée Circulaire à partir de situations concrètes.
+surtitre: Coopérer avec PPC
 introduction: >-
-  Cette page s’adresse aux entreprises, acteurs industriels et organisations qui
-  souhaitent comprendre les travaux en cours et envisager une contribution à la
-  démarche ou au consortium.
+  La Pérennité Programmée Circulaire se construit au croisement de
+  l’expérience industrielle, de la recherche et de l’expérimentation.
+  L’Association et les acteurs réunis autour de PPC travaillent avec des
+  entreprises et des experts pour confronter les principes de la démarche
+  à des situations réelles.
+
 collaboration:
-  surtitre: Une démarche collective
-  titre: Contribuer avant de prétendre adopter
+  surtitre: Une démarche appliquée
+  titre: Partir du terrain pour faire progresser PPC
   paragraphes:
     - >-
-      PPC et ses référentiels se construisent avec les acteurs concernés. La collaboration
-      peut commencer par un échange sur votre activité, vos enjeux et les travaux auxquels
-      vous souhaitez contribuer.
+      Les travaux menés avec les organisations permettent d’examiner leurs actifs,
+      leurs modèles économiques et leurs pratiques afin d’identifier les leviers
+      susceptibles de renforcer la création de valeur dans une logique de long
+      terme : durée de vie, maintenance, remanufacturage, réemploi, conservation
+      des ressources et préservation des savoirs.
     - >-
-      Cette prise de contact ne constitue pas une procédure immédiate d’adoption ou
-      d’utilisation de la marque collective.
+      Les enseignements issus de ces situations contribuent également à une
+      recherche collective sur la manière dont la comptabilité, le financement
+      et la gestion des actifs peuvent mieux reconnaître la valeur conservée dans
+      le temps, notamment autour de la réflexion sur une Classe d’Actifs Durables.
+
 preparation:
-  titre: Préparer l’échange
-  introduction: "Pour permettre un premier échange utile, présentez sobrement :"
+  titre: Préparer un premier échange
+  introduction: >-
+    Pour nous permettre de comprendre rapidement votre situation, indiquez :
   informations:
     - votre organisation et votre activité ;
+    - les actifs, usages ou enjeux que vous souhaitez explorer ;
     - le sujet PPC qui motive votre prise de contact ;
-    - la forme de contribution ou de collaboration envisagée ;
+    - la forme de contribution, d’étude ou de coopération envisagée ;
     - les coordonnées de la personne à recontacter.
-titre_liens: Avant de nous écrire
+
+titre_liens: Pour préparer votre démarche
 ---

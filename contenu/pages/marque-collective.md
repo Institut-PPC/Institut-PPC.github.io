@@ -1,33 +1,45 @@
 ---
-titre: Rendre la démarche identifiable et préserver son intégrité
-description: Comprendre le rôle de la marque collective PPC et son articulation avec les référentiels.
+titre: La marque collective Pérennité Programmée Circulaire
+description: >-
+  Comprendre le rôle de la marque collective Pérennité Programmée Circulaire
+  et la responsabilité de l’Association dans sa protection et son administration.
 surtitre: Marque collective
 introduction: >-
-  La marque collective porte l’identité de la Pérennité Programmée Circulaire. Elle
-  s’appuie sur des référentiels qui formalisent progressivement le cadre de la démarche.
+  La marque collective « Pérennité Programmée Circulaire » a vocation à
+  identifier des démarches conformes aux principes et référentiels développés
+  dans le cadre de PPC. Elle est placée sous la responsabilité de l’Association,
+  qui en assure la protection, la cohérence et l’intégrité.
+
 sections:
-  - surtitre: Un repère commun
-    titre: Une marque au service de la démarche
+  - surtitre: Un bien commun protégé
+    titre: Protéger l’intégrité de PPC
     paragraphes:
       - >-
-        La marque collective relie une identité partagée à un cadre documenté. Elle
-        permet de présenter ce qui est aujourd’hui disponible et ce qui reste encore
-        en construction.
+        La marque collective, les référentiels, les méthodes et les dispositifs
+        qui lui sont associés constituent un bien commun protégé placé sous la
+        responsabilité de l’Association.
       - >-
-        Le site n’anticipe pas de règles d’attribution, de candidature ou de contrôle
-        qui ne sont pas encore définies par PPC.
-  - surtitre: Formalisation
-    titre: Le rôle des référentiels
+        Cette responsabilité vise à préserver la cohérence de la démarche, son
+        indépendance et sa vocation d’intérêt général, et à éviter qu’elle ne
+        bénéficie à un cercle restreint d’acteurs.
+
+  - surtitre: Des règles communes
+    titre: Relier les engagements à un cadre vérifiable
     paragraphes:
       - >-
-        Chaque référentiel représente une identité durable. Ses versions, leur date de
-        publication et leurs documents peuvent être rendus accessibles de façon explicite.
+        La marque a vocation à s’appuyer sur des référentiels, des méthodes
+        d’évaluation et des conventions d’usage permettant de caractériser les
+        démarches qui se réclament de la Pérennité Programmée Circulaire.
       - >-
-        La version courante est indiquée par PPC ; elle n’est jamais déduite automatiquement
-        d’un numéro, d’une date ou de l’ordre de publication.
+        Les statuts prévoient que l’accès à l’usage de la marque, aux référentiels
+        et aux dispositifs d’évaluation soit ouvert à toute organisation respectant
+        les critères techniques, méthodologiques et éthiques définis par
+        l’Association, selon des conditions transparentes, objectives et non
+        discriminatoires.
+
 appel:
-  titre: Accéder au cadre disponible
+  titre: Consulter le cadre disponible
   texte: >-
-    La liste des référentiels distingue clairement leur statut public, leur version
-    courante et les documents accessibles.
+    Les référentiels et documents effectivement publiables seront mis à
+    disposition à mesure de leur validation par l’Association.
 ---
