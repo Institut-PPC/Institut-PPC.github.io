@@ -3,10 +3,8 @@ backend:
   repo: Institut-PPC/Institut-PPC.github.io
   branch: main
   auth_scope: public_repo
-
-  # Après création du site OAuth Netlify, ajouter ici son origine exacte :
-  # base_url: https://<nom-du-site-oauth>.netlify.app
-  # auth_endpoint: auth
+  base_url: https://site-institut-ppc.netlify.app
+  auth_endpoint: auth
 
 # Le proxy local intercepte ce backend sans authentification et ignore les
 # paramètres OAuth de production.
