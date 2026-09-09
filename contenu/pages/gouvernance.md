@@ -1,27 +1,34 @@
 ---
-titre: Une gouvernance au service de la démarche
+titre: Une gouvernance paritaire et collégiale
 description: >-
-  Présentation de la structure de gouvernance de l’Association pour la Pérennité
-  Programmée Circulaire.
+  Découvrir la co-présidence, le Conseil d’administration et la représentation
+  du vivant au sein de l’Association pour la Pérennité Programmée Circulaire.
 surtitre: Association
 introduction: >-
-  La gouvernance de l’Association est présentée à partir de ses organes et des rôles PPC
-  structurés. Les personnes apparaissent uniquement lorsque leurs données publiques
-  complètes sont disponibles.
+  La gouvernance de l’Association repose sur la parité, la collégialité et une
+  gestion désintéressée. L’Assemblée générale demeure l’organe décisionnaire en
+  dernier ressort ; le Conseil d’administration définit les orientations de
+  l’Association et la co-présidence agit dans ce cadre.
 copresidence:
-  titre: Co-présidence
-  texte: La co-présidence fait partie de la gouvernance présentée publiquement par l’Association.
+  titre: Co-présidence paritaire
+  texte: >-
+    L’Association est représentée par une co-présidence paritaire composée d’une
+    femme et d’un homme. Les deux co-présidents exercent leurs fonctions dans une
+    logique de gouvernance partagée fondée sur la parité et la collégialité.
   titre_vide: Composition à publier
   message_vide: >-
-    Les profils seront affichés ici lorsque les données institutionnelles validées
-    seront disponibles dans le dépôt.
+    Les profils de la co-présidence seront affichés ici lorsque leurs données
+    publiques seront disponibles.
 conseil_administration:
   titre: Conseil d’administration
   texte: >-
-    Le Conseil d’administration constitue un organe de gouvernance de l’Association.
-    Sa composition publique sera dérivée directement des rôles attribués aux personnes.
+    Le Conseil d’administration est composé de douze membres, dont six femmes et
+    six hommes, co-présidence comprise. Deux de ses membres, une femme et un homme,
+    sont désignés représentants du vivant afin d’attirer l’attention du Conseil
+    sur les conséquences de ses décisions pour le vivant et les équilibres
+    écologiques.
   titre_vide: Composition à publier
   message_vide: >-
-    Aucun annuaire fictif n’est présenté : les profils apparaîtront dès que les données
-    réelles seront intégrées.
+    Les profils des membres du Conseil d’administration seront affichés ici lorsque
+    leurs données publiques seront disponibles.
 ---
