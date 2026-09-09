@@ -242,6 +242,8 @@ Les secrets OAuth restent exclusivement dans la configuration de secrets Netlify
 - `GITHUB_CLIENT_ID` ;
 - `GITHUB_CLIENT_SECRET`.
 
+La liste configurable des origines CMS autorisées est fournie à Netlify par `CMS_ALLOWED_ORIGINS`. Elle ne contient pas de secret, mais reste une configuration d'exploitation du service plutôt qu'un contenu éditorial ou une valeur injectée dans le build Astro.
+
 Le secret n'est jamais commité, injecté dans le build Astro ou exposé côté client.
 
 Le flux doit au minimum :
@@ -253,6 +255,8 @@ Le flux doit au minimum :
 - fonctionner uniquement en HTTPS ;
 - éviter un CORS permissif générique ;
 - conserver des dépendances minimales.
+
+L'implémentation actuelle complète ces exigences par PKCE S256 et corrèle le `state` à un cookie `Secure`, `HttpOnly`, `SameSite=Lax` de courte durée. Aucun CORS générique n'est ajouté : le retour inter-origines repose sur le protocole `postMessage` attendu par Decap et cible exclusivement l'origine validée.
 
 Les permissions GitHub du repository restent l'autorité d'accès. Retirer l'accès GitHub d'un contributeur doit suffire à empêcher de nouvelles écritures via Decap.
 

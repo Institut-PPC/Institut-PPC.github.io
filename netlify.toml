@@ -1,0 +1,7 @@
+[build]
+  command = "npm run test:oauth && npm run check:oauth"
+  publish = "netlify/public"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

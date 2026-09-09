@@ -10,7 +10,9 @@
     "dev": "astro dev",
     "dev:cms": "BIND_HOST=127.0.0.1 decap-server",
     "check": "astro check",
+    "check:oauth": "tsc --noEmit",
     "test": "vitest run",
+    "test:oauth": "vitest run tests/oauth.test.ts",
     "validate": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/validate-contenus.ts",
     "build": "astro build",
     "ci": "npm run test && npm run validate && npm run check && npm run build"
