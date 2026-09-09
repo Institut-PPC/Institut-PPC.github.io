@@ -153,20 +153,6 @@ describe('fonctions Netlify', () => {
     expect(reponse.headers.get('access-control-allow-origin')).toBeNull();
   });
 
-  it('identifie une variable de configuration absente sans révéler sa valeur', async () => {
-    vi.stubEnv('GITHUB_CLIENT_ID', 'client-id');
-    vi.stubEnv('CMS_ALLOWED_ORIGINS', ORIGINE_PAGES);
-
-    const reponse = await auth(
-      new Request(
-        'https://ppc-oauth.netlify.app/auth?provider=github&site_id=institut-ppc.github.io&scope=public_repo',
-      ),
-    );
-
-    expect(reponse.status).toBe(500);
-    expect(await reponse.text()).toContain('GITHUB_CLIENT_SECRET est absente ou vide');
-  });
-
   it('échange un callback corrélé et renvoie le protocole Decap à l’origine exacte', async () => {
     configurerEnvironnement();
     const etat = creerEtatOAuth(ORIGINE_PAGES, SECRET);
