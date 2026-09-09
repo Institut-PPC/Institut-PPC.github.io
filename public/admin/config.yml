@@ -61,7 +61,6 @@ collections:
         time_format: false
         picker_utc: true
         required: false
-        default: ''
       - { label: Image principale, name: image_principale, widget: image, required: false }
       - { label: Texte alternatif de l’image, name: image_alt, widget: string, required: false, hint: À renseigner si l’image apporte une information qui n’est pas déjà exprimée par le contexte. }
       - { label: Publié, name: publie, widget: boolean, default: false, hint: Active la visibilité publique après validation du contenu. }
@@ -112,7 +111,6 @@ collections:
         time_format: HH:mm
         picker_utc: false
         required: false
-        default: ''
       - label: Relation à PPC
         name: relation_ppc
         widget: select
@@ -268,7 +266,6 @@ collections:
         time_format: false
         picker_utc: true
         required: false
-        default: ''
       - label: Mode d’exposition
         name: mode_exposition
         widget: select
@@ -353,7 +350,6 @@ collections:
             time_format: false
             picker_utc: true
             required: false
-            default: ''
           - label: Document principal
             name: document
             widget: string

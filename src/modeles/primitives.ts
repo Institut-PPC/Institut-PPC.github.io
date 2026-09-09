@@ -37,7 +37,7 @@ export function verifierAlternativeImage(
   imageAlt: string | undefined,
   contexte: z.RefinementCtx,
 ) {
-  if (image === undefined && imageAlt !== undefined) {
+  if (image === undefined && imageAlt?.trim()) {
     contexte.addIssue({
       code: 'custom',
       path: ['image_alt'],
