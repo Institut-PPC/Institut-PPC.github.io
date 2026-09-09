@@ -306,7 +306,15 @@ Les scripts éventuels doivent pouvoir effectuer des mises à jour idempotentes.
 | Site Web | facultatif | |
 | Logo | facultatif | |
 | Courte description | facultatif | Seulement lorsqu'elle est utile |
-| Rôles PPC | facultatif, multiple | Vocabulaire contrôlé lorsque pertinent |
+| Rôles PPC | facultatif, multiple | `partenaire` ou `mecene` uniquement pour le POC |
+
+Pour le POC, le vocabulaire contrôlé de `Organisation.roles_ppc` est exactement :
+- `partenaire` ;
+- `mecene`.
+
+Une `Organisation` peut ne porter aucun rôle PPC. Ce champ décrit uniquement les rôles publics transverses réellement portés par l'Organisation ; il ne représente pas une relation déjà modélisée ailleurs. Une Organisation liée à un Événement est référencée par `Événement.organisations_liees`. L'Organisation d'appartenance ou représentée par une Personne est référencée par `Personne.organisation`.
+
+Aucune autre valeur, notamment `membre`, `utilisateur-marque`, `consortium`, `organisateur-evenement` ou `beneficiaire`, n'est introduite dans le POC sans besoin fonctionnel public explicite. Ce vocabulaire pourra être étendu ultérieurement si un nouveau besoin produit apparaît.
 
 Une `Personne` peut référencer une `Organisation`.
 

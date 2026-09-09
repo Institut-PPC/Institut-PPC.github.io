@@ -319,3 +319,11 @@ Le journal des décisions est rédigé en français.
 **Pourquoi :** Le retour d'implémentation du POC a montré un coût disproportionné pour réaliser des patterns responsive courants avec la doctrine précédente, une tendance à surcontraindre Codex et un premier résultat visuel insuffisant, notamment pour la navigation mobile. Tailwind accélère la composition sans devenir propriétaire des choix de marque ; les tokens centraux préservent la cohérence et la réversibilité de la future charte.
 
 **À réexaminer lorsque :** Tailwind rendrait une refonte de charte coûteuse, conduirait à multiplier des valeurs de marque arbitraires dans les templates ou augmenterait sans justification le poids CSS produit.
+
+### 2026-09-09 — Vocabulaire des rôles PPC des Organisations précisé
+
+**Statut :** Acceptée
+
+**Décision :** Limiter pour le POC le vocabulaire contrôlé facultatif et multivalué de `Organisation.roles_ppc` à `partenaire` et `mecene`. Réserver ce champ aux rôles publics transverses réellement portés par l'Organisation, sans y dupliquer les relations modélisées par `Événement.organisations_liees` ou `Personne.organisation`.
+
+**Pourquoi :** Lever l'ambiguïté du modèle sans anticiper des rôles qui ne répondent pas encore à un besoin fonctionnel public explicite.
