@@ -1,59 +1,86 @@
 titre_page: Pérennité Programmée Circulaire — PPC
 description: >-
-  Découvrir la Pérennité Programmée Circulaire, sa marque collective, ses
-  référentiels et les manières de contribuer à la démarche.
+  Découvrir la Pérennité Programmée Circulaire : une démarche pour faire de la
+  durabilité, de la réparabilité et de la préservation de la valeur des leviers
+  de performance industrielle et économique.
+
 hero:
-  surtitre: Une démarche collective en construction
+  surtitre: Pour une économie qui crée de la valeur en faisant durer
   titre_lignes:
     - Pérennité
     - Programmée
     - Circulaire
   introduction: >-
-    Découvrir la Pérennité Programmée Circulaire, sa formalisation par une marque
-    collective et des référentiels, et les manières de contribuer à son développement.
+    La PPC propose de concevoir et d’organiser les biens, les services et les
+    modèles économiques pour préserver durablement leur valeur, leurs performances
+    et les ressources déjà mobilisées.
+
 pourquoi:
-  surtitre: Pourquoi
-  titre: Comprendre une démarche qui se construit dans le temps
+  surtitre: Pourquoi la PPC ?
+  titre: Faire de la durée un avantage plutôt qu’une contrainte
   introduction: >-
-    Le site propose une découverte progressive de PPC : comprendre le concept, voir
-    sa formalisation concrète, puis approfondir ou entrer en relation.
+    Dans un monde confronté à la raréfaction des ressources, aux enjeux de
+    décarbonation et de souveraineté industrielle, renouveler toujours plus vite
+    les biens n’est plus une réponse soutenable.
   principes:
     - numero: "01"
-      titre: Comprendre
-      texte: Découvrir simplement ce qu’est la PPC et le cadre actuel de la démarche.
+      titre: Concevoir pour durer
+      texte: >-
+        Des biens modulaires, démontables, réparables et évolutifs, pensés pour
+        conserver leurs performances dans le temps.
+
     - numero: "02"
-      titre: Approfondir
-      texte: Consulter les ressources, référentiels et travaux rendus publics.
+      titre: Créer de la valeur par l’usage
+      texte: >-
+        Des modèles économiques où la qualité du service rendu et la durée d’usage
+        comptent davantage que la multiplication des ventes de produits neufs.
+
     - numero: "03"
-      titre: Contribuer
-      texte: Envisager une participation aux travaux collectifs avant de prendre contact.
+      titre: Préserver les ressources et les savoirs
+      texte: >-
+        Maintenance, remanufacturage, réemploi et gestion dans le temps permettent
+        de conserver la valeur des composants, des matières, des infrastructures
+        et des savoirs déjà constitués.
+
 cadre_concret:
   surtitre: Du concept au cadre concret
-  titre: Une marque collective appuyée sur des référentiels
+  titre: Une démarche collective, une marque et des référentiels
   texte: >-
-    La marque collective rend la démarche identifiable. Les référentiels en formalisent
-    le cadre et permettent de rendre disponibles leurs versions et documents.
+    L’Association pour la Pérennité Programmée Circulaire structure et protège un
+    corpus méthodologique, scientifique et technique commun. La marque collective
+    PPC et ses référentiels ont vocation à rendre cette démarche identifiable,
+    cohérente et vérifiable.
+
 contribuer:
-  surtitre: Contribuer
-  titre: Construire la démarche avec les acteurs concernés
+  surtitre: Travailler avec nous
+  titre: Faire progresser PPC à partir de situations réelles
   introduction: >-
-    Entreprises, acteurs industriels et organisations peuvent prendre part aux travaux
-    collectifs autour de PPC et de ses référentiels.
+    Entreprises, industriels, institutions et experts peuvent contribuer aux
+    travaux collectifs de PPC. Les études actuellement menées explorent notamment
+    la manière dont la comptabilité, le financement et la gestion des actifs
+    peuvent mieux reconnaître la valeur conservée dans le temps.
+
 approfondir:
   surtitre: Pour approfondir
-  titre: Des ressources pour aller plus loin
+  titre: Comprendre les fondements et les travaux de PPC
   introduction: >-
-    Les ressources réunissent des ouvrages, publications, vidéos, formations et travaux
-    PPC, qu’ils soient hébergés ici ou accessibles à leur source.
+    Publications, ouvrages, vidéos, formations et travaux PPC permettent
+    d’approfondir les dimensions industrielles, économiques, comptables et
+    systémiques de la démarche.
+
 ressources_mises_en_avant: []
+
 mouvement:
   surtitre: PPC en mouvement
-  titre: Actualités et rendez-vous
+  titre: Travaux, actualités et rendez-vous
   introduction: >-
-    Suivre les publications de PPC et les événements qu’elle organise ou auxquels elle participe.
+    Suivre les avancées de l’Association, les publications liées à PPC et les
+    événements auxquels elle participe.
+
 association:
   surtitre: L’Association
-  titre: Porter, protéger et développer la PPC
+  titre: Porter PPC dans une logique d’intérêt général
   texte: >-
-    L’Association pour la Pérennité Programmée Circulaire est l’organisation d’intérêt
-    général qui structure la démarche et sa marque collective.
+    L’Association pour la Pérennité Programmée Circulaire développe et diffuse
+    les principes de PPC, administre sa marque collective et veille à l’intégrité
+    du corpus méthodologique et scientifique qui lui est associé.
