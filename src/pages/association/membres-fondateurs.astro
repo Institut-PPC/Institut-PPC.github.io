@@ -14,6 +14,6 @@ const page = schemaPageMembresFondateurs.parse(entree.data);
 <BaseLayout title="Membres fondateurs — PPC" description={page.description}>
   <Breadcrumb items={[{label:'Association',href:'/association'},{label:'Membres fondateurs'}]} />
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
-  <section class="founders"><h2>{page.presentation.titre}</h2><p>{page.presentation.texte}</p>{membres.length?<div class="people">{membres.map((personne)=><PersonCard personne={personne} role="Membre fondateur" />)}</div>:<EmptyState title={page.presentation.titre_vide} message={page.presentation.message_vide} />}</section>
+  <section class="founders"><h2>{page.presentation.titre}</h2><p>{page.presentation.texte}</p>{membres.length?<div class="people">{membres.map((personne)=><PersonCard personne={personne} role="Membre fondateur" compact />)}</div>:<EmptyState title={page.presentation.titre_vide} message={page.presentation.message_vide} />}</section>
 </BaseLayout>
 <style>.founders{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.founders>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.founders>p{font-size:var(--font-size-lg)}.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:var(--space-6);margin-top:var(--space-7)}</style>

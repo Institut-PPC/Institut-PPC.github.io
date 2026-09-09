@@ -1,17 +1,24 @@
 ---
 titre: Les membres fondateurs
-description: Présentation du collège des membres fondateurs de l’Association PPC.
+description: >-
+  Découvrir les membres fondateurs de l’Association pour la Pérennité Programmée Circulaire.
 surtitre: Association
 introduction: >-
-  Cette page est conçue pour présenter le collège des membres fondateurs de manière
-  claire, à partir de profils réels et structurés.
+  Les membres fondateurs sont les personnes qui ont participé à la création de
+  l’Association pour la Pérennité Programmée Circulaire. Ils constituent un collège
+  chargé de veiller au respect de son esprit fondateur, de sa mission d’intérêt général
+  et des principes d’indépendance, de transparence et d’intégrité qui fondent son action.
+
 presentation:
-  titre: Un collège à l’origine de la démarche
+  titre: Un collège garant de l’esprit fondateur
   texte: >-
-    Les membres fondateurs disposent d’un rôle institutionnel identifié au sein de
-    l’Association. Leur présentation publique associe une photo, leur nom et un lien LinkedIn.
-  titre_vide: Les portraits seront publiés ici
+    Le collège des membres fondateurs exerce une fonction de vigilance éthique et
+    stratégique. Il veille notamment à l’indépendance de l’Association, à la vocation
+    de bien commun des référentiels et connaissances qu’elle développe, ainsi qu’au
+    respect des principes de durabilité, de robustesse des systèmes techniques et de
+    protection du vivant et des écosystèmes.
+
+  titre_vide: Membres fondateurs
   message_vide: >-
-    Aucune personne réelle n’est encore renseignée dans le dépôt. Cette page n’affiche
-    donc aucun profil fictif.
+    Aucun membre fondateur n’est actuellement publié.
 ---
