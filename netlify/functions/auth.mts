@@ -24,9 +24,10 @@ export default async function auth(request: Request): Promise<Response> {
   let configuration: ConfigurationOAuth;
   try {
     configuration = lireConfigurationOAuth();
-  } catch {
+  } catch (erreur) {
+    const detail = erreur instanceof Error ? erreur.message : 'Configuration invalide.';
     return new Response(
-      'Configuration OAuth Netlify incomplète ou CMS_ALLOWED_ORIGINS invalide.',
+      `Configuration OAuth Netlify invalide : ${detail}`,
       { status: 500, headers: entetesSansCache() },
     );
   }

@@ -27,8 +27,16 @@ export function lireConfigurationOAuth(
   const clientSecret = environnement.GITHUB_CLIENT_SECRET?.trim();
   const origines = environnement.CMS_ALLOWED_ORIGINS;
 
-  if (!clientId || !clientSecret || !origines) {
-    throw new Error('Configuration OAuth incomplète.');
+  if (!clientId) {
+    throw new Error('GITHUB_CLIENT_ID est absente ou vide.');
+  }
+
+  if (!clientSecret) {
+    throw new Error('GITHUB_CLIENT_SECRET est absente ou vide.');
+  }
+
+  if (!origines) {
+    throw new Error('CMS_ALLOWED_ORIGINS est absente ou vide.');
   }
 
   return {
