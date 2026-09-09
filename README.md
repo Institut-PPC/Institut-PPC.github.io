@@ -10,9 +10,9 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, les modèles canoniques nécessaires aux contenus actuellement rendus, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
+Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
 
-L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre les contrats actuellement implémentés. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Le CMS et le modèle `Organisation` ne sont pas encore implémentés ; les contrôles dépendant d’`Organisation` ou d’une future configuration de redirections restent donc à compléter avec ces contrats. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
+L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS reste à implémenter ; les contrôles dépendant d’une future configuration de redirections restent également à compléter avec ce contrat. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -80,7 +80,7 @@ Valider l’intégrité transverse de tous les contenus (schémas, noms de fichi
 npm run validate
 ```
 
-Cette commande agrège les erreurs avec leur fichier source et doit être exécutée après toute modification manuelle, via le futur CMS ou par un script d’import. Les relations vers `Organisation` seront ajoutées à ce contrôle lorsque le modèle, encore non implémenté, aura été finalisé.
+Cette commande agrège les erreurs avec leur fichier source et doit être exécutée après toute modification manuelle, via le futur CMS ou par un script d’import. Elle contrôle notamment l’existence des Personnes et Organisations référencées.
 
 Construire le site statique dans `dist/` :
 

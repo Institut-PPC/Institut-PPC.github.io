@@ -3,6 +3,7 @@ import { glob } from 'astro/loaders';
 
 import { creerSchemaActualite } from './modeles/actualite';
 import { creerSchemaEvenement } from './modeles/evenement';
+import { creerSchemaOrganisation } from './modeles/organisation';
 import { creerSchemaPersonne } from './modeles/personne';
 import { creerSchemaRessource } from './modeles/ressource';
 import { schemaReferentiel } from './modeles/referentiel';
@@ -32,6 +33,14 @@ const personnes = defineCollection({
     pattern: '*.yaml',
   }),
   schema: ({ image }) => creerSchemaPersonne(image()),
+});
+
+const organisations = defineCollection({
+  loader: glob({
+    base: './contenu/organisations',
+    pattern: '*.yaml',
+  }),
+  schema: ({ image }) => creerSchemaOrganisation(image()),
 });
 
 const ressources = defineCollection({
@@ -78,6 +87,7 @@ export const collections = {
   actualites,
   evenements,
   personnes,
+  organisations,
   ressources,
   referentiels,
   pages,

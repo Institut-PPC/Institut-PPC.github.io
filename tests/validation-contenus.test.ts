@@ -23,6 +23,7 @@ const evenementValide = {
   resume: 'Un événement valide.',
   date_debut: '2026-09-08T10:00:00+02:00',
   relation_ppc: 'organise-par-ppc',
+  organisations_liees: ['organisation-ppc'],
   personnes_liees: ['alice-durand'],
   publie: true,
 };
@@ -71,13 +72,18 @@ async function ecrireMarkdown(racine: string, relatif: string, donnees: unknown,
 async function creerCorpusValide(): Promise<string> {
   const racine = await mkdtemp(path.join(tmpdir(), 'site-ppc-validation-'));
   racinesTemporaires.push(racine);
-  for (const dossier of ['actualites', 'evenements', 'personnes', 'ressources', 'referentiels', 'pages', 'configuration']) {
+  for (const dossier of ['actualites', 'evenements', 'personnes', 'organisations', 'ressources', 'referentiels', 'pages', 'configuration']) {
     await mkdir(path.join(racine, 'contenu', dossier), { recursive: true });
   }
 
   await ecrireMarkdown(racine, 'contenu/actualites/2026-09-08-actualite-ppc.md', actualiteValide, 'Un contenu éditorial.\n');
   await ecrireMarkdown(racine, 'contenu/evenements/2026-09-08-evenement-ppc.md', evenementValide, 'Un contenu éditorial.\n');
-  await ecrire(racine, 'contenu/personnes/alice-durand.yaml', stringify({ prenom: 'Alice', nom: 'Durand' }));
+  await ecrire(racine, 'contenu/personnes/alice-durand.yaml', stringify({
+    prenom: 'Alice',
+    nom: 'Durand',
+    organisation: 'organisation-ppc',
+  }));
+  await ecrire(racine, 'contenu/organisations/organisation-ppc.yaml', stringify({ nom: 'Organisation PPC' }));
   await ecrireMarkdown(racine, 'contenu/ressources/guide-ppc.md', ressourceValide, '  \n\n');
   await ecrire(racine, 'public/documents/ressources/guide.pdf', 'document de test');
   await ecrire(racine, 'contenu/pages/accueil.yaml', stringify(accueilValide));
@@ -116,7 +122,50 @@ describe('validateur transverse des contenus', () => {
     const racine = await creerCorpusValide();
     await ecrireMarkdown(racine, 'contenu/evenements/2026-09-08-evenement-ppc.md', { ...evenementValide, personnes_liees: ['personne-absente'] }, 'Contenu.');
     const rapport = await validerContenus(racine);
-    expect(rapport.erreurs.some((erreur) => erreur.message.includes('Personne inexistante « personne-absente »'))).toBe(true);
+    expect(rapport.erreurs.some((erreur) =>
+      erreur.chemin.endsWith('contenu/evenements/2026-09-08-evenement-ppc.md')
+      && erreur.message.includes('champ personnes_liees')
+      && erreur.message.includes('« personne-absente »')
+      && erreur.message.includes('collection personnes'),
+    )).toBe(true);
+  });
+
+  it('accepte les relations d’une Personne et d’un Événement vers une Organisation existante', async () => {
+    const rapport = await validerContenus(await creerCorpusValide());
+    expect(rapport.erreurs).toEqual([]);
+  });
+
+  it('refuse la relation d’une Personne vers une Organisation inexistante', async () => {
+    const racine = await creerCorpusValide();
+    await ecrire(racine, 'contenu/personnes/alice-durand.yaml', stringify({
+      prenom: 'Alice',
+      nom: 'Durand',
+      organisation: 'organisation-absente',
+    }));
+    const rapport = await validerContenus(racine);
+
+    expect(rapport.erreurs.some((erreur) =>
+      erreur.chemin.endsWith('contenu/personnes/alice-durand.yaml')
+      && erreur.message.includes('champ organisation')
+      && erreur.message.includes('« organisation-absente »')
+      && erreur.message.includes('collection organisations'),
+    )).toBe(true);
+  });
+
+  it('refuse la relation d’un Événement vers une Organisation inexistante', async () => {
+    const racine = await creerCorpusValide();
+    await ecrireMarkdown(racine, 'contenu/evenements/2026-09-08-evenement-ppc.md', {
+      ...evenementValide,
+      organisations_liees: ['organisation-absente'],
+    }, 'Contenu.');
+    const rapport = await validerContenus(racine);
+
+    expect(rapport.erreurs.some((erreur) =>
+      erreur.chemin.endsWith('contenu/evenements/2026-09-08-evenement-ppc.md')
+      && erreur.message.includes('champ organisations_liees')
+      && erreur.message.includes('« organisation-absente »')
+      && erreur.message.includes('collection organisations'),
+    )).toBe(true);
   });
 
   it('refuse un document public local manquant sans vérifier les URL externes', async () => {
@@ -138,12 +187,22 @@ describe('validateur transverse des contenus', () => {
   it('agrège plusieurs erreurs de schéma et erreurs transverses', async () => {
     const racine = await creerCorpusValide();
     await ecrireMarkdown(racine, 'contenu/actualites/nom-invalide.md', { ...actualiteValide, titre: '' }, '   \n');
-    await ecrireMarkdown(racine, 'contenu/evenements/2026-09-08-evenement-ppc.md', { ...evenementValide, personnes_liees: ['personne-absente'] }, 'Contenu.');
+    await ecrireMarkdown(racine, 'contenu/evenements/2026-09-08-evenement-ppc.md', {
+      ...evenementValide,
+      personnes_liees: ['personne-absente'],
+      organisations_liees: ['organisation-absente'],
+    }, 'Contenu.');
+    await ecrire(racine, 'contenu/personnes/alice-durand.yaml', stringify({
+      prenom: 'Alice',
+      nom: 'Durand',
+      organisation: 'autre-organisation-absente',
+    }));
     await ecrireMarkdown(racine, 'contenu/ressources/guide-ppc.md', { ...ressourceValide, destination_directe: '/documents/ressources/absent.pdf' }, 'Corps interdit.');
     const rapport = await validerContenus(racine);
-    expect(rapport.erreurs.length).toBeGreaterThanOrEqual(5);
+    expect(rapport.erreurs.length).toBeGreaterThanOrEqual(7);
     expect(rapport.erreurs.some((erreur) => erreur.message.includes('Schéma invalide'))).toBe(true);
-    expect(rapport.erreurs.some((erreur) => erreur.message.includes('Personne inexistante'))).toBe(true);
+    expect(rapport.erreurs.some((erreur) => erreur.message.includes('collection personnes'))).toBe(true);
+    expect(rapport.erreurs.filter((erreur) => erreur.message.includes('collection organisations'))).toHaveLength(2);
     expect(rapport.erreurs.some((erreur) => erreur.message.includes('introuvable'))).toBe(true);
   });
 });

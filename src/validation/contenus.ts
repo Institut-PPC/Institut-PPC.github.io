@@ -8,6 +8,7 @@ import { schemaAccueil, type Accueil } from '../modeles/accueil.ts';
 import { schemaActualite, type Actualite } from '../modeles/actualite.ts';
 import { schemaConfigurationSite } from '../modeles/configuration-site.ts';
 import { schemaEvenement, type Evenement } from '../modeles/evenement.ts';
+import { schemaOrganisation, type Organisation } from '../modeles/organisation.ts';
 import { schemaPageEditoriale } from '../modeles/page-editoriale.ts';
 import { schemaPersonne, type Personne } from '../modeles/personne.ts';
 import { schemaReferentiel, type Referentiel } from '../modeles/referentiel.ts';
@@ -315,10 +316,11 @@ async function verifierDocumentLocal(
 export async function validerContenus(racine: string): Promise<RapportValidationContenus> {
   const erreurs: ErreurValidationContenu[] = [];
 
-  const [actualites, evenements, personnes, ressources, referentiels] = await Promise.all([
+  const [actualites, evenements, personnes, organisations, ressources, referentiels] = await Promise.all([
     chargerCollectionMarkdown<Actualite>(racine, 'contenu/actualites', schemaActualite, 'date', erreurs),
     chargerCollectionMarkdown<Evenement>(racine, 'contenu/evenements', schemaEvenement, 'date', erreurs),
     chargerCollectionYaml<Personne>(racine, 'contenu/personnes', schemaPersonne, erreurs),
+    chargerCollectionYaml<Organisation>(racine, 'contenu/organisations', schemaOrganisation, erreurs),
     chargerCollectionMarkdown<Ressource>(racine, 'contenu/ressources', schemaRessource, 'identifiant', erreurs),
     chargerCollectionMarkdown<Referentiel>(racine, 'contenu/referentiels', schemaReferentiel, 'identifiant', erreurs),
   ]);
@@ -370,12 +372,30 @@ export async function validerContenus(racine: string): Promise<RapportValidation
         ajouterErreur(
           erreurs,
           evenement.chemin,
-          `La relation personnes_liees cible la Personne inexistante « ${personne} ».`,
+          `Le champ personnes_liees référence l’identifiant « ${personne} », absent de la collection personnes.`,
         );
       }
     }
-    // Les relations vers Organisation seront validées lorsque son modèle canonique,
-    // notamment le vocabulaire roles_ppc encore ambigu, aura été finalisé et implémenté.
+    for (const organisation of evenement.donnees.organisations_liees ?? []) {
+      if (!organisations.identifiants.has(organisation)) {
+        ajouterErreur(
+          erreurs,
+          evenement.chemin,
+          `Le champ organisations_liees référence l’identifiant « ${organisation} », absent de la collection organisations.`,
+        );
+      }
+    }
+  }
+
+  for (const personne of personnes.entrees) {
+    const organisation = personne.donnees.organisation;
+    if (organisation && !organisations.identifiants.has(organisation)) {
+      ajouterErreur(
+        erreurs,
+        personne.chemin,
+        `Le champ organisation référence l’identifiant « ${organisation} », absent de la collection organisations.`,
+      );
+    }
   }
 
   if (accueil) {
