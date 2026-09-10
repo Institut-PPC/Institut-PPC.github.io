@@ -28,6 +28,7 @@ Les modèles de contenu normatifs sont détaillés dans [`../contenu/contenu-et-
 | Annuaire public complet | Non requis |
 | Recherche sur le site | Non implémentée ; architecture compatible avec un ajout futur |
 | Analytics | Non implémentés |
+| Éco-conception | Page publique dédiée et exigence transversale durable |
 | Page 404 personnalisée | Requise |
 
 ## Gestion structurée et visibilité publique
@@ -212,6 +213,12 @@ Le dépôt ne doit pas devenir une GED généraliste.
 Aucune recherche dans le POC.
 
 Les contenus et métadonnées doivent être structurés de façon à permettre ultérieurement l'ajout d'une recherche légère sans restructuration majeure.
+
+## Éco-conception
+
+La route `/eco-conception` présente publiquement la démarche appliquée au site, ses choix concrets et un indicateur externe daté. Elle ne présente ni cette démarche ni l'indicateur comme un label ou une certification. Elle est accessible depuis le pied de page et reste hors de la navigation principale.
+
+L'éco-conception constitue une exigence transversale durable. Toute nouvelle fonctionnalité ou dépendance doit être évaluée non seulement selon son utilité fonctionnelle, mais également selon son coût en ressources, son poids, ses dépendances techniques, sa compatibilité dans le temps et son impact sur la maintenabilité du site.
 
 ## Analytics
 

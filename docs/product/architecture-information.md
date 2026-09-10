@@ -52,6 +52,7 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 ├── /mentions-legales
 ├── /politique-de-confidentialite
 ├── /accessibilite
+├── /eco-conception
 │
 └── /404
 ```
@@ -113,6 +114,7 @@ Le pied de page remplit une véritable fonction de navigation secondaire. Il doi
 - les mentions légales ;
 - la politique de confidentialité ;
 - l'accessibilité.
+- l'éco-conception du site.
 
 Cette organisation permet de garder le soutien à l'Association facilement accessible sans en faire un CTA dominant de l’en-tête.
 
@@ -267,6 +269,12 @@ Expliquer de manière claire les traitements de données applicables au site. Le
 ### `/accessibilite` — Accessibilité
 
 Présenter les informations publiques relatives à l'accessibilité du site et, lorsque cela sera pertinent, l'état de conformité ou les moyens de signaler une difficulté. Le POC ne prétend pas à une certification formelle tant qu'elle n'a pas été réalisée.
+
+### `/eco-conception` — Éco-conception
+
+Présenter de manière factuelle et transparente les enjeux environnementaux du numérique, les choix de conception appliqués au site et leur lien avec la Pérennité Programmée Circulaire.
+
+La page rend compte d'indicateurs externes datés sans les présenter comme des labels ou des certifications. Elle rappelle que les mesures peuvent évoluer avec le site et que l'objectif est de préserver l'exigence d'éco-conception au fil de ses évolutions. Elle reste accessible depuis le pied de page sans être ajoutée à la navigation principale.
 
 ### `/404` — Page introuvable
 

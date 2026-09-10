@@ -1,0 +1,144 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const choix = [
+  {
+    titre: 'Site principalement statique',
+    texte: 'Les pages sont générées à l’avance. Cela évite de mobiliser inutilement une infrastructure applicative complexe à chaque consultation.',
+  },
+  {
+    titre: 'JavaScript limité au nécessaire',
+    texte: 'Le contenu principal repose sur HTML et CSS. Les comportements JavaScript sont utilisés seulement lorsqu’ils apportent une réelle utilité.',
+  },
+  {
+    titre: 'Technologies standards et largement supportées',
+    texte: 'Nous privilégions les standards du Web et les fonctionnalités largement disponibles dans les navigateurs afin de limiter les dépendances techniques et de favoriser la compatibilité dans le temps.',
+  },
+  {
+    titre: 'Polices système',
+    texte: 'Le site n’impose pas le téléchargement de polices externes. Il utilise les polices déjà présentes sur les appareils des visiteurs.',
+  },
+  {
+    titre: 'Dépendances limitées',
+    texte: 'Nous cherchons à réduire le nombre de bibliothèques et de composants externes afin de limiter à la fois le poids du site, sa complexité et les risques liés à sa maintenance future.',
+  },
+  {
+    titre: 'Images limitées et optimisées',
+    texte: 'Les images sont utilisées lorsqu’elles apportent une réelle valeur éditoriale et sont adaptées à un usage web.',
+  },
+  {
+    titre: 'Pas de suivi publicitaire ni de collecte inutile',
+    texte: 'Le site ne repose pas sur des outils de suivi publicitaire ou sur des fonctionnalités nécessitant une collecte de données non indispensable à son fonctionnement.',
+  },
+  {
+    titre: 'Contenus indépendants de l’outil de publication',
+    texte: 'Les contenus sont stockés dans des formats simples et ouverts. Ils restent ainsi exploitables indépendamment du CMS utilisé aujourd’hui ou demain.',
+  },
+];
+---
+
+<BaseLayout
+  title="Éco-conception — PPC"
+  description="La démarche d’éco-conception du site PPC, ses choix techniques et son suivi dans le temps."
+>
+  <PageIntro
+    eyebrow="Un site conçu pour durer"
+    title="Éco-conception"
+    intro="Ce site a été conçu pour être utile, léger, maintenable et durable."
+  />
+
+  <div class="introduction">
+    <p>La Pérennité Programmée Circulaire ne concerne pas uniquement les objets industriels. Elle invite plus largement à concevoir des systèmes capables de durer, de rester maintenables et de limiter la consommation inutile de ressources.</p>
+    <p>Nous avons donc appliqué ces principes à la conception de ce site.</p>
+  </div>
+
+  <section class="section">
+    <SectionHeading eyebrow="Comprendre" title="L’enjeu" />
+    <div class="section-content">
+      <p>En France, le numérique représentait en 2022 <strong>4,4 % de l’empreinte carbone nationale</strong> et <strong>11 % de la consommation électrique</strong>. Environ <strong>60 % de l’empreinte carbone du numérique provient de la fabrication des équipements</strong>.</p>
+      <p>À l’échelle du Web, une page d’accueil médiane pesait en 2025 environ <strong>2,9 Mo sur ordinateur</strong> et <strong>2,6 Mo sur mobile</strong>.</p>
+      <blockquote>
+        <p>Concevoir des pages plus légères limite les ressources mobilisées, mais contribue aussi à rendre le Web utilisable sur des appareils plus anciens ou moins puissants. Cette recherche de sobriété rejoint directement un principe de la Pérennité Programmée Circulaire : faire durer les systèmes et les équipements plutôt que provoquer leur renouvellement inutile.</p>
+      </blockquote>
+      <p class="sources">Sources : <a href="https://www.ademe.fr/presse/communique-national/numerique-environnement-entre-opportunites-et-necessaire-sobriete/">ADEME et Arcep, évaluation de l’impact du numérique en France en 2022</a> ; <a href="https://almanac.httparchive.org/en/2025/page-weight">HTTP Archive, Web Almanac 2025</a>.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionHeading eyebrow="Faire durer" title="Nos choix de conception" />
+    <div class="section-content">
+      <div class="choices">
+        {choix.map((choix) => (
+          <article>
+            <h3>{choix.titre}</h3>
+            <p>{choix.texte}</p>
+          </article>
+        ))}
+      </div>
+      <p class="conclusion">Cette architecture vise autant la sobriété que la maintenabilité, la réversibilité et la transmissibilité du site dans le temps.</p>
+    </div>
+  </section>
+
+  <section class="section measure">
+    <SectionHeading eyebrow="Suivre" title="Mesurer pour progresser" />
+    <div class="section-content">
+      <p>EcoIndex est un indicateur externe de performance environnementale des pages web. Il ne constitue ni un label ni une certification.</p>
+      <div class="score">
+        <div class="scale-labels" aria-hidden="true"><span>max. 100</span><span>min. 0</span></div>
+        <ol class="scale" aria-label="Classement EcoIndex de A à G">
+          <li class="grade-a active" aria-current="true"><span>A</span><small>Classe obtenue</small></li>
+          <li class="grade-b"><span>B</span></li>
+          <li class="grade-c"><span>C</span></li>
+          <li class="grade-d"><span>D</span></li>
+          <li class="grade-e"><span>E</span></li>
+          <li class="grade-f"><span>F</span></li>
+          <li class="grade-g"><span>G</span></li>
+        </ol>
+        <p class="score-value"><span>Score EcoIndex</span> <strong>86 <small>/ 100</small></strong></p>
+      </div>
+      <p><a href="https://www.ecoindex.fr/resultat/?id=8a8e8217-20fd-448d-90ca-45b1cc74d3a1">Consulter le résultat détaillé sur EcoIndex</a>.</p>
+      <p>Cette mesure correspond à un instant donné. Elle peut évoluer avec les contenus, les images, les fonctionnalités ou les dépendances ajoutées au site.</p>
+      <p>L’objectif n’est donc pas seulement d’obtenir un bon score aujourd’hui, mais de préserver cette exigence au fil des évolutions du site.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .introduction { max-width: var(--width-reading); padding-bottom: var(--space-section); font-size: var(--font-size-lg); }
+  .section { display: grid; gap: var(--space-5); padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
+  .section-content { min-width: 0; }
+  .section-content > :last-child { margin-bottom: 0; }
+  blockquote { margin-block: var(--space-7); }
+  .sources { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+  .choices { display: grid; gap: var(--space-4); }
+  .choices article { padding: var(--space-5); background: var(--color-surface-muted); }
+  .choices h3 { margin-bottom: var(--space-3); color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }
+  .choices p { margin-bottom: 0; }
+  .conclusion { margin-top: var(--space-6); font-size: var(--font-size-lg); }
+  .measure { border-bottom: var(--border-width) solid var(--color-border); }
+  .score { margin-block: var(--space-6); padding: var(--space-5); background: var(--color-surface); color: var(--color-text); }
+  .scale-labels { display: flex; justify-content: space-between; margin-bottom: var(--space-1); color: var(--color-text-muted); font-size: var(--font-size-sm); font-style: italic; }
+  .scale { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); padding: 0; margin: 0; list-style: none; }
+  .scale li { position: relative; display: grid; place-items: center; min-width: 0; height: 4.5rem; padding-top: var(--space-3); border-top: .7rem solid; font-size: var(--font-size-xl); font-weight: var(--font-weight-interface); line-height: 1; }
+  .scale .active { min-height: 6.25rem; padding-top: 0; border-top: 0; border-radius: var(--radius-surface); color: var(--color-on-brand); }
+  .scale small { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .scale .grade-a { border-top-color: #2f9e44; }.scale .grade-a.active { background: #2f9e44; }
+  .scale .grade-b { border-top-color: #39b86c; }.scale .grade-c { border-top-color: #bfdc00; }
+  .scale .grade-d { border-top-color: #ffe500; }.scale .grade-e { border-top-color: #ffc400; }
+  .scale .grade-f { border-top-color: #ff9826; }.scale .grade-g { border-top-color: #ef2525; }
+  .score-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-3); margin: var(--space-5) 0 0; color: var(--color-brand); }
+  .score-value > span { font-size: var(--font-size-lg); font-weight: var(--font-weight-interface); }
+  .score-value strong { font-family: var(--font-display); font-size: var(--font-size-2xl); font-weight: 400; }
+  .score-value small { font-family: var(--font-body); font-size: var(--font-size-md); }
+  @media (max-width: 30rem) {
+    .score { padding-inline: var(--space-4); }
+    .scale li { height: 3.75rem; font-size: var(--font-size-lg); }
+    .scale .active { min-height: 5.25rem; }
+  }
+  @media (min-width: 48rem) {
+    .section { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); }
+    .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

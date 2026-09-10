@@ -174,7 +174,7 @@ La CI doit pouvoir détecter les redirections incohérentes ou dont la cible n'e
 
 ## Performance et sobriété
 
-La performance est une exigence architecturale forte, mais aucun budget chiffré arbitraire n'est imposé avant mesure de pages représentatives.
+La performance et l'éco-conception sont des exigences architecturales transversales fortes, mais aucun budget chiffré arbitraire n'est imposé avant mesure de pages représentatives.
 
 Principes :
 - HTML statique par défaut ;
@@ -191,6 +191,8 @@ Principes :
 - Tailwind CSS limité à son rôle de couche utilitaire de composition, avec un CSS produit limité au nécessaire ;
 - design tokens PPC centralisés comme source de vérité de la charte et CSS Astro scopé lorsque pertinent ;
 - animations décoratives évitées et transitions limitées aux retours d'interaction utiles.
+
+Toute évolution fonctionnelle ou technique doit mettre en balance sa valeur attendue avec son coût en ressources, son poids transféré, les dépendances qu'elle ajoute, sa compatibilité dans le temps et son impact sur la maintenabilité. Une mesure externe, telle qu'EcoIndex, constitue un indicateur daté pour guider cette amélioration continue ; elle n'est ni une certification ni une garantie permanente.
 
 Une fois des pages représentatives disponibles :
 1. mesurer ;

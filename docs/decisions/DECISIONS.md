@@ -327,3 +327,11 @@ Le journal des décisions est rédigé en français.
 **Décision :** Limiter pour le POC le vocabulaire contrôlé facultatif et multivalué de `Organisation.roles_ppc` à `partenaire` et `mecene`. Réserver ce champ aux rôles publics transverses réellement portés par l'Organisation, sans y dupliquer les relations modélisées par `Événement.organisations_liees` ou `Personne.organisation`.
 
 **Pourquoi :** Lever l'ambiguïté du modèle sans anticiper des rôles qui ne répondent pas encore à un besoin fonctionnel public explicite.
+
+### 2026-09-10 — Éco-conception formalisée comme exigence transversale
+
+**Statut :** Acceptée
+
+**Décision :** Rendre publique la démarche d'éco-conception du site et évaluer toute nouvelle fonctionnalité ou dépendance selon sa valeur fonctionnelle, son coût en ressources, son poids, ses dépendances techniques, sa compatibilité dans le temps et son impact sur la maintenabilité. Utiliser les mesures externes comme des indicateurs datés, jamais comme des certifications.
+
+**Pourquoi :** Empêcher que les évolutions successives ne dégradent silencieusement la sobriété, la compatibilité, la maintenabilité, la réversibilité et la transmissibilité recherchées pour le site PPC.

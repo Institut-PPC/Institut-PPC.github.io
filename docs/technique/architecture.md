@@ -341,6 +341,8 @@ Le site doit rester léger côté client comme en infrastructure :
 - design tokens centraux dans `src/styles/tokens.css`, règles réellement globales dans `src/styles/global.css` et styles spécifiques scopés dans les composants Astro lorsque cela améliore la lisibilité ou exprime une logique propre au composant ;
 - CSS produit limité aux règles réellement nécessaires au site.
 
+Toute nouvelle fonctionnalité ou dépendance doit être évaluée non seulement selon son utilité fonctionnelle, mais également selon son coût en ressources, son poids, ses dépendances techniques, sa compatibilité dans le temps et son impact sur la maintenabilité du site. Cette évaluation doit préserver une architecture sobre, maintenable, réversible et transmissible, ainsi que l'utilisation durable de terminaux raisonnablement anciens ou moins puissants.
+
 Aucun budget chiffré arbitraire de JavaScript, poids de page ou score Lighthouse n'est fixé avant mesure de pages représentatives.
 
 Tailwind et les composants Astro constituent le socle du POC. Aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être ajouté uniquement pour accélérer des composants simples ; une bibliothèque spécialisée ne peut être réévaluée que face à un besoin réel.
