@@ -197,6 +197,62 @@ export const schemaPageContact = schemaBasePage
   })
   .strict();
 
+export const schemaPageEcoConception = schemaBasePage
+  .extend({
+    introduction_detaillee: z.array(schemaTexteObligatoire).min(1),
+    enjeu: z
+      .object({
+        surtitre: schemaTexteObligatoire,
+        titre: schemaTexteObligatoire,
+        chiffres: z.tuple([
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+        ]),
+        poids_pages: z.tuple([
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+          schemaTexteObligatoire,
+        ]),
+        citation: schemaTexteObligatoire,
+        sources: z.array(
+          z
+            .object({
+              libelle: schemaTexteObligatoire,
+              url: schemaUrlHttp,
+            })
+            .strict(),
+        ).min(1),
+      })
+      .strict(),
+    conception: z
+      .object({
+        surtitre: schemaTexteObligatoire,
+        titre: schemaTexteObligatoire,
+        choix: z.array(schemaLienEditorial).min(1),
+        conclusion: schemaTexteObligatoire,
+      })
+      .strict(),
+    mesure: z
+      .object({
+        surtitre: schemaTexteObligatoire,
+        titre: schemaTexteObligatoire,
+        introduction: schemaTexteObligatoire,
+        score: z.number().int().min(0).max(100),
+        url_resultat: schemaUrlHttp,
+        texte_lien: schemaTexteObligatoire,
+        suivi: z.array(schemaTexteObligatoire).min(1),
+      })
+      .strict(),
+  })
+  .strict();
+
 export const schemaPageMarkdown = schemaBasePage.strict();
 
 export const schemaPageEditoriale = z.union([
@@ -210,5 +266,6 @@ export const schemaPageEditoriale = z.union([
   schemaPageFaireUnDon,
   schemaPageTravaillerAvecNous,
   schemaPageContact,
+  schemaPageEcoConception,
   schemaPageMarkdown,
 ]);

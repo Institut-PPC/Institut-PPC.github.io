@@ -1,102 +1,72 @@
 ---
+import { getEntry } from 'astro:content';
 import PageIntro from '../components/PageIntro.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schemaPageEcoConception } from '../modeles/page-editoriale';
 
-const choix = [
-  {
-    titre: 'Site principalement statique',
-    texte: 'Les pages sont générées à l’avance. Cela évite de mobiliser inutilement une infrastructure applicative complexe à chaque consultation.',
-  },
-  {
-    titre: 'JavaScript limité au nécessaire',
-    texte: 'Le contenu principal repose sur HTML et CSS. Les comportements JavaScript sont utilisés seulement lorsqu’ils apportent une réelle utilité.',
-  },
-  {
-    titre: 'Technologies standards et largement supportées',
-    texte: 'Nous privilégions les standards du Web et les fonctionnalités largement disponibles dans les navigateurs afin de limiter les dépendances techniques et de favoriser la compatibilité dans le temps.',
-  },
-  {
-    titre: 'Polices système',
-    texte: 'Le site n’impose pas le téléchargement de polices externes. Il utilise les polices déjà présentes sur les appareils des visiteurs.',
-  },
-  {
-    titre: 'Dépendances limitées',
-    texte: 'Nous cherchons à réduire le nombre de bibliothèques et de composants externes afin de limiter à la fois le poids du site, sa complexité et les risques liés à sa maintenance future.',
-  },
-  {
-    titre: 'Images limitées et optimisées',
-    texte: 'Les images sont utilisées lorsqu’elles apportent une réelle valeur éditoriale et sont adaptées à un usage web.',
-  },
-  {
-    titre: 'Pas de suivi publicitaire ni de collecte inutile',
-    texte: 'Le site ne repose pas sur des outils de suivi publicitaire ou sur des fonctionnalités nécessitant une collecte de données non indispensable à son fonctionnement.',
-  }
-];
+const entree = await getEntry('pages', 'eco-conception');
+if (!entree) throw new Error('Le singleton eco-conception est introuvable.');
+const page = schemaPageEcoConception.parse(entree.data);
+const classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G'] as const;
+const seuils = [75, 55, 40, 25, 15, 5, 0] as const;
+const classeObtenue = classes[seuils.findIndex((seuil) => page.mesure.score >= seuil)];
 ---
 
 <BaseLayout
-  title="Éco-conception — PPC"
-  description="La démarche d’éco-conception du site PPC, ses choix techniques et son suivi dans le temps."
+  title={`${page.titre} — PPC`}
+  description={page.description}
 >
   <PageIntro
-    eyebrow="Un site conçu pour durer"
-    title="Éco-conception"
-    intro="Ce site a été conçu pour être utile, léger, maintenable et durable."
+    eyebrow={page.surtitre}
+    title={page.titre}
+    intro={page.introduction}
   />
 
   <div class="introduction">
-    <p>La Pérennité Programmée Circulaire ne concerne pas uniquement les objets industriels. Elle invite plus largement à concevoir des systèmes capables de durer, de rester maintenables et de limiter la consommation inutile de ressources.</p>
-    <p>Nous avons donc appliqué ces principes à la conception de ce site.</p>
+    {page.introduction_detaillee.map((paragraphe) => <p>{paragraphe}</p>)}
   </div>
 
   <section class="section">
-    <SectionHeading eyebrow="Comprendre" title="L’enjeu" />
+    <SectionHeading eyebrow={page.enjeu.surtitre} title={page.enjeu.titre} />
     <div class="section-content">
-      <p>En France, le numérique représentait en 2022 <strong>4,4 % de l’empreinte carbone nationale</strong> et <strong>11 % de la consommation électrique</strong>. Environ <strong>60 % de l’empreinte carbone du numérique provient de la fabrication des équipements</strong>.</p>
-      <p>À l’échelle du Web, une page d’accueil médiane pesait en 2025 environ <strong>2,9 Mo sur ordinateur</strong> et <strong>2,6 Mo sur mobile</strong>.</p>
+      <p>{page.enjeu.chiffres[0]} <strong>{page.enjeu.chiffres[1]}</strong> {page.enjeu.chiffres[2]} <strong>{page.enjeu.chiffres[3]}</strong>{page.enjeu.chiffres[4]} <strong>{page.enjeu.chiffres[5]}</strong>{page.enjeu.chiffres[6]}</p>
+      <p>{page.enjeu.poids_pages[0]} <strong>{page.enjeu.poids_pages[1]}</strong> {page.enjeu.poids_pages[2]} <strong>{page.enjeu.poids_pages[3]}</strong>{page.enjeu.poids_pages[4]}</p>
       <blockquote>
-        <p>Concevoir des pages plus légères limite les ressources mobilisées, mais contribue aussi à rendre le Web utilisable sur des appareils plus anciens ou moins puissants. Cette recherche de sobriété rejoint directement un principe de la Pérennité Programmée Circulaire : faire durer les systèmes et les équipements plutôt que provoquer leur renouvellement inutile.</p>
+        <p>{page.enjeu.citation}</p>
       </blockquote>
-      <p class="sources">Sources : <a href="https://www.ademe.fr/presse/communique-national/numerique-environnement-entre-opportunites-et-necessaire-sobriete/">ADEME et Arcep, évaluation de l’impact du numérique en France en 2022</a> ; <a href="https://almanac.httparchive.org/en/2025/page-weight">HTTP Archive, Web Almanac 2025</a>.</p>
+      <p class="sources">Sources : {page.enjeu.sources.map((source, index) => <>{index > 0 && ' ; '}<a href={source.url}>{source.libelle}</a></>)}.</p>
     </div>
   </section>
 
   <section class="section">
-    <SectionHeading eyebrow="Faire durer" title="Nos choix de conception" />
+    <SectionHeading eyebrow={page.conception.surtitre} title={page.conception.titre} />
     <div class="section-content">
       <div class="choices">
-        {choix.map((choix) => (
+        {page.conception.choix.map((choix) => (
           <article>
             <h3>{choix.titre}</h3>
             <p>{choix.texte}</p>
           </article>
         ))}
       </div>
-      <p class="conclusion">Cette architecture vise autant la sobriété que la maintenabilité, la réversibilité et la transmissibilité du site dans le temps.</p>
+      <p class="conclusion">{page.conception.conclusion}</p>
     </div>
   </section>
 
   <section class="section measure">
-    <SectionHeading eyebrow="Suivre" title="Mesurer pour progresser" />
+    <SectionHeading eyebrow={page.mesure.surtitre} title={page.mesure.titre} />
     <div class="section-content">
-      <p>EcoIndex est un indicateur externe de performance environnementale des pages web. Il ne constitue ni un label ni une certification.</p>
+      <p>{page.mesure.introduction}</p>
       <div class="score">
         <div class="scale-labels" aria-hidden="true"><span>max. 100</span><span>min. 0</span></div>
         <ol class="scale" aria-label="Classement EcoIndex de A à G">
-          <li class="grade-a active" aria-current="true"><span>A</span><small>Classe obtenue</small></li>
-          <li class="grade-b"><span>B</span></li>
-          <li class="grade-c"><span>C</span></li>
-          <li class="grade-d"><span>D</span></li>
-          <li class="grade-e"><span>E</span></li>
-          <li class="grade-f"><span>F</span></li>
-          <li class="grade-g"><span>G</span></li>
+          {classes.map((classe) => <li class:list={[`grade-${classe.toLowerCase()}`, { active: classe === classeObtenue }]} aria-current={classe === classeObtenue ? 'true' : undefined}><span>{classe}</span>{classe === classeObtenue && <small>Classe obtenue</small>}</li>)}
         </ol>
-        <p class="score-value"><span>Score EcoIndex</span> <strong>86 <small>/ 100</small></strong></p>
+        <p class="score-value"><span>Score EcoIndex</span> <strong>{page.mesure.score} <small>/ 100</small></strong></p>
       </div>
-      <p><a href="https://www.ecoindex.fr/resultat/?id=8a8e8217-20fd-448d-90ca-45b1cc74d3a1">Consulter le résultat détaillé sur EcoIndex</a>.</p>
-      <p>Cette mesure correspond à un instant donné. Elle peut évoluer avec les contenus, les images, les fonctionnalités ou les dépendances ajoutées au site.</p>
-      <p>L’objectif n’est donc pas seulement d’obtenir un bon score aujourd’hui, mais de préserver cette exigence au fil des évolutions du site.</p>
+      <p><a href={page.mesure.url_resultat}>{page.mesure.texte_lien}</a>.</p>
+      {page.mesure.suivi.map((paragraphe) => <p>{paragraphe}</p>)}
     </div>
   </section>
 </BaseLayout>

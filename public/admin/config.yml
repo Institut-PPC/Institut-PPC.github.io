@@ -748,3 +748,64 @@ collections:
         label: Accessibilité
         file: contenu/pages/accessibilite.md
         fields: *champs_page_markdown
+
+      - name: eco_conception
+        label: Éco-conception
+        file: contenu/pages/eco-conception.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - { label: Introduction détaillée, name: introduction_detaillee, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
+          - label: Enjeu
+            name: enjeu
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - label: Chiffres sur le numérique en France
+                name: chiffres
+                widget: list
+                min: 7
+                max: 7
+                field: { label: Segment, name: segment, widget: string }
+              - label: Poids médian des pages Web
+                name: poids_pages
+                widget: list
+                min: 5
+                max: 5
+                field: { label: Segment, name: segment, widget: string }
+              - { label: Citation, name: citation, widget: text }
+              - label: Sources
+                name: sources
+                widget: list
+                min: 1
+                fields:
+                  - { label: Libellé, name: libelle, widget: string }
+                  - { label: URL, name: url, widget: string }
+          - label: Choix de conception
+            name: conception
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - label: Choix
+                name: choix
+                widget: list
+                min: 1
+                fields:
+                  - { label: Titre, name: titre, widget: string }
+                  - { label: Texte, name: texte, widget: text }
+              - { label: Conclusion, name: conclusion, widget: text }
+          - label: Mesure EcoIndex
+            name: mesure
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text }
+              - { label: Score, name: score, widget: number, value_type: int, min: 0, max: 100 }
+              - { label: URL du résultat, name: url_resultat, widget: string }
+              - { label: Texte du lien, name: texte_lien, widget: string }
+              - { label: Paragraphes de suivi, name: suivi, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
