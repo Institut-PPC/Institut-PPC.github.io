@@ -2,7 +2,7 @@
 interface Props {
   identite: {
     nom_court: string;
-    nom_complet: string;
+    nom_association: string;
   };
 }
 
@@ -14,7 +14,7 @@ const { identite } = Astro.props;
     <div class="footer-top grid gap-6 md:gap-7">
       <div class="footer-signature">
         <strong>{identite.nom_court}</strong>
-        <p class="text-ppc-sm mt-2 mb-0">{identite.nom_complet}</p>
+        <p class="text-ppc-sm mt-2 mb-0">{identite.nom_association}</p>
       </div>
       <nav aria-label="Navigation secondaire" class="footer-navigation grid grid-cols-2 gap-5 md:gap-7">
         <section aria-labelledby="footer-decouvrir">
