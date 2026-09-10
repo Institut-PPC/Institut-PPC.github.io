@@ -68,7 +68,9 @@ approfondir:
     d’approfondir les dimensions industrielles, économiques, comptables et
     systémiques de la démarche.
 
-ressources_mises_en_avant: []
+ressources_mises_en_avant:
+  - la-perennite-programmee-circulaire-sator
+  - faconner-une-industrie-circulaire-robuste
 
 mouvement:
   surtitre: PPC en mouvement
