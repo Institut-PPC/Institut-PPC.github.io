@@ -11,8 +11,10 @@ introduction: >-
 
 Le présent site est édité par :
 
-**Association pour la Pérennité Programmée Circulaire**  
+**ASSOCIATION POUR LA PERENNITE PROGRAMMEE CIRCULAIRE**  
 Association française à but non lucratif régie par la loi du 1er juillet 1901.
+
+**N° RNA :** W751285224
 
 **Siège social :**  
 Institut PPC – Association pour la Pérennité Programmée Circulaire  
