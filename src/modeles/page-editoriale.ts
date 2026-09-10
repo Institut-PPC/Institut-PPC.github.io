@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { schemaTexteObligatoire } from './primitives.ts';
+import { schemaTexteObligatoire, schemaUrlHttp } from './primitives.ts';
 
 const schemaBasePage = z.object({
   titre: schemaTexteObligatoire,
@@ -107,6 +107,67 @@ export const schemaPageNousSoutenir = schemaBasePage
   })
   .strict();
 
+const schemaUrlHelloAsso = schemaUrlHttp.refine((valeur) => {
+  const url = new URL(valeur);
+  return url.protocol === 'https:' && (url.hostname === 'helloasso.com' || url.hostname.endsWith('.helloasso.com'));
+}, 'L’URL doit utiliser HTTPS et appartenir à HelloAsso.');
+
+const schemaPeriodeAdhesion = z
+  .object({
+    titre: schemaTexteObligatoire,
+    description: schemaTexteObligatoire,
+    url_widget: schemaUrlHelloAsso.optional(),
+    url_directe: schemaUrlHelloAsso.optional(),
+  })
+  .strict()
+  .superRefine((periode, contexte) => {
+    if (Boolean(periode.url_widget) === Boolean(periode.url_directe)) return;
+    contexte.addIssue({
+      code: 'custom',
+      message: 'url_widget et url_directe doivent être renseignées ensemble.',
+    });
+  });
+
+export const schemaPageAdherer = schemaBasePage
+  .extend({
+    qui_peut_adherer: z
+      .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .strict(),
+    pourquoi_adherer: z
+      .object({
+        titre: schemaTexteObligatoire,
+        raisons: z.tuple([schemaTexteObligatoire, schemaTexteObligatoire, schemaTexteObligatoire]),
+      })
+      .strict(),
+    choisir_adhesion: z
+      .object({
+        titre: schemaTexteObligatoire,
+        introduction: schemaTexteObligatoire,
+        periodes: z.array(schemaPeriodeAdhesion).min(1),
+      })
+      .strict(),
+  })
+  .strict();
+
+export const schemaPageFaireUnDon = schemaBasePage
+  .extend({
+    utilisation_dons: z
+      .object({
+        titre: schemaTexteObligatoire,
+        raisons: z.tuple([schemaTexteObligatoire, schemaTexteObligatoire, schemaTexteObligatoire]),
+        precision: schemaTexteObligatoire,
+      })
+      .strict(),
+    formulaire: z
+      .object({
+        titre: schemaTexteObligatoire,
+        url_widget: schemaUrlHelloAsso,
+        url_directe: schemaUrlHelloAsso,
+      })
+      .strict(),
+  })
+  .strict();
+
 export const schemaPageTravaillerAvecNous = schemaBasePage
   .extend({
     collaboration: schemaSectionNarrative,
@@ -144,6 +205,8 @@ export const schemaPageEditoriale = z.union([
   schemaPageGouvernance,
   schemaPageMembresFondateurs,
   schemaPageNousSoutenir,
+  schemaPageAdherer,
+  schemaPageFaireUnDon,
   schemaPageTravaillerAvecNous,
   schemaPageContact,
   schemaPageMarkdown,

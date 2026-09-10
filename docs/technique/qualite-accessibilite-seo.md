@@ -58,6 +58,8 @@ L'outil précis reste un choix d'implémentation.
 
 Tester les composants qui portent une vraie logique ou un risque : images accessibles, liens externes/internes, métadonnées, comportement lié aux modes d'exposition, etc.
 
+Pour un widget tiers, protéger en particulier le titre accessible du cadre, le lien direct de repli, le filtrage de l'origine et de la source des messages, la validation de la hauteur et la coexistence de plusieurs instances.
+
 Éviter les tests qui reproduisent simplement l'implémentation (`<div>`, texte statique, structure triviale).
 
 ### E2E

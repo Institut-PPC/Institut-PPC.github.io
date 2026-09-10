@@ -185,11 +185,14 @@ Ne pas ajouter de backend ou de service de formulaire externe uniquement pour pr
 ## Adhésion, dons et newsletter
 
 Pour le POC :
-- adhésion et dons utilisent de simples liens vers les services externes effectivement retenus par l'association ;
+- les routes `/association/adherer` et `/association/faire-un-don` présentent le contexte éditorial avant la transaction ;
+- les formulaires d'adhésion et de don sont intégrés depuis HelloAsso, qui reste seul opérateur du formulaire et du paiement ;
+- chaque widget conserve un lien direct vers le formulaire HelloAsso afin que le parcours reste possible si l'intégration ne charge pas ;
+- la page d'adhésion accepte plusieurs périodes indépendantes et n'expose un widget que lorsqu'une URL certaine est configurée pour la période concernée ;
 - la newsletter utilise un CTA vers une page ou un formulaire externe lorsqu'une solution existe ;
 - le site ne réimplémente pas ces transactions ou inscriptions.
 
-Toute intégration tierce supplémentaire doit rester proportionnée aux objectifs du site.
+L'intégration HelloAsso reste isolée dans un composant réutilisable, sans framework client ni dépendance supplémentaire. Toute autre intégration tierce doit rester proportionnée aux objectifs du site.
 
 ## Documents et médias
 

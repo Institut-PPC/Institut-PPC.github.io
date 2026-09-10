@@ -1,0 +1,76 @@
+---
+import { getEntry } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import HelloAssoWidget from '../../components/HelloAssoWidget.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { schemaPageAdherer } from '../../modeles/page-editoriale';
+
+const entree = await getEntry('pages', 'adherer');
+if (!entree) throw new Error('Le singleton adherer est introuvable.');
+const page = schemaPageAdherer.parse(entree.data);
+---
+
+<BaseLayout title="Adhérer à l’Association PPC" description={page.description}>
+  <Breadcrumb items={[{ label: 'Association', href: '/association' }, { label: 'Adhérer' }]} />
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+
+  <section class="eligibilite">
+    <SectionHeading title={page.qui_peut_adherer.titre} />
+    <p>{page.qui_peut_adherer.texte}</p>
+  </section>
+
+  <section class="raisons">
+    <SectionHeading title={page.pourquoi_adherer.titre} />
+    <ol>
+      {page.pourquoi_adherer.raisons.map((raison, index) => (
+        <li><span>{String(index + 1).padStart(2, '0')}</span><p>{raison}</p></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="periodes">
+    <SectionHeading title={page.choisir_adhesion.titre} intro={page.choisir_adhesion.introduction} />
+    <div class="liste-periodes">
+      {page.choisir_adhesion.periodes.map((periode) => (
+        <article>
+          <h3>{periode.titre}</h3>
+          <p>{periode.description}</p>
+          {periode.url_widget && periode.url_directe ? (
+            <>
+              <p class="operateur">Le formulaire et le paiement sont opérés par HelloAsso.</p>
+              <HelloAssoWidget
+                urlWidget={periode.url_widget}
+                urlDirecte={periode.url_directe}
+                title={`Formulaire HelloAsso — ${periode.titre}`}
+                libelleLien="ouvrir le formulaire d’adhésion directement sur HelloAsso"
+              />
+            </>
+          ) : (
+            <p class="indisponible">Le formulaire pour cette période sera ajouté dès qu’il sera disponible.</p>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .eligibilite, .raisons, .periodes { padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
+  .eligibilite { display: grid; gap: var(--space-5); }
+  .eligibilite > p { font-size: var(--font-size-lg); }
+  ol { display: grid; gap: var(--space-6); padding: 0; margin: 0; list-style: none; }
+  li, article { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
+  li > span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  li > p { margin-block: var(--space-4) 0; }
+  .liste-periodes { display: grid; gap: var(--space-7); }
+  article h3 { color: var(--color-brand); }
+  .operateur, .indisponible { color: var(--color-text-muted); }
+  .operateur { margin-top: var(--space-5); font-size: var(--font-size-sm); }
+  .indisponible { padding: var(--space-4); background: var(--color-surface-muted); }
+  @media (min-width: 48rem) {
+    .eligibilite { grid-template-columns: .8fr 1.2fr; gap: var(--space-8); }
+    ol { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

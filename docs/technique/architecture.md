@@ -32,6 +32,14 @@ Le site n'est pas une SPA, ne reçoit pas d'hydratation globale et n'introduit a
 
 Le site public ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth.
 
+### Intégration publique HelloAsso
+
+Les pages d'adhésion et de don utilisent un composant Astro réutilisable qui rend une `iframe` HelloAsso et un lien direct de repli. HelloAsso est une dépendance d'exécution limitée à ces formulaires : son indisponibilité ne doit empêcher ni le chargement du reste de la page, ni l'accès aux explications éditoriales, ni l'utilisation du lien direct lorsqu'il reste joignable.
+
+Le redimensionnement repose sur un unique listener local `postMessage` par page, sans framework ni bibliothèque. Un message n'est appliqué que si son origine HTTPS correspond exactement à celle d'une URL HelloAsso configurée, si sa source est la fenêtre du cadre concerné et si sa propriété `height` est un nombre fini strictement positif. Cette association par source permet à plusieurs widgets de cohabiter sans identifiant global.
+
+Le composant conserve une hauteur initiale de 750 px, une largeur de 100 %, le chargement différé, un titre accessible, l'autorisation de paiement requise par HelloAsso et aucune règle `sandbox` ajoutée localement.
+
 ## Structure physique du dépôt
 
 Organisation cible :

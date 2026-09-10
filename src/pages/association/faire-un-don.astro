@@ -1,0 +1,50 @@
+---
+import { getEntry } from 'astro:content';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import HelloAssoWidget from '../../components/HelloAssoWidget.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { schemaPageFaireUnDon } from '../../modeles/page-editoriale';
+
+const entree = await getEntry('pages', 'faire-un-don');
+if (!entree) throw new Error('Le singleton faire-un-don est introuvable.');
+const page = schemaPageFaireUnDon.parse(entree.data);
+---
+
+<BaseLayout title="Faire un don à l’Association PPC" description={page.description}>
+  <Breadcrumb items={[{ label: 'Association', href: '/association' }, { label: 'Faire un don' }]} />
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+
+  <section class="utilisation">
+    <SectionHeading title={page.utilisation_dons.titre} />
+    <ol>
+      {page.utilisation_dons.raisons.map((raison, index) => (
+        <li><span>{String(index + 1).padStart(2, '0')}</span><p>{raison}</p></li>
+      ))}
+    </ol>
+    <p class="precision">{page.utilisation_dons.precision}</p>
+  </section>
+
+  <section class="formulaire">
+    <SectionHeading title={page.formulaire.titre} />
+    <p class="operateur">Le formulaire et le paiement sont opérés par HelloAsso.</p>
+    <HelloAssoWidget
+      urlWidget={page.formulaire.url_widget}
+      urlDirecte={page.formulaire.url_directe}
+      title="Formulaire HelloAsso pour faire un don à l’Association PPC"
+      libelleLien="ouvrir le formulaire de don directement sur HelloAsso"
+    />
+  </section>
+</BaseLayout>
+
+<style>
+  .utilisation, .formulaire { padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
+  ol { display: grid; gap: var(--space-6); padding: 0; margin: 0; list-style: none; }
+  li { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
+  li > span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  li > p { margin-block: var(--space-4) 0; }
+  .precision { margin-top: var(--space-7); padding: var(--space-5); background: var(--color-surface-muted); }
+  .operateur { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+  @media (min-width: 48rem) { ol { grid-template-columns: repeat(3, 1fr); } }
+</style>

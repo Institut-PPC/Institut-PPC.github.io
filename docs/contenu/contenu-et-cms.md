@@ -486,6 +486,8 @@ Les informations dérivables ne sont pas dupliquées :
 
 Un champ structuré supplémentaire n'est créé que lorsque le code a réellement besoin d'en connaître la sémantique ou le placement. Éviter de découper artificiellement chaque paragraphe ou section narrative en champs de front matter.
 
+Les pages `adherer.md` et `faire-un-don.md` sont des singletons éditoriaux dédiés. Les URLs HelloAsso y sont stockées avec le formulaire qu'elles décrivent : la page d'adhésion porte une liste de périodes, chacune avec des URLs de widget et de lien direct facultatives mais indissociables, tandis que la page de don porte un formulaire unique. Cette localisation évite de réduire plusieurs périodes d'adhésion à une URL globale ambiguë. Une période sans URLs reste valide et visible sans formulaire.
+
 La page 404 reste dans le code pour le POC, sauf apparition ultérieure d'un besoin réel d'édition via CMS.
 
 ### Singleton `Accueil`
@@ -521,6 +523,8 @@ Il ne contient pas :
 - configuration Astro ;
 - logique des composants ;
 - paramètres techniques de build ou de déploiement.
+
+Les URLs propres à une période d'adhésion ou au formulaire présenté sur une page restent dans le singleton de cette page. Les éventuelles URLs globales sont réservées à une destination transverse unique réellement utilisée ailleurs dans le site.
 
 ## Documents et médias
 

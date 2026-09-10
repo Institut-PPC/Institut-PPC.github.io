@@ -1,0 +1,49 @@
+---
+import { estHoteHelloAsso } from './helloasso';
+
+interface Props {
+  urlWidget: string;
+  urlDirecte: string;
+  title: string;
+  libelleLien: string;
+}
+
+const { urlWidget, urlDirecte, title, libelleLien } = Astro.props;
+// Attribut HTML requis par HelloAsso ; il est déprécié dans les types DOM, pas dans le navigateur.
+const attributsCompatibilite: Record<string, string> = { scrolling: 'auto' };
+
+for (const [nom, valeur] of [['urlWidget', urlWidget], ['urlDirecte', urlDirecte]] as const) {
+  const url = new URL(valeur);
+  if (url.protocol !== 'https:' || !estHoteHelloAsso(url.hostname)) {
+    throw new Error(`${nom} doit être une URL HTTPS HelloAsso.`);
+  }
+}
+---
+
+<div class="helloasso-widget">
+  <iframe
+    data-widget-helloasso
+    src={urlWidget}
+    title={title}
+    width="100%"
+    height="750"
+    {...attributsCompatibilite}
+    loading="lazy"
+    allow="payment 'self' https://paymenthub.helloassopay.com https://helloasso.com"
+  ></iframe>
+  <p class="fallback">
+    Si le formulaire ne s’affiche pas, <a href={urlDirecte}>{libelleLien}</a>.
+  </p>
+</div>
+
+<script>
+  import { initialiserWidgetsHelloAsso } from './helloasso';
+
+  initialiserWidgetsHelloAsso();
+</script>
+
+<style>
+  .helloasso-widget { margin-top: var(--space-5); }
+  iframe { display: block; width: 100%; height: 750px; border: 0; background: var(--color-surface); }
+  .fallback { margin-block: var(--space-4) 0; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+</style>

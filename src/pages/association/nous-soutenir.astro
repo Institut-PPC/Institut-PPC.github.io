@@ -13,6 +13,6 @@ const page = schemaPageNousSoutenir.parse(entree.data);
 <BaseLayout title="Nous soutenir — PPC" description={page.description}>
   <Breadcrumb items={[{label:'Association',href:'/association'},{label:'Nous soutenir'}]} />
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
-  <div class="ways">{page.manieres.map((maniere, index) => <section><span>{maniere.numero}</span><h2>{maniere.titre}</h2><p>{maniere.texte}</p>{index === 2 && <ActionLink href="/contact" secondary>Nous contacter</ActionLink>}</section>)}</div>
+  <div class="ways">{page.manieres.map((maniere, index) => <section><span>{maniere.numero}</span><h2>{maniere.titre}</h2><p>{maniere.texte}</p>{index === 0 && <ActionLink href="/association/adherer" secondary>Adhérer</ActionLink>}{index === 1 && <ActionLink href="/association/faire-un-don" secondary>Faire un don</ActionLink>}{index === 2 && <ActionLink href="/contact" secondary>Nous contacter</ActionLink>}</section>)}</div>
 </BaseLayout>
 <style>.ways{display:grid;gap:var(--space-7);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}section{padding-top:var(--space-4);border-top:2px solid var(--color-brand)}section>span{color:var(--color-accent);font-size:var(--font-size-sm);font-weight:var(--font-weight-interface)}h2{margin-block:var(--space-4) var(--space-3);color:var(--color-brand);font-family:var(--font-body);font-size:var(--font-size-xl)}p{color:var(--color-text-muted)}@media(min-width:48rem){.ways{grid-template-columns:repeat(3,1fr)}} </style>

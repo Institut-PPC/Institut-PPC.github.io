@@ -41,7 +41,9 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 ├── /association
 │   ├── /association/gouvernance
 │   ├── /association/membres-fondateurs
-│   └── /association/nous-soutenir
+│   ├── /association/nous-soutenir
+│   ├── /association/adherer
+│   └── /association/faire-un-don
 │
 ├── /travailler-avec-nous
 │
@@ -93,7 +95,9 @@ Les sous-menus sont présents dès le POC lorsqu'une rubrique possède de vraies
 - Présentation ;
 - Gouvernance ;
 - Membres fondateurs ;
-- Nous soutenir / adhérer.
+- Nous soutenir ;
+- Adhérer ;
+- Faire un don.
 
 **Comprendre la PPC** reste une entrée simple dans la navigation globale. Sa navigation interne éventuelle se fait par ancres dans la page elle-même.
 
@@ -218,9 +222,19 @@ La page `/association` présente synthétiquement le rôle du collège des membr
 
 ### `/association/nous-soutenir` — Nous soutenir / adhérer
 
-Expliquer les possibilités de soutien à l'Association et orienter vers les services externes effectivement utilisés pour l'adhésion ou le don.
+Expliquer les possibilités de soutien à l'Association et orienter vers les pages dédiées à l'adhésion et au don.
 
 Le site ne réimplémente pas dans le POC les transactions gérées par ces services externes.
+
+### `/association/adherer` — Adhérer
+
+Présenter les motifs et conditions générales d'adhésion, puis les périodes d'adhésion disponibles. Plusieurs périodes indépendantes peuvent coexister ; chacune dispose de son propre formulaire HelloAsso lorsqu'il est disponible. Une période sans URL connue reste présentée sans formulaire ni destination inventée.
+
+Le formulaire de paiement est intégré par un widget HelloAsso et reste accessible par un lien direct de repli.
+
+### `/association/faire-un-don` — Faire un don
+
+Expliquer l'usage des dons et intégrer le formulaire de don HelloAsso. La transaction reste entièrement opérée par HelloAsso et un lien direct permet d'ouvrir le formulaire hors du widget.
 
 ### `/travailler-avec-nous` — Travailler avec nous
 
@@ -441,7 +455,7 @@ Personne qui veut comprendre qui porte PPC, connaître sa gouvernance, adhérer 
 - navigation principale **Association** ;
 - bloc Association / soutien en bas de l'accueil ;
 - pied de page ;
-- liens directs vers Gouvernance, Membres fondateurs ou Nous soutenir / adhérer.
+- liens directs vers Gouvernance, Membres fondateurs, Nous soutenir, Adhérer ou Faire un don.
 
 **Étapes attendues**
 1. Accéder à **Association**.
@@ -449,17 +463,19 @@ Personne qui veut comprendre qui porte PPC, connaître sa gouvernance, adhérer 
 3. Selon l'intention :
    - consulter **Gouvernance** ;
    - consulter **Membres fondateurs** ;
-   - ou ouvrir **Nous soutenir / adhérer**.
-4. Pour un soutien ou une adhésion, poursuivre vers le service externe effectivement utilisé.
+   - ouvrir **Nous soutenir** pour comparer les possibilités ;
+   - ou accéder directement à **Adhérer** ou **Faire un don**.
+4. Utiliser le formulaire HelloAsso intégré ou son lien direct de repli.
 
 **CTA structurants**
 - Voir la gouvernance ;
 - Découvrir les membres fondateurs ;
-- Nous soutenir / adhérer ;
-- Adhérer / faire un don dans le pied de page ou les contextes appropriés.
+- Nous soutenir ;
+- Adhérer ;
+- Faire un don dans le pied de page ou les contextes appropriés.
 
 **Destination attendue**  
-Accès à l'information institutionnelle recherchée ou au service externe de soutien, sans faire de l'adhésion/don l'action dominante du site PPC.
+Accès à l'information institutionnelle recherchée ou à la page locale de soutien adaptée, sans faire de l'adhésion/don l'action dominante du site PPC.
 
 **Variantes**
 - accès direct à la gouvernance depuis un lien institutionnel ;

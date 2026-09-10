@@ -39,6 +39,13 @@ Lorsque vous suivez l’un de ces liens, le service concerné applique sa propre
 politique de confidentialité et peut collecter des données indépendamment du
 site PPC.
 
+Les pages d’adhésion et de don intègrent également un formulaire fourni par
+HelloAsso. Le chargement de ces pages peut donc établir une connexion avec
+HelloAsso, qui traite les données nécessaires à l’affichage du formulaire et,
+si vous l’utilisez, à l’adhésion ou au don selon ses propres conditions et sa
+politique de confidentialité. Un lien direct permet d’ouvrir le même formulaire
+sur le site HelloAsso si le module intégré ne s’affiche pas.
+
 ## Nous contacter
 
 Pour toute question relative à la protection des données personnelles ou au

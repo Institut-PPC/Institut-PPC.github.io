@@ -624,6 +624,66 @@ collections:
               - { label: Texte, name: texte, widget: text }
           - *corps_markdown_facultatif
 
+      - name: adherer
+        label: Adhérer
+        file: contenu/pages/adherer.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: Qui peut adhérer ?
+            name: qui_peut_adherer
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+          - label: Pourquoi adhérer ?
+            name: pourquoi_adherer
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Raisons, name: raisons, widget: list, min: 3, max: 3, field: { label: Raison, name: raison, widget: text } }
+          - label: Choisir votre adhésion
+            name: choisir_adhesion
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Introduction, name: introduction, widget: text }
+              - label: Périodes d’adhésion
+                name: periodes
+                widget: list
+                min: 1
+                summary: '{{fields.titre}}'
+                fields:
+                  - { label: Titre, name: titre, widget: string }
+                  - { label: Description, name: description, widget: text }
+                  - { label: URL du widget HelloAsso, name: url_widget, widget: string, required: false }
+                  - { label: URL directe HelloAsso, name: url_directe, widget: string, required: false }
+
+      - name: faire_un_don
+        label: Faire un don
+        file: contenu/pages/faire-un-don.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: text }
+          - label: À quoi servent les dons ?
+            name: utilisation_dons
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Raisons, name: raisons, widget: list, min: 3, max: 3, field: { label: Raison, name: raison, widget: text } }
+              - { label: Précision, name: precision, widget: text }
+          - label: Formulaire
+            name: formulaire
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: URL du widget HelloAsso, name: url_widget, widget: string }
+              - { label: URL directe HelloAsso, name: url_directe, widget: string }
+
       - name: travailler_avec_nous
         label: Travailler avec nous
         file: contenu/pages/travailler-avec-nous.md
