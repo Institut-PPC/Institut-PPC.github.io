@@ -188,7 +188,7 @@ Pour le POC :
 - les routes `/association/adherer` et `/association/faire-un-don` présentent le contexte éditorial avant la transaction ;
 - les formulaires d'adhésion et de don sont intégrés depuis HelloAsso, qui reste seul opérateur du formulaire et du paiement ;
 - chaque widget conserve un lien direct vers le formulaire HelloAsso afin que le parcours reste possible si l'intégration ne charge pas ;
-- la page d'adhésion accepte plusieurs périodes indépendantes et n'expose un widget que lorsqu'une URL certaine est configurée pour la période concernée ;
+- la page d'adhésion accepte plusieurs périodes indépendantes et les présente dans des onglets accessibles, avec une seule période visible à la fois et la première active par défaut ; elle n'expose un widget que lorsqu'une URL certaine est configurée pour la période concernée ;
 - la newsletter utilise un CTA vers une page ou un formulaire externe lorsqu'une solution existe ;
 - le site ne réimplémente pas ces transactions ou inscriptions.
 

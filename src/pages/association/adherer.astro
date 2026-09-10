@@ -32,9 +32,29 @@ const page = schemaPageAdherer.parse(entree.data);
 
   <section class="periodes">
     <SectionHeading title={page.choisir_adhesion.titre} intro={page.choisir_adhesion.introduction} />
-    <div class="liste-periodes">
-      {page.choisir_adhesion.periodes.map((periode) => (
-        <article>
+    <div class="selecteur-periode" data-onglets-adhesion>
+      <div class="onglets" role="tablist" aria-label="Période d’adhésion">
+        {page.choisir_adhesion.periodes.map((periode, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`onglet-adhesion-${index}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`panneau-adhesion-${index}`}
+            tabindex={index === 0 ? 0 : -1}
+          >
+            {periode.libelle_onglet}
+          </button>
+        ))}
+      </div>
+      {page.choisir_adhesion.periodes.map((periode, index) => (
+        <article
+          class="periode-panel"
+          role="tabpanel"
+          id={`panneau-adhesion-${index}`}
+          aria-labelledby={`onglet-adhesion-${index}`}
+          hidden={index !== 0}
+        >
           <h3>{periode.titre}</h3>
           <p>{periode.description}</p>
           {periode.url_widget && periode.url_directe ? (
@@ -45,6 +65,7 @@ const page = schemaPageAdherer.parse(entree.data);
                 urlDirecte={periode.url_directe}
                 title={`Formulaire HelloAsso — ${periode.titre}`}
                 libelleLien="ouvrir le formulaire d’adhésion directement sur HelloAsso"
+                chargerImmediatement={index === 0}
               />
             </>
           ) : (
@@ -52,23 +73,55 @@ const page = schemaPageAdherer.parse(entree.data);
           )}
         </article>
       ))}
+      <noscript>
+        <p class="sans-script">
+          Pour choisir une autre période sans JavaScript, utilisez directement les liens HelloAsso :
+        </p>
+        <ul>
+          {page.choisir_adhesion.periodes.map((periode) => periode.url_directe && (
+            <li><a href={periode.url_directe}>{periode.libelle_onglet}</a></li>
+          ))}
+        </ul>
+      </noscript>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import { initialiserOngletsAdhesion } from '../../components/onglets-adhesion';
+
+  initialiserOngletsAdhesion();
+</script>
 
 <style>
   .eligibilite, .raisons, .periodes { padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
   .eligibilite { display: grid; gap: var(--space-5); }
   .eligibilite > p { font-size: var(--font-size-lg); }
   ol { display: grid; gap: var(--space-6); padding: 0; margin: 0; list-style: none; }
-  li, article { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
+  .raisons li { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
   li > span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
   li > p { margin-block: var(--space-4) 0; }
-  .liste-periodes { display: grid; gap: var(--space-7); }
-  article h3 { color: var(--color-brand); }
+  .selecteur-periode:not(.onglets-actifs) .onglets { display: none; }
+  .onglets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: var(--border-width) solid var(--color-border-strong); }
+  .onglets button {
+    min-height: var(--size-control);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+    border-bottom: 3px solid transparent;
+    color: var(--color-text-muted);
+    background: transparent;
+    font-weight: var(--font-weight-interface);
+    line-height: var(--line-height-heading);
+    cursor: pointer;
+  }
+  .onglets button:hover { color: var(--color-link-hover); background: var(--color-surface-muted); }
+  .onglets button[aria-selected='true'] { border-bottom-color: var(--color-brand); color: var(--color-brand); background: var(--color-brand-soft); }
+  .periode-panel { padding-top: var(--space-7); }
+  .periode-panel h3 { color: var(--color-brand); }
   .operateur, .indisponible { color: var(--color-text-muted); }
   .operateur { margin-top: var(--space-5); font-size: var(--font-size-sm); }
   .indisponible { padding: var(--space-4); background: var(--color-surface-muted); }
+  .sans-script { margin-top: var(--space-5); color: var(--color-text-muted); }
   @media (min-width: 48rem) {
     .eligibilite { grid-template-columns: .8fr 1.2fr; gap: var(--space-8); }
     ol { grid-template-columns: repeat(3, 1fr); }

@@ -26,17 +26,17 @@ pourquoi_adherer:
       pérennité des biens et des savoirs devient une valeur à préserver.
 choisir_adhesion:
   titre: Choisir votre adhésion
-  introduction: >-
-    Choisissez ci-dessous l’adhésion correspondant à la période qui vous
-    convient.
+  introduction: Choisissez la période d’adhésion qui vous convient.
   periodes:
-    - titre: Adhésion pour la fin de l’année 2026
+    - libelle_onglet: Fin 2026
+      titre: Adhésion pour la fin de l’année 2026
       description: Cette adhésion couvre la période restante de l’année 2026.
       url_widget: >-
         https://www.helloasso.com/associations/association-pour-la-perennite-programmee-circulaire/adhesions/adhesion-association-ppc/widget
       url_directe: >-
         https://www.helloasso.com/associations/association-pour-la-perennite-programmee-circulaire/adhesions/adhesion-association-ppc
-    - titre: Adhésion fin 2026 et année 2027
+    - libelle_onglet: Fin 2026 + 2027
+      titre: Adhésion fin 2026 et année 2027
       description: >-
         Cette adhésion couvre la fin de l’année 2026 ainsi que l’ensemble de
         l’année 2027.

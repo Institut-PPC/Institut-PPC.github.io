@@ -40,6 +40,8 @@ Le redimensionnement repose sur un unique listener local `postMessage` par page,
 
 Le composant conserve une hauteur initiale de 750 px, une largeur de 100 %, le chargement différé, un titre accessible, l'autorisation de paiement requise par HelloAsso et aucune règle `sandbox` ajoutée localement.
 
+Sur la page d'adhésion, les périodes sont associées à des onglets et panneaux ARIA. Seule l'URL du premier widget est affectée à une `iframe` lors du rendu initial ; l'URL d'un autre widget est affectée à son cadre lors de la première activation de son onglet, puis conservée afin que les changements suivants ne rechargent pas le formulaire.
+
 ## Structure physique du dépôt
 
 Organisation cible :

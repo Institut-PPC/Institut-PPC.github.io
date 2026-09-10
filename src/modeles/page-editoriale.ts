@@ -114,6 +114,7 @@ const schemaUrlHelloAsso = schemaUrlHttp.refine((valeur) => {
 
 const schemaPeriodeAdhesion = z
   .object({
+    libelle_onglet: schemaTexteObligatoire,
     titre: schemaTexteObligatoire,
     description: schemaTexteObligatoire,
     url_widget: schemaUrlHelloAsso.optional(),

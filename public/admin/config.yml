@@ -656,6 +656,7 @@ collections:
                 min: 1
                 summary: '{{fields.titre}}'
                 fields:
+                  - { label: Libellé court de l’onglet, name: libelle_onglet, widget: string }
                   - { label: Titre, name: titre, widget: string }
                   - { label: Description, name: description, widget: text }
                   - { label: URL du widget HelloAsso, name: url_widget, widget: string, required: false }

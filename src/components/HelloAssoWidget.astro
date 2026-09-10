@@ -6,11 +6,14 @@ interface Props {
   urlDirecte: string;
   title: string;
   libelleLien: string;
+  chargerImmediatement?: boolean;
 }
 
-const { urlWidget, urlDirecte, title, libelleLien } = Astro.props;
-// Attribut HTML requis par HelloAsso ; il est déprécié dans les types DOM, pas dans le navigateur.
-const attributsCompatibilite: Record<string, string> = { scrolling: 'auto' };
+const { urlWidget, urlDirecte, title, libelleLien, chargerImmediatement = true } = Astro.props;
+// `scrolling` est requis par HelloAsso mais déprécié dans les types DOM.
+const attributsIframe: Record<string, string> = chargerImmediatement
+  ? { scrolling: 'auto', src: urlWidget }
+  : { scrolling: 'auto', 'data-src': urlWidget };
 
 for (const [nom, valeur] of [['urlWidget', urlWidget], ['urlDirecte', urlDirecte]] as const) {
   const url = new URL(valeur);
@@ -23,11 +26,10 @@ for (const [nom, valeur] of [['urlWidget', urlWidget], ['urlDirecte', urlDirecte
 <div class="helloasso-widget">
   <iframe
     data-widget-helloasso
-    src={urlWidget}
+    {...attributsIframe}
     title={title}
     width="100%"
     height="750"
-    {...attributsCompatibilite}
     loading="lazy"
     allow="payment 'self' https://paymenthub.helloassopay.com https://helloasso.com"
   ></iframe>
