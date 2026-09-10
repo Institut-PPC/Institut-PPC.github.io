@@ -51,6 +51,12 @@ const accueilValide = {
       { numero: '03', titre: 'Principe 3', texte: 'Texte 3.' },
     ],
   },
+  idee_ppc: {
+    surtitre: 'L’idée PPC',
+    titre: 'Conserver la valeur',
+    texte_principal: 'Une nouvelle logique économique.',
+    texte_complementaire: 'La durée devient une source de performance.',
+  },
   cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre', texte: 'Texte.' },
   contribuer: { surtitre: 'Contribuer', titre: 'Contribuer' },
   approfondir: { surtitre: 'Approfondir', titre: 'Approfondir' },

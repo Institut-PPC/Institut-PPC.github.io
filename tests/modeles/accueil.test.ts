@@ -19,6 +19,12 @@ const accueilMinimal = {
       { numero: '03', titre: 'Contribuer', texte: 'Prendre part aux travaux.' },
     ],
   },
+  idee_ppc: {
+    surtitre: 'L’idée PPC',
+    titre: 'Conserver la valeur',
+    texte_principal: 'Une nouvelle logique économique.',
+    texte_complementaire: 'La durée devient une source de performance.',
+  },
   cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre concret', texte: 'Le cadre de PPC.' },
   contribuer: { surtitre: 'Contribuer', titre: 'Construire ensemble' },
   approfondir: { surtitre: 'Approfondir', titre: 'Aller plus loin' },

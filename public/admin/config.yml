@@ -402,6 +402,14 @@ collections:
                   - { label: Numéro, name: numero, widget: string }
                   - { label: Titre, name: titre, widget: string }
                   - { label: Texte, name: texte, widget: text }
+          - label: L’idée PPC
+            name: idee_ppc
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte principal, name: texte_principal, widget: text }
+              - { label: Texte complémentaire, name: texte_complementaire, widget: text }
           - label: Du concept au cadre concret
             name: cadre_concret
             widget: object

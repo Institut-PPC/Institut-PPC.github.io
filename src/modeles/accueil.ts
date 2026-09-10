@@ -36,6 +36,10 @@ export const schemaAccueil = z
     pourquoi: schemaEnteteSection.extend({
       principes: z.tuple([schemaPrincipeAccueil, schemaPrincipeAccueil, schemaPrincipeAccueil]),
     }),
+    idee_ppc: schemaEnteteSection.extend({
+      texte_principal: schemaTexteObligatoire,
+      texte_complementaire: schemaTexteObligatoire,
+    }),
     cadre_concret: schemaEnteteSection.extend({ texte: schemaTexteObligatoire }),
     contribuer: schemaEnteteSection,
     approfondir: schemaEnteteSection,
