@@ -1,20 +1,19 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import ActionLink from '../components/ActionLink.astro';
-import ActualiteItem from '../components/ActualiteItem.astro';
 import EmptyState from '../components/EmptyState.astro';
-import EvenementItem from '../components/EvenementItem.astro';
 import HeroBlueprint from '../components/HeroBlueprint.astro';
+import HomeContentCard from '../components/HomeContentCard.astro';
 import RessourceItem from '../components/RessourceItem.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { evenementAVenir } from '../lib/contenus';
+import { evenementAVenir, formaterDate } from '../lib/contenus';
 
 const actualites = (await getCollection('actualites', ({ data }) => data.publie))
-  .sort((a, b) => b.data.date_publication.localeCompare(a.data.date_publication)).slice(0, 2);
+  .sort((a, b) => b.data.date_publication.localeCompare(a.data.date_publication)).slice(0, 1);
 const evenements = (await getCollection('evenements', ({ data }) => data.publie))
   .filter(({ data }) => evenementAVenir(data.date_fin, data.date_debut))
-  .sort((a, b) => a.data.date_debut.localeCompare(b.data.date_debut)).slice(0, 2);
+  .sort((a, b) => a.data.date_debut.localeCompare(b.data.date_debut)).slice(0, 1);
 const accueil = await getEntry('accueil', 'accueil');
 
 if (!accueil) {
@@ -46,7 +45,7 @@ const ressourcesMisesEnAvant = accueil.data.ressources_mises_en_avant
   <section class="section framework"><div><p class="eyebrow">{accueil.data.cadre_concret.surtitre}</p><h2>{accueil.data.cadre_concret.titre}</h2></div><div><p>{accueil.data.cadre_concret.texte}</p><p class="section-link"><a href="/marque-collective">Découvrir la marque collective <span aria-hidden="true">→</span></a></p></div></section>
   <section class="section collaboration-call"><SectionHeading eyebrow={accueil.data.contribuer.surtitre} title={accueil.data.contribuer.titre} intro={accueil.data.contribuer.introduction} /><ActionLink href="/travailler-avec-nous">Voir comment travailler avec PPC <span aria-hidden="true">→</span></ActionLink></section>
   <section class="section deeper"><SectionHeading eyebrow={accueil.data.approfondir.surtitre} title={accueil.data.approfondir.titre} intro={accueil.data.approfondir.introduction} />{ressourcesMisesEnAvant.map((ressource) => <RessourceItem ressource={ressource} />)}<p class="section-link"><a href="/ressources">Parcourir les ressources <span aria-hidden="true">→</span></a></p></section>
-  <section class="section movement"><SectionHeading eyebrow={accueil.data.mouvement.surtitre} title={accueil.data.mouvement.titre} intro={accueil.data.mouvement.introduction} /><div class="movement-grid"><div><h3>Dernières actualités</h3>{actualites.length ? actualites.map((actualite) => <ActualiteItem actualite={actualite} />) : <EmptyState title="Aucune actualité pour le moment" message="Les actualités de PPC seront présentées ici dès leur publication." />}</div><div><h3>Prochains événements</h3>{evenements.length ? evenements.map((evenement) => <EvenementItem evenement={evenement} />) : <EmptyState title="Aucun événement annoncé" message="Aucun événement n’est annoncé pour le moment." />}</div></div><p class="section-link"><a href="/actualites-evenements">Voir toutes les actualités et tous les événements <span aria-hidden="true">→</span></a></p></section>
+  <section class="section movement"><SectionHeading eyebrow={accueil.data.mouvement.surtitre} title={accueil.data.mouvement.titre} intro={accueil.data.mouvement.introduction} /><div class="movement-grid"><div><h3>Dernière actualité</h3>{actualites.length ? actualites.map((actualite) => <HomeContentCard image={actualite.data.image_principale} imageAlt={actualite.data.image_alt} date={formaterDate(actualite.data.date_publication)} title={actualite.data.titre} href={`/actualites/${actualite.data.slug}`} summary={actualite.data.resume} />) : <EmptyState title="Aucune actualité pour le moment" message="Les actualités de PPC seront présentées ici dès leur publication." />}<p class="archive-link"><a href="/actualites-evenements#actualites">Toutes les actualités <span aria-hidden="true">→</span></a></p></div><div><h3>Prochain événement</h3>{evenements.length ? evenements.map((evenement) => <HomeContentCard image={evenement.data.image} imageAlt={evenement.data.image_alt} date={formaterDate(evenement.data.date_debut)} title={evenement.data.titre} href={`/evenements/${evenement.data.slug}`} summary={evenement.data.resume} />) : <EmptyState title="Aucun événement annoncé" message="Aucun événement n’est annoncé pour le moment." />}<p class="archive-link"><a href="/actualites-evenements#evenements">Tous les événements <span aria-hidden="true">→</span></a></p></div></div></section>
   <section class="section association-call"><div><p class="eyebrow">{accueil.data.association.surtitre}</p><h2>{accueil.data.association.titre}</h2></div><div><p>{accueil.data.association.texte}</p><div class="inline-links"><a href="/association">Découvrir l’Association</a><a href="/association/nous-soutenir">Nous soutenir</a></div></div></section>
 </BaseLayout>
 <style>
@@ -60,6 +59,6 @@ const ressourcesMisesEnAvant = accueil.data.ressources_mises_en_avant
   .principles { display: grid; gap: var(--space-6); }.principles article { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }.principles span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }.principles h3 { margin-block: var(--space-4) var(--space-3); }.principles p { color: var(--color-text-muted); }
   .section-link { margin-top: var(--space-6); font-weight: var(--font-weight-interface); }.idea, .framework, .association-call { display: grid; gap: var(--space-6); }.idea { padding-inline: clamp(var(--space-5), 5vw, var(--space-8)); background: var(--color-surface-muted); }.idea h2, .framework h2, .association-call h2 { max-width: 35rem; color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.idea-copy { font-size: var(--font-size-lg); }.idea-copy p + p { margin-top: var(--space-4); }
   .collaboration-call { padding-inline: clamp(var(--space-5), 5vw, var(--space-8)); background: var(--color-brand); color: var(--color-on-brand); border: 0; }.collaboration-call :global(.section-heading h2), .collaboration-call :global(.section-heading .eyebrow) { color: var(--color-on-brand); }
-  .movement-grid { display: grid; gap: var(--space-8); }.movement-grid > div > h3 { margin-bottom: var(--space-3); color: var(--color-brand); }.inline-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); font-weight: var(--font-weight-interface); }
+  .movement-grid { display: grid; gap: var(--space-8); }.movement-grid > div > h3 { margin-bottom: var(--space-3); color: var(--color-brand); }.archive-link { margin-top: var(--space-5); font-weight: var(--font-weight-interface); }.inline-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); font-weight: var(--font-weight-interface); }
   @media (min-width: 48rem) { .hero { grid-template-columns: 1.08fr .92fr; }.actions { flex-direction: row; align-items: flex-start; }.principles { grid-template-columns: repeat(3, 1fr); }.idea, .framework, .association-call { grid-template-columns: 1fr 1fr; gap: var(--space-8); }.movement-grid { grid-template-columns: 1fr 1fr; } }
 </style>
