@@ -7,8 +7,8 @@ introduction: >-
   contribuer à ses travaux ou échanger avec l’Association ? Écrivez-nous en
   précisant le contexte et l’objet de votre demande.
 coordonnees_absentes:
-  titre: Coordonnées temporairement indisponibles.
-  texte: Les coordonnées publiques de l’Association seront prochainement disponibles.
+  titre: Coordonnées indisponibles
+  texte: Aucune coordonnée publique de l’Association n’est disponible.
 titre_demandes: Pour nous aider à orienter votre demande
 demandes:
   - titre: Information générale

@@ -19,6 +19,5 @@ presentation:
     protection du vivant et des écosystèmes.
 
   titre_vide: Membres fondateurs
-  message_vide: >-
-    Aucun membre fondateur n’est actuellement publié.
+  message_vide: Aucun membre fondateur n’est disponible.
 ---

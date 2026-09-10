@@ -651,7 +651,7 @@ collections:
           - { label: Description, name: description, widget: text, required: false }
           - { label: Surtitre, name: surtitre, widget: string }
           - { label: Introduction, name: introduction, widget: text }
-          - label: Coordonnées absentes
+          - label: État vide des coordonnées
             name: coordonnees_absentes
             widget: object
             fields:

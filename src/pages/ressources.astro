@@ -8,6 +8,6 @@ const ressources=(await getCollection('ressources',({data})=>data.publie)).sort(
 ---
 <BaseLayout title="Ressources — PPC" description="Ouvrages, publications, vidéos, formations et travaux pour approfondir la PPC.">
   <PageIntro eyebrow="Approfondir" title="Ressources" intro="Une sélection de contenus PPC ou externes pour prolonger la découverte : ouvrages, publications, vidéos, formations et travaux PPC." />
-  <section class="listing" aria-labelledby="liste-ressources"><h2 id="liste-ressources" class="visually-hidden">Liste des ressources</h2>{ressources.length?ressources.map((ressource)=><RessourceItem ressource={ressource}/>):<EmptyState title="La bibliothèque se prépare" message="Aucune ressource réelle n’est encore publiée dans le dépôt. Le listing accueillera directement les contenus dès leur ajout." />}</section>
+  <section class="listing" aria-labelledby="liste-ressources"><h2 id="liste-ressources" class="visually-hidden">Liste des ressources</h2>{ressources.length?ressources.map((ressource)=><RessourceItem ressource={ressource}/>):<EmptyState title="Aucune ressource disponible" message="Aucune ressource n’est disponible pour le moment." />}</section>
 </BaseLayout>
 <style>.listing{padding-block:var(--space-5) var(--space-section);border-top:var(--border-width) solid var(--color-border)}</style>

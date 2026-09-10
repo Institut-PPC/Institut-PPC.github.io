@@ -15,10 +15,8 @@ copresidence:
     L’Association est représentée par une co-présidence paritaire composée d’une
     femme et d’un homme. Les deux co-présidents exercent leurs fonctions dans une
     logique de gouvernance partagée fondée sur la parité et la collégialité.
-  titre_vide: Composition à publier
-  message_vide: >-
-    Les profils de la co-présidence seront affichés ici lorsque leurs données
-    publiques seront disponibles.
+  titre_vide: Co-présidence indisponible
+  message_vide: La composition de la co-présidence n’est pas disponible.
 conseil_administration:
   titre: Conseil d’administration paritaire
   texte: >-
@@ -27,8 +25,6 @@ conseil_administration:
     sont désignés représentants du vivant afin d’attirer l’attention du Conseil
     sur les conséquences de ses décisions pour le vivant et les équilibres
     écologiques.
-  titre_vide: Composition à publier
-  message_vide: >-
-    Les profils des membres du Conseil d’administration seront affichés ici lorsque
-    leurs données publiques seront disponibles.
+  titre_vide: Conseil d’administration indisponible
+  message_vide: La composition du Conseil d’administration n’est pas disponible.
 ---
