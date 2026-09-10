@@ -1,21 +1,54 @@
 ---
 titre: Accessibilité
-description: Engagements d’accessibilité appliqués au POC du site PPC.
-surtitre: Informations du site
+description: Engagements d’accessibilité du site de la Pérennité Programmée Circulaire.
+surtitre: Un site accessible
 introduction: >-
-  L’accessibilité est intégrée à la conception technique et éditoriale de ce POC.
-  Aucune déclaration formelle de conformité n’est formulée avant la réalisation d’un audit approprié.
+  L’Association pour la Pérennité Programmée Circulaire souhaite rendre ses
+  contenus accessibles au plus grand nombre et intègre l’accessibilité à la
+  conception éditoriale et technique de son site.
 ---
-## Principes appliqués
 
-Le site privilégie un HTML sémantique, une hiérarchie de titres cohérente, la navigation au clavier, un focus visible, des liens explicites et des contrastes adaptés.
+## Principes de conception
 
-La navigation responsive est utilisable au clavier et au tactile. Les mises en page sont conçues pour céder avant le contenu, afin de rester lisibles au zoom et à l’agrandissement du texte.
+Le site est conçu notamment pour favoriser :
 
-## Contenus et mouvement
+- une structure de page claire et une hiérarchie cohérente des titres ;
+- une navigation utilisable au clavier ;
+- une indication visible du focus ;
+- des liens dont la fonction peut être comprise dans leur contexte ;
+- des contrastes suffisants entre les textes et leur arrière-plan ;
+- la lisibilité lors du zoom ou de l’agrandissement du texte ;
+- une utilisation adaptée aux différentes tailles d’écran.
 
-Les textes alternatifs sont utilisés selon la fonction des images. Aucune information essentielle n’est portée uniquement par la couleur, le survol ou une animation. Les préférences de réduction du mouvement sont respectées.
+## Images et contenus visuels
+
+Les images porteuses d’information disposent d’une alternative textuelle
+lorsque celle-ci est nécessaire à leur compréhension.
+
+Les informations essentielles ne doivent pas dépendre uniquement de la
+couleur, du survol d’un élément ou d’une animation.
+
+## Animations et mouvement
+
+Le site limite les animations aux situations où elles apportent une réelle
+valeur à la compréhension ou à l’utilisation.
+
+Lorsque le navigateur ou le système indique une préférence pour la réduction
+des mouvements, celle-ci est prise en compte par les composants concernés.
 
 ## État de conformité
 
-Le POC ne revendique à ce stade ni certification ni conformité formelle. L’état de conformité et un moyen de signaler une difficulté devront être complétés avant la publication publique définitive.
+Le site n’a pas encore fait l’objet d’un audit complet permettant de publier
+une déclaration formelle de conformité à un référentiel d’accessibilité.
+
+Cette page ne constitue donc pas une déclaration de conformité.
+
+## Signaler une difficulté
+
+Si vous rencontrez une difficulté pour accéder à un contenu ou utiliser une
+fonctionnalité du site, vous pouvez nous écrire à :
+
+**perennite.programmee.circulaire@gmail.com**
+
+Indiquez si possible la page concernée et la difficulté rencontrée afin de nous
+aider à identifier et corriger le problème.

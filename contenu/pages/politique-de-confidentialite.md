@@ -1,19 +1,50 @@
 ---
 titre: Politique de confidentialité
-description: Informations sur les traitements de données du POC PPC.
-surtitre: Informations du site
+description: Informations sur la protection des données personnelles sur le site PPC.
+surtitre: Vos données
 introduction: >-
-  Ce POC public est volontairement simple : il ne comporte ni analytics, ni compte
-  utilisateur, ni formulaire de contact.
+  Le site de la Pérennité Programmée Circulaire est conçu pour limiter au
+  strict nécessaire la collecte et le traitement de données personnelles.
 ---
+
 ## Données collectées par le site
 
-Le POC ne met en œuvre aucun outil de mesure d’audience et ne collecte aucune donnée au moyen d’un formulaire natif.
+Le site public ne comporte pas de compte utilisateur, de formulaire de contact
+natif ni d’outil de mesure d’audience.
 
-## Liens vers des services externes
+Il ne dépose pas volontairement de cookie de mesure d’audience, de publicité
+ou de suivi du comportement des visiteurs.
 
-Certains contenus pourront renvoyer vers leur source, vers un événement ou vers les services externes retenus pour l’adhésion et le don. Leur propre politique de confidentialité s’applique après avoir quitté ce site.
+## Hébergement et données techniques
 
-## Informations à compléter
+Comme tout site Web, son infrastructure d’hébergement peut traiter les données
+techniques nécessaires à la fourniture et à la sécurisation du service, par
+exemple l’adresse IP ou des informations liées aux requêtes HTTP.
 
-La politique devra être revue avant la publication définitive afin de refléter exactement les coordonnées de l’éditeur, de l’hébergeur et tout service externe alors effectivement utilisé.
+Ces traitements relèvent également des conditions et politiques applicables
+au service d’hébergement utilisé par le site.
+
+## Services externes
+
+Certaines pages proposent des liens vers des services exploités par des tiers,
+par exemple pour :
+
+- accéder à une ressource ou une publication ;
+- consulter ou s’inscrire à un événement ;
+- adhérer à l’Association ;
+- effectuer un don ;
+- consulter un profil ou un réseau social.
+
+Lorsque vous suivez l’un de ces liens, le service concerné applique sa propre
+politique de confidentialité et peut collecter des données indépendamment du
+site PPC.
+
+## Nous contacter
+
+Pour toute question relative à la protection des données personnelles ou au
+fonctionnement de ce site, vous pouvez écrire à :
+
+**perennite.programmee.circulaire@gmail.com**
+
+Cette politique sera mise à jour si de nouveaux services impliquant un
+traitement de données personnelles sont ajoutés au site.
