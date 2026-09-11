@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { ressource: CollectionEntry<'ressources'>; }
+const { ressource } = Astro.props;
+const href = ressource.data.mode_exposition === 'lien-direct' ? ressource.data.destination_directe : `/ressources/${ressource.data.slug}`;
+---
+<article class="resource-item">
+  {ressource.data.image && <Image src={ressource.data.image} alt={ressource.data.image_alt ?? ''} widths={[480, 768]} sizes="(min-width: 48rem) 16rem, 100vw" />}
+  <div>
+    <h3><a href={href}>{ressource.data.titre}</a></h3>
+    <p>{ressource.data.resume}</p>
+  </div>
+</article>
+<style>
+  .resource-item {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+    border-top: var(--border-width) solid var(--color-border);
+  }
+
+  img {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-surface);
+  }
+
+  h3 {
+    margin-bottom: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--font-size-xl);
+  }
+
+  h3 a { color: var(--color-brand); }
+  p { color: var(--color-text-muted); }
+
+  @media (min-width: 48rem) {
+    .resource-item:has(img) { grid-template-columns: 16rem 1fr; }
+  }
+</style>
