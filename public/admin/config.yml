@@ -593,6 +593,14 @@ collections:
               - { label: Texte, name: texte, widget: text }
               - { label: Titre de l’état vide, name: titre_vide, widget: string }
               - { label: Message de l’état vide, name: message_vide, widget: text }
+          - label: Équipe opérationnelle
+            name: equipe_operationnelle
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Texte, name: texte, widget: text }
+              - { label: Titre de l’état vide, name: titre_vide, widget: string }
+              - { label: Message de l’état vide, name: message_vide, widget: text }
           - *corps_markdown_facultatif
 
       - name: membres_fondateurs

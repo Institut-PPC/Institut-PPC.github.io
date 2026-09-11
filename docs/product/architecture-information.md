@@ -211,6 +211,7 @@ Pour le POC :
 - co-présidence et Conseil d'administration avec **photo, nom, rôle et lien LinkedIn** ;
 - ces listes sont dérivées des entités `Personne` et de leurs rôles PPC contrôlés, sans duplication des noms dans le contenu de la page ;
 - les représentants du vivant et autres rôles de gouvernance sont également dérivés des rôles lorsque leur présentation est requise.
+- l'équipe opérationnelle est présentée avec photo, nom et lien LinkedIn, à partir du rôle `equipe-operationnelle` des entités `Personne`.
 
 Les règles de gouvernance elles-mêmes ne sont pas définies par le site : le contenu publié doit refléter les sources institutionnelles de l'Association.
 

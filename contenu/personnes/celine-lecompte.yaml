@@ -1,6 +1,7 @@
-prenom: Celine
+prenom: Céline
 nom: Lecompte
 roles_ppc:
   - membre-fondateur
+  - equipe-operationnelle
 photo: ../medias/images/personnes/celine-lecompte.webp
 linkedin: https://www.linkedin.com/in/celine-lecompte-charton/

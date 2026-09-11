@@ -1,8 +1,9 @@
 ---
 titre: Une gouvernance paritaire et collégiale
 description: >-
-  Découvrir la co-présidence, le Conseil d’administration et la représentation
-  du vivant au sein de l’Association pour la Pérennité Programmée Circulaire.
+  Découvrir la co-présidence, le Conseil d’administration, la représentation du
+  vivant et l’équipe opérationnelle de l’Association pour la Pérennité
+  Programmée Circulaire.
 surtitre: Association
 introduction: >-
   La gouvernance de l’Association repose sur la parité, la collégialité et une
@@ -27,4 +28,13 @@ conseil_administration:
     écologiques.
   titre_vide: Conseil d’administration indisponible
   message_vide: La composition du Conseil d’administration n’est pas disponible.
+equipe_operationnelle:
+  titre: Équipe opérationnelle
+  texte: >-
+    L’association s’appuie sur une équipe engagée qui contribue à son
+    fonctionnement et à la mise en œuvre de ses projets. Elle fait avancer au
+    quotidien les travaux de la Pérennité Programmée Circulaire, en lien avec la
+    co-présidence, le Conseil d’administration et les membres de l’association.
+  titre_vide: Équipe opérationnelle indisponible
+  message_vide: La composition de l’équipe opérationnelle n’est pas disponible.
 ---

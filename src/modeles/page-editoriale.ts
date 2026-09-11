@@ -77,6 +77,14 @@ export const schemaPageGouvernance = schemaBasePage
         message_vide: schemaTexteObligatoire,
       })
       .strict(),
+    equipe_operationnelle: z
+      .object({
+        titre: schemaTexteObligatoire,
+        texte: schemaTexteObligatoire,
+        titre_vide: schemaTexteObligatoire,
+        message_vide: schemaTexteObligatoire,
+      })
+      .strict(),
   })
   .strict();
 

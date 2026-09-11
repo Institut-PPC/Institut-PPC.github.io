@@ -9,6 +9,7 @@ import { schemaPageGouvernance } from '../../modeles/page-editoriale';
 const personnes = await getCollection('personnes');
 const copresidence = personnes.filter(({data})=>data.roles_ppc?.includes('co-presidence'));
 const conseil = personnes.filter(({data})=>(data.roles_ppc?.includes('conseil-administration')||data.roles_ppc?.includes('conseil-administration-representant-vivant'))&&!data.roles_ppc?.includes('co-presidence'));
+const equipeOperationnelle = personnes.filter(({data})=>data.roles_ppc?.includes('equipe-operationnelle'));
 const entree = await getEntry('pages', 'gouvernance');
 if (!entree) throw new Error('Le singleton gouvernance est introuvable.');
 const page = schemaPageGouvernance.parse(entree.data);
@@ -18,5 +19,6 @@ const page = schemaPageGouvernance.parse(entree.data);
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
   <section class="governance"><h2>{page.copresidence.titre}</h2><p>{page.copresidence.texte}</p>{copresidence.length?<div class="people">{copresidence.map((personne)=><PersonCard personne={personne} />)}</div>:<EmptyState title={page.copresidence.titre_vide} message={page.copresidence.message_vide} />}</section>
   <section class="governance"><h2>{page.conseil_administration.titre}</h2><p>{page.conseil_administration.texte}</p>{conseil.length?<div class="people">{conseil.map((personne)=><PersonCard personne={personne} role={personne.data.roles_ppc?.includes('conseil-administration-representant-vivant')?'Représentation du vivant':''} />)}</div>:<EmptyState title={page.conseil_administration.titre_vide} message={page.conseil_administration.message_vide} />}</section>
+  <section class="governance"><h2>{page.equipe_operationnelle.titre}</h2><p>{page.equipe_operationnelle.texte}</p>{equipeOperationnelle.length?<div class="people">{equipeOperationnelle.map((personne)=><PersonCard personne={personne} />)}</div>:<EmptyState title={page.equipe_operationnelle.titre_vide} message={page.equipe_operationnelle.message_vide} />}</section>
 </BaseLayout>
 <style>.governance{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.governance>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.governance>p{font-size:var(--font-size-lg)}.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:var(--space-6);margin-top:var(--space-7)}</style>
