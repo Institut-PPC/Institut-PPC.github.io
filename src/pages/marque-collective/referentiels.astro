@@ -9,7 +9,7 @@ const referentiels=(await getCollection('referentiels',({data})=>data.publie)).s
 ---
 <BaseLayout title="Référentiels — PPC" description="Consulter les référentiels publiés de la marque collective PPC et leurs versions.">
   <Breadcrumb items={[{label:'Marque collective',href:'/marque-collective'},{label:'Référentiels'}]} />
-  <PageIntro eyebrow="Marque collective" title="Référentiels" intro="Les référentiels formalisent le cadre de la démarche. Chaque entrée publiée présente son statut, sa version courante et les documents disponibles." />
+  <PageIntro eyebrow="Marque collective" title="Référentiels" intro="Le référentiel PPC constitue un langage commun permettant à l'ensemble des acteurs d'un écosystème de partager les mêmes méthodes de conception, d'exploitation, de coopération, de gestion et de financement. Il est enrichi en permanence par ses comités scientifiques, méthodologiques et techniques afin de constituer un commun industriel au service d'une industrie robuste, souveraine, compétitive et respectueuse de l'environnement." />
   <section class="listing" aria-labelledby="liste-referentiels"><h2 id="liste-referentiels" class="visually-hidden">Liste des référentiels</h2>{referentiels.length?referentiels.map((referentiel)=><ReferentielItem referentiel={referentiel}/>):<EmptyState title="Aucun référentiel disponible à ce jour" message="Les référentiels publics de PPC seront accessibles ici lorsqu’ils auront été publiés par l’Association." />}</section>
 </BaseLayout>
 <style>.listing{padding-block:var(--space-5) var(--space-section);border-top:var(--border-width) solid var(--color-border)}</style>

@@ -49,6 +49,11 @@ sections:
     titre: Une approche intégrée de la pérennité
     paragraphes:
       - >-
+        Le référentiel de la Pérennité Programmée Circulaire est un cadre 
+        méthodologique, scientifique et technique destiné à concevoir, produire, 
+        commercialiser, exploiter, financer et remanufacturer des biens, des 
+        infrastructures et des services pensés pour durer.
+      - >-
         La PPC articule quatre dimensions complémentaires : concevoir des produits
         modulaires, démontables, réparables et évolutifs ; développer des modèles
         économiques fondés sur l’usage ; organiser des chaînes de valeur circulaires
@@ -65,7 +70,7 @@ sections:
 
 poursuivre:
   surtitre: Pour aller plus loin
-  titre: Des principes aux référentiels et aux travaux PPC
+  titre: Des principes aux référentiels et aux travaux
   texte: >-
     La marque collective et les référentiels ont vocation à formaliser la démarche
     PPC. Les publications, études et autres ressources permettent d’en approfondir

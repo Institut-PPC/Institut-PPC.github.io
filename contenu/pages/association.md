@@ -33,7 +33,7 @@ liens:
       Découvrir les possibilités pour adhérer à l’Association, soutenir ses
       missions ou contribuer à ses travaux.
 contact:
-  titre: Entrer en relation avec PPC
+  titre: Entrer en relation avec l'association PPC
   texte: >-
     Entreprises, institutions, experts, chercheurs, associations ou citoyens :
     contactez-nous pour toute question, proposition de coopération ou contribution
