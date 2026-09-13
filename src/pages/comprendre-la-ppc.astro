@@ -23,7 +23,7 @@ const ancres = ['demarche', 'structure', 'cadre'] as const;
   .page-nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); border-block: var(--border-width) solid var(--color-border); }.page-nav span { width: 100%; color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
   .narrative { display: grid; gap: var(--space-5); padding-block: var(--space-section); border-bottom: var(--border-width) solid var(--color-border); scroll-margin-top: var(--space-7); }.narrative > div { font-size: var(--font-size-lg); }
   .section-illustration { margin: var(--space-3) 0 0; }
-  .section-illustration :global(img) { display: block; width: 100%; height: auto; border: var(--border-width) solid var(--color-border); }
+  .section-illustration :global(img) { display: block; width: 85%; height: auto; border: var(--border-width) solid var(--color-border); }
   .next { margin-top: var(--space-section); padding: var(--space-6); background: var(--color-surface-muted); }.next h2 { color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
   @media (min-width: 48rem) { .page-nav span { width: auto; margin-right: auto; }.narrative { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); }.section-illustration { grid-column: 1 / -1; width: min(76rem, calc(100vw - (2 * var(--space-5)))); margin-inline: auto; justify-self: center; } }
 </style>
