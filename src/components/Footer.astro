@@ -7,6 +7,10 @@ interface Props {
 }
 
 const { identite } = Astro.props;
+const anneeCourante = new Intl.DateTimeFormat('fr-FR', {
+  year: 'numeric',
+  timeZone: 'Europe/Paris',
+}).format(new Date());
 ---
 
 <footer class="site-footer py-7">
@@ -49,6 +53,9 @@ const { identite } = Astro.props;
       <a href="/accessibilite">Accessibilité</a>
       <a href="/eco-conception">Éco-conception</a>
     </nav>
+    <p class="footer-copyright">
+      © Association pour la Pérennité Programmée Circulaire&nbsp;{anneeCourante}
+    </p>
   </div>
 </footer>
 
@@ -73,6 +80,7 @@ const { identite } = Astro.props;
   .footer-contact { border-block: var(--border-width) solid var(--color-border-strong); }
   .footer-contact a { font-size: var(--font-size-md); font-weight: var(--font-weight-interface); }
   .footer-legal a { text-decoration: underline; }
+  .footer-copyright { margin-top: var(--space-3); font-size: var(--font-size-sm); }
   @media (min-width: 48rem) {
     .footer-top { grid-template-columns: 1fr 2fr; }
     .footer-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); }
