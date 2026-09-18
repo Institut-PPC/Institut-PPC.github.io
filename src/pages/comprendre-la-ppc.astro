@@ -36,7 +36,7 @@ const ancres = ['demarche', 'structure', 'cadre'] as const;
           </ol>
         </div>
       )}
-      {index === 0 && <figure class="section-illustration"><Image src={modeleLineaireVsPpc} alt="Comparaison entre le modèle industriel classique, qui perd de la valeur après l’usage et la fin de vie, et le modèle PPC, qui conserve la valeur grâce à la maintenance, la réparation et l’évolution du produit." widths={[720, 1152, 1672]} sizes="(min-width: 72rem) 76rem, 100vw" loading="lazy" /></figure>}
+      {index === 0 && <figure class="section-illustration"><Image src={modeleLineaireVsPpc} alt="Comparaison entre le modèle industriel classique, qui perd de la valeur après l’usage et la fin de vie, et le modèle PPC, qui conserve la valeur grâce à la maintenance, la réparation et l’évolution du produit." widths={[720, 1152, 1672]} sizes="(min-width: 72rem) 72rem, 100vw" loading="lazy" /></figure>}
     </section>
   ))}
   <section class="next"><p class="eyebrow">{page.poursuivre.surtitre}</p><h2>{page.poursuivre.titre}</h2><p>{page.poursuivre.texte}</p><ActionLink href="/ressources" secondary>Parcourir les ressources</ActionLink></section>
@@ -44,8 +44,8 @@ const ancres = ['demarche', 'structure', 'cadre'] as const;
 <style>
   .page-nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); border-block: var(--border-width) solid var(--color-border); }.page-nav span { width: 100%; color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
   .narrative { display: grid; gap: var(--space-5); padding-block: var(--space-section); border-bottom: var(--border-width) solid var(--color-border); scroll-margin-top: var(--space-7); }.narrative-copy { font-size: var(--font-size-lg); }
-  .section-illustration { margin: var(--space-3) 0 0; }
-  .section-illustration :global(img) { display: block; width: 85%; height: auto; border: var(--border-width) solid var(--color-border); }
+  .section-illustration { min-width: 0; margin: var(--space-3) 0 0; }
+  .section-illustration :global(img) { display: block; width: 100%; height: auto; border: var(--border-width) solid var(--color-border); }
   .pillars { display: grid; gap: var(--space-6); margin-top: var(--space-4); }
   .pillars-introduction { max-width: var(--width-reading); margin: 0; color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
   .pillars-grid { display: grid; gap: var(--space-7); padding: 0; margin: 0; list-style: none; }
@@ -54,5 +54,5 @@ const ancres = ['demarche', 'structure', 'cadre'] as const;
   .pillar h3 { margin-bottom: var(--space-4); color: var(--color-brand); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
   .pillar p:last-child { margin-bottom: 0; }
   .next { margin-top: var(--space-section); padding: var(--space-6); background: var(--color-surface-muted); }.next h2 { color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
-  @media (min-width: 48rem) { .page-nav span { width: auto; margin-right: auto; }.narrative { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); }.section-illustration, .pillars { grid-column: 1 / -1; }.section-illustration { width: min(76rem, calc(100vw - (2 * var(--space-5)))); margin-inline: auto; justify-self: center; }.pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 48rem) { .page-nav span { width: auto; margin-right: auto; }.narrative { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); }.section-illustration, .pillars { grid-column: 1 / -1; }.pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
