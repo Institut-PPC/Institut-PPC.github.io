@@ -5,18 +5,23 @@ description: >-
   son rôle dans le développement de PPC et la protection de sa marque collective.
 surtitre: L’Association
 introduction: >-
-  L’Association pour la Pérennité Programmée Circulaire rassemble des professionnels, experts, institutions et acteurs publics ou privés autour d’un
-  objectif commun : promouvoir, développer et diffuser les principes de la PPC
-  dans l’industrie et les services.
+  L’Association pour la Pérennité Programmée Circulaire est une association sans
+  but lucratif qui agit dans une logique d’intérêt général. Ses travaux ont
+  vocation à bénéficier à un public large, au-delà de ses seuls membres. Elle
+  rassemble des entreprises, chercheurs, collectivités, institutions, experts,
+  étudiants, associations et citoyens souhaitant contribuer à cette transformation.
 mission:
   surtitre: Mission
-  titre: Structurer un commun au service de la pérennité
+  titre: Faire progresser la PPC au service de l’intérêt général
   texte: >-
-    L’Association contribue à élaborer, structurer et diffuser un corpus méthodologique,
-    scientifique et technique consacré à la durabilité des biens, à leur réparabilité,
-    leur réemploi et leur robustesse, ainsi qu’aux conditions économiques, comptables,
-    organisationnelles et technologiques permettant d’assurer leur pérennité dans
-    le temps long. Elle assure également la protection, la cohérence et
+    L’Association développe et diffuse des travaux scientifiques, techniques,
+    économiques, comptables, juridiques et pédagogiques. Elle favorise le dialogue
+    et la coopération entre acteurs de terrain, industriels, chercheurs,
+    institutions, collectivités et citoyens. Elle contribue ainsi à l’émergence de
+    solutions permettant de faire évoluer les modèles industriels, les pratiques
+    économiques et les cadres associés. Son approche vise à concilier performance
+    économique, intérêt général, robustesse, préservation des ressources et enjeux
+    environnementaux. Elle assure également la protection, la cohérence et
     l’administration de la marque collective « Pérennité Programmée Circulaire ».
 titre_liens: Découvrir l’Association
 liens:

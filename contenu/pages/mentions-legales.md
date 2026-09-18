@@ -26,6 +26,13 @@ France
 **Contact :**  
 perennite.programmee.circulaire@gmail.com
 
+## Statuts de l’association
+
+Les statuts définissent notamment l’objet, les principes de gouvernance et les
+règles de fonctionnement de l’Association pour la Pérennité Programmée Circulaire.
+
+[Consulter les statuts de l’association (PDF) ↗](/documents/mentions-legales/2026-07-10-Statuts-Association-PPC.pdf)
+
 ## Hébergement
 
 Le site est hébergé au moyen du service **GitHub Pages**, fourni par GitHub.

@@ -49,24 +49,61 @@ sections:
     titre: Une approche intégrée de la pérennité
     paragraphes:
       - >-
-        Le référentiel de la Pérennité Programmée Circulaire est un cadre 
-        méthodologique, scientifique et technique destiné à concevoir, produire, 
-        commercialiser, exploiter, financer et remanufacturer des biens, des 
+        Le référentiel de la Pérennité Programmée Circulaire est un cadre
+        méthodologique, scientifique et technique destiné à concevoir, produire,
+        commercialiser, exploiter, financer et remanufacturer des biens, des
         infrastructures et des services pensés pour durer.
-      - >-
-        La PPC articule quatre dimensions complémentaires : concevoir des produits
-        modulaires, démontables, réparables et évolutifs ; développer des modèles
-        économiques fondés sur l’usage ; organiser des chaînes de valeur circulaires
-        capables de maintenir et de remettre les équipements en service ; et gérer
-        dans le temps les composants, les matières, les infrastructures et les
-        savoirs nécessaires à leur pérennité.
-      - >-
-        Cette dernière dimension conduit notamment à questionner la manière dont
-        la comptabilité et le financement représentent la valeur conservée dans le
-        temps. L’Association travaille ainsi à la définition et à la reconnaissance
-        d’une Classe d’Actifs Durables, avec des travaux portant notamment sur les
-        Matières Premières Pérennes (MPP), le Génie Civil Pérenne (GCP) et les
-        Savoirs Opérationnels Pérennes (SOP).
+
+piliers:
+  introduction: La PPC repose sur quatre piliers indissociables.
+  elements:
+    - numero: "01"
+      titre: Conception modulaire, démontable et réversible
+      texte: >-
+        Le premier pilier est la conception modulaire, démontable et réversible.
+        Les produits sont conçus dès l'origine pour être robustes, réparables,
+        évolutifs et remanufacturables. La réversibilité est au cœur de cette
+        approche : les composants, les matières premières et les assemblages sont
+        pensés pour pouvoir être séparés, récupérés et réemployés. La robustesse
+        permet de prolonger leur durée de vie, tandis que le remanufacturage consiste
+        à remplacer uniquement les pièces d'usure afin de conserver le maximum de
+        matière, d'énergie et de travail déjà incorporés dans les produits.
+    - numero: "02"
+      titre: Modèle d'affaires serviciel
+      texte: >-
+        Le deuxième pilier est le modèle d'affaires serviciel. La PPC ne repose plus
+        sur la vente de biens d'équipement mais sur la vente d'une performance
+        d'usage mesurable : kilomètres parcourus, heures de fonctionnement,
+        disponibilité, confort, éclairage, énergie, production ou tout autre service
+        rendu. La création de valeur ne dépend plus du nombre de produits fabriqués
+        mais de leur qualité, de leur fiabilité et de l'intensité de leur usage. Les
+        intérêts du fabricant, de l'utilisateur et de la collectivité convergent
+        naturellement vers l'allongement de la durée de vie des équipements.
+    - numero: "03"
+      titre: Chaîne de valeur circulaire territorialisée
+      texte: >-
+        Le troisième pilier est l'organisation d'une chaîne de valeur circulaire
+        territorialisée. Les équipements sont récupérés, entretenus, réparés,
+        remanufacturés puis remis en service grâce à une coopération étroite entre
+        industriels, opérateurs de services, réparateurs, collectivités, acteurs de
+        l'économie sociale et solidaire, organismes de formation et financeurs.
+        Cette coopération permet de développer une véritable économie territoriale
+        de la durabilité, créatrice d'emplois locaux, de résilience industrielle et
+        de souveraineté sur les ressources.
+    - numero: "04"
+      titre: Gestion par composant
+      texte: >-
+        Le quatrième pilier est la gestion par composant. Chaque composant est
+        identifié, tracé, évalué et piloté tout au long de son cycle de vie. Cette
+        approche permet d'adapter les durées d'amortissement à la réalité physique
+        des composants, de mieux organiser leur maintenance, leur réemploi et leur
+        financement. Elle ouvre également la voie à la reconnaissance de nouvelles
+        classes d'actifs durables, telles que les Matières Premières Pérennes (MPP),
+        le Génie Civil Pérenne (GCP) et les Savoirs Opérationnels Pérennes (SOP),
+        lorsque leur conception réversible permet d'en préserver durablement la
+        valeur. L'un des objectifs de l'association est de faire reconnaître ces
+        actifs afin de permettre leur financement sur le temps long et de favoriser
+        l'émergence d'une véritable économie de la durabilité.
 
 poursuivre:
   surtitre: Pour aller plus loin

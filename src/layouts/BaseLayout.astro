@@ -34,7 +34,10 @@ if (!configuration) {
           <slot />
         </div>
       </main>
-      <Footer identite={configuration.data.identite} />
+      <Footer
+        identite={configuration.data.identite}
+        reseauxSociaux={configuration.data.reseaux_sociaux ?? []}
+      />
     </div>
   </body>
 </html>

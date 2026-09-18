@@ -4,9 +4,13 @@ interface Props {
     nom_court: string;
     nom_association: string;
   };
+  reseauxSociaux: Array<{
+    nom: string;
+    url: string;
+  }>;
 }
 
-const { identite } = Astro.props;
+const { identite, reseauxSociaux } = Astro.props;
 const anneeCourante = new Intl.DateTimeFormat('fr-FR', {
   year: 'numeric',
   timeZone: 'Europe/Paris',
@@ -19,6 +23,22 @@ const anneeCourante = new Intl.DateTimeFormat('fr-FR', {
       <div class="footer-signature">
         <strong>{identite.nom_court}</strong>
         <p class="text-ppc-sm mt-2 mb-0">{identite.nom_association}</p>
+        {reseauxSociaux.length > 0 && (
+          <ul class="footer-social mt-4">
+            {reseauxSociaux.map((reseau) => (
+              <li>
+                <a href={reseau.url}>
+                  {reseau.nom.toLowerCase() === 'linkedin' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                      <path fill="currentColor" d="M6.5 8.4H3.2V19h3.3V8.4ZM4.9 3A1.9 1.9 0 1 0 5 6.8 1.9 1.9 0 0 0 5 3ZM19.8 13c0-3.2-1.7-4.8-4-4.8a3.5 3.5 0 0 0-3.2 1.8V8.4H9.4V19h3.3v-5.2c0-1.4.3-2.8 2-2.8s1.8 1.6 1.8 2.9V19h3.3v-6Z" />
+                    </svg>
+                  )}
+                  <span>{reseau.nom} de l’Association ↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <nav aria-label="Navigation secondaire" class="footer-navigation grid grid-cols-2 gap-5 md:gap-7">
         <section aria-labelledby="footer-decouvrir">
@@ -44,8 +64,8 @@ const anneeCourante = new Intl.DateTimeFormat('fr-FR', {
       </nav>
     </div>
     <nav aria-label="Collaborer et contacter" class="footer-contact flex flex-col gap-2 md:flex-row md:gap-6 py-5 mt-6">
-      <a href="/travailler-avec-nous">Travailler avec nous <span aria-hidden="true">↗</span></a>
-      <a href="/contact">Nous contacter <span aria-hidden="true">↗</span></a>
+      <a href="/travailler-avec-nous">Travailler avec nous <span aria-hidden="true">→</span></a>
+      <a href="/contact">Nous contacter <span aria-hidden="true">→</span></a>
     </nav>
     <nav aria-label="Informations du site" class="footer-legal flex flex-wrap gap-x-5 gap-y-1 pt-4">
       <a href="/mentions-legales">Mentions légales</a>
@@ -65,6 +85,7 @@ const anneeCourante = new Intl.DateTimeFormat('fr-FR', {
   .footer-signature p { max-width: 16rem; }
   h2 { margin-bottom: var(--space-2); font-size: var(--font-size-md); }
   ul { padding: 0; margin: 0; list-style: none; }
+  .footer-social a { gap: var(--space-2); text-decoration: underline; }
   a {
     display: inline-flex;
     align-items: center;

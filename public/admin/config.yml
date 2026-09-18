@@ -503,6 +503,20 @@ collections:
               - { label: Surtitre, name: surtitre, widget: string }
               - { label: Titre, name: titre, widget: string }
               - { label: Paragraphes, name: paragraphes, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
+          - label: Quatre piliers
+            name: piliers
+            widget: object
+            fields:
+              - { label: Introduction, name: introduction, widget: text }
+              - label: Piliers
+                name: elements
+                widget: list
+                min: 4
+                max: 4
+                fields:
+                  - { label: Numéro, name: numero, widget: string }
+                  - { label: Titre, name: titre, widget: string }
+                  - { label: Texte, name: texte, widget: text }
           - label: Poursuivre
             name: poursuivre
             widget: object

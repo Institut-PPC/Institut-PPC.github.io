@@ -24,9 +24,23 @@ const schemaLienEditorial = z
   })
   .strict();
 
+const schemaPilierPpc = z
+  .object({
+    numero: schemaTexteObligatoire,
+    titre: schemaTexteObligatoire,
+    texte: schemaTexteObligatoire,
+  })
+  .strict();
+
 export const schemaPageComprendre = schemaBasePage
   .extend({
     sections: z.tuple([schemaSectionNarrative, schemaSectionNarrative, schemaSectionNarrative]),
+    piliers: z
+      .object({
+        introduction: schemaTexteObligatoire,
+        elements: z.tuple([schemaPilierPpc, schemaPilierPpc, schemaPilierPpc, schemaPilierPpc]),
+      })
+      .strict(),
     poursuivre: z
       .object({
         surtitre: schemaTexteObligatoire,
