@@ -112,3 +112,15 @@ Après l'implémentation :
 Il peut être compacté, archivé ou purgé périodiquement. Les spécifications ne doivent jamais dépendre du journal pour décrire le comportement actuel requis.
 
 Ne pas polluer les spécifications normatives avec l'historique chronologique des décisions.
+
+## Nettoyage des environnements de test
+
+Lors des tests ou vérifications, tout processus temporaire lancé par l'agent doit être arrêté avant la fin de la tâche.
+
+En particulier :
+- ne jamais laisser tourner en arrière-plan un serveur de développement (`npm run dev`, `astro dev`, serveur HTTP, watcher, etc.) ;
+- arrêter explicitement les processus lancés pour les tests dès qu'ils ne sont plus nécessaires ;
+- avant de terminer, vérifier qu'aucun processus temporaire créé pendant la tâche ne reste actif ;
+- ne pas arrêter les processus préexistants qui n'ont pas été lancés par l'agent.
+
+Le nettoyage fait partie intégrante de la tâche et doit être effectué même en cas d'échec d'un test ou d'une vérification.
