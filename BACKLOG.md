@@ -3,6 +3,7 @@
 ## 🟠 Fonctionnel / contenu / produit
 
 ### NOW
+* [ ] Elaborer une **courte charte éditoriale** (ton de la voix, vocabulaire, ...)
 * [ ] Faire une **passe éditoriale finale** (placeholders, textes génériques, traces POC...)
 * [ ] Finaliser les **mentions légales** et y ajouter le PDF des statuts de l'asso
 * [ ] Tester le **parcours d’adhésion** et les règles associées
@@ -16,8 +17,8 @@
 * [ ] Définir les règles de **publication et de licence des contenus PPC**
 * [ ] Prévoir la représentation des futurs **comités techniques et de leurs travaux**
 
-
 ### LATER
+* [ ] Faire **remonter les actus/évènements dans la homepage** - éléments plus dynamiques
 * [ ] Compléter / affiner **l’identité visuelle** - dépendance par rapport aux travaux sur la Brand Identity de PPC
 * [ ] Décider si un **outil d’analytics** est nécessaire et quels usages on souhaite mesurer
 * [ ] Discuter de l'***intégration de la veille Sindup** - à voir en fonction du niveau d'accès qu'on souhaite donner
