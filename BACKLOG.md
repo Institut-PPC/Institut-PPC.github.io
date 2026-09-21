@@ -3,6 +3,7 @@
 ## 🟠 Fonctionnel / contenu / produit
 
 ### NOW
+* [ ] Revoir la page **Comprendre la PPC** pour mettre plus en évidence les 4 pilliers
 * [ ] Elaborer une **courte charte éditoriale** (ton de la voix, vocabulaire, ...)
 * [ ] Faire une **passe éditoriale finale** (placeholders, textes génériques, traces POC...)
 * [ ] Finaliser les **mentions légales** et y ajouter le PDF des statuts de l'asso
@@ -24,6 +25,7 @@
 * [ ] Discuter de l'***intégration de la veille Sindup** - à voir en fonction du niveau d'accès qu'on souhaite donner
 * [ ] Faire une page "**Aux origines de la PPC**" avec l'histoire de Christian
 * [ ] Faire une page "**Partenaires**" - à voir en fonction des partenariats croisés existants ou à venir (Ademe, Orée, C3D,...)
+* [ ] Faire une page "**Presse**" - communiqués / dossiers de presse, interviews dans les media, ... etc
 
 
 ## 🔵 Technique
