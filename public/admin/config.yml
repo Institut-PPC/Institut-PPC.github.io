@@ -497,8 +497,8 @@ collections:
           - label: Sections
             name: sections
             widget: list
-            min: 3
-            max: 3
+            min: 6
+            max: 6
             fields: &champs_section_narrative
               - { label: Surtitre, name: surtitre, widget: string }
               - { label: Titre, name: titre, widget: string }
@@ -507,7 +507,6 @@ collections:
             name: piliers
             widget: object
             fields:
-              - { label: Introduction, name: introduction, widget: text }
               - label: Piliers
                 name: elements
                 widget: list
@@ -515,7 +514,8 @@ collections:
                 max: 4
                 fields:
                   - { label: Numéro, name: numero, widget: string }
-                  - { label: Titre, name: titre, widget: string }
+                  - { label: Titre pédagogique, name: titre, widget: string }
+                  - { label: Intitulé technique, name: intitule_technique, widget: string }
                   - { label: Texte, name: texte, widget: text }
           - label: Poursuivre
             name: poursuivre

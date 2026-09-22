@@ -11,25 +11,32 @@ import modeleLineaireVsPpc from '../../contenu/medias/images/pages/modele-lineai
 const entree = await getEntry('pages', 'comprendre-la-ppc');
 if (!entree) throw new Error('Le singleton comprendre-la-ppc est introuvable.');
 const page = schemaPageComprendre.parse(entree.data);
-const ancres = ['demarche', 'structure', 'cadre'] as const;
+const navigation = [
+  { ancre: 'changer-de-logique', libelle: 'Changer de logique' },
+  { ancre: 'quatre-piliers', libelle: 'Les quatre piliers' },
+  { ancre: 'systeme-coherent', libelle: 'Un système cohérent' },
+  { ancre: 'preserver-la-valeur', libelle: 'Préserver la valeur' },
+  { ancre: 'referentiel', libelle: 'Le référentiel' },
+  { ancre: 'commun-industriel', libelle: 'Un commun industriel' },
+] as const;
 ---
 <BaseLayout title={`${page.titre} — PPC`} description={page.description}>
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
-  <nav class="page-nav" aria-label="Dans cette page"><span>Dans cette page</span><a href="#demarche">La démarche</a><a href="#structure">Sa structure</a><a href="#cadre">Un cadre concret</a></nav>
+  <nav class="page-nav" aria-label="Dans cette page"><span>Dans cette page</span>{navigation.map((lien) => <a href={`#${lien.ancre}`}>{lien.libelle}</a>)}</nav>
   {page.sections.map((section, index) => (
-    <section id={ancres[index]} class="narrative">
+    <section id={navigation[index].ancre} class:list={['narrative', { 'narrative--pillars': index === 1 }]}>
       <SectionHeading eyebrow={section.surtitre} title={section.titre} />
       <div class="narrative-copy">
         {section.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}
       </div>
-      {index === 2 && (
+      {index === 1 && (
         <div class="pillars">
-          <p class="pillars-introduction">{page.piliers.introduction}</p>
           <ol class="pillars-grid">
             {page.piliers.elements.map((pilier) => (
               <li class="pillar">
                 <p class="pillar-number">{pilier.numero}</p>
                 <h3>{pilier.titre}</h3>
+                <p class="pillar-technical">{pilier.intitule_technique}</p>
                 <p>{pilier.texte}</p>
               </li>
             ))}
@@ -44,14 +51,16 @@ const ancres = ['demarche', 'structure', 'cadre'] as const;
 <style>
   .page-nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); border-block: var(--border-width) solid var(--color-border); }.page-nav span { width: 100%; color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
   .narrative { display: grid; gap: var(--space-5); padding-block: var(--space-section); border-bottom: var(--border-width) solid var(--color-border); scroll-margin-top: var(--space-7); }.narrative-copy { font-size: var(--font-size-lg); }
+  .narrative--pillars { gap: var(--space-4); padding-inline: var(--space-5); background: var(--color-surface-muted); }
+  .narrative--pillars :global(.section-heading) { margin-bottom: 0; }
   .section-illustration { min-width: 0; margin: var(--space-3) 0 0; }
   .section-illustration :global(img) { display: block; width: 100%; height: auto; border: var(--border-width) solid var(--color-border); }
-  .pillars { display: grid; gap: var(--space-6); margin-top: var(--space-4); }
-  .pillars-introduction { max-width: var(--width-reading); margin: 0; color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
+  .pillars { display: grid; gap: var(--space-5); }
   .pillars-grid { display: grid; gap: var(--space-7); padding: 0; margin: 0; list-style: none; }
   .pillar { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
   .pillar-number { margin-bottom: var(--space-3); color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
-  .pillar h3 { margin-bottom: var(--space-4); color: var(--color-brand); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
+  .pillar h3 { margin-bottom: var(--space-2); color: var(--color-brand); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
+  .pillar-technical { margin-bottom: var(--space-4); color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
   .pillar p:last-child { margin-bottom: 0; }
   .next { margin-top: var(--space-section); padding: var(--space-6); background: var(--color-surface-muted); }.next h2 { color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }
   @media (min-width: 48rem) { .page-nav span { width: auto; margin-right: auto; }.narrative { grid-template-columns: minmax(15rem, .8fr) 1.2fr; gap: var(--space-8); }.section-illustration, .pillars { grid-column: 1 / -1; }.pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

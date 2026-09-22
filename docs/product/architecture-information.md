@@ -130,6 +130,12 @@ L'accueil n'est ni un portail exhaustif ni une version condensée de toutes les 
 
 Grande page pédagogique et narrative destinée à expliquer PPC de manière progressive.
 
+La progression éditoriale du POC présente la démarche, le changement de logique,
+les quatre piliers indissociables, leur articulation, les effets recherchés, puis
+la traduction de la démarche en référentiel et le rôle de la marque collective
+et de l'Association. Les piliers apparaissent immédiatement après le changement
+de logique, avec un titre pédagogique et un intitulé technique pour chacun.
+
 Principes fonctionnels :
 - éviter un traitement excessivement textuel ou laborieux ;
 - privilégier les schémas et illustrations ;
