@@ -8,7 +8,7 @@ introduction: >-
   La Pérennité Programmée Circulaire est une démarche industrielle et commerciale
   d'intérêt général pour une économie robuste et circulaire. Elle propose de
   faire de la durée de vie et de la conservation de la valeur des biens,
-  composants, matières, infrastructures et savoirs un levier de création de valeur.
+  composants, matières, infrastructures et savoirs, un levier de création de valeur.
 
 sections:
   - surtitre: "01 — Changer de logique"
@@ -88,7 +88,7 @@ sections:
 
 piliers:
   elements:
-    - numero: "01"
+    - numero: "1"
       titre: Concevoir pour durer et pouvoir évoluer
       intitule_technique: Conception modulaire, démontable et réversible
       texte: >-
@@ -98,7 +98,7 @@ piliers:
         assemblages. Le remanufacturage consiste à remplacer les pièces d'usure
         pour conserver le maximum de matière, d'énergie et de travail déjà
         incorporés dans les produits.
-    - numero: "02"
+    - numero: "2"
       titre: Faire de la durabilité un intérêt économique
       intitule_technique: Modèle d'affaires serviciel
       texte: >-
@@ -107,7 +107,7 @@ piliers:
         sur la multiplication des ventes de biens neufs. Un équipement fiable,
         maintenable et utilisé longtemps devient une source de valeur pour le
         fabricant ou l'opérateur comme pour l'utilisateur.
-    - numero: "03"
+    - numero: "3"
       titre: Organiser la durabilité à l'échelle d'un territoire
       intitule_technique: Chaîne de valeur circulaire territorialisée
       texte: >-
@@ -117,7 +117,7 @@ piliers:
         solidaire, organismes de formation et financeurs. Cette chaîne de valeur
         peut développer une économie territoriale de la durabilité, des emplois
         locaux et une plus grande robustesse industrielle.
-    - numero: "04"
+    - numero: "4"
       titre: Préserver et piloter la valeur dans le temps
       intitule_technique: Gestion par composant
       texte: >-
