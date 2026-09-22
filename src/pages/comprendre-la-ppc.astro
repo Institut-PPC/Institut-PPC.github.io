@@ -7,6 +7,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { schemaPageComprendre } from '../modeles/page-editoriale';
 import modeleLineaireVsPpc from '../../contenu/medias/images/pages/modele-lineaire-vs-ppc.webp';
+import lesQuatrePiliersPpc from '../../contenu/medias/images/pages/les-4-piliers-ppc.webp';
 
 const entree = await getEntry('pages', 'comprendre-la-ppc');
 if (!entree) throw new Error('Le singleton comprendre-la-ppc est introuvable.');
@@ -29,6 +30,7 @@ const navigation = [
       <div class="narrative-copy">
         {section.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}
       </div>
+      {index === 1 && <figure class="section-illustration"><Image src={lesQuatrePiliersPpc} alt="Schéma des quatre piliers de la PPC : concevoir pour durer et pouvoir évoluer ; faire de la durabilité un intérêt économique ; organiser la durabilité à l’échelle des territoires ; piloter la valeur dans le temps. Des flèches relient conception, usage et cycles de vie pour montrer la valeur conservée dans le temps." widths={[720, 1152, 1672]} sizes="(min-width: 72rem) 72rem, 100vw" loading="lazy" /></figure>}
       {index === 1 && (
         <div class="pillars">
           <ol class="pillars-grid">
