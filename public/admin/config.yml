@@ -739,6 +739,21 @@ collections:
           - { label: Surtitre, name: surtitre, widget: string }
           - { label: Introduction, name: introduction, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
           - { label: Collaboration, name: collaboration, widget: object, fields: *champs_section_narrative }
+          - label: Exemples de collaboration
+            name: exemples_collaboration
+            widget: object
+            fields:
+              - { label: Surtitre, name: surtitre, widget: string }
+              - { label: Titre, name: titre, widget: string }
+              - label: Exemples
+                name: items
+                widget: list
+                min: 4
+                max: 4
+                summary: '{{fields.titre}}'
+                fields:
+                  - { label: Titre, name: titre, widget: string }
+                  - { label: Description, name: description, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
           - label: Préparation
             name: preparation
             widget: object

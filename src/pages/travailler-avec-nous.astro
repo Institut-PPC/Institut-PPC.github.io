@@ -11,9 +11,20 @@ if (!entree) throw new Error('Le singleton travailler-avec-nous est introuvable.
 const page = schemaPageTravaillerAvecNous.parse(entree.data);
 ---
 <BaseLayout title="Travailler avec nous — PPC" description={page.description}>
-  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} primaryHref="/contact" primaryLabel="Échanger avec PPC" />
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} primaryHref="/contact" primaryLabel="Échanger avec nous" />
   <section class="collaboration"><SectionHeading eyebrow={page.collaboration.surtitre} title={page.collaboration.titre} /><div>{page.collaboration.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div></section>
+  <section class="examples">
+    <SectionHeading eyebrow={page.exemples_collaboration.surtitre} title={page.exemples_collaboration.titre} />
+    <ul>
+      {page.exemples_collaboration.items.map((item) => (
+        <li>
+          <h3>{item.titre}</h3>
+          {item.description.map((paragraphe) => <p>{paragraphe}</p>)}
+        </li>
+      ))}
+    </ul>
+  </section>
   <section class="prepare"><h2>{page.preparation.titre}</h2>{page.preparation.introduction.map((paragraphe) => <p>{paragraphe}</p>)}<ol>{page.preparation.informations.map((information) => <li>{information}</li>)}</ol><ActionLink href="/contact">Voir les consignes de contact <span aria-hidden="true">→</span></ActionLink></section>
   <section class="related"><h2>{page.titre_liens}</h2><div><a href="/comprendre-la-ppc">Comprendre les principes de PPC <span aria-hidden="true">→</span></a><a href="/marque-collective/referentiels">Consulter les référentiels disponibles <span aria-hidden="true">→</span></a></div></section>
 </BaseLayout>
-<style>.collaboration{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.collaboration>div{font-size:var(--font-size-lg)}.prepare{padding:var(--space-6);background:var(--color-surface-muted)}.prepare h2,.related h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.prepare li+li{margin-top:var(--space-2)}.related{padding-block:var(--space-section)}.related>div{display:flex;flex-direction:column;gap:var(--space-4);font-weight:var(--font-weight-interface)}@media(min-width:48rem){.collaboration{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}.related>div{flex-direction:row;gap:var(--space-7)}} </style>
+<style>.collaboration{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.collaboration>div{font-size:var(--font-size-lg)}.examples{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.examples ul{display:grid;gap:var(--space-5);padding:0;margin:0;list-style:none}.examples li{padding:var(--space-5);border-top:2px solid var(--color-brand);background:var(--color-surface-muted)}.examples h3{margin-bottom:var(--space-3);color:var(--color-brand);font-size:var(--font-size-lg)}.examples p{color:var(--color-text-muted)}.examples p:last-child{margin-bottom:0}.prepare{padding:var(--space-6);background:var(--color-surface-muted)}.prepare h2,.related h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.prepare li+li{margin-top:var(--space-2)}.related{padding-block:var(--space-section)}.related>div{display:flex;flex-direction:column;gap:var(--space-4);font-weight:var(--font-weight-interface)}@media(min-width:48rem){.collaboration{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}.examples ul{grid-template-columns:repeat(2,minmax(0,1fr))}.related>div{flex-direction:row;gap:var(--space-7)}} </style>

@@ -209,9 +209,28 @@ export const schemaPageFaireUnDon = schemaBasePage
   })
   .strict();
 
+const schemaExempleCollaboration = z
+  .object({
+    titre: schemaTexteObligatoire,
+    description: schemaParagraphes,
+  })
+  .strict();
+
 export const schemaPageTravaillerAvecNous = schemaBasePage
   .extend({
     collaboration: schemaSectionNarrative,
+    exemples_collaboration: z
+      .object({
+        surtitre: schemaTexteObligatoire,
+        titre: schemaTexteObligatoire,
+        items: z.tuple([
+          schemaExempleCollaboration,
+          schemaExempleCollaboration,
+          schemaExempleCollaboration,
+          schemaExempleCollaboration,
+        ]),
+      })
+      .strict(),
     preparation: z
       .object({
         titre: schemaTexteObligatoire,
