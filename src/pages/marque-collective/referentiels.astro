@@ -1,15 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import EmptyState from '../../components/EmptyState.astro';
 import PageIntro from '../../components/PageIntro.astro';
 import ReferentielItem from '../../components/ReferentielItem.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { schemaPageReferentiels } from '../../modeles/page-editoriale';
+
 const referentiels=(await getCollection('referentiels',({data})=>data.publie)).sort((a,b)=>a.data.titre.localeCompare(b.data.titre,'fr'));
+const entree = await getEntry('pages', 'referentiels');
+if (!entree) throw new Error('Le singleton referentiels est introuvable.');
+const page = schemaPageReferentiels.parse(entree.data);
 ---
-<BaseLayout title="Référentiels — PPC" description="Consulter les référentiels publiés de la marque collective PPC et leurs versions.">
+<BaseLayout title={`${page.titre} — PPC`} description={page.description}>
   <Breadcrumb items={[{label:'Marque collective',href:'/marque-collective'},{label:'Référentiels'}]} />
-  <PageIntro eyebrow="Marque collective" title="Référentiels" intro="Le référentiel PPC constitue un langage commun permettant à l'ensemble des acteurs d'un écosystème de partager les mêmes méthodes de conception, d'exploitation, de coopération, de gestion et de financement. Il est enrichi en permanence par ses comités scientifiques, méthodologiques et techniques afin de constituer un commun industriel au service d'une industrie robuste, souveraine, compétitive et respectueuse de l'environnement." />
-  <section class="listing" aria-labelledby="liste-referentiels"><h2 id="liste-referentiels" class="visually-hidden">Liste des référentiels</h2>{referentiels.length?referentiels.map((referentiel)=><ReferentielItem referentiel={referentiel}/>):<EmptyState title="Référentiel PPC en cours de consolidation et de validation" message="Les premières versions publiques seront mises en ligne après validation par les instances de l’Association. Le référentiel est conçu comme un commun évolutif, nourri par les retours d’expérience, les travaux scientifiques et les cas d’application." />}</section>
+  <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
+  <section class="listing" aria-labelledby="liste-referentiels"><h2 id="liste-referentiels" class="visually-hidden">Liste des référentiels</h2>{referentiels.length?referentiels.map((referentiel)=><ReferentielItem referentiel={referentiel}/>):<EmptyState title={page.etat_vide.titre} message={page.etat_vide.message} />}</section>
 </BaseLayout>
 <style>.listing{padding-block:var(--space-5) var(--space-section);border-top:var(--border-width) solid var(--color-border)}</style>

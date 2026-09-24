@@ -550,6 +550,21 @@ collections:
               - { label: Texte, name: texte, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
           - *corps_markdown_facultatif
 
+      - name: page_referentiels
+        label: Référentiels
+        file: contenu/pages/referentiels.md
+        fields:
+          - { label: Titre, name: titre, widget: string }
+          - { label: Description, name: description, widget: text, required: false }
+          - { label: Surtitre, name: surtitre, widget: string }
+          - { label: Introduction, name: introduction, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
+          - label: État sans référentiel publié
+            name: etat_vide
+            widget: object
+            fields:
+              - { label: Titre, name: titre, widget: string }
+              - { label: Message, name: message, widget: text }
+
       - name: association
         label: Association
         file: contenu/pages/association.md
