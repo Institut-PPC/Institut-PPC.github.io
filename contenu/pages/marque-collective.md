@@ -6,9 +6,8 @@ description: >-
 surtitre: Marque collective
 introduction: >-
   La marque collective « Pérennité Programmée Circulaire » a vocation à
-  identifier des démarches conformes aux principes et référentiels développés
-  dans le cadre de PPC. Elle est placée sous la responsabilité de l’Association,
-  qui en assure la protection, la cohérence et l’intégrité.
+  identifier les organisations, offres, produits, services ou démarches qui 
+  respectent les principes et exigences définis par les référentiels PPC.
 
 sections:
   - surtitre: Un bien commun protégé
@@ -27,15 +26,19 @@ sections:
     titre: Relier les engagements à un cadre vérifiable
     paragraphes:
       - >-
-        La marque a vocation à s’appuyer sur des référentiels, des méthodes
-        d’évaluation et des conventions d’usage permettant de caractériser les
-        démarches qui se réclament de la Pérennité Programmée Circulaire.
+        La marque s’appuie sur des référentiels, des méthodes d’évaluation et des 
+        conventions d’utilisation de la marque permettant de vérifier la mise en 
+        œuvre cohérente des quatre piliers de la PPC.
       - >-
         Les statuts prévoient que l’accès à l’usage de la marque, aux référentiels
         et aux dispositifs d’évaluation soit ouvert à toute organisation respectant
         les critères techniques, méthodologiques et éthiques définis par
         l’Association, selon des conditions transparentes, objectives et non
         discriminatoires.
+      - >-
+        L’objectif n’est pas de labelliser une qualité isolée d’un produit, mais de 
+        vérifier la cohérence d’un système industriel et économique : conception, 
+        modèle d’usage, organisation territoriale et gestion par composants.
 
 appel:
   titre: Consulter le cadre disponible

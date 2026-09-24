@@ -5,10 +5,9 @@ description: >-
   piliers indissociables et leur traduction en référentiel et marque collective.
 surtitre: Comprendre la PPC
 introduction: >-
-  La Pérennité Programmée Circulaire est une démarche industrielle et commerciale
-  d'intérêt général pour une économie robuste et circulaire. Elle propose de
-  faire de la durée de vie et de la conservation de la valeur des biens,
-  composants, matières, infrastructures et savoirs, un levier de création de valeur.
+  La PPC est un modèle industriel, économique et comptable systémique d’intérêt général. 
+  Elle vise à rendre économiquement préférable la conservation de la valeur des biens, 
+  composants, matières, infrastructures et savoirs plutôt que leur renouvellement prématuré.
 
 sections:
   - surtitre: "01 — Changer de logique"
@@ -44,8 +43,15 @@ sections:
       - >-
         Pour financer ces activités sur le temps long, il faut aussi pouvoir
         identifier, tracer et valoriser les composants et les patrimoines
-        conservés. La singularité de la PPC tient à l'articulation de ces quatre
-        piliers dans un même système.
+        conservés. La singularité de la PPC tient au caractère systémique et 
+        indissociable de ces quatre piliers. Aucun ne suffit isolément : leur 
+        articulation aligne l’intérêt du producteur, de l’utilisateur, du 
+        territoire et du financeur autour de la conservation de la valeur.
+      - >-
+        Le recyclage n’est pas le moteur du modèle PPC. Il intervient lorsque la 
+        maintenance, la réparation, le réemploi ou la remanufacture ne permettent 
+        plus de conserver la fonction ou la valeur du composant. La PPC cherche 
+        d’abord à conserver la valeur déjà créée avant de revenir à la matière.
 
   - surtitre: "04 — Les effets recherchés"
     titre: Préserver la valeur dans le temps
@@ -57,12 +63,11 @@ sections:
         réduction des prélèvements de matières. Les activités de proximité qu'elle
         mobilise peuvent soutenir la réindustrialisation et l'emploi territorial.
       - >-
-        Cette logique concerne aussi la valeur des Matières Premières Pérennes
-        (MPP), du Génie Civil Pérenne (GCP) et des Savoirs Opérationnels Pérennes
-        (SOP), lorsque leur conception réversible permet d'en préserver
-        durablement la valeur. Leur reconnaissance comme actifs durables fait
-        partie des objectifs de l'Association, afin de favoriser un financement
-        adapté au temps long.
+        Les travaux de l’Association étudient les conditions permettant de reconnaître 
+        comptablement et financièrement la valeur durable de certaines Matières Premières
+         Pérennes (MPP), du Génie Civil Pérenne (GCP) et des Savoirs Opérationnels Pérennes (SOP), 
+         ainsi que des composants dont la durée de vie physique excède largement les durées 
+         d’amortissement conventionnelles.
 
   - surtitre: "05 — De la démarche au référentiel"
     titre: Traduire la PPC en principes et exigences
@@ -90,41 +95,39 @@ piliers:
   elements:
     - numero: "1"
       titre: Concevoir pour durer et pouvoir évoluer
-      intitule_technique: Conception modulaire, démontable et réversible
+      intitule_technique: Conception démontable
       texte: >-
-        Les produits sont conçus dès l'origine pour être robustes, réparables,
-        évolutifs et remanufacturables. La réversibilité permet de séparer,
-        récupérer et réemployer les composants, les matières premières et les
-        assemblages. Le remanufacturage consiste à remplacer les pièces d'usure
-        pour conserver le maximum de matière, d'énergie et de travail déjà
-        incorporés dans les produits.
+        La conception doit permettre d’accéder aux composants, de les remplacer, les réparer, 
+        les mettre à niveau, les réemployer et, lorsque cela est nécessaire, de récupérer 
+        les matières dans les meilleures conditions. La durée de vie n’est pas le point de 
+        départ du modèle : elle est la conséquence d’une conception compatible avec des cycles 
+        successifs d’usage et de remanufacture.
     - numero: "2"
       titre: Faire de la durabilité un intérêt économique
-      intitule_technique: Modèle d'affaires serviciel
+      intitule_technique: Vente à l’usage
       texte: >-
-        La PPC s'inscrit dans des modèles serviciels où la valeur repose sur une
-        performance d'usage mesurable et la qualité du service rendu, plutôt que
-        sur la multiplication des ventes de biens neufs. Un équipement fiable,
-        maintenable et utilisé longtemps devient une source de valeur pour le
-        fabricant ou l'opérateur comme pour l'utilisateur.
+        L’opérateur conserve la propriété de l’actif et vend une performance d’usage garantie. 
+        La relation avec l’utilisateur est organisée par une convention d’usage à engagements 
+        réciproques. La robustesse, la fiabilité, la maintenabilité, la réparabilité et la 
+        capacité de remanufacture deviennent alors directement créatrices de valeur économique.
     - numero: "3"
       titre: Organiser la durabilité à l'échelle d'un territoire
-      intitule_technique: Chaîne de valeur circulaire territorialisée
+      intitule_technique: Organisation industrielle circulaire
       texte: >-
-        Les équipements sont récupérés, entretenus, réparés, remanufacturés puis
-        remis en service grâce à la coopération entre industriels, opérateurs de
-        services, réparateurs, collectivités, acteurs de l'économie sociale et
-        solidaire, organismes de formation et financeurs. Cette chaîne de valeur
-        peut développer une économie territoriale de la durabilité, des emplois
-        locaux et une plus grande robustesse industrielle.
+        Les activités de maintenance, réparation, réemploi, remanufacture et remise en service 
+        sont organisées dans des écosystèmes territorialisés. Elles associent les compétences 
+        industrielles, les opérateurs, les mainteneurs, les acteurs de l’ESS, les organismes 
+        de formation, les collectivités et les financeurs. Elles permettent de conserver 
+        localement la valeur, les compétences et les emplois, tout en développant formation, 
+        insertion et réindustrialisation.
     - numero: "4"
       titre: Préserver et piloter la valeur dans le temps
-      intitule_technique: Gestion par composant
+      intitule_technique: Gestion par composants
       texte: >-
-        Chaque composant est identifié, tracé, évalué et piloté tout au long de
-        son cycle de vie. Cette gestion aide à organiser la maintenance et le
-        réemploi, à adapter les durées d'amortissement à la réalité physique des
-        composants et à préparer leur financement dans le temps.
+        La gestion par composants est au cœur du modèle PPC. Chaque composant significatif est 
+        identifié, tracé, maintenu, évalué et géré selon sa durée de vie physique réelle. Cette 
+        approche permet d’aligner les règles d’immobilisation, de maintenance, de renouvellement 
+        et de financement sur la réalité des actifs plutôt que sur une durée conventionnelle uniforme.
 
 poursuivre:
   surtitre: Pour aller plus loin

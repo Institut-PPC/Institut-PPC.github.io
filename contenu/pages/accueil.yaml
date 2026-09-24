@@ -5,44 +5,46 @@ description: >-
   de performance industrielle et économique.
 
 hero:
-  surtitre: Pour une économie qui crée de la valeur en faisant durer
+  surtitre: Pour une économie qui crée de la valeur en conservant la valeur
   titre_lignes:
     - Pérennité
     - Programmée
     - Circulaire
   introduction: >-
-    La Pérennité Programmée Circulaire (PPC) est une démarche industrielle et commerciale d'intérêt général pour une économie 
-    robuste et circulaire.
-    Elle s'inscrit dans une vision positive de l'avenir : réindustrialiser les territoires, renforcer notre indépendance, 
-    préserver les ressources, créer des emplois durables pour construire une économie où la performance économique, 
-    l'intérêt général et les enjeux environnementaux se renforcent mutuellement.
+    La Pérennité Programmée Circulaire (PPC) est un modèle commercial, industriel et économique systémique d’intérêt général 
+    qui organise la conservation de la valeur des biens, des composants, des matières, des infrastructures et des savoirs 
+    dans le temps.
+    Elle vise à rendre économiquement préférable la conservation de la valeur plutôt que le renouvellement permanent des biens. 
+    Elle articule Conception démontable, Vente à l’usage, Organisation industrielle circulaire et Gestion par composants.
 
 pourquoi:
   surtitre: Pourquoi la PPC ?
-  titre: Faire de la durée un avantage plutôt qu’une contrainte
+  titre: Faire de la conservation de la valeur un avantage compétitif
   introduction: >-
     Dans un monde confronté à la raréfaction des ressources, aux enjeux de
     décarbonation et de souveraineté industrielle, renouveler toujours plus vite
     les biens n’est plus une réponse soutenable.
   principes:
     - numero: "01"
-      titre: Concevoir pour durer
+      titre: Concevoir pour démonter, faire évoluer et remanufacturer
       texte: >-
-        Des biens modulaires, démontables, réparables et évolutifs, pensés pour
-        conserver leurs performances dans le temps.
+        Des biens robustes, modulaires, démontables et réversibles, conçus pour permettre 
+        la maintenance, la réparation, l’évolution, le réemploi des composants et la remanufacture.
 
     - numero: "02"
-      titre: Créer de la valeur par l’usage
+      titre: Vendre l’usage plutôt que multiplier les ventes de biens
       texte: >-
-        Des modèles économiques où la qualité du service rendu et la durée d’usage
-        comptent davantage que la multiplication des ventes de produits neufs.
+        Le producteur ou l’opérateur conserve la propriété de l’actif et commercialise une performance 
+        d’usage dans le cadre d’une convention à engagements réciproques. Sa performance économique 
+        dépend alors de la robustesse, de la maintenabilité et de la conservation de la valeur de l’équipement.
 
     - numero: "03"
-      titre: Préserver les ressources et les savoirs
+      titre: Organiser une chaîne de valeur circulaire territorialisée
       texte: >-
-        Maintenance, remanufacturage, réemploi et gestion dans le temps permettent
-        de conserver la valeur des composants, des matières, des infrastructures
-        et des savoirs déjà constitués.
+        Maintenance, réparation, réemploi et remanufacture sont organisés au plus près des usages grâce à des 
+        écosystèmes territoriaux associant industriels, mainteneurs, acteurs de l’ESS, organismes de formation, 
+        collectivités et financeurs. Cette organisation crée de l’emploi, de la formation, de l’insertion et 
+        de nouvelles capacités industrielles locales.
 
 idee_ppc:
   surtitre: L’idée PPC
@@ -71,9 +73,12 @@ contribuer:
   titre: Faire progresser la PPC à partir de situations réelles
   introduction: >-
     Entreprises, industriels, institutions et experts peuvent contribuer aux
-    travaux collectifs de l'association. Les études actuellement menées explorent notamment
-    la manière dont la comptabilité, le financement et la gestion des actifs
-    peuvent mieux reconnaître la valeur conservée dans le temps.
+    travaux collectifs de l'association. Les travaux de l’Association portent notamment sur 
+    l’évolution des référentiels commerciaux, industriels, économiques, comptables, financiers 
+    et juridiques nécessaires à l’économie de l’usage. Ils étudient en particulier la 
+    reconnaissance et le financement d’actifs dont la valeur peut être conservée sur le temps 
+    long : composants, Matières Premières Pérennes (MPP), Génie Civil Pérenne (GCP) et Savoirs 
+    Opérationnels Pérennes (SOP).
 
 approfondir:
   surtitre: Pour approfondir

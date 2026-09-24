@@ -5,24 +5,25 @@ description: >-
   son rôle dans le développement de PPC et la protection de sa marque collective.
 surtitre: L’Association
 introduction: >-
-  L’Association pour la Pérennité Programmée Circulaire est une association sans
-  but lucratif qui agit dans une logique d’intérêt général. Ses travaux ont
-  vocation à bénéficier à un public large, au-delà de ses seuls membres. Elle
-  rassemble des entreprises, chercheurs, collectivités, institutions, experts,
-  étudiants, associations et citoyens souhaitant contribuer à cette transformation.
+  L’Association pour la Pérennité Programmée Circulaire est une association sans but lucratif 
+  qui développe, structure et diffuse la PPC dans une logique d’intérêt général. Elle garantit 
+  l’indépendance du référentiel et organise sa construction comme un commun accessible aux acteurs 
+  qui souhaitent transformer leurs modèles commerciaux, industriels et économiques.
+  Elle rassemble des citoyens et des acteurs issus de la recherche, de l’industrie, des entreprises, 
+  de l’économie sociale et solidaire, de l’enseignement et de la formation, des collectivités, des 
+  institutions et du monde associatif, qui souhaitent contribuer à la construction et au développement 
+  de la Pérennité Programmée Circulaire. 
 mission:
   surtitre: Mission
   titre: Faire progresser la PPC au service de l’intérêt général
   texte: >-
-    L’Association développe et diffuse des travaux scientifiques, techniques,
-    économiques, comptables, juridiques et pédagogiques. Elle favorise le dialogue
-    et la coopération entre acteurs de terrain, industriels, chercheurs,
-    institutions, collectivités et citoyens. Elle contribue ainsi à l’émergence de
-    solutions permettant de faire évoluer les modèles industriels, les pratiques
-    économiques et les cadres associés. Son approche vise à concilier performance
-    économique, intérêt général, robustesse, préservation des ressources et enjeux
-    environnementaux. Elle assure également la protection, la cohérence et
-    l’administration de la marque collective « Pérennité Programmée Circulaire ».
+    L’Association développe, coordonne et diffuse des travaux scientifiques, techniques, industriels, 
+    économiques, comptables, financiers, juridiques et pédagogiques. Elle organise les groupes de travail 
+    qui font évoluer le référentiel PPC à partir de connaissances scientifiques, de retours d’expérience 
+    et de cas industriels réels.
+    Son ambition est de contribuer à une économie de l’usage capable de renforcer simultanément la compétitivité 
+    des entreprises, la souveraineté industrielle, la préservation des ressources, la création d’emplois locaux, 
+    la formation et l’insertion.
 titre_liens: Découvrir l’Association
 liens:
   - titre: Gouvernance
