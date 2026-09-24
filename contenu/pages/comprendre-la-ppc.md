@@ -37,14 +37,15 @@ sections:
     paragraphes:
       - >-
         Concevoir pour durer ne suffit pas si le modèle économique pousse au
-        remplacement. Un modèle serviciel ne suffit pas si le bien n'est ni
+        remplacement. La vente à l'usage ne suffit pas si le bien n'est ni
         maintenable ni remanufacturable. La maintenance, le réemploi et la
         remanufacturation supposent à leur tour une chaîne de valeur territoriale
         capable de les organiser.
       - >-
-        Pour financer ces activités sur le temps long, il faut aussi pouvoir
-        identifier, tracer et valoriser les composants et les patrimoines
-        conservés. La singularité de la PPC tient au caractère systémique et 
+        Pour financer ces activités sur le temps long, il faut pouvoir gérer et
+        valoriser les composants selon leur durée de vie physique réelle. Cette
+        gestion suppose notamment de pouvoir les identifier et les tracer dans
+        le temps. La singularité de la PPC tient au caractère systémique et 
         indissociable de ces quatre piliers. Aucun ne suffit isolément : leur 
         articulation aligne l’intérêt du producteur, de l’utilisateur, du 
         territoire et du financeur autour de la conservation de la valeur.
@@ -68,7 +69,9 @@ sections:
         comptablement et financièrement la valeur durable de certaines Matières Premières
          Pérennes (MPP), du Génie Civil Pérenne (GCP) et des Savoirs Opérationnels Pérennes (SOP), 
          ainsi que des composants dont la durée de vie physique excède largement les durées 
-         d’amortissement conventionnelles.
+         d’amortissement conventionnelles. Dans cette logique, les Matières Premières Pérennes
+         (MPP) relèvent d’une logique de remanufacture et de conservation de la valeur, plutôt
+         que d’un retour systématique à la matière par recyclage.
 
   - surtitre: "05 — De la démarche au référentiel"
     titre: Traduire la PPC en principes et exigences
@@ -111,8 +114,9 @@ piliers:
         - >-
           L’opérateur conserve la propriété de l’actif et vend une performance d’usage garantie. 
           La relation avec l’utilisateur est organisée par une convention d’usage à engagements 
-          réciproques. La robustesse, la fiabilité, la maintenabilité, la réparabilité et la 
-          capacité de remanufacture deviennent alors directement créatrices de valeur économique.
+          réciproques. Lorsque le producteur conserve la responsabilité économique du bien dans
+          le temps, robustesse, maintenabilité et remanufacture peuvent devenir des leviers de
+          performance, de préservation des marges et de compétitivité.
     - numero: "3"
       titre: Organiser la durabilité à l'échelle d'un territoire
       intitule_technique: Organisation industrielle circulaire

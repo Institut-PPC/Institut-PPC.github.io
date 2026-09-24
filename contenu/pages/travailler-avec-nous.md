@@ -20,7 +20,7 @@ collaboration:
       Les travaux menés avec les organisations permettent d’examiner leurs actifs,
       leurs modèles économiques et leurs pratiques afin d’identifier les leviers
       susceptibles de renforcer la création de valeur dans une logique de long
-      terme : durée de vie, maintenance, remanufacturage, réemploi, conservation
+      terme : durée de vie, maintenance, remanufacturation, réemploi, conservation
       des ressources et préservation des savoirs.
     - >-
       Les enseignements issus de ces situations contribuent également à une
