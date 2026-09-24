@@ -25,29 +25,36 @@ pourquoi:
   introduction:
     - >-
       Dans un monde confronté à la raréfaction des ressources, aux enjeux de
-      décarbonation et de souveraineté industrielle, renouveler toujours plus vite
-      les biens n’est plus une réponse soutenable.
+      décarbonation et de souveraineté industrielle, renouveler toujours plus
+      vite les biens détruit de la valeur économique, matérielle et humaine que
+      nous avons déjà créée.
   principes:
     - numero: "01"
-      titre: Concevoir pour démonter, faire évoluer et remanufacturer
+      titre: Une valeur détruite bien avant d’être épuisée
       texte: >-
-        Des biens robustes, modulaires, démontables et réversibles, conçus pour permettre 
-        la maintenance, la réparation, l’évolution, le réemploi des composants et la remanufacture.
+        Des biens, composants, matières, infrastructures et savoir-faire sont
+        remplacés alors qu’ils pourraient encore produire de la valeur. Cette
+        logique accélère la consommation de ressources, multiplie les
+        investissements de remplacement et détruit une partie du capital déjà
+        constitué.
 
     - numero: "02"
-      titre: Vendre l’usage plutôt que multiplier les ventes de biens
+      titre: Des modèles économiques qui récompensent encore le renouvellement
       texte: >-
-        Le producteur ou l’opérateur conserve la propriété de l’actif et commercialise une performance 
-        d’usage dans le cadre d’une convention à engagements réciproques. Sa performance économique 
-        dépend alors de la robustesse, de la maintenabilité et de la conservation de la valeur de l’équipement.
+        La vente répétée de biens ne crée pas toujours d’intérêt économique à
+        prolonger leur usage. Durabilité, maintenance et conservation de la
+        valeur peuvent alors apparaître comme des coûts, alors qu’elles
+        pourraient devenir des sources de performance, de marges et de
+        compétitivité.
 
     - numero: "03"
-      titre: Organiser une chaîne de valeur circulaire territorialisée
+      titre: Des chaînes de valeur insuffisamment organisées pour le temps long
       texte: >-
-        Maintenance, réparation, réemploi et remanufacture sont organisés au plus près des usages grâce à des 
-        écosystèmes territoriaux associant industriels, mainteneurs, acteurs de l’ESS, organismes de formation, 
-        collectivités et financeurs. Cette organisation crée de l’emploi, de la formation, de l’insertion et 
-        de nouvelles capacités industrielles locales.
+        Maintenance, réparation, réemploi et remanufacture nécessitent des
+        compétences, des capacités industrielles, des financements et une
+        organisation territoriale adaptés. Lorsque ces écosystèmes disparaissent
+        ou restent fragmentés, emplois, savoir-faire, autonomie industrielle et
+        valeur locale disparaissent avec eux.
 
 idee_ppc:
   surtitre: L’idée PPC
@@ -63,6 +70,31 @@ idee_ppc:
       Cela suppose de concevoir des biens robustes, réparables et évolutifs, mais
       aussi d’organiser les modèles économiques, la coopération, la gestion, la 
       comptabilité et le financement pour que leur durée devienne une source de performance.
+  piliers:
+    titre: LES 4 PILIERS DE LA PPC
+    items:
+      - numero: "01"
+        titre: Conception démontable
+        description:
+          - >-
+            Robuste, modulaire, démontable et réversible.
+      - numero: "02"
+        titre: Vente à l’usage
+        description:
+          - >-
+            Performance d’usage garantie par des engagements réciproques.
+      - numero: "03"
+        titre: Organisation industrielle circulaire
+        description:
+          - >-
+            Maintenance, réparation, réemploi et remanufacture dans des
+            écosystèmes territoriaux.
+      - numero: "04"
+        titre: Gestion par composants
+        description:
+          - >-
+            Gestion économique et comptable de la valeur selon la durée de vie
+            réelle des composants.
 
 cadre_concret:
   surtitre: Du concept au cadre concret

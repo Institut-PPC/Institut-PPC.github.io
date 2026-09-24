@@ -27,12 +27,6 @@ const ressourcesMisesEnAvant = accueil.data.ressources_mises_en_avant
   .map((id) => ressourcesParId.get(id))
   .filter((ressource) => ressource !== undefined);
 
-const piliersPpc = [
-  'Conception démontable',
-  'Vente à l’usage',
-  'Organisation industrielle circulaire',
-  'Gestion par composants',
-] as const;
 ---
 <BaseLayout title={accueil.data.titre_page} description={accueil.data.description}>
   <section class="hero" aria-labelledby="titre-accueil">
@@ -48,7 +42,19 @@ const piliersPpc = [
     <SectionHeading eyebrow={accueil.data.pourquoi.surtitre} title={accueil.data.pourquoi.titre} intro={accueil.data.pourquoi.introduction} />
     <div class="principles">{accueil.data.pourquoi.principes.map((principe) => <article><span>{principe.numero}</span><h3>{principe.titre}</h3><p>{principe.texte}</p></article>)}</div>
   </section>
-  <section class="section idea"><div><p class="eyebrow">{accueil.data.idee_ppc.surtitre}</p><h2>{accueil.data.idee_ppc.titre}</h2></div><div class="idea-copy">{accueil.data.idee_ppc.texte_principal.map((paragraphe) => <p>{paragraphe}</p>)}{accueil.data.idee_ppc.texte_complementaire.map((paragraphe) => <p>{paragraphe}</p>)}<div class="idea-pillars"><h3 id="titre-piliers-accueil" class="idea-pillars-heading">Les 4 piliers de la PPC</h3><ol aria-labelledby="titre-piliers-accueil">{piliersPpc.map((pilier, index) => <li><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h4>{pilier}</h4></li>)}</ol></div><p class="section-link"><a href="/comprendre-la-ppc">Comprendre la démarche <span aria-hidden="true">→</span></a></p></div></section>
+  <section class="section idea">
+    <div class="idea-intro">
+      <div><p class="eyebrow">{accueil.data.idee_ppc.surtitre}</p><h2>{accueil.data.idee_ppc.titre}</h2></div>
+      <div class="idea-copy">{accueil.data.idee_ppc.texte_principal.map((paragraphe) => <p>{paragraphe}</p>)}{accueil.data.idee_ppc.texte_complementaire.map((paragraphe) => <p>{paragraphe}</p>)}</div>
+    </div>
+    <div class="idea-pillars">
+      <h3 id="titre-piliers-accueil" class="idea-pillars-heading">{accueil.data.idee_ppc.piliers.titre}</h3>
+      <ol aria-labelledby="titre-piliers-accueil">
+        {accueil.data.idee_ppc.piliers.items.map((pilier) => <li><span>{pilier.numero}</span><div><h4>{pilier.titre}</h4>{pilier.description.map((paragraphe) => <p>{paragraphe}</p>)}</div></li>)}
+      </ol>
+    </div>
+    <p class="section-link idea-link"><a href="/comprendre-la-ppc">Comprendre la démarche <span aria-hidden="true">→</span></a></p>
+  </section>
   <section class="section framework"><div><p class="eyebrow">{accueil.data.cadre_concret.surtitre}</p><h2>{accueil.data.cadre_concret.titre}</h2></div><div>{accueil.data.cadre_concret.texte.map((paragraphe) => <p>{paragraphe}</p>)}<p class="section-link"><a href="/marque-collective">Découvrir la marque collective <span aria-hidden="true">→</span></a></p></div></section>
   <section class="section collaboration-call"><SectionHeading eyebrow={accueil.data.contribuer.surtitre} title={accueil.data.contribuer.titre} intro={accueil.data.contribuer.introduction} /><ActionLink href="/travailler-avec-nous">Voir comment travailler avec nous<span aria-hidden="true">→</span></ActionLink></section>
   <section class="section deeper"><SectionHeading eyebrow={accueil.data.approfondir.surtitre} title={accueil.data.approfondir.titre} intro={accueil.data.approfondir.introduction} />{ressourcesMisesEnAvant.map((ressource) => <HomeResourceItem ressource={ressource} />)}<p class="section-link"><a href="/ressources">Parcourir les ressources <span aria-hidden="true">→</span></a></p></section>
@@ -63,15 +69,15 @@ const piliersPpc = [
   .actions { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6); }
   .section { padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
   .principles { display: grid; gap: var(--space-6); }.principles article { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }.principles span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }.principles h3 { margin-block: var(--space-4) var(--space-3); }.principles p { color: var(--color-text-muted); }
-  .section-link { margin-top: var(--space-6); font-weight: var(--font-weight-interface); }.idea, .framework, .association-call { display: grid; gap: var(--space-6); }.idea { padding-inline: clamp(var(--space-5), 5vw, var(--space-8)); background: var(--color-surface-muted); }.idea h2, .framework h2, .association-call h2 { max-width: 35rem; color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.idea-copy { font-size: var(--font-size-lg); }.idea-copy > p + p { margin-top: var(--space-4); }
-  .idea-pillars { display: grid; gap: var(--space-4); max-width: 32rem; margin-top: var(--space-7); }
-  .idea-pillars-heading { width: fit-content; margin: 0; padding: var(--space-2) var(--space-4); color: var(--color-on-brand); background: var(--color-brand); border-radius: var(--radius-control); font-size: var(--font-size-md); font-weight: var(--font-weight-interface); line-height: var(--line-height-heading); }
-  .idea-pillars ol { display: grid; gap: 0; padding: 0 0 0 var(--space-5); margin: 0; border-left: var(--border-width) solid var(--color-border-strong); list-style: none; }
-  .idea-pillars li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-4); border-top: var(--border-width) solid var(--color-border); }
-  .idea-pillars li:last-child { border-bottom: var(--border-width) solid var(--color-border); }
+  .section-link { margin-top: var(--space-6); font-weight: var(--font-weight-interface); }.framework, .association-call { display: grid; gap: var(--space-6); }.idea { padding-inline: clamp(var(--space-5), 5vw, var(--space-8)); background: var(--color-surface-muted); }.idea-intro { display: grid; gap: var(--space-6); }.idea h2, .framework h2, .association-call h2 { max-width: 35rem; color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }.idea-copy { font-size: var(--font-size-lg); }.idea-copy > p + p { margin-top: var(--space-4); }
+  .idea-pillars { margin-top: var(--space-8); padding-top: var(--space-6); border-top: var(--border-width) solid var(--color-border-strong); }
+  .idea-pillars-heading { margin: 0 0 var(--space-6); color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); letter-spacing: .08em; line-height: var(--line-height-heading); }
+  .idea-pillars ol { display: grid; gap: var(--space-6); padding: 0; margin: 0; list-style: none; }
+  .idea-pillars li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: var(--space-4); padding-top: var(--space-5); border-top: var(--border-width) solid var(--color-border); }
   .idea-pillars li > span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
-  .idea-pillars h4 { margin: 0; color: var(--color-brand); font-size: var(--font-size-md); line-height: var(--line-height-heading); }
+  .idea-pillars h4 { margin: 0 0 var(--space-3); color: var(--color-brand); font-size: var(--font-size-xl); line-height: var(--line-height-heading); }
+  .idea-pillars p { margin: 0; color: var(--color-text-muted); font-size: var(--font-size-md); }
   .collaboration-call { padding-inline: clamp(var(--space-5), 5vw, var(--space-8)); background: var(--color-brand); color: var(--color-on-brand); border: 0; }.collaboration-call :global(.section-heading h2), .collaboration-call :global(.section-heading .eyebrow) { color: var(--color-on-brand); }
   .movement-grid { display: grid; gap: var(--space-8); }.movement-grid > div > h3 { margin-bottom: var(--space-3); color: var(--color-brand); }.archive-link { margin-top: var(--space-5); font-weight: var(--font-weight-interface); }.inline-links { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); font-weight: var(--font-weight-interface); }
-  @media (min-width: 48rem) { .hero { grid-template-columns: 1.08fr .92fr; }.actions { flex-direction: row; align-items: flex-start; }.principles { grid-template-columns: repeat(3, 1fr); }.idea, .framework, .association-call { grid-template-columns: 1fr 1fr; gap: var(--space-8); }.movement-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 48rem) { .hero { grid-template-columns: 1.08fr .92fr; }.actions { flex-direction: row; align-items: flex-start; }.principles { grid-template-columns: repeat(3, 1fr); }.idea-intro, .framework, .association-call { grid-template-columns: 1fr 1fr; gap: var(--space-8); }.idea-pillars ol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7) var(--space-8); }.idea-link { text-align: right; }.movement-grid { grid-template-columns: 1fr 1fr; } }
 </style>

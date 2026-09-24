@@ -56,6 +56,15 @@ const accueilValide = {
     titre: 'Conserver la valeur',
     texte_principal: ['Une nouvelle logique économique.'],
     texte_complementaire: ['La durée devient une source de performance.'],
+    piliers: {
+      titre: 'LES 4 PILIERS DE LA PPC',
+      items: [
+        { numero: '01', titre: 'Conception', description: ['Description.'] },
+        { numero: '02', titre: 'Usage', description: ['Description.'] },
+        { numero: '03', titre: 'Organisation', description: ['Description.'] },
+        { numero: '04', titre: 'Gestion', description: ['Description.'] },
+      ],
+    },
   },
   cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre', texte: ['Texte.'] },
   contribuer: { surtitre: 'Contribuer', titre: 'Contribuer' },

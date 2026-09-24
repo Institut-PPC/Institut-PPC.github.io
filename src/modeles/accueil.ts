@@ -18,6 +18,14 @@ const schemaPrincipeAccueil = z
   })
   .strict();
 
+const schemaPilierAccueil = z
+  .object({
+    numero: schemaTexteObligatoire,
+    titre: schemaTexteObligatoire,
+    description: schemaParagraphes,
+  })
+  .strict();
+
 export const schemaAccueil = z
   .object({
     titre_page: schemaTexteObligatoire,
@@ -39,6 +47,17 @@ export const schemaAccueil = z
     idee_ppc: schemaEnteteSection.extend({
       texte_principal: schemaParagraphes,
       texte_complementaire: schemaParagraphes,
+      piliers: z
+        .object({
+          titre: schemaTexteObligatoire,
+          items: z.tuple([
+            schemaPilierAccueil,
+            schemaPilierAccueil,
+            schemaPilierAccueil,
+            schemaPilierAccueil,
+          ]),
+        })
+        .strict(),
     }),
     cadre_concret: schemaEnteteSection.extend({ texte: schemaParagraphes }),
     contribuer: schemaEnteteSection,

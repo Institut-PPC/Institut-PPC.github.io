@@ -410,6 +410,21 @@ collections:
               - { label: Titre, name: titre, widget: string }
               - { label: Texte principal, name: texte_principal, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
               - { label: Texte complémentaire, name: texte_complementaire, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
+              - label: Piliers
+                name: piliers
+                widget: object
+                fields:
+                  - { label: Intertitre, name: titre, widget: string }
+                  - label: Piliers
+                    name: items
+                    widget: list
+                    min: 4
+                    max: 4
+                    summary: '{{fields.numero}} — {{fields.titre}}'
+                    fields:
+                      - { label: Numéro, name: numero, widget: string }
+                      - { label: Titre, name: titre, widget: string }
+                      - { label: Description, name: description, widget: list, min: 1, field: { label: Paragraphe, name: paragraphe, widget: text } }
           - label: Du concept au cadre concret
             name: cadre_concret
             widget: object
