@@ -41,7 +41,7 @@ const ressourceValide = {
 const accueilValide = {
   titre_page: 'PPC',
   description: 'Présentation de PPC.',
-  hero: { surtitre: 'Démarche', titre_lignes: ['Pérennité', 'Programmée', 'Circulaire'], introduction: 'Introduction.' },
+  hero: { surtitre: 'Démarche', titre_lignes: ['Pérennité', 'Programmée', 'Circulaire'], introduction: ['Introduction.'] },
   pourquoi: {
     surtitre: 'Pourquoi',
     titre: 'Comprendre',
@@ -54,15 +54,15 @@ const accueilValide = {
   idee_ppc: {
     surtitre: 'L’idée PPC',
     titre: 'Conserver la valeur',
-    texte_principal: 'Une nouvelle logique économique.',
-    texte_complementaire: 'La durée devient une source de performance.',
+    texte_principal: ['Une nouvelle logique économique.'],
+    texte_complementaire: ['La durée devient une source de performance.'],
   },
-  cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre', texte: 'Texte.' },
+  cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre', texte: ['Texte.'] },
   contribuer: { surtitre: 'Contribuer', titre: 'Contribuer' },
   approfondir: { surtitre: 'Approfondir', titre: 'Approfondir' },
   ressources_mises_en_avant: ['guide-ppc'],
   mouvement: { surtitre: 'Mouvement', titre: 'Mouvement' },
-  association: { surtitre: 'Association', titre: 'Association', texte: 'Texte.' },
+  association: { surtitre: 'Association', titre: 'Association', texte: ['Texte.'] },
 };
 
 async function ecrire(racine: string, relatif: string, contenu: string | Uint8Array): Promise<void> {

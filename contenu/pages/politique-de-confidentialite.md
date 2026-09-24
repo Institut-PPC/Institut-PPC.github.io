@@ -2,9 +2,10 @@
 titre: Politique de confidentialité
 description: Informations sur la protection des données personnelles sur le site PPC.
 surtitre: Vos données
-introduction: >-
-  Le site de la Pérennité Programmée Circulaire est conçu pour limiter au
-  strict nécessaire la collecte et le traitement de données personnelles.
+introduction:
+  - >-
+    Le site de la Pérennité Programmée Circulaire est conçu pour limiter au
+    strict nécessaire la collecte et le traitement de données personnelles.
 ---
 
 ## Données collectées par le site

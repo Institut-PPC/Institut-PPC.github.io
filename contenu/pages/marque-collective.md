@@ -4,10 +4,11 @@ description: >-
   Comprendre le rôle de la marque collective Pérennité Programmée Circulaire
   et la responsabilité de l’Association dans sa protection et son administration.
 surtitre: Marque collective
-introduction: >-
-  La marque collective « Pérennité Programmée Circulaire » a vocation à
-  identifier les organisations, offres, produits, services ou démarches qui 
-  respectent les principes et exigences définis par les référentiels PPC.
+introduction:
+  - >-
+    La marque collective « Pérennité Programmée Circulaire » a vocation à
+    identifier les organisations, offres, produits, services ou démarches qui 
+    respectent les principes et exigences définis par les référentiels PPC.
 
 sections:
   - surtitre: Un bien commun protégé
@@ -42,7 +43,8 @@ sections:
 
 appel:
   titre: Consulter le cadre disponible
-  texte: >-
-    Les référentiels et documents effectivement publiables seront mis à
-    disposition à mesure de leur validation par l’Association.
+  texte:
+    - >-
+      Les référentiels et documents effectivement publiables seront mis à
+      disposition à mesure de leur validation par l’Association.
 ---

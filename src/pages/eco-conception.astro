@@ -46,18 +46,18 @@ const classeObtenue = classes[seuils.findIndex((seuil) => page.mesure.score >= s
         {page.conception.choix.map((choix) => (
           <article>
             <h3>{choix.titre}</h3>
-            <p>{choix.texte}</p>
+            {choix.texte.map((paragraphe) => <p>{paragraphe}</p>)}
           </article>
         ))}
       </div>
-      <p class="conclusion">{page.conception.conclusion}</p>
+      <div class="conclusion">{page.conception.conclusion.map((paragraphe) => <p>{paragraphe}</p>)}</div>
     </div>
   </section>
 
   <section class="section measure">
     <SectionHeading eyebrow={page.mesure.surtitre} title={page.mesure.titre} />
     <div class="section-content">
-      <p>{page.mesure.introduction}</p>
+      {page.mesure.introduction.map((paragraphe) => <p>{paragraphe}</p>)}
       <div class="score">
         <div class="scale-labels" aria-hidden="true"><span>max. 100</span><span>min. 0</span></div>
         <ol class="scale" aria-label="Classement EcoIndex de A à G">

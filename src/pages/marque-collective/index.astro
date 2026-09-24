@@ -13,6 +13,6 @@ const page = schemaPageMarqueCollective.parse(entree.data);
 <BaseLayout title="Marque collective — PPC" description={page.description}>
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} primaryHref="/marque-collective/referentiels" primaryLabel="Consulter les référentiels" />
   {page.sections.map((section) => <section class="editorial"><SectionHeading eyebrow={section.surtitre} title={section.titre} /><div>{section.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div></section>)}
-  <section class="callout"><h2>{page.appel.titre}</h2><p>{page.appel.texte}</p><ActionLink href="/marque-collective/referentiels">Voir les référentiels <span aria-hidden="true">→</span></ActionLink></section>
+  <section class="callout"><h2>{page.appel.titre}</h2>{page.appel.texte.map((paragraphe) => <p>{paragraphe}</p>)}<ActionLink href="/marque-collective/referentiels">Voir les référentiels <span aria-hidden="true">→</span></ActionLink></section>
 </BaseLayout>
 <style>.editorial{display:grid;gap:var(--space-5);padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.editorial>div{font-size:var(--font-size-lg)}.callout{margin-top:var(--space-section);padding:var(--space-6);background:var(--color-brand);color:var(--color-on-brand)}.callout h2{font-family:var(--font-display);font-weight:400}.callout p{margin-bottom:var(--space-6)}@media(min-width:48rem){.editorial{grid-template-columns:.8fr 1.2fr;gap:var(--space-8)}} </style>

@@ -2,10 +2,11 @@
 titre: Accessibilité
 description: Engagements d’accessibilité du site de la Pérennité Programmée Circulaire.
 surtitre: Un site accessible
-introduction: >-
-  L’Association pour la Pérennité Programmée Circulaire souhaite rendre ses
-  contenus accessibles au plus grand nombre et intègre l’accessibilité à la
-  conception éditoriale et technique de son site.
+introduction:
+  - >-
+    L’Association pour la Pérennité Programmée Circulaire souhaite rendre ses
+    contenus accessibles au plus grand nombre et intègre l’accessibilité à la
+    conception éditoriale et technique de son site.
 ---
 
 ## Principes de conception

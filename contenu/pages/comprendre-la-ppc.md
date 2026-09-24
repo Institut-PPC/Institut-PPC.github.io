@@ -4,10 +4,11 @@ description: >-
   Comprendre la démarche de la Pérennité Programmée Circulaire, ses quatre
   piliers indissociables et leur traduction en référentiel et marque collective.
 surtitre: Comprendre la PPC
-introduction: >-
-  La PPC est un modèle industriel, économique et comptable systémique d’intérêt général. 
-  Elle vise à rendre économiquement préférable la conservation de la valeur des biens, 
-  composants, matières, infrastructures et savoirs plutôt que leur renouvellement prématuré.
+introduction:
+  - >-
+    La PPC est un modèle industriel, économique et comptable systémique d’intérêt général. 
+    Elle vise à rendre économiquement préférable la conservation de la valeur des biens, 
+    composants, matières, infrastructures et savoirs plutôt que leur renouvellement prématuré.
 
 sections:
   - surtitre: "01 — Changer de logique"
@@ -96,43 +97,48 @@ piliers:
     - numero: "1"
       titre: Concevoir pour durer et pouvoir évoluer
       intitule_technique: Conception démontable
-      texte: >-
-        La conception doit permettre d’accéder aux composants, de les remplacer, les réparer, 
-        les mettre à niveau, les réemployer et, lorsque cela est nécessaire, de récupérer 
-        les matières dans les meilleures conditions. La durée de vie n’est pas le point de 
-        départ du modèle : elle est la conséquence d’une conception compatible avec des cycles 
-        successifs d’usage et de remanufacture.
+      texte:
+        - >-
+          La conception doit permettre d’accéder aux composants, de les remplacer, les réparer, 
+          les mettre à niveau, les réemployer et, lorsque cela est nécessaire, de récupérer 
+          les matières dans les meilleures conditions. La durée de vie n’est pas le point de 
+          départ du modèle : elle est la conséquence d’une conception compatible avec des cycles 
+          successifs d’usage et de remanufacture.
     - numero: "2"
       titre: Faire de la durabilité un intérêt économique
       intitule_technique: Vente à l’usage
-      texte: >-
-        L’opérateur conserve la propriété de l’actif et vend une performance d’usage garantie. 
-        La relation avec l’utilisateur est organisée par une convention d’usage à engagements 
-        réciproques. La robustesse, la fiabilité, la maintenabilité, la réparabilité et la 
-        capacité de remanufacture deviennent alors directement créatrices de valeur économique.
+      texte:
+        - >-
+          L’opérateur conserve la propriété de l’actif et vend une performance d’usage garantie. 
+          La relation avec l’utilisateur est organisée par une convention d’usage à engagements 
+          réciproques. La robustesse, la fiabilité, la maintenabilité, la réparabilité et la 
+          capacité de remanufacture deviennent alors directement créatrices de valeur économique.
     - numero: "3"
       titre: Organiser la durabilité à l'échelle d'un territoire
       intitule_technique: Organisation industrielle circulaire
-      texte: >-
-        Les activités de maintenance, réparation, réemploi, remanufacture et remise en service 
-        sont organisées dans des écosystèmes territorialisés. Elles associent les compétences 
-        industrielles, les opérateurs, les mainteneurs, les acteurs de l’ESS, les organismes 
-        de formation, les collectivités et les financeurs. Elles permettent de conserver 
-        localement la valeur, les compétences et les emplois, tout en développant formation, 
-        insertion et réindustrialisation.
+      texte:
+        - >-
+          Les activités de maintenance, réparation, réemploi, remanufacture et remise en service 
+          sont organisées dans des écosystèmes territorialisés. Elles associent les compétences 
+          industrielles, les opérateurs, les mainteneurs, les acteurs de l’ESS, les organismes 
+          de formation, les collectivités et les financeurs. Elles permettent de conserver 
+          localement la valeur, les compétences et les emplois, tout en développant formation, 
+          insertion et réindustrialisation.
     - numero: "4"
       titre: Préserver et piloter la valeur dans le temps
       intitule_technique: Gestion par composants
-      texte: >-
-        La gestion par composants est au cœur du modèle PPC. Chaque composant significatif est 
-        identifié, tracé, maintenu, évalué et géré selon sa durée de vie physique réelle. Cette 
-        approche permet d’aligner les règles d’immobilisation, de maintenance, de renouvellement 
-        et de financement sur la réalité des actifs plutôt que sur une durée conventionnelle uniforme.
+      texte:
+        - >-
+          La gestion par composants est au cœur du modèle PPC. Chaque composant significatif est 
+          identifié, tracé, maintenu, évalué et géré selon sa durée de vie physique réelle. Cette 
+          approche permet d’aligner les règles d’immobilisation, de maintenance, de renouvellement 
+          et de financement sur la réalité des actifs plutôt que sur une durée conventionnelle uniforme.
 
 poursuivre:
   surtitre: Pour aller plus loin
   titre: Des principes aux référentiels et aux travaux
-  texte: >-
-    Les publications, études et autres ressources permettent d’approfondir les
-    fondements de la PPC, ses applications et les travaux en cours.
+  texte:
+    - >-
+      Les publications, études et autres ressources permettent d’approfondir les
+      fondements de la PPC, ses applications et les travaux en cours.
 ---

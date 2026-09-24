@@ -2,9 +2,10 @@
 titre: Mentions légales
 description: Informations légales relatives au site de la Pérennité Programmée Circulaire.
 surtitre: Informations du site
-introduction: >-
-  Informations relatives à l’éditeur et à l’hébergement du site de la
-  Pérennité Programmée Circulaire.
+introduction:
+  - >-
+    Informations relatives à l’éditeur et à l’hébergement du site de la
+    Pérennité Programmée Circulaire.
 ---
 
 ## Éditeur du site

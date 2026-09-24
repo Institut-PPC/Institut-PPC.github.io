@@ -23,7 +23,7 @@ const page = schemaPageFaireUnDon.parse(entree.data);
         <li><span>{String(index + 1).padStart(2, '0')}</span><p>{raison}</p></li>
       ))}
     </ol>
-    <p class="precision">{page.utilisation_dons.precision}</p>
+    <div class="precision">{page.utilisation_dons.precision.map((paragraphe) => <p>{paragraphe}</p>)}</div>
   </section>
 
   <section class="formulaire">

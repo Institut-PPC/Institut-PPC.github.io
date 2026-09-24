@@ -4,6 +4,8 @@ const motifIdentifiantPpc = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const schemaTexteObligatoire = z.string().trim().min(1, 'Ce champ ne peut pas être vide.');
 
+export const schemaParagraphes = z.array(schemaTexteObligatoire).min(1);
+
 export const schemaIdentifiantPpc = z
   .string()
   .regex(motifIdentifiantPpc, 'L’identifiant doit être en ASCII minuscule et en kebab-case.');

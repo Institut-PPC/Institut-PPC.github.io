@@ -2,17 +2,19 @@
 titre: Adhérer à l’Association PPC
 description: Rejoindre l’Association pour la Pérennité Programmée Circulaire.
 surtitre: Adhésion
-introduction: >-
-  Rejoindre l’Association pour la Pérennité Programmée Circulaire, c’est
-  soutenir le développement et la diffusion de la PPC et prendre part à une
-  dynamique collective au service de modèles industriels plus durables,
-  réparables, robustes et pérennes.
+introduction:
+  - >-
+    Rejoindre l’Association pour la Pérennité Programmée Circulaire, c’est
+    soutenir le développement et la diffusion de la PPC et prendre part à une
+    dynamique collective au service de modèles industriels plus durables,
+    réparables, robustes et pérennes.
 qui_peut_adherer:
   titre: Qui peut adhérer ?
-  texte: >-
-    L’adhésion est ouverte aux personnes physiques comme aux personnes morales
-    qui souhaitent contribuer à l’objet de l’association et en partager les
-    principes.
+  texte:
+    - >-
+      L’adhésion est ouverte aux personnes physiques comme aux personnes morales
+      qui souhaitent contribuer à l’objet de l’association et en partager les
+      principes.
 pourquoi_adherer:
   titre: Pourquoi adhérer ?
   raisons:
@@ -26,7 +28,8 @@ pourquoi_adherer:
       pérennité des biens et des savoirs devient une valeur à préserver.
 choisir_adhesion:
   titre: Choisir votre adhésion
-  introduction: Choisissez la période d’adhésion qui vous convient.
+  introduction:
+    - Choisissez la période d’adhésion qui vous convient.
   periodes:
     - libelle_onglet: Fin 2026
       titre: Adhésion pour la fin de l’année 2026

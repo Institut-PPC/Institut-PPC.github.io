@@ -18,7 +18,7 @@ const page = schemaPageAdherer.parse(entree.data);
 
   <section class="eligibilite">
     <SectionHeading title={page.qui_peut_adherer.titre} />
-    <p>{page.qui_peut_adherer.texte}</p>
+    <div>{page.qui_peut_adherer.texte.map((paragraphe) => <p>{paragraphe}</p>)}</div>
   </section>
 
   <section class="raisons">
@@ -96,7 +96,7 @@ const page = schemaPageAdherer.parse(entree.data);
 <style>
   .eligibilite, .raisons, .periodes { padding-block: var(--space-section); border-top: var(--border-width) solid var(--color-border); }
   .eligibilite { display: grid; gap: var(--space-5); }
-  .eligibilite > p { font-size: var(--font-size-lg); }
+  .eligibilite > div { font-size: var(--font-size-lg); }
   ol { display: grid; gap: var(--space-6); padding: 0; margin: 0; list-style: none; }
   .raisons li { padding-top: var(--space-4); border-top: 2px solid var(--color-brand); }
   li > span { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }

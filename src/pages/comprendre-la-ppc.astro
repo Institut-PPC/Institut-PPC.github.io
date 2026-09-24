@@ -39,7 +39,7 @@ const navigation = [
                 <p class="pillar-number">Pilier {pilier.numero}</p>
                 <h3>{pilier.intitule_technique}</h3>
                 <p class="pillar-technical">{pilier.titre}</p>
-                <p>{pilier.texte}</p>
+                {pilier.texte.map((paragraphe) => <p>{paragraphe}</p>)}
               </li>
             ))}
           </ol>
@@ -48,7 +48,7 @@ const navigation = [
       {index === 0 && <figure class="section-illustration"><Image src={modeleLineaireVsPpc} alt="Comparaison entre le modèle industriel classique, qui perd de la valeur après l’usage et la fin de vie, et le modèle PPC, qui conserve la valeur grâce à la maintenance, la réparation et l’évolution du produit." widths={[720, 1152, 1672]} sizes="(min-width: 72rem) 72rem, 100vw" loading="lazy" /></figure>}
     </section>
   ))}
-  <section class="next"><p class="eyebrow">{page.poursuivre.surtitre}</p><h2>{page.poursuivre.titre}</h2><p>{page.poursuivre.texte}</p><ActionLink href="/ressources" secondary>Parcourir les ressources</ActionLink></section>
+  <section class="next"><p class="eyebrow">{page.poursuivre.surtitre}</p><h2>{page.poursuivre.titre}</h2>{page.poursuivre.texte.map((paragraphe) => <p>{paragraphe}</p>)}<ActionLink href="/ressources" secondary>Parcourir les ressources</ActionLink></section>
 </BaseLayout>
 <style>
   .page-nav { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-5); padding-block: var(--space-4); border-block: var(--border-width) solid var(--color-border); }.page-nav span { width: 100%; color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); text-transform: uppercase; }

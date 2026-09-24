@@ -8,7 +8,7 @@ const accueilMinimal = {
   hero: {
     surtitre: 'Une démarche collective',
     titre_lignes: ['Pérennité', 'Programmée', 'Circulaire'],
-    introduction: 'Introduction à la démarche.',
+    introduction: ['Introduction à la démarche.'],
   },
   pourquoi: {
     surtitre: 'Pourquoi',
@@ -22,15 +22,15 @@ const accueilMinimal = {
   idee_ppc: {
     surtitre: 'L’idée PPC',
     titre: 'Conserver la valeur',
-    texte_principal: 'Une nouvelle logique économique.',
-    texte_complementaire: 'La durée devient une source de performance.',
+    texte_principal: ['Une nouvelle logique économique.'],
+    texte_complementaire: ['La durée devient une source de performance.'],
   },
-  cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre concret', texte: 'Le cadre de PPC.' },
+  cadre_concret: { surtitre: 'Cadre', titre: 'Un cadre concret', texte: ['Le cadre de PPC.'] },
   contribuer: { surtitre: 'Contribuer', titre: 'Construire ensemble' },
   approfondir: { surtitre: 'Approfondir', titre: 'Aller plus loin' },
   ressources_mises_en_avant: [],
   mouvement: { surtitre: 'Actualités', titre: 'PPC en mouvement' },
-  association: { surtitre: 'Association', titre: 'Porter PPC', texte: 'Le rôle de l’Association.' },
+  association: { surtitre: 'Association', titre: 'Porter PPC', texte: ['Le rôle de l’Association.'] },
 };
 
 describe('schemaAccueil', () => {

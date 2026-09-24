@@ -486,9 +486,27 @@ Les informations dérivables ne sont pas dupliquées :
 
 Un champ structuré supplémentaire n'est créé que lorsque le code a réellement besoin d'en connaître la sémantique ou le placement. Éviter de découper artificiellement chaque paragraphe ou section narrative en champs de front matter.
 
+Dans les singletons, un champ structuré qui représente un contenu éditorial
+potentiellement long (`introduction`, texte principal d’une section, conclusion
+éditoriale, etc.) est stocké comme une **liste ordonnée de paragraphes**. Chaque
+entrée correspond à un élément `<p>` dans le rendu. Les textes d’interface et
+les contenus volontairement courts restent des chaînes simples : titres,
+surtitres, libellés, boutons, métadescriptions, résumés, messages d’état et
+descriptions courtes liées à un choix ou à une carte.
+
+Exemple :
+
+```yaml
+introduction:
+  - >-
+    Premier paragraphe.
+  - >-
+    Deuxième paragraphe.
+```
+
 Le singleton `comprendre-la-ppc.md` contient six sections narratives dans un ordre
 fixé par la page et quatre piliers. Chaque pilier conserve un titre pédagogique,
-un intitulé technique et un texte ; le formulaire Decap suit cette structure.
+un intitulé technique et une liste de paragraphes ; le formulaire Decap suit cette structure.
 
 Les pages `adherer.md` et `faire-un-don.md` sont des singletons éditoriaux dédiés. Les URLs HelloAsso y sont stockées avec le formulaire qu'elles décrivent : la page d'adhésion porte une liste de périodes, chacune avec des URLs de widget et de lien direct facultatives mais indissociables, tandis que la page de don porte un formulaire unique. Cette localisation évite de réduire plusieurs périodes d'adhésion à une URL globale ambiguë. Une période sans URLs reste valide et visible sans formulaire.
 

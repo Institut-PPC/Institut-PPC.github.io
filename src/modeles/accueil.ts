@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-import { schemaIdentifiantPpc, schemaTexteObligatoire } from './primitives.ts';
+import { schemaIdentifiantPpc, schemaParagraphes, schemaTexteObligatoire } from './primitives.ts';
 
 const schemaEnteteSection = z
   .object({
     surtitre: schemaTexteObligatoire,
     titre: schemaTexteObligatoire,
-    introduction: schemaTexteObligatoire.optional(),
+    introduction: schemaParagraphes.optional(),
   })
   .strict();
 
@@ -30,22 +30,22 @@ export const schemaAccueil = z
           schemaTexteObligatoire,
           schemaTexteObligatoire,
         ]),
-        introduction: schemaTexteObligatoire,
+        introduction: schemaParagraphes,
       })
       .strict(),
     pourquoi: schemaEnteteSection.extend({
       principes: z.tuple([schemaPrincipeAccueil, schemaPrincipeAccueil, schemaPrincipeAccueil]),
     }),
     idee_ppc: schemaEnteteSection.extend({
-      texte_principal: schemaTexteObligatoire,
-      texte_complementaire: schemaTexteObligatoire,
+      texte_principal: schemaParagraphes,
+      texte_complementaire: schemaParagraphes,
     }),
-    cadre_concret: schemaEnteteSection.extend({ texte: schemaTexteObligatoire }),
+    cadre_concret: schemaEnteteSection.extend({ texte: schemaParagraphes }),
     contribuer: schemaEnteteSection,
     approfondir: schemaEnteteSection,
     ressources_mises_en_avant: z.array(schemaIdentifiantPpc),
     mouvement: schemaEnteteSection,
-    association: schemaEnteteSection.extend({ texte: schemaTexteObligatoire }),
+    association: schemaEnteteSection.extend({ texte: schemaParagraphes }),
   })
   .strict();
 

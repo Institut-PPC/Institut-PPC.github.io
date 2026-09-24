@@ -4,7 +4,7 @@ import ActionLink from './ActionLink.astro';
 interface Props {
   eyebrow?: string;
   title: string;
-  intro: string;
+  intro: string | string[];
   primaryHref?: string;
   primaryLabel?: string;
   secondaryHref?: string;
@@ -12,12 +12,13 @@ interface Props {
 }
 
 const { eyebrow, title, intro, primaryHref, primaryLabel, secondaryHref, secondaryLabel } = Astro.props;
+const paragraphes = Array.isArray(intro) ? intro : [intro];
 ---
 
 <header class="page-intro">
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <h1>{title}</h1>
-  <p class="lead">{intro}</p>
+  <div class="lead">{paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div>
   {(primaryHref || secondaryHref) && (
     <div class="actions">
       {primaryHref && primaryLabel && <ActionLink href={primaryHref}>{primaryLabel} <span aria-hidden="true">→</span></ActionLink>}
@@ -41,7 +42,9 @@ const { eyebrow, title, intro, primaryHref, primaryLabel, secondaryHref, seconda
   }
   .eyebrow::before { content: ''; width: var(--space-6); height: 2px; background: var(--color-accent); }
   h1 { max-width: 52rem; margin-bottom: var(--space-5); color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-display); font-weight: 400; }
-  .lead { max-width: 48rem; margin: 0; font-size: var(--font-size-lg); }
+  .lead { max-width: 48rem; font-size: var(--font-size-lg); }
+  .lead p { margin: 0; }
+  .lead p + p { margin-top: var(--space-4); }
   .actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: stretch; margin-top: var(--space-6); }
   @media (min-width: 48rem) { .actions { flex-direction: row; align-items: flex-start; } }
 </style>

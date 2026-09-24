@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
-import { schemaTexteObligatoire, schemaUrlHttp } from './primitives.ts';
+import { schemaParagraphes, schemaTexteObligatoire, schemaUrlHttp } from './primitives.ts';
 
 const schemaBasePage = z.object({
   titre: schemaTexteObligatoire,
   description: schemaTexteObligatoire.optional(),
   surtitre: schemaTexteObligatoire,
-  introduction: schemaTexteObligatoire,
+  introduction: schemaParagraphes,
 });
 
 const schemaSectionNarrative = z
   .object({
     surtitre: schemaTexteObligatoire,
     titre: schemaTexteObligatoire,
-    paragraphes: z.array(schemaTexteObligatoire).min(1),
+    paragraphes: schemaParagraphes,
   })
   .strict();
 
 const schemaLienEditorial = z
   .object({
     titre: schemaTexteObligatoire,
-    texte: schemaTexteObligatoire,
+    texte: schemaParagraphes,
   })
   .strict();
 
@@ -29,7 +29,7 @@ const schemaPilierPpc = z
     numero: schemaTexteObligatoire,
     titre: schemaTexteObligatoire,
     intitule_technique: schemaTexteObligatoire,
-    texte: schemaTexteObligatoire,
+    texte: schemaParagraphes,
   })
   .strict();
 
@@ -52,7 +52,7 @@ export const schemaPageComprendre = schemaBasePage
       .object({
         surtitre: schemaTexteObligatoire,
         titre: schemaTexteObligatoire,
-        texte: schemaTexteObligatoire,
+        texte: schemaParagraphes,
       })
       .strict(),
   })
@@ -62,7 +62,7 @@ export const schemaPageMarqueCollective = schemaBasePage
   .extend({
     sections: z.tuple([schemaSectionNarrative, schemaSectionNarrative]),
     appel: z
-      .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .object({ titre: schemaTexteObligatoire, texte: schemaParagraphes })
       .strict(),
   })
   .strict();
@@ -70,12 +70,12 @@ export const schemaPageMarqueCollective = schemaBasePage
 export const schemaPageAssociation = schemaBasePage
   .extend({
     mission: z
-      .object({ surtitre: schemaTexteObligatoire, titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .object({ surtitre: schemaTexteObligatoire, titre: schemaTexteObligatoire, texte: schemaParagraphes })
       .strict(),
     titre_liens: schemaTexteObligatoire,
     liens: z.tuple([schemaLienEditorial, schemaLienEditorial, schemaLienEditorial]),
     contact: z
-      .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .object({ titre: schemaTexteObligatoire, texte: schemaParagraphes })
       .strict(),
   })
   .strict();
@@ -85,7 +85,7 @@ export const schemaPageGouvernance = schemaBasePage
     copresidence: z
       .object({
         titre: schemaTexteObligatoire,
-        texte: schemaTexteObligatoire,
+        texte: schemaParagraphes,
         titre_vide: schemaTexteObligatoire,
         message_vide: schemaTexteObligatoire,
       })
@@ -93,7 +93,7 @@ export const schemaPageGouvernance = schemaBasePage
     conseil_administration: z
       .object({
         titre: schemaTexteObligatoire,
-        texte: schemaTexteObligatoire,
+        texte: schemaParagraphes,
         titre_vide: schemaTexteObligatoire,
         message_vide: schemaTexteObligatoire,
       })
@@ -101,7 +101,7 @@ export const schemaPageGouvernance = schemaBasePage
     equipe_operationnelle: z
       .object({
         titre: schemaTexteObligatoire,
-        texte: schemaTexteObligatoire,
+        texte: schemaParagraphes,
         titre_vide: schemaTexteObligatoire,
         message_vide: schemaTexteObligatoire,
       })
@@ -114,7 +114,7 @@ export const schemaPageMembresFondateurs = schemaBasePage
     presentation: z
       .object({
         titre: schemaTexteObligatoire,
-        texte: schemaTexteObligatoire,
+        texte: schemaParagraphes,
         titre_vide: schemaTexteObligatoire,
         message_vide: schemaTexteObligatoire,
       })
@@ -126,7 +126,7 @@ const schemaManiereSoutenir = z
   .object({
     numero: schemaTexteObligatoire,
     titre: schemaTexteObligatoire,
-    texte: schemaTexteObligatoire,
+    texte: schemaParagraphes,
   })
   .strict();
 
@@ -161,7 +161,7 @@ const schemaPeriodeAdhesion = z
 export const schemaPageAdherer = schemaBasePage
   .extend({
     qui_peut_adherer: z
-      .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .object({ titre: schemaTexteObligatoire, texte: schemaParagraphes })
       .strict(),
     pourquoi_adherer: z
       .object({
@@ -172,7 +172,7 @@ export const schemaPageAdherer = schemaBasePage
     choisir_adhesion: z
       .object({
         titre: schemaTexteObligatoire,
-        introduction: schemaTexteObligatoire,
+        introduction: schemaParagraphes,
         periodes: z.array(schemaPeriodeAdhesion).min(1),
       })
       .strict(),
@@ -185,7 +185,7 @@ export const schemaPageFaireUnDon = schemaBasePage
       .object({
         titre: schemaTexteObligatoire,
         raisons: z.tuple([schemaTexteObligatoire, schemaTexteObligatoire, schemaTexteObligatoire]),
-        precision: schemaTexteObligatoire,
+        precision: schemaParagraphes,
       })
       .strict(),
     formulaire: z
@@ -204,7 +204,7 @@ export const schemaPageTravaillerAvecNous = schemaBasePage
     preparation: z
       .object({
         titre: schemaTexteObligatoire,
-        introduction: schemaTexteObligatoire,
+        introduction: schemaParagraphes,
         informations: z.array(schemaTexteObligatoire).min(1),
       })
       .strict(),
@@ -213,13 +213,13 @@ export const schemaPageTravaillerAvecNous = schemaBasePage
   .strict();
 
 const schemaDemandeContact = z
-  .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+  .object({ titre: schemaTexteObligatoire, texte: schemaParagraphes })
   .strict();
 
 export const schemaPageContact = schemaBasePage
   .extend({
     coordonnees_absentes: z
-      .object({ titre: schemaTexteObligatoire, texte: schemaTexteObligatoire })
+      .object({ titre: schemaTexteObligatoire, texte: schemaParagraphes })
       .strict(),
     titre_demandes: schemaTexteObligatoire,
     demandes: z.array(schemaDemandeContact).min(1),
@@ -228,7 +228,7 @@ export const schemaPageContact = schemaBasePage
 
 export const schemaPageEcoConception = schemaBasePage
   .extend({
-    introduction_detaillee: z.array(schemaTexteObligatoire).min(1),
+    introduction_detaillee: schemaParagraphes,
     enjeu: z
       .object({
         surtitre: schemaTexteObligatoire,
@@ -265,18 +265,18 @@ export const schemaPageEcoConception = schemaBasePage
         surtitre: schemaTexteObligatoire,
         titre: schemaTexteObligatoire,
         choix: z.array(schemaLienEditorial).min(1),
-        conclusion: schemaTexteObligatoire,
+        conclusion: schemaParagraphes,
       })
       .strict(),
     mesure: z
       .object({
         surtitre: schemaTexteObligatoire,
         titre: schemaTexteObligatoire,
-        introduction: schemaTexteObligatoire,
+        introduction: schemaParagraphes,
         score: z.number().int().min(0).max(100),
         url_resultat: schemaUrlHttp,
         texte_lien: schemaTexteObligatoire,
-        suivi: z.array(schemaTexteObligatoire).min(1),
+        suivi: schemaParagraphes,
       })
       .strict(),
   })

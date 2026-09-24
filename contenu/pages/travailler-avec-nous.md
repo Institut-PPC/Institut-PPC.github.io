@@ -4,12 +4,13 @@ description: >-
   Entreprises, industriels, institutions et experts : contribuer aux travaux
   de la Pérennité Programmée Circulaire à partir de situations concrètes.
 surtitre: Coopérer pour faire progresser la PPC
-introduction: >-
-  La Pérennité Programmée Circulaire se construit au croisement de
-  l’expérience industrielle, de la recherche et de l’expérimentation.
-  L’Association et les acteurs réunis autour de la PPC travaillent avec des
-  entreprises et des experts pour confronter les principes de la démarche
-  à des situations réelles.
+introduction:
+  - >-
+    La Pérennité Programmée Circulaire se construit au croisement de
+    l’expérience industrielle, de la recherche et de l’expérimentation.
+    L’Association et les acteurs réunis autour de la PPC travaillent avec des
+    entreprises et des experts pour confronter les principes de la démarche
+    à des situations réelles.
 
 collaboration:
   surtitre: Une démarche appliquée
@@ -29,8 +30,9 @@ collaboration:
 
 preparation:
   titre: Préparer un premier échange
-  introduction: >-
-    Pour nous permettre de comprendre rapidement votre situation, indiquez :
+  introduction:
+    - >-
+      Pour nous permettre de comprendre rapidement votre situation, indiquez :
   informations:
     - votre organisation et votre activité ;
     - les actifs, usages ou enjeux que vous souhaitez explorer ;

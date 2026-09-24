@@ -1,15 +1,18 @@
 ---
-interface Props { eyebrow?: string; title: string; intro?: string; }
+interface Props { eyebrow?: string; title: string; intro?: string | string[]; }
 const { eyebrow, title, intro } = Astro.props;
+const paragraphes = intro === undefined ? [] : Array.isArray(intro) ? intro : [intro];
 ---
 <header class="section-heading">
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <h2>{title}</h2>
-  {intro && <p class="intro">{intro}</p>}
+  {paragraphes.length > 0 && <div class="intro">{paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div>}
 </header>
 <style>
   .section-heading { max-width: var(--width-reading); margin-bottom: var(--space-7); }
   .eyebrow { margin-bottom: var(--space-3); color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); letter-spacing: .08em; text-transform: uppercase; }
   h2 { margin-bottom: var(--space-4); color: var(--color-brand); font-family: var(--font-display); font-weight: 400; }
-  .intro { margin: 0; font-size: var(--font-size-lg); }
+  .intro { font-size: var(--font-size-lg); }
+  .intro p { margin: 0; }
+  .intro p + p { margin-top: var(--space-4); }
 </style>
