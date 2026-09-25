@@ -2,7 +2,7 @@
 titre: Le site Web fait peau neuve !
 slug: 2026-09-nouveau-site-web
 resume: Un nouveau site pour mieux présenter la Pérennité Programmée Circulaire, ses principes, ses travaux et les façons de contribuer à son développement.
-date_publication: 2026-09-10
+date_publication: 2026-09-29
 image_principale: ../medias/images/actualites/nouveau-site.png
 image_alt: Le nouveau site Web de la Pérennité Programmée Circulaire
 publie: true
