@@ -3,7 +3,7 @@ titre: La PPC au cœur d’une note publiée par l’Institut Rousseau
 slug: 2026-09-ppc-institut-rousseau
 resume: L’Institut Rousseau publie une note consacrée à la Pérennité Programmée Circulaire et à son potentiel pour concilier réindustrialisation, compétitivité, souveraineté et sobriété matérielle.
 date_publication: 2026-09-25
-image_principale: ../medias/images/actualites/note-institut-rousseau-ppc.png
+image_principale: ../medias/images/actualites/2026-09-ppc-institut-rousseau.png
 image_alt: Publication de la note consacrée à la Pérennité Programmée Circulaire par l’Institut Rousseau
 publie: true
 ---
