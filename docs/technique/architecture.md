@@ -16,7 +16,8 @@ Le socle retenu est :
 - **GitHub Pages** pour l'hébergement public ;
 - **GitHub Actions** pour validation, tests, build et déploiement ;
 - **DecapCMS** comme interface d'édition ;
-- **deux Netlify Functions minimales** pour le flux OAuth GitHub utilisé par Decap.
+- **un projet Netlify OAuth** avec deux Functions minimales pour le flux GitHub utilisé par Decap ;
+- **un projet Netlify Redirects**, distinct et sans Function, pour rediriger les domaines secondaires vers le domaine canonique.
 
 Git Gateway n'est pas utilisé.
 
@@ -30,7 +31,7 @@ Le HTML statique et la génération statique constituent le défaut. Ajouter du 
 
 Le site n'est pas une SPA, ne reçoit pas d'hydratation globale et n'introduit aucun framework front-end client par défaut. React, Vue, Svelte ou équivalent ne peut être ajouté que si un besoin fonctionnel futur suffisamment riche le justifie explicitement. Le JavaScript décoratif gratuit reste exclu.
 
-Le site public ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth.
+Le site public canonique ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth. Seuls les domaines secondaires dépendent du projet Netlify Redirects pour atteindre le domaine canonique.
 
 ### Intégration publique HelloAsso
 
@@ -78,6 +79,10 @@ Organisation cible :
 │   ├── documents/               # fichiers publics servis tels quels
 │   ├── CNAME                    # domaine personnalisé GitHub Pages
 │   └── robots.txt
+│
+├── netlify/
+│   ├── oauth/                    # Functions et publication technique OAuth
+│   └── redirects/                # redirection 301 des domaines secondaires
 │
 ├── scripts/                     # validation et automatisations ponctuelles
 ├── tests/                       # lorsque des fixtures/tests hors src le justifient
@@ -270,7 +275,7 @@ L'implémentation actuelle complète ces exigences par PKCE S256 et corrèle le 
 
 Les permissions GitHub du repository restent l'autorité d'accès. Retirer l'accès GitHub d'un contributeur doit suffire à empêcher de nouvelles écritures via Decap.
 
-**Git Gateway est explicitement exclu.** Netlify n'est utilisé que pour les deux fonctions OAuth ; le site reste hébergé sur GitHub Pages.
+**Git Gateway est explicitement exclu.** Le projet Netlify OAuth n'est utilisé que pour les deux fonctions OAuth. Un second projet Netlify, sans Function ni secret, termine HTTPS et redirige les domaines secondaires. Le domaine canonique et le site Astro restent exclusivement hébergés sur GitHub Pages.
 
 ## Rich text et preview
 

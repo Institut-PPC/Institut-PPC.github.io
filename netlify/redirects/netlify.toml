@@ -1,0 +1,3 @@
+[build]
+  command = "npm run test:redirects"
+  publish = "/netlify/redirects/public"

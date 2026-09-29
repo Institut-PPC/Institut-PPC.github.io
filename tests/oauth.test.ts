@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import auth from '../netlify/functions/auth.mts';
-import callback from '../netlify/functions/callback.mts';
+import auth from '../netlify/oauth/functions/auth.mts';
+import callback from '../netlify/oauth/functions/callback.mts';
 
 import {
   analyserOriginesAutorisees,
@@ -14,7 +14,7 @@ import {
   enteteCookie,
   pageRetourDecap,
   verifierEtatOAuth,
-} from '../netlify/functions/_shared/oauth.mts';
+} from '../netlify/oauth/functions/_shared/oauth.mts';
 
 const ORIGINE_PAGES = 'https://institut-ppc.github.io';
 const SECRET = 'secret-de-test-suffisamment-long';

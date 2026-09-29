@@ -12,7 +12,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
 
-L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS est intégré pour l’édition locale des contenus canoniques et les deux Netlify Functions OAuth de production sont implémentées. Leur mise en service nécessite encore les opérations manuelles documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md), notamment la création du site Netlify et de l'OAuth App GitHub puis le report de l'origine Netlify réelle dans Decap. Les contrôles dépendant d’une future configuration de redirections restent également à compléter avec ce contrat. Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
+L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS est intégré pour l’édition locale des contenus canoniques. Le dépôt sépare sous `netlify/` le projet OAuth de production et le projet de redirection permanente des domaines secondaires ; aucun des deux ne construit ni n'héberge le site Astro. Les opérations manuelles sont documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) et [`docs/exploitation/redirects-netlify.md`](docs/exploitation/redirects-netlify.md). Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
 Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
 
@@ -24,6 +24,7 @@ Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pou
 - GitHub Actions pour validation, build et déploiement
 - contenus structurés versionnés dans Git
 - DecapCMS comme CMS du POC, avec contenus indépendants du CMS, backend GitHub direct et OAuth via deux Netlify Functions minimales
+- deux projets Netlify techniques et indépendants : OAuth Decap et redirection des domaines secondaires
 - V1/POC uniquement en français
 - architecture statique, sobre, accessible et durable
 - design tokens PPC centraux, Tailwind CSS pour la composition courante et CSS Astro scopé lorsque pertinent
@@ -76,7 +77,7 @@ npm run dev:cms
 
 Ouvrir ensuite `http://localhost:4321/admin/`, se connecter au proxy local, modifier un contenu puis l’enregistrer. Decap écrit directement dans les fichiers canoniques de `contenu/`. Les widgets image rangent les sources par famille sous `contenu/medias/images/`. La médiathèque globale range les documents sous `public/documents/` ; reporter ensuite leur chemin public `/documents/...` dans le champ du contenu concerné. Astro reflète les changements locaux ; avant de les conserver, exécuter `npm run validate` puis `npm run build` et examiner le diff Git.
 
-L’édition locale fonctionne sans identifiant ni secret. Le backend GitHub direct, la branche `main` et la portée `public_repo` sont déclarés dans la configuration. Les deux Netlify Functions OAuth sont versionnées, mais l'URL de leur futur site Netlify n'est pas inventée dans le dépôt : suivre [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) pour créer le service, configurer ses secrets et renseigner le `base_url` réel avant le test de production.
+L’édition locale fonctionne sans identifiant ni secret. Le backend GitHub direct, la branche `main` et la portée `public_repo` sont déclarés dans la configuration. Les deux Netlify Functions OAuth sont versionnées sous `netlify/oauth/` ; suivre [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) pour administrer le service et ses secrets.
 
 Contrôler le projet avec Astro et TypeScript :
 
