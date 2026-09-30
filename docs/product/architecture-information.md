@@ -217,7 +217,11 @@ Pour le POC :
 - co-présidence et Conseil d'administration avec **photo, nom, rôle et lien LinkedIn** ;
 - ces listes sont dérivées des entités `Personne` et de leurs rôles PPC contrôlés, sans duplication des noms dans le contenu de la page ;
 - les représentants du vivant et autres rôles de gouvernance sont également dérivés des rôles lorsque leur présentation est requise.
+- le rôle contrôlé `co-tresorier`, dont le libellé public est « Co-trésorerie », est présenté comme un rôle complémentaire dans le bloc naturel de chaque personne, sans section autonome ;
+- les cartes ne répètent pas le rôle principal indiqué par le titre du bloc et peuvent afficher plusieurs rôles complémentaires ;
 - l'équipe opérationnelle est présentée avec photo, nom et lien LinkedIn, à partir du rôle `equipe-operationnelle` des entités `Personne`.
+
+Les personnes portant le rôle `co-tresorier` disposent, comme les autres rôles de gouvernance concernés, d'une photo et d'un lien LinkedIn.
 
 Les règles de gouvernance elles-mêmes ne sont pas définies par le site : le contenu publié doit refléter les sources institutionnelles de l'Association.
 

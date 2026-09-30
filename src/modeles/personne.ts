@@ -4,6 +4,7 @@ import { schemaIdentifiantPpc, schemaTexteObligatoire } from './primitives.ts';
 
 export const rolesPpc = [
   'co-presidence',
+  'co-tresorier',
   'conseil-administration',
   'conseil-administration-representant-vivant',
   'equipe-operationnelle',
@@ -16,6 +17,7 @@ export type RolePpc = (typeof rolesPpc)[number];
 
 const rolesAvecInformationsPubliquesObligatoires = new Set<RolePpc>([
   'co-presidence',
+  'co-tresorier',
   'conseil-administration',
   'conseil-administration-representant-vivant',
   'membre-fondateur',

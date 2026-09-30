@@ -183,13 +183,14 @@ collections:
         required: false
         options:
           - { label: Co-présidence, value: co-presidence }
+          - { label: Co-trésorerie, value: co-tresorier }
           - { label: Conseil d’administration, value: conseil-administration }
           - { label: Conseil d’administration — représentant du vivant, value: conseil-administration-representant-vivant }
           - { label: Équipe opérationnelle, value: equipe-operationnelle }
           - { label: Membre fondateur, value: membre-fondateur }
           - { label: Partenaire, value: partenaire }
           - { label: Mécène, value: mecene }
-        hint: Photo et LinkedIn sont obligatoires pour la co-présidence, le conseil d’administration et les membres fondateurs.
+        hint: Photo et LinkedIn sont obligatoires pour la co-présidence, la co-trésorerie, le conseil d’administration et les membres fondateurs.
       - { label: Photo, name: photo, widget: image, required: false }
       - { label: Profil LinkedIn, name: linkedin, widget: string, required: false, hint: URL https complète sur linkedin.com. }
 

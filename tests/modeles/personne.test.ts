@@ -64,7 +64,7 @@ describe('schemaPersonne', () => {
     );
   });
 
-  it.each(['co-presidence', 'conseil-administration', 'conseil-administration-representant-vivant'] as const)(
+  it.each(['co-presidence', 'co-tresorier', 'conseil-administration', 'conseil-administration-representant-vivant'] as const)(
     'exige photo et LinkedIn pour le rôle %s',
     (role) => {
       const resultat = schemaPersonne.safeParse({
@@ -83,6 +83,18 @@ describe('schemaPersonne', () => {
       );
     },
   );
+
+  it('accepte un Co-trésorerie avec photo et LinkedIn', () => {
+    expect(
+      schemaPersonne.safeParse({
+        prenom: 'Camille',
+        nom: 'Durand',
+        roles_ppc: ['co-tresorier'],
+        photo: '../medias/images/personnes/camille-durand.jpg',
+        linkedin: 'https://www.linkedin.com/in/camille-durand',
+      }).success,
+    ).toBe(true);
+  });
 
   it('refuse un rôle PPC inconnu', () => {
     attendreErreurSur(

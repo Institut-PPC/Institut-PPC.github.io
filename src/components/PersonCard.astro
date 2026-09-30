@@ -1,10 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { normaliserRolesPersonCard } from './person-card';
 
-interface Props { personne: CollectionEntry<'personnes'>; role?: string; }
-const { personne, role } = Astro.props;
+interface Props { personne: CollectionEntry<'personnes'>; role?: string; roles?: readonly string[]; }
+const { personne, role, roles } = Astro.props;
 const nom = `${personne.data.prenom} ${personne.data.nom}`;
+const rolesAffiches = normaliserRolesPersonCard({ role, roles });
 ---
 <article class="person-card">
   {personne.data.photo && (personne.data.linkedin
@@ -14,7 +16,7 @@ const nom = `${personne.data.prenom} ${personne.data.nom}`;
     : <Image src={personne.data.photo} alt="" widths={[112, 224]} sizes="clamp(5rem, 18vw, 7rem)" />)}
   <div>
     <h3>{nom}</h3>
-    {role && <p class="role">{role}</p>}
+    {rolesAffiches.map((libelle) => <p class="role">{libelle}</p>)}
     {personne.data.fonction_organisation && <p>{personne.data.fonction_organisation}</p>}
   </div>
 </article>

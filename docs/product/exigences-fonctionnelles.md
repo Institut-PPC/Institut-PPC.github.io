@@ -73,11 +73,13 @@ Exigences :
 - une `Personne` peut référencer une `Organisation` ;
 - une `Personne` peut porter plusieurs rôles PPC contrôlés ;
 - les pages institutionnelles de gouvernance doivent dériver leur affichage des rôles des `Personne`, sans recopier les noms dans les pages ;
+- la page Gouvernance ne répète pas sur chaque carte le rôle principal déjà fourni par le titre du bloc ; elle affiche les rôles complémentaires contrôlés, notamment `co-tresorier` (« Co-trésorerie ») et `conseil-administration-representant-vivant` (« Représentation du vivant »), et accepte leur cumul ;
 - un changement de co-présidence, de Conseil d'administration ou d'équipe opérationnelle doit pouvoir être reflété en modifiant les entités `Personne` concernées ;
 - il n'existe pas de page publique générique `/personnes/<slug>` ou `/organisations/<slug>` dans le POC.
 
 Pour les personnes exposées comme :
 - co-présidence ;
+- co-trésorerie ;
 - membre du Conseil d'administration ;
 - membre fondateur ;
 

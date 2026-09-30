@@ -259,6 +259,7 @@ Aucun champ biographique supplémentaire n'est ajouté sans besoin éditorial id
 
 Liste initiale :
 - `co-presidence`
+- `co-tresorier` — libellé public « Co-trésorerie »
 - `conseil-administration`
 - `conseil-administration-representant-vivant`
 - `equipe-operationnelle`
@@ -274,10 +275,13 @@ Pour le POC, `roles_ppc` décrit **la situation actuelle**. Aucun historique fon
 
 Photo et LinkedIn sont requis dans le POC pour les personnes présentées comme :
 - co-présidence ;
+- co-trésorerie ;
 - membre du Conseil d'administration ;
 - membre fondateur.
 
 Ces contraintes doivent être contrôlées par les schémas ou le build lorsque le CMS ne les garantit pas suffisamment.
+
+Sur la page Gouvernance, le titre de chaque bloc fournit le rôle principal. Les cartes ne le répètent pas : elles affichent uniquement les rôles complémentaires explicitement prévus, comme « Représentation du vivant » ou « Co-trésorerie ». Une même carte peut afficher plusieurs de ces libellés lorsque la personne cumule les rôles correspondants.
 
 #### Stockage et automatisation
 
