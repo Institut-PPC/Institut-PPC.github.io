@@ -10,9 +10,9 @@ version_courante: v1-0
 versions:
   - id: v1-0
     version: "1.0"
-    date_publication: 2026-09-23
-    document: /documents/referentiels/referentiel-ppc/2026-09-23_Referentiel-PPC_v1.0.pdf
-publie: false
+    date_publication: 2026-09-29
+    document: /documents/referentiels/referentiel-ppc/2026-09-29_Referentiel-PPC_v1.0.pdf
+publie: true
 ---
 
 # Référentiel de la Pérennité Programmée Circulaire
