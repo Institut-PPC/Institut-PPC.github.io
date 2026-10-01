@@ -15,9 +15,11 @@
     "test:oauth": "vitest run tests/oauth.test.ts",
     "test:redirects": "vitest run tests/netlify-redirects.test.ts",
     "validate": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/validate-contenus.ts",
+    "referentiel:import": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/importer-referentiel.ts",
+    "referentiel:check": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/verifier-referentiel.ts",
     "build": "astro build",
     "check:dist": "node scripts/verifier-site-genere.mjs",
-    "ci": "npm run test && npm run validate && npm run check && npm run build && npm run check:dist"
+    "ci": "npm run test && npm run validate && npm run referentiel:check && npm run check && npm run build && npm run check:dist"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -26,10 +28,16 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/markdown-remark": "^7.3.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^22.0.0",
+    "@types/turndown": "^5.0.6",
     "decap-server": "^3.11.0",
+    "mammoth": "^1.13.0",
+    "pdfjs-dist": "^6.3.289",
     "tailwindcss": "^4.3.3",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^6.0.3",
     "vitest": "^5.0.0",
     "yaml": "^2.8.3"

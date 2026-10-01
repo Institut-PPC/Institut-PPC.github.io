@@ -56,6 +56,8 @@ Organisation cible :
 │   ├── organisations/
 │   ├── ressources/
 │   ├── referentiels/
+│   │   └── ppc/
+│   │       └── courant.md      # corps officiel courant + métadonnées
 │   ├── pages/
 │   ├── configuration/
 │   │   └── site.yaml
@@ -134,6 +136,11 @@ Une **définition canonique** des règles locales doit être partagée entre Ast
 
 Utiliser les helpers Astro appropriés, notamment pour les images locales et les références typées lorsque cela améliore le typage. La validation transverse PPC reste néanmoins l'autorité sur l'intégrité globale du graphe de contenus.
 
+Pour le Référentiel PPC, un plugin Remark ciblé applique au build la table
+d'ancres principales stables maintenue dans le repo, décale les titres du corps
+sous le H1 de page et groupe chaque chapitre dans une section sémantique. Le
+plan public reste dérivé du Markdown courant.
+
 ### Accès applicatif
 
 Les pages et composants passent par les API du Content Layer (`getCollection()`, `getEntry()` ou mécanismes équivalents de la version Astro retenue). Les contenus `publie: false` sont chargés et validés mais filtrés avant toute exposition publique.
@@ -150,6 +157,7 @@ Une règle qui peut être vérifiée avec une seule entrée appartient au schém
 - photo + LinkedIn requis selon les rôles publics d'une `Personne` ;
 - cohérence de `Référentiel.version_courante` avec `versions[].id` au sein du même fichier ;
 - cohérence locale image / `image_alt` lorsque applicable.
+- métadonnées obligatoires et format du numéro de version du Référentiel PPC.
 
 ### Niveau 2 — Validateur transverse PPC
 
@@ -163,6 +171,9 @@ Il couvre au minimum :
 - existence réelle des documents locaux référencés sous `public/` ;
 - cohérence des redirections et de leurs cibles ;
 - conventions de noms de fichiers et identifiants lorsque vérifiables globalement.
+- présence des dix chapitres du Référentiel PPC, ordre de leur numérotation,
+  applicabilité des ancres principales, cohérence version/date/nom du PDF et
+  unicité du fichier Markdown courant.
 
 Les erreurs sont **agrégées**, bloquantes et formulées de façon actionnable avec le chemin du fichier, l'identifiant concerné et la correction attendue. Éviter les warnings pour les règles normatives ; réserver les warnings aux recommandations réellement non bloquantes.
 
@@ -226,6 +237,14 @@ Tout script écrivant dans `contenu/` doit :
 Les scripts modifient le **working tree** uniquement. Ils ne créent pas automatiquement de commit, ne poussent pas sur GitHub et ne fusionnent pas de branche. L'opérateur examine le `git diff` avant commit.
 
 Aucun connecteur AssoConnect, HelloAsso ou autre SI associatif n'est implémenté dans le POC.
+
+Le Référentiel PPC constitue l'import officiel implémenté : `mammoth` convertit
+le DOCX en HTML sémantique, `turndown` et son extension GFM produisent le
+Markdown, puis la logique PPC sépare le préambule, contrôle les dix chapitres,
+applique la table d'ancres au rendu et met à jour l'historique. La comparaison
+textuelle avec le PDF repose sur `pdfjs-dist` et émet un warning non bloquant.
+Le script écrit uniquement le working tree et restaure le fichier courant si
+la validation structurante échoue.
 
 ## Intégration DecapCMS
 
@@ -329,6 +348,11 @@ Le workflow cible sépare au moins :
 2. **déploiement**, dépendant du premier job et seul détenteur des permissions GitHub Pages nécessaires.
 
 Aucun artefact n'est déployé si un contrôle normatif échoue.
+
+La commande agrégée exécute aussi `npm run referentiel:check`. Les incohérences
+structurelles restent bloquantes via `npm run validate`; la comparaison
+Markdown ↔ PDF signale les divergences significatives sans bloquer seule le
+déploiement, conformément à l'obligation de revue humaine.
 
 Les commandes utilisées dans la CI doivent être reproductibles localement. Le gestionnaire de paquets exact peut être choisi à l'implémentation, mais un seul gestionnaire et son lockfile doivent être committés.
 

@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements, ressources et référentiels publiés, y compris lorsque les collections sont vides.
+Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements et ressources publiés. Le Référentiel PPC dispose de sa rubrique autonome, de sa version Web officielle et d'un workflow d'import DOCX contrôlé.
 
 L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS est intégré pour l’édition locale des contenus canoniques. Le dépôt sépare sous `netlify/` le projet OAuth de production et le projet de redirection permanente des domaines secondaires ; aucun des deux ne construit ni n'héberge le site Astro. Les opérations manuelles sont documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) et [`docs/exploitation/redirects-netlify.md`](docs/exploitation/redirects-netlify.md). Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
@@ -43,7 +43,7 @@ Tailwind CSS 4 est compilé par `@tailwindcss/vite` dans la configuration Astro.
 
 Le Header utilise un panneau modal natif en dessous de **80 rem**, tablette comprise. Ce seuil local laisse la place aux cinq rubriques et au CTA sur une ligne en mode desktop. Une seule navigation est déplacée entre le panneau et le Header par `src/components/navigation.ts`, sans framework ni hydratation. Le panneau gère le focus, le défilement et le retour au bouton Menu ; Échap ferme d’abord une sous-rubrique ouverte, puis le panneau. Sur desktop, les sous-menus se ferment aussi au clic extérieur ou lorsque le focus les quitte. Sans JavaScript ou sans support de `showModal`, un menu HTML `details` donne accès aux mêmes liens.
 
-Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment un parcours démontrable. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources et référentiels, uniquement lorsque leur modèle demande une page interne.
+Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment un parcours démontrable. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources, uniquement lorsque leur modèle demande une page interne. Le Référentiel PPC est publié sous `/referentiel` et `/referentiel/ppc` ; son corps officiel n'est pas éditable dans Decap.
 
 Le Header utilise temporairement un asset local du logo actuel de l’Association, en attendant le travail sur l’identité de marque PPC. Les coordonnées publiques, liens d’adhésion et de don, mentions juridiques complètes et profils institutionnels réels restent volontairement absents tant que leurs données validées ne sont pas disponibles dans le dépôt.
 
@@ -98,6 +98,22 @@ npm run validate
 ```
 
 Cette commande agrège les erreurs avec leur fichier source et doit être exécutée après toute modification manuelle, via le CMS ou par un script d’import. Elle contrôle notamment l’existence des Personnes et Organisations référencées.
+
+### Publier une version du Référentiel PPC
+
+Ajouter d'abord le PDF officiel versionné, puis importer l'export DOCX avec des
+métadonnées explicites :
+
+```sh
+npm run referentiel:import -- /chemin/vers/referentiel.docx \
+  --version 1.1 \
+  --date 2026-12-15 \
+  --pdf /documents/referentiels/referentiel-ppc/2026-12-15_Referentiel-PPC_v1.1.pdf
+```
+
+La procédure complète, les conventions et la revue humaine obligatoire sont
+documentées dans
+[`docs/exploitation/publication-referentiel.md`](docs/exploitation/publication-referentiel.md).
 
 Construire le site statique dans `dist/` :
 

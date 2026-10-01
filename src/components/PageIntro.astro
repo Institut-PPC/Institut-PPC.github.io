@@ -4,7 +4,7 @@ import ActionLink from './ActionLink.astro';
 interface Props {
   eyebrow?: string;
   title: string;
-  intro: string | string[];
+  intro?: string | string[];
   primaryHref?: string;
   primaryLabel?: string;
   secondaryHref?: string;
@@ -12,13 +12,13 @@ interface Props {
 }
 
 const { eyebrow, title, intro, primaryHref, primaryLabel, secondaryHref, secondaryLabel } = Astro.props;
-const paragraphes = Array.isArray(intro) ? intro : [intro];
+const paragraphes = intro === undefined ? [] : Array.isArray(intro) ? intro : [intro];
 ---
 
 <header class="page-intro">
   {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <h1>{title}</h1>
-  <div class="lead">{paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div>
+  {paragraphes.length > 0 && <div class="lead">{paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}</div>}
   {(primaryHref || secondaryHref) && (
     <div class="actions">
       {primaryHref && primaryLabel && <ActionLink href={primaryHref}>{primaryLabel} <span aria-hidden="true">→</span></ActionLink>}

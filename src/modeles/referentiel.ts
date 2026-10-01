@@ -2,29 +2,46 @@ import { z } from 'zod';
 
 import {
   schemaDate,
-  schemaDestinationWebOuDocument,
   schemaIdentifiantPpc,
-  schemaSlug,
+  schemaParagraphes,
   schemaTexteObligatoire,
 } from './primitives.ts';
+
+export const schemaNumeroVersionReferentiel = z
+  .string()
+  .regex(/^\d+\.\d+(?:\.\d+)?$/, 'La version doit utiliser un format numérique comme 1.0 ou 1.2.3.');
+
+export const schemaDocumentReferentiel = z
+  .string()
+  .regex(
+    /^\/documents\/referentiels\/[a-z0-9]+(?:-[a-z0-9]+)*\/[^/?#\s]+\.pdf$/,
+    'Le PDF doit être un chemin local sous /documents/referentiels/<identifiant>/.',
+  );
 
 export const schemaVersionReferentiel = z
   .object({
     id: schemaIdentifiantPpc,
-    version: schemaTexteObligatoire,
-    date_publication: schemaDate.optional(),
-    document: schemaDestinationWebOuDocument.optional(),
+    version: schemaNumeroVersionReferentiel,
+    date_publication: schemaDate,
+    document: schemaDocumentReferentiel,
+  })
+  .strict();
+
+export const schemaSectionPreambuleReferentiel = z
+  .object({
+    titre: schemaTexteObligatoire,
+    paragraphes: schemaParagraphes,
   })
   .strict();
 
 export const schemaReferentiel = z
   .object({
     titre: schemaTexteObligatoire,
-    slug: schemaSlug.optional(),
     resume: schemaTexteObligatoire,
     statut_public: schemaTexteObligatoire.optional(),
-    version_courante: schemaIdentifiantPpc.optional(),
-    versions: z.array(schemaVersionReferentiel),
+    preambule: z.array(schemaSectionPreambuleReferentiel).min(1),
+    version_courante: schemaIdentifiantPpc,
+    versions: z.array(schemaVersionReferentiel).min(1),
     publie: z.boolean(),
   })
   .strict()
@@ -43,15 +60,7 @@ export const schemaReferentiel = z
       idsVus.add(version.id);
     });
 
-    if (referentiel.versions.length > 0 && referentiel.version_courante === undefined) {
-      contexte.addIssue({
-        code: 'custom',
-        path: ['version_courante'],
-        message: 'La version courante est obligatoire lorsqu’au moins une version existe.',
-      });
-    }
-
-    if (referentiel.version_courante !== undefined && !idsVus.has(referentiel.version_courante)) {
+    if (!idsVus.has(referentiel.version_courante)) {
       contexte.addIssue({
         code: 'custom',
         path: ['version_courante'],

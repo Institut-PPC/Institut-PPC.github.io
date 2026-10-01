@@ -64,7 +64,7 @@ La page d'accueil doit apporter quelques preuves sobres que la PPC est réelle e
 
 Pour le POC/V1, la marque collective constitue une **section spécialisée du site** expliquant :
 - son rôle ;
-- les référentiels disponibles ;
+- son articulation avec le Référentiel PPC autonome ;
 - ce qui est aujourd'hui disponible ou encore en construction.
 
 Elle n'est pas encore un grand parcours transactionnel.
@@ -74,6 +74,10 @@ L'architecture doit néanmoins permettre à cette zone de devenir plus tard un p
 **référentiels → critères → processus → candidature → contrôle → organisations utilisant la marque**
 
 Ne pas implémenter ce processus futur avant que ses règles métier n'existent.
+
+Le Référentiel PPC publié est une rubrique autonome de premier niveau sous
+`/referentiel` et `/referentiel/ppc`. Ce choix de navigation ne modifie pas son
+lien fonctionnel avec la marque collective.
 
 ## Section Association
 

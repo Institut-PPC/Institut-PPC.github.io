@@ -54,6 +54,10 @@ L'outil précis reste un choix d'implémentation.
 
 Le contrôle léger `npm run check:dist` inspecte directement les fichiers générés sous `dist/`. Il vérifie notamment l'index et les fichiers du sitemap, `robots.txt`, ainsi que les métadonnées essentielles de plusieurs pages représentatives. `npm run ci` l'exécute après `astro build`.
 
+Pour le Référentiel PPC, il vérifie en plus la présence de `/referentiel` et
+`/referentiel/ppc`, leur canonical, leur présence dans le sitemap et l'absence
+des anciennes routes sous `/marque-collective/referentiels`.
+
 ## Stratégie de tests
 
 ### Composants
@@ -135,6 +139,12 @@ Principes :
 
 Les contrôles automatisés d'accessibilité doivent être bloquants pour les violations sérieuses, déterministes et actionnables. Les heuristiques ambiguës nécessitent une revue humaine plutôt qu'un faux sentiment de conformité.
 
+Le lecteur du Référentiel conserve tous ses chapitres dans le HTML. Sans
+JavaScript, ils restent visibles séquentiellement et les ancres fonctionnent.
+Avec JavaScript, les changements de chapitre, le sommaire mobile et la
+navigation précédent/suivant restent utilisables au clavier, exposent l'état
+courant et replacent le focus sur le titre visé.
+
 ### Images et textes alternatifs
 
 Pour `Actualité`, `Événement` et `Ressource`, `image_alt` est facultatif et décrit l'information éditoriale disponible. Le composant Astro décide de l'usage accessible dans son contexte : utiliser cette alternative lorsque l'image apporte une information autonome, ou `alt=""` lorsque la même image est décorative à cet emplacement.
@@ -167,6 +177,20 @@ Aucun override SEO générique n'est ajouté :
 - route du site → canonical.
 
 Un besoin réel pourra justifier plus tard un champ spécifique ; ne pas anticiper avec `titre_seo`, `og_title`, etc.
+
+`/referentiel` et `/referentiel/ppc` sont indexables. La canonical du lecteur
+est toujours `/referentiel/ppc` : un fragment d'ancre n'est jamais une page SEO
+distincte et ne crée aucune entrée supplémentaire dans le sitemap.
+
+## Contrôles de fidélité du Référentiel
+
+`npm run validate` bloque les métadonnées incomplètes, versions ou dates
+invalides, PDF absents ou mal nommés, historique incohérent et structure de
+chapitres inexploitable. `npm run referentiel:check` extrait le texte du PDF,
+normalise pagination, espaces et césures puis compare des séquences textuelles
+avec le Markdown courant. Une divergence significative produit un warning clair
+mais reste non bloquante par défaut ; la vérification humaine finale du DOCX, du
+Markdown, du PDF et du rendu demeure obligatoire.
 
 ## URL et redirections
 

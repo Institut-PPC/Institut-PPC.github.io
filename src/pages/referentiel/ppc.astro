@@ -1,0 +1,132 @@
+---
+import { getEntry, render } from 'astro:content';
+
+import ContentMeta from '../../components/ContentMeta.astro';
+import ReferentielToc from '../../components/ReferentielToc.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { extrairePlanReferentiel } from '../../lib/referentiel-ppc';
+import { formaterDate } from '../../lib/contenus';
+
+const entree = await getEntry('referentiels', 'ppc/courant');
+if (!entree || !entree.data.publie) throw new Error('Le Référentiel PPC courant publié est introuvable.');
+
+const { Content } = await render(entree);
+const chapitres = extrairePlanReferentiel(entree.body ?? '');
+const versionCourante = entree.data.versions.find(({ id }) => id === entree.data.version_courante);
+if (!versionCourante) throw new Error('La version courante du Référentiel PPC est incohérente.');
+---
+
+<BaseLayout title="Référentiel PPC — Version Web officielle" description={entree.data.resume}>
+  <article class="referentiel-reader" data-referentiel-reader>
+    <header class="reader-header">
+      <p class="eyebrow">Version Web officielle</p>
+      <h1>Référentiel PPC</h1>
+      <ContentMeta items={[`Version ${versionCourante.version}`, 'Version actuelle']} />
+      <p>Publiée le <time datetime={versionCourante.date_publication}>{formaterDate(versionCourante.date_publication)}</time>.</p>
+    </header>
+
+    <details class="mobile-toc" data-mobile-toc>
+      <summary>Sommaire du Référentiel</summary>
+      <ReferentielToc chapitres={chapitres} variante="mobile" />
+    </details>
+
+    <div class="reader-layout">
+      <aside class="desktop-toc">
+        <p class="toc-title">Sommaire</p>
+        <ReferentielToc chapitres={chapitres} variante="desktop" />
+      </aside>
+      <div class="official-content">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  function initialiserLecteur(lecteur: HTMLElement) {
+    const chapitres = Array.from(lecteur.querySelectorAll<HTMLElement>('[data-referentiel-chapter]'));
+    const liensChapitres = Array.from(lecteur.querySelectorAll<HTMLAnchorElement>('[data-chapter-link]'));
+    const groupesSousSections = Array.from(lecteur.querySelectorAll<HTMLOListElement>('[data-subsections-for]'));
+    const panneauMobile = lecteur.querySelector<HTMLDetailsElement>('[data-mobile-toc]');
+
+    if (chapitres.length === 0) return;
+
+    function chapitrePourAncre(ancre: string): HTMLElement {
+      const cible = ancre ? document.getElementById(ancre) : null;
+      return cible?.closest<HTMLElement>('[data-referentiel-chapter]') ?? chapitres[0]!;
+    }
+
+    function afficherChapitre(chapitre: HTMLElement) {
+      const id = chapitre.dataset.referentielChapter!;
+      chapitres.forEach((element) => { element.hidden = element !== chapitre; });
+      liensChapitres.forEach((lien) => {
+        if (lien.getAttribute('href') === `#${id}`) lien.setAttribute('aria-current', 'location');
+        else lien.removeAttribute('aria-current');
+      });
+      groupesSousSections.forEach((groupe) => { groupe.hidden = groupe.dataset.subsectionsFor !== id; });
+    }
+
+    function atteindre(ancre: string, enregistrer: boolean) {
+      const cible = document.getElementById(ancre);
+      const chapitre = chapitrePourAncre(ancre);
+      afficherChapitre(chapitre);
+      if (enregistrer) history.pushState(null, '', `#${ancre}`);
+      const destination = cible ?? chapitre.querySelector<HTMLElement>('h2') ?? chapitre;
+      destination.scrollIntoView({ block: 'start' });
+      if (panneauMobile) panneauMobile.open = false;
+    }
+
+    lecteur.addEventListener('click', (event) => {
+      const lien = (event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+      if (!lien || !lecteur.contains(lien)) return;
+      const ancre = decodeURIComponent(lien.hash.slice(1));
+      if (!document.getElementById(ancre)) return;
+      event.preventDefault();
+      atteindre(ancre, true);
+    });
+
+    window.addEventListener('hashchange', () => {
+      atteindre(decodeURIComponent(location.hash.slice(1)), false);
+    });
+
+    lecteur.dataset.enhanced = '';
+    const ancreInitiale = decodeURIComponent(location.hash.slice(1));
+    afficherChapitre(chapitrePourAncre(ancreInitiale));
+    if (ancreInitiale && document.getElementById(ancreInitiale)) {
+      requestAnimationFrame(() => atteindre(ancreInitiale, false));
+    }
+  }
+
+  const lecteur = document.querySelector<HTMLElement>('[data-referentiel-reader]');
+  if (lecteur) initialiserLecteur(lecteur);
+</script>
+
+<style>
+  .reader-header { max-width: var(--width-reading); padding-bottom: var(--space-7); }
+  .eyebrow, .toc-title { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); letter-spacing: .08em; text-transform: uppercase; }
+  h1 { max-width: 18ch; color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-display); font-weight: 400; }
+  .mobile-toc { margin-bottom: var(--space-6); border-block: var(--border-width) solid var(--color-border); }
+  .mobile-toc summary { min-height: var(--size-control); padding-block: var(--space-3); color: var(--color-brand); font-weight: var(--font-weight-interface); cursor: pointer; }
+  .mobile-toc :global(.referentiel-toc) { padding-bottom: var(--space-4); }
+  .desktop-toc { display: none; }
+  .official-content { min-width: 0; max-width: var(--width-reading); }
+  .official-content :global(.referentiel-chapter) { padding-bottom: var(--space-7); }
+  .official-content :global(.referentiel-chapter + .referentiel-chapter) { padding-top: var(--space-7); border-top: var(--border-width) solid var(--color-border); }
+  .official-content :global(h2) { margin-top: 0; color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-2xl); font-weight: 400; }
+  .official-content :global(h3) { margin-top: var(--space-7); color: var(--color-brand); font-size: var(--font-size-xl); }
+  .official-content :global(p), .official-content :global(li) { line-height: var(--line-height-body); }
+  .official-content :global(a) { overflow-wrap: anywhere; }
+  .official-content :global(.chapter-pagination) { display: grid; gap: var(--space-4); margin-top: var(--space-7); padding-top: var(--space-5); border-top: var(--border-width) solid var(--color-border); }
+  .official-content :global(.chapter-pagination a) { display: grid; gap: var(--space-1); min-height: var(--size-control); text-decoration: none; }
+  .official-content :global(.chapter-pagination a:hover) { text-decoration: underline; }
+  .official-content :global(.chapter-pagination span) { color: var(--color-text-muted); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  [hidden] { display: none !important; }
+
+  @media (min-width: 48rem) {
+    .mobile-toc { display: none; }
+    .reader-layout { display: grid; grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr); gap: var(--space-7); align-items: start; }
+    .desktop-toc { display: block; position: sticky; top: var(--space-4); max-height: calc(100vh - var(--space-7)); overflow-y: auto; padding-right: var(--space-3); }
+    .official-content :global(.chapter-pagination) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .official-content :global(.chapter-pagination__next) { grid-column: 2; text-align: right; }
+  }
+</style>

@@ -119,19 +119,26 @@ La route `/ressources/<slug>` est donc facultative **par ressource**, et non obl
 
 Les ressources mises en avant sur la page d'accueil sont sélectionnées manuellement et ordonnées dans le singleton `Accueil`. Une `Ressource` ne porte pas de champ `mise_en_avant_accueil`.
 
-## Référentiels et versions
+## Référentiel PPC et versions
 
-Un `Référentiel` représente une identité durable rattachée canoniquement à l'univers Marque collective.
+Le Référentiel PPC est une rubrique autonome, distincte de la hiérarchie Marque
+collective.
 
 Exigences :
-- liste sous `/marque-collective/referentiels` ;
-- détail facultatif sous `/marque-collective/referentiels/<slug>` ; la présence du slug indique explicitement qu'une page dédiée existe ;
-- conservation explicite de plusieurs versions au sein du référentiel lorsque nécessaire ;
+- page de présentation sous `/referentiel` ;
+- version Web officielle courante sous `/referentiel/ppc`, dans une page HTML unique ;
+- corps complet présent dans le HTML et lisible séquentiellement sans JavaScript ;
+- amélioration progressive affichant un seul chapitre principal à la fois, avec sommaire, ancres et navigation précédent/suivant ;
+- sommaire et libellés de navigation dérivés du Markdown courant ;
+- un unique Markdown courant sous `contenu/referentiels/ppc/`, commençant au chapitre 1 ;
+- préambule extrait du DOCX et présenté uniquement sur `/referentiel` ;
+- conservation explicite de plusieurs versions PDF dans le frontmatter ;
 - chaque version dispose d'un identifiant stable ;
 - `version_courante` désigne explicitement l'identifiant de la version courante ;
 - la version courante ne doit jamais être déduite automatiquement de la date, du numéro ou de l'ordre de la liste ;
-- les anciennes versions peuvent rester accessibles lorsque PPC le souhaite ;
-- Git reste l'historique technique, distinct de cet historique éditorial.
+- les anciennes versions restent accessibles en PDF ; Git conserve l'historique des anciennes versions Markdown ;
+- import canonique par la commande documentée `npm run referentiel:import -- ...`, et non par DecapCMS ;
+- contrôles structurants bloquants et comparaison Markdown ↔ PDF non bloquante avec revue humaine obligatoire.
 
 Le site ne doit pas inventer de workflow d'approbation, de validation, d'attribution, de contrôle ou d'opposabilité non défini par PPC.
 
@@ -249,4 +256,4 @@ Les URL publiques importantes doivent être :
 - aussi stables que raisonnablement possible ;
 - indépendantes du CMS ou des détails d'implémentation.
 
-Exemples du sitemap retenu : `/association`, `/association/membres-fondateurs`, `/marque-collective`, `/marque-collective/referentiels`, `/ressources/<slug>` lorsqu'une ressource possède une page interne, `/actualites/<slug>`, `/evenements/<slug>`.
+Exemples du sitemap retenu : `/association`, `/association/membres-fondateurs`, `/marque-collective`, `/referentiel`, `/referentiel/ppc`, `/ressources/<slug>` lorsqu'une ressource possède une page interne, `/actualites/<slug>`, `/evenements/<slug>`.

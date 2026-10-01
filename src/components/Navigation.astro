@@ -5,14 +5,7 @@ const currentPath = Astro.url.pathname;
 
 const primaryLinks = [
   { label: 'Comprendre la PPC', href: '/comprendre-la-ppc' },
-  {
-    label: 'Marque collective',
-    href: '/marque-collective',
-    children: [
-      { label: 'Présentation', href: '/marque-collective' },
-      { label: 'Référentiels', href: '/marque-collective/referentiels' },
-    ],
-  },
+  { label: 'Référentiel', href: '/referentiel' },
   { label: 'Ressources', href: '/ressources' },
   { label: 'Actualités & événements', href: '/actualites-evenements' },
   {
@@ -101,12 +94,13 @@ const isCurrent = (href: string) => currentPath === href || currentPath === `${h
   a:hover, summary:hover { color: var(--color-link-hover); }
   .secondary-list a:hover, .secondary-list a[aria-current='page'] { text-decoration: underline; }
 
-  /* Seuil local : les cinq libellés et le CTA doivent tenir sans compression. */
+  /* Seuil local : les cinq rubriques et le CTA doivent tenir sans compression. */
   @media (min-width: 80rem) {
     .navigation-inner { display: flex; align-items: center; justify-content: flex-end; }
     .primary-list { display: flex; align-items: center; gap: var(--space-5); }
     .primary-list > li { position: relative; border: 0; }
-    .primary-list > li > a, summary { padding-block: var(--space-3); font-size: var(--font-size-sm); }
+    .primary-list > li > a, summary { padding-block: var(--space-3); font-size: var(--font-size-sm); white-space: nowrap; }
+    .navigation-inner :global(.action) { white-space: nowrap; }
     .secondary-list {
       position: absolute;
       z-index: 2;

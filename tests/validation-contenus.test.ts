@@ -38,6 +38,24 @@ const ressourceValide = {
   publie: true,
 };
 
+const corpsReferentielValide = Array.from({ length: 10 }, (_, index) =>
+  `# ${index + 1}. Chapitre ${index + 1}\n\n## ${index + 1}.1 Section\n\nTexte officiel.`,
+).join('\n\n');
+
+const referentielValide = {
+  titre: 'Référentiel PPC',
+  resume: 'Version officielle.',
+  preambule: [{ titre: 'Objet', paragraphes: ['Présentation officielle.'] }],
+  version_courante: 'v1-0',
+  versions: [{
+    id: 'v1-0',
+    version: '1.0',
+    date_publication: '2026-09-29',
+    document: '/documents/referentiels/referentiel-ppc/2026-09-29_Referentiel-PPC_v1.0.pdf',
+  }],
+  publie: true,
+};
+
 const accueilValide = {
   titre_page: 'PPC',
   description: 'Présentation de PPC.',
@@ -197,6 +215,36 @@ describe('validateur transverse des contenus', () => {
     await ecrireMarkdown(racine, 'contenu/ressources/guide-ppc.md', ressourceValide, 'Corps interdit.');
     const rapport = await validerContenus(racine);
     expect(rapport.erreurs.some((erreur) => erreur.message.includes('corps Markdown vide'))).toBe(true);
+  });
+
+  it('contrôle la structure, les métadonnées et le PDF du Référentiel PPC', async () => {
+    const racine = await creerCorpusValide();
+    await ecrireMarkdown(
+      racine,
+      'contenu/referentiels/ppc/courant.md',
+      referentielValide,
+      corpsReferentielValide,
+    );
+    const rapportSansPdf = await validerContenus(racine);
+    expect(rapportSansPdf.erreurs.some((erreur) => erreur.message.includes('introuvable'))).toBe(true);
+
+    await ecrire(
+      racine,
+      'public/documents/referentiels/referentiel-ppc/2026-09-29_Referentiel-PPC_v1.0.pdf',
+      'pdf de test',
+    );
+    const rapportValide = await validerContenus(racine);
+    expect(rapportValide.erreurs).toEqual([]);
+
+    await ecrireMarkdown(
+      racine,
+      'contenu/referentiels/ppc/courant.md',
+      { ...referentielValide, versions: [{ ...referentielValide.versions[0], id: 'version-incoherente' }], version_courante: 'version-incoherente' },
+      '# 2. Mauvais premier chapitre',
+    );
+    const rapportInvalide = await validerContenus(racine);
+    expect(rapportInvalide.erreurs.some((erreur) => erreur.message.includes('identifiant « v1-0 »'))).toBe(true);
+    expect(rapportInvalide.erreurs.some((erreur) => erreur.message.includes('exactement 10'))).toBe(true);
   });
 
   it('agrège plusieurs erreurs de schéma et erreurs transverses', async () => {

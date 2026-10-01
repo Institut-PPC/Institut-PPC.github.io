@@ -33,7 +33,8 @@ Les routes et le rôle des pages sont décrits dans [`../product/architecture-in
 
 | Famille | Exemples | Pilotage cible |
 |---|---|---|
-| Contenus récurrents structurés | Actualités, événements, personnes, organisations, ressources, référentiels | CMS + fichiers versionnés dans Git |
+| Contenus récurrents structurés | Actualités, événements, personnes, organisations, ressources | CMS + fichiers versionnés dans Git |
+| Référentiel PPC officiel | Markdown courant, préambule et historique PDF | Import DOCX contrôlé + fichiers versionnés dans Git, hors CMS |
 | Pages éditoriales fixes | Comprendre la PPC, Association, Marque collective, Travailler avec nous, etc. | Singletons éditables via CMS ; structure dans le code |
 | Paramètres éditoriaux globaux | Contact, réseaux sociaux, adhésion, don, newsletter | Singleton éditorial via CMS |
 | Structure du produit | Routes, navigation, composants, logique de rendu, design, configuration Astro | Code uniquement |
@@ -48,7 +49,7 @@ Les contenus canoniques sont stockés dans un répertoire **`contenu/` à la rac
 - `src/` : application Astro, schémas, règles de rendu et composants ;
 - `public/` : fichiers servis tels quels, documents téléchargeables et interface `/admin`.
 
-Les collections récurrentes sont **plates** : une collection correspond à un dossier et une entité à un fichier directement dans ce dossier. La date, la catégorie, le rôle ou toute autre taxonomie métier ne crée pas de sous-arborescence.
+Les collections récurrentes éditées dans Decap sont **plates** : une collection correspond à un dossier et une entité à un fichier directement dans ce dossier. La date, la catégorie, le rôle ou toute autre taxonomie métier ne crée pas de sous-arborescence. Le Référentiel PPC, hors Decap, constitue l'exception explicite : chaque référentiel dispose d'un sous-dossier stable contenant son unique fichier `courant.md`.
 
 Répartition normative :
 
@@ -59,7 +60,7 @@ Répartition normative :
 | Personne | `contenu/personnes/` | YAML `.yaml` |
 | Organisation | `contenu/organisations/` | YAML `.yaml` |
 | Ressource | `contenu/ressources/` | Markdown `.md` + front matter YAML, corps éventuellement vide |
-| Référentiel | `contenu/referentiels/` | Markdown `.md` + front matter YAML, corps éventuellement vide |
+| Référentiel | `contenu/referentiels/<identifiant>/courant.md` | Markdown `.md` + front matter YAML, corps officiel obligatoire |
 | Pages institutionnelles | `contenu/pages/` | Markdown `.md` + front matter YAML |
 | Accueil | `contenu/pages/accueil.yaml` | YAML |
 | Paramètres éditoriaux globaux | `contenu/configuration/site.yaml` | YAML |
@@ -82,7 +83,7 @@ Exemples :
 contenu/personnes/christian-bruere.yaml        → id `christian-bruere`
 contenu/organisations/atemis.yaml              → id `atemis`
 contenu/ressources/livre-blanc-ppc.md          → id `livre-blanc-ppc`
-contenu/referentiels/conception-ppc.md          → id `conception-ppc`
+contenu/referentiels/ppc/courant.md             → id `ppc`
 ```
 
 Les identifiants sont uniques dans leur collection, en ASCII minuscule et `kebab-case`. Ils ne dépendent ni du CMS, ni du slug public, ni d'un système externe. Une fois l'entité créée, l'identifiant est considéré comme immuable ; un renommage de fichier est une migration d'identifiant nécessitant la mise à jour explicite de ses relations.
@@ -171,6 +172,12 @@ Ne pas introduire dans le POC :
 - page builder ou système générique de blocs.
 
 Lorsqu'un rendu spécifique est nécessaire, préférer **champ structuré dédié + composant dans le code**.
+
+Le corps officiel du Référentiel PPC constitue une exception contrôlée à ce
+sous-ensemble éditorial : ses chapitres sont importés comme titres `H1`, puis
+rendus comme `H2` par le lecteur Web ; les tableaux Markdown GFM issus du DOCX
+sont également acceptés. Cette exception reste limitée à
+`contenu/referentiels/<identifiant>/courant.md`, hors Decap.
 
 ## Modèles de contenus structurés
 
@@ -399,77 +406,37 @@ L'existence de la page dépend du mode et du slug, jamais de la présence d'un c
 
 La sélection de ressources de la homepage est manuelle et ordonnée dans le singleton `Accueil`. Une Ressource ne porte pas de champ `mise_en_avant_accueil`. Toute Ressource explicitement sélectionnée pour l'accueil doit être publiée.
 
-### Référentiel
+### Référentiel PPC
 
-**Rôle :** contenu normatif rattaché canoniquement à l'univers **Marque collective** et distinct des ressources d'approfondissement.
-
-Le modèle du site n'invente aucune règle métier relative à l'attribution, la validation, le contrôle ou l'opposabilité des référentiels.
+**Rôle :** contenu normatif autonome, distinct des ressources d'approfondissement
+et relié contextuellement à la marque collective sans lui être subordonné dans
+l'architecture publique.
 
 **Exposition publique :**
-- liste : `/marque-collective/referentiels` ;
-- détail facultatif : `/marque-collective/referentiels/<slug>`.
+- présentation : `/referentiel` ;
+- version Web officielle courante : `/referentiel/ppc`.
 
-Chaque Référentiel est stocké dans `contenu/referentiels/<id>.md`. La présence du `slug` est le **signal canonique** indiquant qu'une page de détail existe. L'absence de slug signifie qu'aucune route de détail n'est générée, indépendamment de la présence éventuelle de Markdown.
+Le corps officiel courant est stocké dans l'unique fichier
+`contenu/referentiels/ppc/courant.md`. Son frontmatter contient le titre, le
+résumé, le préambule structuré extrait avant le chapitre 1, la référence
+explicite à la version courante et l'historique des PDF publiés. Son corps
+commence au chapitre 1 et contient les dix chapitres officiels.
 
-Un `Référentiel` représente une identité durable contenant une liste structurée de versions. Une version n'est pas une collection autonome dans le POC.
-
-Structure conceptuelle :
-
-```yaml
-titre: Référentiel exemple
-slug: referentiel-exemple
-version_courante: v1-2
-versions:
-  - id: v1-1
-    version: "1.1"
-    date_publication: 2026-05-10
-    document: /documents/referentiels/referentiel-exemple/v1-1.pdf
-  - id: v1-2
-    version: "1.2"
-    date_publication: 2026-09-01
-    document: /documents/referentiels/referentiel-exemple/v1-2.pdf
-publie: true
-```
-
-#### Champs au niveau du référentiel
-
-| Champ | Statut | Règle |
-|---|---|---|
-| Identifiant stable (nom de fichier) | obligatoire | Nom de fichier sans extension |
-| Titre | obligatoire | |
-| Slug | facultatif | Sa présence crée la page de détail |
-| Résumé | obligatoire | |
-| Statut public | facultatif, lorsque pertinent | Ne pas confondre avec `publie` |
-| Version courante | obligatoire dès qu'il existe des versions | Référence explicite vers `versions[].id` |
-| Contenu de présentation | facultatif | Corps Markdown ; ne détermine jamais l'existence de la route |
-| `publie` | obligatoire | Visibilité publique |
-
-#### Champs d'une version
-
-Une version peut comporter :
-- `id` stable, unique à l'intérieur du Référentiel ;
-- libellé / numéro `version`, distinct de l'identifiant technique ;
-- date de publication lorsqu'elle est pertinente ;
-- document principal local ou externe ;
-- documents ou liens associés éventuels.
-
-Règles :
-- `version_courante` référence l'`id` stable d'une version, pas son libellé ;
-- l'identifiant de version est stable même si son libellé éditorial évolue ;
-- plusieurs versions peuvent être conservées explicitement ;
-- la version courante n'est jamais déduite de l'ordre, du numéro ou de la date ;
-- les anciennes versions peuvent rester accessibles lorsque PPC le souhaite ;
-- Git reste l'historique technique, distinct de cet historique éditorial ;
-- aucun workflow métier d'approbation n'est modélisé ;
-- une évolution normative significative d'une version déjà publiée crée normalement une **nouvelle version** plutôt qu'un écrasement silencieux du document précédent.
-
-Pour un document local, la convention privilégiée est :
+Chaque version comporte obligatoirement un `id`, un numéro numérique, une date
+de publication et le chemin du PDF. Pour le Référentiel PPC, la convention est :
 
 ```text
-public/documents/referentiels/<id-referentiel>/<id-version>.<extension>
+public/documents/referentiels/referentiel-ppc/YYYY-MM-DD_Referentiel-PPC_vX.Y.pdf
 ```
 
-Le chemin reste néanmoins stocké explicitement dans la version ; il n'est pas reconstruit implicitement par le code. La validation vérifie que `version_courante` existe réellement et que tout document local référencé existe dans `public/`.
+`version_courante` référence explicitement une entrée de `versions`. Les PDF
+antérieurs restent dans le dépôt ; seul le Markdown courant est conservé, les
+anciennes versions Markdown restant disponibles dans Git.
+
+Le fichier n'est pas éditable dans DecapCMS. Le workflow canonique est Google
+Docs → export DOCX → `npm run referentiel:import -- ...` → revue humaine → Git.
+Le sommaire, la table des matières et les liens précédent/suivant sont dérivés
+du corps Markdown et ne sont pas stockés séparément.
 
 ## Pages éditoriales fixes et singletons
 
@@ -511,11 +478,6 @@ introduction:
 Le singleton `comprendre-la-ppc.md` contient six sections narratives dans un ordre
 fixé par la page et quatre piliers. Chaque pilier conserve un titre pédagogique,
 un intitulé technique et une liste de paragraphes ; le formulaire Decap suit cette structure.
-
-Le singleton `referentiels.md` porte les textes de la page de liste des
-référentiels, notamment son introduction et son état éditorial lorsqu’aucun
-référentiel n’est publié. La liste elle-même reste dérivée de la collection
-`Référentiel` et n’est jamais dupliquée dans ce singleton.
 
 Les pages `adherer.md` et `faire-un-don.md` sont des singletons éditoriaux dédiés. Les URLs HelloAsso y sont stockées avec le formulaire qu'elles décrivent : la page d'adhésion porte une liste de périodes, chacune avec des URLs de widget et de lien direct facultatives mais indissociables, tandis que la page de don porte un formulaire unique. Cette localisation évite de réduire plusieurs périodes d'adhésion à une URL globale ambiguë. Une période sans URLs reste valide et visible sans formulaire.
 
@@ -658,7 +620,10 @@ Le contributeur choisit le type, l'origine et le mode d'exposition. Le CMS peut 
 
 ### Référentiel
 
-Le contributeur ajoute une entrée dans `versions`, puis modifie explicitement `version_courante` lorsque nécessaire. Le CMS ne déduit jamais la version courante.
+Le Référentiel PPC ne se modifie pas dans le CMS. Un mainteneur ajoute le PDF
+versionné, exporte le Google Docs en DOCX puis exécute la commande d'import avec
+la version, la date et le chemin PDF explicites. Il contrôle ensuite le diff, le
+warning de comparaison PDF et le rendu avant commit.
 
 ### Page institutionnelle
 
@@ -685,7 +650,7 @@ La configuration Decap projette directement les modèles canoniques :
 | Personne | `folder collection` YAML | oui |
 | Organisation | `folder collection` YAML | oui |
 | Ressource | `folder collection` Markdown | oui |
-| Référentiel | `folder collection` Markdown | oui |
+| Référentiel PPC | hors Decap, import DOCX contrôlé | non |
 | Pages institutionnelles | `file collection` | non |
 | Accueil | `file collection` | non |
 | Configuration éditoriale globale | `file collection` | non |
@@ -700,11 +665,13 @@ Pour les nouvelles entrées, Decap génère le nom de fichier à partir des cham
 
 Pour les collections qui portent `publie`, une nouvelle entrée Decap utilise `publie: false` par défaut. Cela évite une exposition accidentelle au premier enregistrement sans introduire de workflow éditorial supplémentaire.
 
-### Ressource et Référentiel
+### Ressource
 
 Pour `Ressource`, Decap présente les champs des deux modes avec des libellés et aides clairs. Aucun widget React PPC spécifique n'est introduit uniquement pour masquer dynamiquement des champs ; les schémas canoniques restent l'autorité sur les combinaisons permises.
 
-Pour `Référentiel`, `versions` est représenté comme une liste structurée. `version_courante` saisit l'identifiant de la version explicitement désignée ; la validation garantit qu'il correspond à une entrée de `versions`. Ne pas déformer le modèle pour créer un sélecteur dynamique spécifique au CMS.
+Le corps, le préambule, les métadonnées et l'historique du Référentiel PPC ne
+sont pas exposés dans Decap. Cette exclusion empêche de contourner le workflow
+Google Docs → DOCX → import contrôlé.
 
 ### Rich text
 

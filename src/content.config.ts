@@ -54,7 +54,7 @@ const ressources = defineCollection({
 const referentiels = defineCollection({
   loader: glob({
     base: './contenu/referentiels',
-    pattern: '*.md',
+    pattern: '**/*.md',
   }),
   schema: schemaReferentiel,
 });

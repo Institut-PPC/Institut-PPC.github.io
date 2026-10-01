@@ -13,6 +13,7 @@ import { schemaPageEditoriale } from '../modeles/page-editoriale.ts';
 import { schemaPersonne, type Personne } from '../modeles/personne.ts';
 import { schemaReferentiel, type Referentiel } from '../modeles/referentiel.ts';
 import { schemaRessource, type Ressource } from '../modeles/ressource.ts';
+import { erreursStructureReferentiel } from '../lib/referentiel-ppc.ts';
 
 export interface ErreurValidationContenu {
   chemin: string;
@@ -210,6 +211,54 @@ async function chargerCollectionMarkdown<T>(
   return { entrees, identifiants };
 }
 
+async function chargerReferentiels(
+  racine: string,
+  erreurs: ErreurValidationContenu[],
+): Promise<CollectionChargee<Referentiel>> {
+  const dossierRelatif = 'contenu/referentiels';
+  const dossier = path.join(racine, dossierRelatif);
+  let elements;
+
+  try {
+    elements = await readdir(dossier, { withFileTypes: true });
+  } catch {
+    ajouterErreur(erreurs, dossierRelatif, 'Le dossier canonique est absent ou illisible.');
+    return { entrees: [], identifiants: new Set() };
+  }
+
+  const entrees: EntreeValidee<Referentiel>[] = [];
+  const identifiants = new Set<string>();
+
+  for (const element of elements.sort((a, b) => a.name.localeCompare(b.name, 'fr'))) {
+    if (element.name.startsWith('.')) continue;
+    const relatif = `${dossierRelatif}/${element.name}`;
+    if (!element.isDirectory()) {
+      ajouterErreur(erreurs, relatif, 'Chaque référentiel doit posséder son dossier et un unique fichier courant.md.');
+      continue;
+    }
+    if (!motifIdentifiant.test(element.name)) {
+      ajouterErreur(erreurs, relatif, 'Le dossier du référentiel doit être un identifiant ASCII minuscule en kebab-case.');
+      continue;
+    }
+
+    identifiants.add(element.name);
+    const fichiers = (await readdir(path.join(dossier, element.name), { withFileTypes: true }))
+      .filter((fichier) => !fichier.name.startsWith('.'));
+    if (fichiers.length !== 1 || !fichiers[0]?.isFile() || fichiers[0].name !== 'courant.md') {
+      ajouterErreur(erreurs, relatif, 'Le dossier doit contenir uniquement le fichier Markdown courant.md.');
+      continue;
+    }
+
+    const chemin = `${relatif}/courant.md`;
+    const markdown = analyserMarkdown(await readFile(path.join(racine, chemin), 'utf8'), chemin, erreurs);
+    if (!markdown) continue;
+    const donnees = validerSchema(schemaReferentiel, markdown.donnees, chemin, erreurs);
+    if (donnees) entrees.push({ id: element.name, chemin, donnees, corps: markdown.corps });
+  }
+
+  return { entrees, identifiants };
+}
+
 async function chargerCollectionYaml<T>(
   racine: string,
   dossier: string,
@@ -322,7 +371,7 @@ export async function validerContenus(racine: string): Promise<RapportValidation
     chargerCollectionYaml<Personne>(racine, 'contenu/personnes', schemaPersonne, erreurs),
     chargerCollectionYaml<Organisation>(racine, 'contenu/organisations', schemaOrganisation, erreurs),
     chargerCollectionMarkdown<Ressource>(racine, 'contenu/ressources', schemaRessource, 'identifiant', erreurs),
-    chargerCollectionMarkdown<Referentiel>(racine, 'contenu/referentiels', schemaReferentiel, 'identifiant', erreurs),
+    chargerReferentiels(racine, erreurs),
   ]);
 
   const fichiersPages = await listerFichiers(
@@ -364,7 +413,23 @@ export async function validerContenus(racine: string): Promise<RapportValidation
     '/ressources/<slug>',
     erreurs,
   );
-  verifierUniciteSlugs(referentiels.entrees, (donnees) => (donnees as Referentiel).slug, '/marque-collective/referentiels/<slug>', erreurs);
+  for (const referentiel of referentiels.entrees) {
+    for (const message of erreursStructureReferentiel(referentiel.corps ?? '')) {
+      ajouterErreur(erreurs, referentiel.chemin, message);
+    }
+
+    if (referentiel.id !== 'ppc') continue;
+    for (const version of referentiel.donnees.versions) {
+      const idAttendu = `v${version.version.replaceAll('.', '-')}`;
+      const documentAttendu = `/documents/referentiels/referentiel-ppc/${version.date_publication}_Referentiel-PPC_v${version.version}.pdf`;
+      if (version.id !== idAttendu) {
+        ajouterErreur(erreurs, referentiel.chemin, `La version ${version.version} doit utiliser l’identifiant « ${idAttendu} ».`);
+      }
+      if (version.document !== documentAttendu) {
+        ajouterErreur(erreurs, referentiel.chemin, `La version ${version.version} doit référencer « ${documentAttendu} ».`);
+      }
+    }
+  }
 
   for (const evenement of evenements.entrees) {
     for (const personne of evenement.donnees.personnes_liees ?? []) {

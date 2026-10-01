@@ -96,10 +96,10 @@ Cette page est distincte du corps officiel du Référentiel.
 
 Elle contient, dans cet ordre général :
 
-1. l'identification de la version courante ;
+1. un en-tête concis identifiant le Référentiel PPC ;
 2. un court texte éditorial de présentation ;
 3. le sommaire des chapitres principaux ;
-4. la section **Versions publiées**.
+4. la section **Versions publiées**, qui porte les informations de version et les liens PDF.
 
 ### 2.3 Route `/referentiel/ppc`
 
@@ -126,13 +126,14 @@ Compte tenu de la jeunesse du site, aucune redirection spécifique n'est requise
 
 ## 3. Page `/referentiel`
 
-### 3.1 Métadonnées de la version courante
+### 3.1 En-tête de page
 
-Le haut de page doit identifier clairement la version courante avec au minimum :
-- numéro de version ;
-- date de publication ;
-- statut indiquant qu'il s'agit de la version actuelle ;
-- accès direct au PDF correspondant.
+Le haut de page reste volontairement concis :
+- le titre principal est **« Référentiel PPC »** ;
+- le libellé **« Référentiel de la Pérennité Programmée Circulaire »** est présenté comme surtitre ;
+- aucune métadonnée de version ni action de consultation ou de téléchargement n'est répétée entre le titre et le texte de présentation.
+
+Le numéro, la date, le statut de version actuelle et le lien PDF sont regroupés dans la section **Versions publiées**. L'accès à la version Web s'effectue depuis le sommaire des chapitres.
 
 ### 3.2 Texte de présentation
 
@@ -632,7 +633,7 @@ La fonctionnalité est considérée comme conforme lorsque :
 - [ ] `/referentiel/ppc` est l'unique page Web de lecture de la version courante.
 - [ ] les anciennes pages de référentiels sous **Marque collective** sont supprimées.
 - [ ] la rubrique **Marque collective** peut pointer contextuellement vers `/referentiel` sans le contenir hiérarchiquement.
-- [ ] `/referentiel` affiche la version courante, sa date, son PDF, un texte bref, le sommaire et les versions publiées.
+- [ ] `/referentiel` présente un en-tête concis, le texte de présentation, le sommaire et les versions publiées ; la version courante, sa date et son PDF sont regroupés dans cette dernière section.
 - [ ] le sommaire de `/referentiel` est dérivé du Markdown courant.
 - [ ] le lecteur contient l'intégralité du Référentiel dans son HTML.
 - [ ] avec JavaScript, un seul chapitre principal est affiché à la fois.

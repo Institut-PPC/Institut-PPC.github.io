@@ -27,9 +27,10 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 │
 ├── /comprendre-la-ppc
 │
+├── /referentiel
+│   └── /referentiel/ppc
+│
 ├── /marque-collective
-│   └── /marque-collective/referentiels
-│       └── /marque-collective/referentiels/<slug>   [si nécessaire]
 │
 ├── /ressources
 │   └── /ressources/<slug>   [uniquement pour les ressources avec page interne]
@@ -75,22 +76,22 @@ L'organisation des contenus et les URL ne doivent toutefois pas empêcher l'ajou
 Ordre retenu pour le POC :
 
 1. **Comprendre la PPC**
-2. **Marque collective**
+2. **Référentiel**
 3. **Ressources**
 4. **Actualités & événements**
 5. **Association**
 
 Un CTA distinct **Nous contacter** complète la navigation principale.
 
+La page **Marque collective** reste accessible par les liens contextuels du
+site et par la navigation secondaire du pied de page, sans occuper une entrée
+du menu principal.
+
 Le logo renvoie à l'accueil.
 
 ### Sous-menus
 
 Les sous-menus sont présents dès le POC lorsqu'une rubrique possède de vraies pages filles.
-
-**Marque collective** :
-- Présentation ;
-- Référentiels.
 
 **Association** :
 - Présentation ;
@@ -152,17 +153,23 @@ Expliquer :
 
 Ne pas inventer ni préfigurer comme acquis des mécanismes futurs d'attribution, d'audit, de candidature ou de contrôle tant que leurs règles métier ne sont pas documentées.
 
-### `/marque-collective/referentiels` — Référentiels
+### `/referentiel` — Référentiel PPC
 
-Présenter les référentiels disponibles ou publiables du corpus normatif PPC.
+Présenter directement le Référentiel PPC avec un en-tête concis, le préambule
+du document, le sommaire dérivé et l'historique des versions PDF publiées. Les
+informations de version, la date et le PDF officiel sont regroupés dans cet
+historique en bas de page. Cette page n'est pas un catalogue multi-référentiels.
 
-Les référentiels appartiennent **canoniquement à l'univers de la Marque collective**, même s'ils peuvent être liés directement depuis d'autres pages lorsque cela sert un parcours utilisateur.
+### `/referentiel/ppc` — Version Web officielle
 
-### `/marque-collective/referentiels/<slug>` — Détail d'un référentiel, si nécessaire
+Permettre la consultation de la version officielle courante dans une page HTML
+unique. L'intégralité du corps reste présente et lisible sans JavaScript ;
+l'amélioration progressive affiche un chapitre principal à la fois avec
+sommaire, ancres et navigation précédent/suivant.
 
-Présenter un référentiel individuel lorsque le simple lien vers un document ou une ressource ne suffit pas.
-
-Cette route est optionnelle dans le POC : ne créer une page de détail que si elle apporte une valeur réelle de contexte, de métadonnées ou de navigation.
+Le Référentiel est une rubrique autonome de premier niveau. La rubrique Marque
+collective peut y renvoyer contextuellement sans constituer son parent
+hiérarchique.
 
 ### `/ressources` — Ressources
 
@@ -394,7 +401,7 @@ Une prise de contact qualifiée, sans prétendre automatiser un processus de can
 
 **Variantes**
 - entrée depuis une actualité, un événement ou une ressource ;
-- passage par Marque collective / Référentiels si l'intérêt porte d'abord sur le cadre formel.
+- passage par le Référentiel si l'intérêt porte d'abord sur le cadre formel.
 
 **Hypothèses POC à observer**
 - pertinence de garder Travailler avec nous hors navigation principale ;
@@ -407,30 +414,29 @@ Une prise de contact qualifiée, sans prétendre automatiser un processus de can
 Personne ou organisation qui cherche les éléments formels ou normatifs associés à PPC et à la marque collective.
 
 **Points d'entrée principaux**
-- navigation principale **Marque collective** ;
-- lien contextuel direct vers les Référentiels ;
-- arrivée directe sur un référentiel depuis un lien partagé ou un moteur de recherche.
+- navigation principale **Référentiel** ;
+- lien contextuel depuis Marque collective ou une autre page ;
+- arrivée directe sur la version Web depuis un lien partagé ou un moteur de recherche.
 
 **Étapes attendues**
-1. Accéder à **Marque collective**.
-2. Comprendre le rôle de la marque et l'état de sa formalisation.
-3. Accéder à **Référentiels**.
-4. Ouvrir le document ou la page du référentiel concerné.
+1. Accéder à **Référentiel**.
+2. Prendre connaissance du texte de présentation.
+3. Accéder à la version Web par le sommaire ou consulter une version PDF publiée.
+4. Lire la version Web officielle, linéairement ou par ancres.
 
 **CTA structurants**
-- Voir les référentiels ;
-- Consulter / télécharger le référentiel, selon son mode de publication.
+- accéder à un chapitre depuis le sommaire ;
+- Télécharger le PDF officiel.
 
 **Destination attendue**  
 Accès au document ou à l'information normative recherchée, avec un contexte suffisant pour comprendre sa place dans la marque collective.
 
 **Variantes**
-- accès direct à un référentiel depuis Ressources ou une autre page, tout en conservant son rattachement canonique à la Marque collective ;
+- accès direct au lecteur depuis Ressources ou une autre page ;
 - contact si l'utilisateur a une question sur la marque ou les référentiels.
 
 **Hypothèses POC à observer**
-- pertinence de Marque collective au premier niveau du menu ;
-- nécessité réelle de pages de détail par référentiel ;
+- lisibilité du lecteur Web à chapitre unique côté client et du repli linéaire sans JavaScript ;
 - clarté de la distinction entre ressources d'approfondissement et documents normatifs.
 
 ### P4 — Suivre l'activité de PPC
@@ -513,7 +519,7 @@ Les règles suivantes doivent être considérées comme structurantes :
 2. **Chaque page doit avoir un rôle identifiable.** Ne pas créer une rubrique simplement « au cas où ».
 3. **La navigation principale reste courte.** Les parcours transversaux s'appuient aussi sur des liens contextuels et une navigation secondaire utile.
 4. **Les URL publiques sont sémantiques, lisibles, stables et indépendantes du CMS.**
-5. **Les référentiels appartiennent canoniquement à l'univers de la Marque collective.** Des liens transversaux directs restent autorisés.
+5. **Le Référentiel PPC est une rubrique autonome de premier niveau.** Son lien fonctionnel avec la marque collective peut être expliqué et relié sans relation hiérarchique parent/enfant.
 6. **Séparer les grandes natures de contenus.** En particulier : pédagogie PPC, contenus normatifs/référentiels, ressources d'approfondissement, vie institutionnelle de l'Association, actualités et événements.
 7. **Structurer les contenus qui évoluent.** Les contenus récurrents ou appelés à être gérés par des contributeurs non techniques doivent rester compatibles avec les principes de contenu structuré et de portabilité du dépôt. Les listes institutionnelles dérivables, notamment la gouvernance et les membres fondateurs, sont produites à partir des entités canoniques plutôt que recopiées dans les pages.
 8. **Ne pas inventer de règles métier PPC.** Une architecture peut prévoir l'évolution future d'un parcours sans définir à l'avance ses critères, statuts, processus ou droits.
@@ -524,7 +530,7 @@ Les règles suivantes doivent être considérées comme structurantes :
 
 Les éléments suivants sont validés comme hypothèses de mise en œuvre du POC, mais doivent pouvoir être réévalués à partir des retours de la co-présidence et des premiers tests :
 
-- présence de **Marque collective** au premier niveau du menu ;
+- présence de **Référentiel** au premier niveau du menu ;
 - présence de **Ressources** au premier niveau du menu ;
 - utilisation de sous-menus dès le POC ;
 - absence de **Adhérer / faire un don** dans l’en-tête ;

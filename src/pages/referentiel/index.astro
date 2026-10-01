@@ -1,0 +1,73 @@
+---
+import { getEntry } from 'astro:content';
+
+import PageIntro from '../../components/PageIntro.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { extrairePlanReferentiel } from '../../lib/referentiel-ppc';
+import { formaterDate } from '../../lib/contenus';
+
+const entree = await getEntry('referentiels', 'ppc/courant');
+if (!entree || !entree.data.publie) throw new Error('Le Référentiel PPC courant publié est introuvable.');
+
+const chapitres = extrairePlanReferentiel(entree.body ?? '');
+---
+
+<BaseLayout title="Référentiel PPC — Pérennité Programmée Circulaire" description={entree.data.resume}>
+  <article class="referentiel-presentation">
+    <PageIntro eyebrow={entree.data.titre} title="Le Référentiel PPC" />
+
+    <div class="preambule">
+      {entree.data.preambule.map((section) => (
+        <section>
+          <h2>{section.titre}</h2>
+          {section.paragraphes.map((paragraphe) => <p>{paragraphe}</p>)}
+        </section>
+      ))}
+    </div>
+
+    <section class="sommaire" aria-labelledby="sommaire-titre">
+      <p class="eyebrow">Version Web</p>
+      <h2 id="sommaire-titre">Sommaire</h2>
+      <ol>
+        {chapitres.map((chapitre) => (
+          <li><a href={`/referentiel/ppc#${chapitre.id}`}>{chapitre.titre}</a></li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="versions" aria-labelledby="versions-titre">
+      <p class="eyebrow">Documents officiels</p>
+      <h2 id="versions-titre">Versions publiées</h2>
+      <ol>
+        {entree.data.versions.map((version) => (
+          <li>
+            <div>
+              <strong>Version {version.version}</strong>
+              {version.id === entree.data.version_courante && <span>Version actuelle</span>}
+            </div>
+            <time datetime={version.date_publication}>{formaterDate(version.date_publication)}</time>
+            <a href={version.document}>Télécharger le PDF <span aria-hidden="true">↗</span></a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .referentiel-presentation { max-width: var(--width-reading); }
+  .eyebrow { color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); letter-spacing: .08em; text-transform: uppercase; }
+  h2 { color: var(--color-brand); font-family: var(--font-display); font-size: var(--font-size-2xl); font-weight: 400; }
+  .preambule, .sommaire, .versions { padding-block: var(--space-7); border-top: var(--border-width) solid var(--color-border); }
+  .preambule { display: grid; gap: var(--space-6); }
+  .preambule section > :last-child { margin-bottom: 0; }
+  .sommaire ol, .versions ol { padding: 0; margin: var(--space-5) 0 0; list-style: none; counter-reset: chapitres; }
+  .sommaire li { counter-increment: chapitres; border-top: var(--border-width) solid var(--color-border); }
+  .sommaire a { display: grid; grid-template-columns: 2rem 1fr; gap: var(--space-3); padding-block: var(--space-3); text-decoration: none; }
+  .sommaire a::before { content: counter(chapitres, decimal-leading-zero); color: var(--color-accent); font-size: var(--font-size-sm); font-weight: var(--font-weight-interface); }
+  .sommaire a:hover { text-decoration: underline; }
+  .versions li { display: grid; gap: var(--space-2); padding-block: var(--space-4); border-top: var(--border-width) solid var(--color-border); }
+  .versions li div { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .versions span { padding: var(--space-1) var(--space-2); background: var(--color-brand-soft); font-size: var(--font-size-sm); }
+  .versions time { color: var(--color-text-muted); }
+</style>

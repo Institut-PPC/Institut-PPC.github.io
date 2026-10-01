@@ -67,17 +67,6 @@ export const schemaPageMarqueCollective = schemaBasePage
   })
   .strict();
 
-export const schemaPageReferentiels = schemaBasePage
-  .extend({
-    etat_vide: z
-      .object({
-        titre: schemaTexteObligatoire,
-        message: schemaTexteObligatoire,
-      })
-      .strict(),
-  })
-  .strict();
-
 export const schemaPageAssociation = schemaBasePage
   .extend({
     mission: z
@@ -317,7 +306,6 @@ export const schemaPageMarkdown = schemaBasePage.strict();
 export const schemaPageEditoriale = z.union([
   schemaPageComprendre,
   schemaPageMarqueCollective,
-  schemaPageReferentiels,
   schemaPageAssociation,
   schemaPageGouvernance,
   schemaPageMembresFondateurs,

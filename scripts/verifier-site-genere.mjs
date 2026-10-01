@@ -67,6 +67,8 @@ verifier(
 for (const chemin of [
   '/',
   '/association',
+  '/referentiel',
+  '/referentiel/ppc',
   '/actualites-evenements',
   '/actualites/2026-09-edito-tf1info-durabilite-obsolescence',
 ]) {
@@ -81,6 +83,10 @@ verifier(
   ![...cheminsPublics].some((chemin) => chemin === '/404' || chemin === '/404.html'),
   'Le sitemap ne doit contenir aucune route correspondant à la page 404.',
 );
+verifier(
+  ![...cheminsPublics].some((chemin) => chemin.startsWith('/marque-collective/referentiels')),
+  'Le sitemap ne doit plus contenir les anciennes routes /marque-collective/referentiels.',
+);
 
 const robots = await lireFichier('robots.txt');
 verifier(/^User-agent: \*$/m.test(robots), 'robots.txt doit cibler tous les robots.');
@@ -94,6 +100,8 @@ verifier(
 const pages = [
   { fichier: 'index.html', chemin: '/', imageSociale: false },
   { fichier: 'association/index.html', chemin: '/association/', imageSociale: false },
+  { fichier: 'referentiel/index.html', chemin: '/referentiel/', imageSociale: false },
+  { fichier: 'referentiel/ppc/index.html', chemin: '/referentiel/ppc/', imageSociale: false },
   {
     fichier: 'actualites/2026-09-edito-tf1info-durabilite-obsolescence/index.html',
     chemin: '/actualites/2026-09-edito-tf1info-durabilite-obsolescence/',

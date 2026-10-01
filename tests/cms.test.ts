@@ -25,4 +25,13 @@ describe('configuration Decap', () => {
 
     expect(roles?.options?.map(({ value }) => value)).toEqual([...rolesPpc]);
   });
+
+  it('n’expose pas le corps officiel du Référentiel PPC', () => {
+    const configuration = parse(readFileSync('public/admin/config.yml', 'utf8')) as {
+      collections: CollectionDecap[];
+    };
+
+    expect(configuration.collections.some((collection) => collection.name === 'referentiels')).toBe(false);
+    expect(readFileSync('public/admin/config.yml', 'utf8')).not.toContain('contenu/referentiels');
+  });
 });

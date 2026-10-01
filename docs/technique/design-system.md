@@ -449,7 +449,12 @@ Lorsque le menu est ouvert :
 
 Une petite interaction TypeScript/JavaScript locale est parfaitement acceptable si elle apporte une meilleure UX ou évite une implémentation HTML/CSS artificiellement complexe. Le menu ne dépend pas d'une animation pour être compréhensible ou utilisable.
 
-À largeur desktop, la navigation principale reste compacte. Les rubriques ayant des enfants peuvent utiliser un dropdown ou un disclosure approprié ; leurs sous-rubriques ne sont pas affichées en permanence si cela augmente inutilement la hauteur du Header. La spécification ne fige pas le choix exact du panneau, drawer, dropdown ou disclosure dès lors que le pattern retenu respecte ces exigences.
+À largeur desktop, la navigation principale reste compacte et ses libellés ne
+se coupent pas sur plusieurs lignes. Les rubriques ayant des enfants peuvent
+utiliser un dropdown ou un disclosure approprié ; leurs sous-rubriques ne sont
+pas affichées en permanence si cela augmente inutilement la hauteur du Header.
+La spécification ne fige pas le choix exact du panneau, drawer, dropdown ou
+disclosure dès lors que le pattern retenu respecte ces exigences.
 
 ### Images et personnes
 
