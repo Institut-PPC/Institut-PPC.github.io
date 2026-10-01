@@ -10,7 +10,7 @@ if (!entree) throw new Error('Le singleton mentions-legales est introuvable.');
 const page = schemaPageMarkdown.parse(entree.data);
 const { Content } = await render(entree);
 ---
-<BaseLayout title="Mentions légales — PPC">
+<BaseLayout title="Mentions légales — PPC" description={page.description}>
   <PageIntro eyebrow={page.surtitre} title={page.titre} intro={page.introduction} />
   <div class="legal"><EditorialContent><Content /></EditorialContent></div>
 </BaseLayout>

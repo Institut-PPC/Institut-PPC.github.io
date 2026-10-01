@@ -1,8 +1,21 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   output: 'static',
   site: 'https://www.perennite-programmee-circulaire.org',
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const pathname = new URL(page).pathname;
+        return (
+          pathname !== '/admin'
+          && !pathname.startsWith('/admin/')
+          && !['/404', '/404/', '/404.html'].includes(pathname)
+        );
+      },
+    }),
+  ],
   vite: { plugins: [tailwindcss()] },
 });

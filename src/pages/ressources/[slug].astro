@@ -11,7 +11,7 @@ export async function getStaticPaths(){const entries=await getCollection('ressou
 interface Props{entry:CollectionEntry<'ressources'>}
 const {entry}=Astro.props;if(entry.data.mode_exposition!=='page-interne')throw new Error('Une page de ressource requiert le mode page-interne.');const {Content}=await render(entry);
 ---
-<BaseLayout title={`${entry.data.titre} — PPC`} description={entry.data.resume}>
+<BaseLayout title={`${entry.data.titre} — PPC`} description={entry.data.resume} socialImage={entry.data.image}>
   <Breadcrumb items={[{label:'Ressources',href:'/ressources'},{label:entry.data.titre}]} />
   <article><header class="content-header"><p class="eyebrow">{libellesRessource[entry.data.type]}</p><h1>{entry.data.titre}</h1><p class="lead">{entry.data.resume}</p><ContentMeta items={[entry.data.origine==='ppc'?'Ressource PPC':'Ressource externe',entry.data.date?formaterDate(entry.data.date):'']} />{entry.data.lien_principal_associe&&<ActionLink href={entry.data.lien_principal_associe}>Accéder à la ressource principale <span aria-hidden="true">↗</span></ActionLink>}</header>{entry.data.image&&<Image class="hero-image" src={entry.data.image} alt={entry.data.image_alt??''} widths={[720,1152]} sizes="(min-width:72rem) 72rem,100vw"/>}<EditorialContent><Content /></EditorialContent></article>
 </BaseLayout>

@@ -52,6 +52,8 @@ Après build, contrôler au minimum :
 
 L'outil précis reste un choix d'implémentation.
 
+Le contrôle léger `npm run check:dist` inspecte directement les fichiers générés sous `dist/`. Il vérifie notamment l'index et les fichiers du sitemap, `robots.txt`, ainsi que les métadonnées essentielles de plusieurs pages représentatives. `npm run ci` l'exécute après `astro build`.
+
 ## Stratégie de tests
 
 ### Composants

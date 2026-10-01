@@ -16,9 +16,11 @@
     "test:redirects": "vitest run tests/netlify-redirects.test.ts",
     "validate": "node --disable-warning=ExperimentalWarning --experimental-strip-types scripts/validate-contenus.ts",
     "build": "astro build",
-    "ci": "npm run test && npm run validate && npm run check && npm run build"
+    "check:dist": "node scripts/verifier-site-genere.mjs",
+    "ci": "npm run test && npm run validate && npm run check && npm run build && npm run check:dist"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.1",
     "zod": "^4.5.4"
   },
