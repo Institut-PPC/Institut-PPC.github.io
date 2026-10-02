@@ -46,7 +46,6 @@ const chapitres = extrairePlanReferentiel(entree.body ?? '');
               {version.id === entree.data.version_courante && <span>Version actuelle</span>}
             </div>
             <time datetime={version.date_publication}>{formaterDate(version.date_publication)}</time>
-            <a href={version.document}>Télécharger le PDF <span aria-hidden="true">↗</span></a>
           </li>
         ))}
       </ol>
