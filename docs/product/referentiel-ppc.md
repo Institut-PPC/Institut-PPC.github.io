@@ -341,18 +341,18 @@ Il n'est pas la source technique utilisée directement par le site.
 
 ### 7.2 Source technique publiée
 
-Le **Markdown versionné dans Git** est la source de vérité technique de la version publiée sur le site.
+Le **PDF officiel versionné** est la référence de publication. Le Markdown versionné dans Git est sa représentation technique dérivée et la source du rendu Web.
 
 La chaîne conceptuelle est :
 
 ```text
 Google Docs
     ↓
-export DOCX
+export du PDF officiel versionné
     ↓
-conversion semi-automatisée
+placement dans le dépôt et import contrôlé
     ↓
-Markdown versionné dans Git
+extraction du préambule et génération du Markdown
     ↓
 rendu Web
 ```
@@ -438,8 +438,8 @@ Le processus cible est :
 
 1. rédaction et collaboration dans Google Docs ;
 2. validation de la nouvelle version par l'association ;
-3. export manuel du Google Docs au format DOCX ;
-4. ajout du PDF officiel versionné dans `public/documents/referentiels/referentiel-ppc/` ;
+3. export manuel du Google Docs au format PDF officiel versionné ;
+4. ajout de ce PDF dans `public/documents/referentiels/referentiel-ppc/` ;
 5. exécution d'une commande d'import documentée ;
 6. extraction du préambule situé avant le chapitre 1 pour alimenter `/referentiel` ;
 7. conversion en Markdown du contenu **à partir du chapitre 1 inclus** ;
@@ -456,12 +456,12 @@ Le processus cible est :
 Le repo fournit une commande unique et documentée pour lancer l'import, par exemple conceptuellement :
 
 ```text
-npm run referentiel:import -- <fichier.docx> ...
+npm run referentiel:import -- public/documents/referentiels/referentiel-ppc/<fichier.pdf> ...
 ```
 
 La syntaxe finale est un détail d'implémentation, mais la commande doit :
 - être simple à exécuter ;
-- prendre en entrée le DOCX ;
+- prendre en entrée le même PDF officiel que celui publié dans le dépôt ;
 - recevoir explicitement les métadonnées nécessaires qui ne doivent pas être inférées ;
 - produire ou remplacer le Markdown courant ;
 - exécuter les transformations et contrôles prévus ;
@@ -489,11 +489,11 @@ La documentation doit permettre à un autre membre du projet de reprendre le pro
 
 ---
 
-## 10. Conversion DOCX → Markdown
+## 10. Extraction PDF → Markdown
 
-### 10.1 Dépendance de conversion
+### 10.1 Dépendance d'extraction
 
-La conversion DOCX → Markdown doit s'appuyer sur une dépendance externe mature et reconnue plutôt que réimplémenter entièrement le parsing DOCX dans le projet.
+L'extraction PDF → Markdown doit s'appuyer sur une dépendance externe mature et reconnue plutôt que réimplémenter entièrement le parsing PDF dans le projet. Une même bibliothèque d'extraction doit être partagée entre l'import et le contrôle de fidélité afin d'éviter des implémentations concurrentes.
 
 La logique spécifique au Référentiel PPC reste dans le repo :
 - nettoyage ;
@@ -503,7 +503,7 @@ La logique spécifique au Référentiel PPC reste dans le repo :
 - validations ;
 - mise à jour de l'historique.
 
-Le choix précis de la dépendance appartient à l'implémentation et doit être justifié, maintenable et compatible avec le projet.
+L'implémentation utilise `pdfjs-dist`, déjà employé pour le contrôle PDF ↔ Markdown. La reconstruction de structure à partir des positions, tailles de texte et séparations de lignes reste une heuristique propre au projet.
 
 ### 10.2 Fidélité
 
@@ -600,7 +600,7 @@ Le Référentiel n'est pas un contenu éditorial ordinaire modifié directement 
 Le workflow canonique de modification est :
 
 ```text
-Google Docs → DOCX → import contrôlé → Markdown Git
+Google Docs → PDF officiel versionné → import contrôlé → Markdown Git
 ```
 
 L'implémentation doit éviter qu'une interface CMS générique puisse modifier directement et silencieusement le corps officiel du Référentiel en contournant ce workflow.
@@ -665,7 +665,7 @@ La fonctionnalité est considérée comme conforme lorsque :
 - [ ] tous les PDFs versionnés restent dans `public/documents/referentiels/referentiel-ppc/`.
 - [ ] les métadonnées de la version courante sont explicites dans le frontmatter.
 - [ ] l'historique structuré des PDFs est maintenu séparément du corps Markdown.
-- [ ] une commande unique permet l'import DOCX → Markdown.
+- [ ] une commande unique permet l'import PDF → Markdown depuis le PDF officiel publié.
 - [ ] la commande met à jour automatiquement l'historique des versions.
 - [ ] les contrôles structurants sont bloquants.
 - [ ] la comparaison Markdown ↔ PDF génère un warning exploitable.

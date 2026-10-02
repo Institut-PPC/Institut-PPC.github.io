@@ -1,6 +1,4 @@
-import { readFile } from 'node:fs/promises';
-
-import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
+import { extrairePagesPdf, texteExtraitDesPages } from './pdf-referentiel.ts';
 
 const TITRE_CHAPITRE_1 = '1. Introduction : comprendre la Pérennité Programmée Circulaire';
 const RAYON_CONTEXTE = 6;
@@ -67,24 +65,7 @@ function extraireCorpsPdf(tokensPdf: string[], tokensMarkdown: string[]): string
 }
 
 async function extraireTextePdf(cheminPdf: string): Promise<string> {
-  const donnees = new Uint8Array(await readFile(cheminPdf));
-  const document = await getDocument({ data: donnees, useWorkerFetch: false }).promise;
-  const pages: string[] = [];
-
-  for (let index = 1; index <= document.numPages; index += 1) {
-    const page = await document.getPage(index);
-    const contenu = await page.getTextContent();
-    const fragments = contenu.items.flatMap((item) => (
-      'str' in item ? [{ texte: item.str, finDeLigne: item.hasEOL }] : []
-    ));
-    const dernierNonVide = fragments.findLastIndex(({ texte }) => texte.trim() !== '');
-    if (dernierNonVide >= 0 && /^\d+$/.test(fragments[dernierNonVide]!.texte.trim())) {
-      fragments.splice(dernierNonVide, 1);
-    }
-    pages.push(fragments.map(({ texte, finDeLigne }) => `${texte}${finDeLigne ? '\n' : ''}`).join(''));
-  }
-
-  return pages.join('\f');
+  return texteExtraitDesPages(await extrairePagesPdf(cheminPdf));
 }
 
 export interface ResultatComparaisonReferentiel {

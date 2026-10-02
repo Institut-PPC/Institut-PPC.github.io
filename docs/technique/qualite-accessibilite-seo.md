@@ -191,8 +191,8 @@ chapitres inexploitable. `npm run referentiel:check` extrait le texte du PDF,
 techniques de pagination, d'espacement, de retours à la ligne, de césure et de
 syntaxe Markdown, puis exige la même séquence de tokens, accents et ordre
 compris. Le premier écart produit un warning contextualisé mais reste non
-bloquant par défaut ; la vérification humaine finale du DOCX, du Markdown, du
-PDF et du rendu demeure obligatoire.
+bloquant par défaut ; la vérification humaine finale du PDF officiel, du
+Markdown et du rendu demeure obligatoire.
 
 ## URL et redirections
 

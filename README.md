@@ -10,7 +10,7 @@ La documentation du projet et les contenus de la V1/POC sont rédigés en **fran
 
 ## État du projet
 
-Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements et ressources publiés. Le Référentiel PPC dispose de sa rubrique autonome, de sa version Web officielle et d'un workflow d'import DOCX contrôlé.
+Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements et ressources publiés. Le Référentiel PPC dispose de sa rubrique autonome, de sa version Web officielle et d'un workflow d'import PDF contrôlé.
 
 L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS est intégré pour l’édition locale des contenus canoniques. Le dépôt sépare sous `netlify/` le projet OAuth de production et le projet de redirection permanente des domaines secondaires ; aucun des deux ne construit ni n'héberge le site Astro. Les opérations manuelles sont documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) et [`docs/exploitation/redirects-netlify.md`](docs/exploitation/redirects-netlify.md). Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
 
@@ -101,14 +101,13 @@ Cette commande agrège les erreurs avec leur fichier source et doit être exécu
 
 ### Publier une version du Référentiel PPC
 
-Ajouter d'abord le PDF officiel versionné, puis importer l'export DOCX avec des
-métadonnées explicites :
+Ajouter le PDF officiel versionné à son emplacement public, puis l'importer avec
+des métadonnées explicites :
 
 ```sh
-npm run referentiel:import -- /chemin/vers/referentiel.docx \
+npm run referentiel:import -- public/documents/referentiels/referentiel-ppc/2026-12-15_Referentiel-PPC_v1.1.pdf \
   --version 1.1 \
-  --date 2026-12-15 \
-  --pdf /documents/referentiels/referentiel-ppc/2026-12-15_Referentiel-PPC_v1.1.pdf
+  --date 2026-12-15
 ```
 
 La procédure complète, les conventions et la revue humaine obligatoire sont

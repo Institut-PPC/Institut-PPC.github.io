@@ -2,12 +2,10 @@ import { access, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-import mammoth from 'mammoth';
-import TurndownService from 'turndown';
-import { gfm } from 'turndown-plugin-gfm';
 import { parseDocument, stringify } from 'yaml';
 
 import { comparerMarkdownPdf } from '../src/lib/controle-referentiel.ts';
+import { convertirPdf } from '../src/lib/import-referentiel-pdf.ts';
 import { erreursStructureReferentiel } from '../src/lib/referentiel-ppc.ts';
 import { schemaReferentiel, type Referentiel } from '../src/modeles/referentiel.ts';
 import { validerContenus } from '../src/validation/contenus.ts';
@@ -16,14 +14,14 @@ const racine = process.cwd();
 const cheminCourant = path.join(racine, 'contenu/referentiels/ppc/courant.md');
 
 interface OptionsImport {
-  docx: string;
+  pdf: string;
   version: string;
   date: string;
-  pdf: string;
+  document: string;
 }
 
 function lireOptions(argumentsCli: string[]): OptionsImport {
-  const [docx, ...reste] = argumentsCli;
+  const [pdf, ...reste] = argumentsCli;
   const options = new Map<string, string>();
   for (let index = 0; index < reste.length; index += 2) {
     const cle = reste[index];
@@ -32,15 +30,20 @@ function lireOptions(argumentsCli: string[]): OptionsImport {
     options.set(cle, valeur);
   }
 
-  if (!docx || !options.get('--version') || !options.get('--date') || !options.get('--pdf')) {
-    throw new Error('Usage : npm run referentiel:import -- <fichier.docx> --version X.Y --date YYYY-MM-DD --pdf /documents/referentiels/referentiel-ppc/<fichier>.pdf');
+  if (!pdf || !options.get('--version') || !options.get('--date')) {
+    throw new Error('Usage : npm run referentiel:import -- public/documents/referentiels/referentiel-ppc/<fichier>.pdf --version X.Y --date YYYY-MM-DD');
   }
 
+  const version = options.get('--version')!;
+  const date = options.get('--date')!;
+  const document = `/documents/referentiels/referentiel-ppc/${date}_Referentiel-PPC_v${version}.pdf`;
   return {
-    docx: path.resolve(racine, docx),
-    version: options.get('--version')!,
-    date: options.get('--date')!,
-    pdf: options.get('--pdf')!,
+    pdf: pdf.startsWith('/documents/')
+      ? path.join(racine, 'public', pdf.slice(1))
+      : path.resolve(racine, pdf),
+    version,
+    date,
+    document,
   };
 }
 
@@ -52,87 +55,23 @@ function decomposerMarkdown(source: string): { donnees: Referentiel; corps: stri
   return { donnees: schemaReferentiel.parse(document.toJS()), corps: correspondance[2]! };
 }
 
-function nettoyerMarkdown(markdown: string): string {
-  return markdown
-    .replace(/\u00a0/g, ' ')
-    .replace(/[ \t]+$/gm, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
-
-function extrairePreambule(markdownAvantChapitre: string): Referentiel['preambule'] {
-  let source = markdownAvantChapitre
-    .replace(/^#\s+Référentiel[^\n]*\n+/i, '')
-    .replace(/^Version[^\n]*\n+/i, '')
-    .trim();
-
-  const debutSommaire = source.search(/^(?:\[[^\]]*)?1\.\s+Introduction\b/im);
-  if (debutSommaire >= 0) source = source.slice(0, debutSommaire).trim();
-
-  const sections: Referentiel['preambule'] = [];
-  let sectionCourante: Referentiel['preambule'][number] | undefined;
-  for (const bloc of source.split(/\n{2,}/)) {
-    const titre = bloc.match(/^(?:#{1,4}\s+|\*\*)(.+?)(?:\*\*)?$/)?.[1]?.trim();
-    if (titre) {
-      sectionCourante = { titre, paragraphes: [] };
-      sections.push(sectionCourante);
-      continue;
-    }
-    if (sectionCourante && bloc.trim()) sectionCourante.paragraphes.push(bloc.replace(/\n/g, ' ').trim());
-  }
-
-  return sections.filter((section) => section.paragraphes.length > 0);
-}
-
-async function convertirDocx(docx: string): Promise<{ preambule: Referentiel['preambule']; corps: string; messages: string[] }> {
-  const resultat = await mammoth.convertToHtml(
-    { path: docx },
-    {
-      styleMap: [
-        "p[style-name='Title'] => h1:fresh",
-        "p[style-name='Heading 1'] => h1:fresh",
-        "p[style-name='Heading 2'] => h2:fresh",
-        "p[style-name='Heading 3'] => h3:fresh",
-      ],
-      includeDefaultStyleMap: true,
-    },
-  );
-  const turndown = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-', emDelimiter: '*', strongDelimiter: '**' });
-  turndown.use(gfm);
-  turndown.remove(['style', 'script']);
-  const markdown = nettoyerMarkdown(turndown.turndown(resultat.value));
-  const debutChapitre = markdown.search(/^#\s+1\.\s+/m);
-  if (debutChapitre < 0) throw new Error('Impossible d’identifier le chapitre 1 dans le DOCX. Vérifier les styles de titres Google Docs.');
-
-  const corps = markdown.slice(debutChapitre).trim();
-  const preambule = extrairePreambule(markdown.slice(0, debutChapitre));
-  if (preambule.length === 0) throw new Error('Impossible d’extraire un préambule structuré avant le chapitre 1.');
-
-  return {
-    preambule,
-    corps,
-    messages: resultat.messages.map((message) => message.message),
-  };
-}
-
 async function executer(): Promise<void> {
   const options = lireOptions(process.argv.slice(2));
-  await access(options.docx);
-
-  const attenduPdf = `/documents/referentiels/referentiel-ppc/${options.date}_Referentiel-PPC_v${options.version}.pdf`;
-  if (options.pdf !== attenduPdf) throw new Error(`Le PDF attendu pour ces métadonnées est « ${attenduPdf} ».`);
-  const cheminPdf = path.join(racine, 'public', options.pdf.slice(1));
-  await access(cheminPdf);
+  await access(options.pdf);
+  const cheminAttendu = path.join(racine, 'public', options.document.slice(1));
+  if (options.pdf !== cheminAttendu) {
+    throw new Error(`Le PDF d’entrée doit être le fichier officiel publié « ${cheminAttendu} ».`);
+  }
 
   const sourceInitiale = await readFile(cheminCourant, 'utf8');
   const courant = decomposerMarkdown(sourceInitiale);
-  const conversion = await convertirDocx(options.docx);
+  const conversion = await convertirPdf(options.pdf);
   const erreursStructure = erreursStructureReferentiel(conversion.corps);
   if (erreursStructure.length > 0) throw new Error(erreursStructure.join('\n'));
 
   const idVersion = `v${options.version.replaceAll('.', '-')}`;
   const versionExistante = courant.donnees.versions.find((version) => version.id === idVersion);
-  const nouvelleVersion = { id: idVersion, version: options.version, date_publication: options.date, document: options.pdf };
+  const nouvelleVersion = { id: idVersion, version: options.version, date_publication: options.date, document: options.document };
   if (versionExistante && JSON.stringify(versionExistante) !== JSON.stringify(nouvelleVersion)) {
     throw new Error(`L’historique contient déjà « ${idVersion} » avec d’autres métadonnées.`);
   }
@@ -152,9 +91,9 @@ async function executer(): Promise<void> {
     throw new Error(`Import annulé :\n${rapport.erreurs.map((erreur) => `- ${erreur.chemin} : ${erreur.message}`).join('\n')}`);
   }
 
-  console.log(`PDF utilisé pour la comparaison : ${options.pdf}`);
-  const comparaison = await comparerMarkdownPdf(conversion.corps, cheminPdf);
-  for (const message of conversion.messages) console.warn(`Avertissement DOCX : ${message}`);
+  console.log(`PDF utilisé pour l’import et la comparaison : ${options.document}`);
+  const comparaison = await comparerMarkdownPdf(conversion.corps, options.pdf);
+  for (const message of conversion.messages) console.warn(`Avertissement PDF : ${message}`);
   if (comparaison.avertissement) console.warn(`Avertissement : ${comparaison.avertissement}`);
   else console.log(`Comparaison Markdown ↔ PDF conforme : ${comparaison.nombreTokensMarkdown} tokens identiques dans le même ordre.`);
   console.log(`Import terminé : version ${options.version}. Vérification humaine finale obligatoire avant commit.`);

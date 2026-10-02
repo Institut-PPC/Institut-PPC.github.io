@@ -131,7 +131,7 @@ Exigences :
 - amélioration progressive affichant un seul chapitre principal à la fois, avec sommaire, ancres et navigation précédent/suivant ;
 - sommaire et libellés de navigation dérivés du Markdown courant ;
 - un unique Markdown courant sous `contenu/referentiels/ppc/`, commençant au chapitre 1 ;
-- préambule extrait du DOCX et présenté uniquement sur `/referentiel` ;
+- préambule extrait du PDF officiel et présenté uniquement sur `/referentiel` ;
 - conservation explicite de plusieurs versions PDF dans le frontmatter ;
 - chaque version dispose d'un identifiant stable ;
 - `version_courante` désigne explicitement l'identifiant de la version courante ;

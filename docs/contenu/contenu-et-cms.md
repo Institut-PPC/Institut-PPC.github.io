@@ -34,7 +34,7 @@ Les routes et le rôle des pages sont décrits dans [`../product/architecture-in
 | Famille | Exemples | Pilotage cible |
 |---|---|---|
 | Contenus récurrents structurés | Actualités, événements, personnes, organisations, ressources | CMS + fichiers versionnés dans Git |
-| Référentiel PPC officiel | Markdown courant, préambule et historique PDF | Import DOCX contrôlé + fichiers versionnés dans Git, hors CMS |
+| Référentiel PPC officiel | PDF officiel, Markdown courant, préambule et historique PDF | Import PDF contrôlé + fichiers versionnés dans Git, hors CMS |
 | Pages éditoriales fixes | Comprendre la PPC, Association, Marque collective, Travailler avec nous, etc. | Singletons éditables via CMS ; structure dans le code |
 | Paramètres éditoriaux globaux | Contact, réseaux sociaux, adhésion, don, newsletter | Singleton éditorial via CMS |
 | Structure du produit | Routes, navigation, composants, logique de rendu, design, configuration Astro | Code uniquement |
@@ -175,7 +175,7 @@ Lorsqu'un rendu spécifique est nécessaire, préférer **champ structuré dédi
 
 Le corps officiel du Référentiel PPC constitue une exception contrôlée à ce
 sous-ensemble éditorial : ses chapitres sont importés comme titres `H1`, puis
-rendus comme `H2` par le lecteur Web ; les tableaux Markdown GFM issus du DOCX
+rendus comme `H2` par le lecteur Web ; les tableaux Markdown GFM reconstruits depuis le PDF
 sont également acceptés. Cette exception reste limitée à
 `contenu/referentiels/<identifiant>/courant.md`, hors Decap.
 
@@ -434,7 +434,8 @@ antérieurs restent dans le dépôt ; seul le Markdown courant est conservé, le
 anciennes versions Markdown restant disponibles dans Git.
 
 Le fichier n'est pas éditable dans DecapCMS. Le workflow canonique est Google
-Docs → export DOCX → `npm run referentiel:import -- ...` → revue humaine → Git.
+Docs → export du PDF officiel versionné → ajout au dépôt →
+`npm run referentiel:import -- ...` → revue humaine → Git.
 Le sommaire, la table des matières et les liens précédent/suivant sont dérivés
 du corps Markdown et ne sont pas stockés séparément.
 
@@ -620,10 +621,10 @@ Le contributeur choisit le type, l'origine et le mode d'exposition. Le CMS peut 
 
 ### Référentiel
 
-Le Référentiel PPC ne se modifie pas dans le CMS. Un mainteneur ajoute le PDF
-versionné, exporte le Google Docs en DOCX puis exécute la commande d'import avec
-la version, la date et le chemin PDF explicites. Il contrôle ensuite le diff, le
-warning de comparaison PDF et le rendu avant commit.
+Le Référentiel PPC ne se modifie pas dans le CMS. Un mainteneur exporte le
+Google Docs en PDF officiel versionné, place ce PDF dans le répertoire public,
+puis exécute la commande d'import avec la version et la date explicites. Il
+contrôle ensuite le diff, le warning de comparaison PDF et le rendu avant commit.
 
 ### Page institutionnelle
 
@@ -650,7 +651,7 @@ La configuration Decap projette directement les modèles canoniques :
 | Personne | `folder collection` YAML | oui |
 | Organisation | `folder collection` YAML | oui |
 | Ressource | `folder collection` Markdown | oui |
-| Référentiel PPC | hors Decap, import DOCX contrôlé | non |
+| Référentiel PPC | hors Decap, import PDF contrôlé | non |
 | Pages institutionnelles | `file collection` | non |
 | Accueil | `file collection` | non |
 | Configuration éditoriale globale | `file collection` | non |
@@ -671,7 +672,7 @@ Pour `Ressource`, Decap présente les champs des deux modes avec des libellés e
 
 Le corps, le préambule, les métadonnées et l'historique du Référentiel PPC ne
 sont pas exposés dans Decap. Cette exclusion empêche de contourner le workflow
-Google Docs → DOCX → import contrôlé.
+Google Docs → PDF officiel versionné → import contrôlé.
 
 ### Rich text
 

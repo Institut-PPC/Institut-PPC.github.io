@@ -238,11 +238,12 @@ Les scripts modifient le **working tree** uniquement. Ils ne créent pas automat
 
 Aucun connecteur AssoConnect, HelloAsso ou autre SI associatif n'est implémenté dans le POC.
 
-Le Référentiel PPC constitue l'import officiel implémenté : `mammoth` convertit
-le DOCX en HTML sémantique, `turndown` et son extension GFM produisent le
-Markdown, puis la logique PPC sépare le préambule, contrôle les dix chapitres,
-applique la table d'ancres au rendu et met à jour l'historique. La comparaison
-textuelle avec le PDF repose sur `pdfjs-dist` et émet un warning non bloquant.
+Le Référentiel PPC constitue l'import officiel implémenté : `pdfjs-dist`
+extrait le texte, les positions et les tailles depuis le PDF officiel publié.
+La logique PPC sépare le préambule, reconstruit les titres, paragraphes, listes
+et tableaux récupérables, contrôle les dix chapitres, applique la table d'ancres
+au rendu et met à jour l'historique. Le même extracteur alimente la comparaison
+textuelle PDF ↔ Markdown, qui émet un warning non bloquant en cas d'écart.
 Le script écrit uniquement le working tree et restaure le fichier courant si
 la validation structurante échoue.
 
