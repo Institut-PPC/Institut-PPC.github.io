@@ -17,9 +17,10 @@ const donnees = schemaReferentiel.parse(parseDocument(correspondance[1]!).toJS()
 const version = donnees.versions.find(({ id }) => id === donnees.version_courante);
 if (!version) throw new Error('La version courante du Référentiel est introuvable.');
 
+console.log(`PDF utilisé pour la comparaison : ${version.document}`);
 const resultat = await comparerMarkdownPdf(
   correspondance[2]!,
   path.join(racine, 'public', version.document.slice(1)),
 );
 if (resultat.avertissement) console.warn(`AVERTISSEMENT non bloquant : ${resultat.avertissement}`);
-else console.log(`Comparaison Markdown ↔ PDF : ${(resultat.couverture * 100).toFixed(1)} % des séquences retrouvées.`);
+else console.log(`Comparaison Markdown ↔ PDF conforme : ${resultat.nombreTokensMarkdown} tokens identiques dans le même ordre.`);

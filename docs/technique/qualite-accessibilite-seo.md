@@ -187,10 +187,12 @@ distincte et ne crée aucune entrée supplémentaire dans le sitemap.
 `npm run validate` bloque les métadonnées incomplètes, versions ou dates
 invalides, PDF absents ou mal nommés, historique incohérent et structure de
 chapitres inexploitable. `npm run referentiel:check` extrait le texte du PDF,
-normalise pagination, espaces et césures puis compare des séquences textuelles
-avec le Markdown courant. Une divergence significative produit un warning clair
-mais reste non bloquante par défaut ; la vérification humaine finale du DOCX, du
-Markdown, du PDF et du rendu demeure obligatoire.
+écarte les pages précédant le chapitre 1, normalise les seuls artefacts
+techniques de pagination, d'espacement, de retours à la ligne, de césure et de
+syntaxe Markdown, puis exige la même séquence de tokens, accents et ordre
+compris. Le premier écart produit un warning contextualisé mais reste non
+bloquant par défaut ; la vérification humaine finale du DOCX, du Markdown, du
+PDF et du rendu demeure obligatoire.
 
 ## URL et redirections
 

@@ -152,10 +152,11 @@ async function executer(): Promise<void> {
     throw new Error(`Import annulé :\n${rapport.erreurs.map((erreur) => `- ${erreur.chemin} : ${erreur.message}`).join('\n')}`);
   }
 
+  console.log(`PDF utilisé pour la comparaison : ${options.pdf}`);
   const comparaison = await comparerMarkdownPdf(conversion.corps, cheminPdf);
   for (const message of conversion.messages) console.warn(`Avertissement DOCX : ${message}`);
   if (comparaison.avertissement) console.warn(`Avertissement : ${comparaison.avertissement}`);
-  else console.log(`Comparaison Markdown ↔ PDF : ${(comparaison.couverture * 100).toFixed(1)} % des séquences retrouvées.`);
+  else console.log(`Comparaison Markdown ↔ PDF conforme : ${comparaison.nombreTokensMarkdown} tokens identiques dans le même ordre.`);
   console.log(`Import terminé : version ${options.version}. Vérification humaine finale obligatoire avant commit.`);
 }
 

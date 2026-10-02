@@ -551,10 +551,17 @@ Le processus doit tenter de détecter les divergences textuelles entre :
 - le Markdown courant ;
 - le PDF officiel de la même version.
 
-La comparaison peut :
-- extraire le texte du PDF ;
-- normaliser les différences de pagination, espaces, césures et autres artefacts de rendu ;
-- comparer le texte normalisé.
+La comparaison doit :
+- ignorer dans le PDF les pages qui précèdent le début effectif du chapitre 1 ;
+- comparer uniquement le corps Markdown, sans son frontmatter ;
+- normaliser les seuls artefacts techniques de pagination, d'espacement, de
+  retours à la ligne, de césure PDF et de syntaxe Markdown non affichée ;
+- conserver les accents, les mots et leur ordre ;
+- exiger l'identité de la séquence de tokens normalisés du Markdown et du PDF.
+
+Une proportion élevée de texte retrouvé ou un score de similarité ne suffit
+pas à rendre le contrôle conforme. Au premier écart, le diagnostic indique sa
+position et un contexte issu des deux sources.
 
 Cette comparaison est un **warning à examiner humainement**, et non un blocage automatique absolu, car certains écarts techniques peuvent être légitimes.
 
