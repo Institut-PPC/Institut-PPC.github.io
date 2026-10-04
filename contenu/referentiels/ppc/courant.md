@@ -1,47 +1,36 @@
 ---
 titre: Référentiel de la Pérennité Programmée Circulaire
-resume: >-
-  Version Web officielle courante du Référentiel de la Pérennité Programmée
-  Circulaire, publiée sous la responsabilité de l’Association.
+resume: Version Web officielle courante du Référentiel de la Pérennité Programmée Circulaire,
+  publiée sous la responsabilité de l’Association.
 statut_public: Version initiale
 preambule:
   - titre: Présentation
     paragraphes:
-      - >-
-        Le référentiel de la PPC constitue un bien commun protégé placé sous la
-        responsabilité de l’Association pour la Pérennité Programmée
-        Circulaire, afin d’en garantir la cohérence, l’intégrité, la
-        crédibilité, l’indépendance et la vocation d’intérêt général. Les
-        statuts distinguent les contenus conceptuels, pédagogiques et
-        explicatifs, qui peuvent être diffusés sous licence Creative Commons
-        de type CC BY-NC-SA, de la marque collective, de son règlement
-        d’usage, des référentiels techniques et des documents normatifs
-        opposables, qui demeurent protégés.
+      - Le référentiel de la PPC constitue un bien commun protégé placé sous la responsabilité de
+        l’Association pour la Pérennité Programmée Circulaire, afin d’en garantir la cohérence,
+        l’intégrité, la crédibilité, l’indépendance et la vocation d’intérêt général. Les statuts
+        distinguent les contenus conceptuels, pédagogiques et explicatifs, qui peuvent être diffusés
+        sous licence Creative Commons de type CC BY-NC-SA, de la marque collective, de son règlement
+        d’usage, des référentiels techniques et des documents normatifs opposables, qui demeurent
+        protégés.
   - titre: Statut
     paragraphes:
-      - >-
-        Le référentiel PPC est publié sous la responsabilité de l’Association 
-        pour la Pérennité Programmée Circulaire.
-      - >-
-        Son contenu actuel correspond à sa version initiale et constitue la trame 
-        du référentiel public. Il a vocation à évoluer grâce aux travaux de l’association 
-        et aux contributions de ses groupes de travail.
-      - >-
-        Son évolution suit les modalités de gouvernance, de consolidation, de
-        validation, de publication et de versionnage définies par
-        l’association. Chaque version publiée permet d’identifier l’état
-        officiel du référentiel applicable à une date donnée.
+      - Le référentiel PPC est publié sous la responsabilité de l’Association  pour la Pérennité
+        Programmée Circulaire.
+      - Son contenu actuel correspond à sa version initiale et constitue la trame  du référentiel
+        public. Il a vocation à évoluer grâce aux travaux de l’association  et aux contributions de
+        ses groupes de travail.
+      - Son évolution suit les modalités de gouvernance, de consolidation, de validation, de
+        publication et de versionnage définies par l’association. Chaque version publiée permet
+        d’identifier l’état officiel du référentiel applicable à une date donnée.
   - titre: Principe général
     paragraphes:
-      - >-
-        La PPC est un modèle systémique fondé sur quatre piliers
-        indissociables. Chacun répond à une dimension différente du modèle
-        industriel et économique. Leur articulation permet de faire converger
-        intérêt économique, préservation des ressources, robustesse
-        industrielle, souveraineté et création de valeur territoriale.
-      - >-
-        L’allongement de la durée de vie est la conséquence de l’application
-        du modèle de Pérennité Programmée Circulaire.
+      - La PPC est un modèle systémique fondé sur quatre piliers indissociables. Chacun répond à une
+        dimension différente du modèle industriel et économique. Leur articulation permet de faire
+        converger intérêt économique, préservation des ressources, robustesse industrielle,
+        souveraineté et création de valeur territoriale.
+      - L’allongement de la durée de vie est la conséquence de l’application du modèle de Pérennité
+        Programmée Circulaire.
 version_courante: v1-0
 versions:
   - id: v1-0
@@ -119,9 +108,61 @@ L’allongement de la durée de vie est la conséquence de l’application du mo
 
 # 2. Principes d’utilisation du référentiel
 
-Pour chacun des quatre piliers, le référentiel présente l’objectif recherché, les principes fondamentaux, les exigences associées, les méthodes de mise en œuvre, les critères d’évaluation, les niveaux de maturité, les exemples et retours d’expérience, les points de vigilance et les interactions avec les trois autres piliers.
+## 2.1 Finalité du référentiel
 
-L’évaluation s’appuie sur des niveaux de maturité. Elle permet de situer une démarche et de construire une trajectoire de transformation.
+Le référentiel donne un cadre commun pour comprendre, mettre en œuvre et faire progresser une démarche de Pérennité Programmée Circulaire. Il relie les dimensions techniques, économiques, industrielles, territoriales, numériques, comptables et financières du modèle.
+
+Il structure une transformation à partir de la situation réelle d’un bien, de ses usages, de l’organisation qui le porte et de son écosystème. Il crée également un langage commun entre les métiers et les acteurs qui interviennent au cours de ses différents cycles.
+
+## 2.2 Une lecture fondée sur quatre piliers indissociables
+
+Le référentiel s’organise autour de quatre piliers : "Conception démontable", "Vente à l’usage", "Organisation industrielle circulaire" et "Gestion par composants". Chacun répond à une fonction différente et produit ses effets par son articulation avec les trois autres.
+
+La lecture est donc systémique. L’évaluation porte sur la maturité de chaque pilier et sur la qualité de leurs interactions. Une démarche PPC se construit par la cohérence progressive de l’ensemble.
+
+## 2.3 Partir du réel et des usages
+
+La démarche commence par l’observation du réel : fonction attendue, usages effectifs, conditions d’exploitation, pannes, interventions, contraintes physiques, compétences disponibles et organisation existante. Les utilisateurs et les techniciens de terrain apportent une connaissance essentielle de ce qui fonctionne, de ce qui casse et de ce qui pourrait être amélioré.
+
+L’expertise intervient ensuite pour confronter les solutions envisagées aux connaissances scientifiques, aux contraintes techniques et au cadre applicable. Cette séquence préserve la capacité d’exploration avant la phase de consolidation.
+
+## 2.4 Distinguer les limites physiques des conventions humaines
+
+La PPC distingue ce qui relève des limites physiques de ce qui relève des constructions humaines. Les lois de la physique et de la chimie ainsi que les propriétés des éléments du tableau périodique fixent des limites matérielles. Les normes, les règles comptables, les modèles économiques, les contrats, les organisations et les réglementations sont élaborés par les sociétés humaines. Ils s’appliquent dans leur cadre de validité et peuvent évoluer.
+
+L’histoire de la pensée économique montre l’importance de cette distinction. Jean-Baptiste Say a décrit les richesses naturelles comme des biens que la nature fournit gratuitement et a ensuite présenté certaines richesses naturelles comme inépuisables. Cette représentation a contribué à laisser les limites physiques en dehors d’une partie du raisonnement économique. La confrontation aux ressources finies rappelle qu’un modèle intellectuel ou économique reste une représentation du réel et peut être révisé.
+
+Le référentiel PPC applique ce principe à ses propres méthodes. Il fournit un cadre pour agir, comparer, apprendre et construire une trajectoire. Il reste ouvert à la discussion et à l’évolution lorsque l’expérience, les données, la recherche ou les retours du terrain mettent en évidence une formulation ou une méthode à améliorer. Cette capacité de remise en question participe à sa robustesse.
+
+## 2.5 Adapter la démarche au bien et à son contexte
+
+Les principes de la PPC s’appliquent à des biens, des usages et des environnements industriels différents. Leur traduction dépend de la maturité technologique, de la durée pertinente des composants, de l’intensité d’usage, des conditions de maintenance, du territoire et du modèle économique.
+
+Le référentiel fournit une méthode commune. Le niveau de détail, les indicateurs, les moyens techniques et l’organisation retenue restent proportionnés aux enjeux du bien, de ses composants et de son usage.
+
+## 2.6 Progresser par niveaux de maturité
+
+La transformation vers la PPC peut être progressive. Les niveaux de maturité permettent de situer les pratiques existantes, d’identifier les écarts et d’organiser une trajectoire cohérente entre les quatre piliers.
+
+Une organisation peut commencer par améliorer la démontabilité, structurer la maintenance, expérimenter une convention d’usage ou renforcer la traçabilité. La progression consiste à relier ces avancées jusqu’à former un système dans lequel les quatre piliers se renforcent mutuellement.
+
+## 2.7 Documenter pour apprendre et décider
+
+La PPC s’appuie sur une connaissance qui s’enrichit au fil des cycles. Nomenclatures, données d’usage, historiques de maintenance, diagnostics, coûts, durées observées, valeurs résiduelles et retours du terrain permettent de confronter les hypothèses à la réalité.
+
+Cette documentation nourrit la conception, la maintenance, l’organisation des stocks, la gestion par composants, le coût total de possession et le financement. La donnée sert la décision et conserve un lien avec l’actif et ses composants.
+
+## 2.8 Distinguer principes établis, méthodes et travaux prospectifs
+
+Le référentiel distingue les principes et méthodes opérationnels des travaux qui explorent des évolutions comptables, financières, normatives ou méthodologiques. Cette distinction permet d’identifier ce qui peut être mis en œuvre dans le cadre existant et ce qui relève de la recherche, de l’expérimentation ou d’une proposition d’évolution.
+
+Les travaux prospectifs enrichissent le référentiel lorsqu’ils sont suffisamment documentés, expérimentés et consolidés pour être intégrés selon sa gouvernance.
+
+## 2.9 Évaluer une trajectoire et la cohérence du système
+
+L’évaluation observe la mise en œuvre de chaque pilier, la qualité de leurs interactions et les effets produits. Elle s’appuie sur des éléments observables et documentés.
+
+Elle permet de situer une démarche, d’identifier les points structurants à améliorer et de construire une trajectoire de transformation. La partie 8 précise cette méthode d’évaluation et son articulation avec les niveaux de maturité.
 
 # 3. Pilier 1 : Conception démontable
 
@@ -172,7 +213,9 @@ L’analyse du bien doit être prolongée composant par composant dans une nomen
 Pour chaque composant significatif, trois dimensions sont évaluées :
 
 1. la probabilité d’obsolescence ou de rupture technologique ;
+
 2. la durée de vie calendaire du matériau ;
+
 3. la résistance à l’usure liée à l’usage réel.
 
 La première dimension mesure la stabilité de la technologie. La deuxième mesure le vieillissement naturel du matériau indépendamment de l’usage. La troisième mesure l’effet des sollicitations réelles : cycles, frottements, vibrations, températures, charges, chocs ou autres contraintes propres au produit.
@@ -969,7 +1012,9 @@ Un bien pérenne rassemble des composants dont les durées, les états, les coû
 
 ## 7.6 Interdépendances entre les quatre piliers
 
-Chaque pilier dépend des capacités créées par les trois autres. La conception démontable prend sa valeur lorsqu’un modèle économique a intérêt à l’exploiter, qu’une organisation sait intervenir et que les composants sont suivis dans le temps. La vente à l’usage devient robuste lorsque le bien est maintenable, que les interventions sont organisées et que les coûts futurs sont connus. L’organisation industrielle circulaire territorialisée s’appuie sur des produits conçus pour être entretenus et sur une activité organisée dans la durée. La gestion par composants s’appuie sur des éléments identifiables, séparables, tracés et suivis au fil des usages. L’interdépendance constitue la structure même du modèle.
+Chaque pilier dépend des capacités créées par les trois autres. La conception démontable prend sa valeur lorsqu’un modèle économique a intérêt à l’exploiter, qu’une organisation sait intervenir et que les composants sont suivis dans le temps. La vente à l’usage devient robuste lorsque le bien est maintenable, que les interventions sont organisées et que les coûts futurs sont connus.
+
+L’organisation industrielle circulaire territorialisée s’appuie sur des produits conçus pour être entretenus et sur une activité organisée dans la durée. La gestion par composants s’appuie sur des éléments identifiables, séparables, tracés et suivis au fil des usages. L’interdépendance constitue la structure même du modèle.
 
 ## 7.7 Effets systémiques : compétitivité, ressources, souveraineté, emplois et territoires
 
@@ -1063,9 +1108,7 @@ Les niveaux de maturité permettent de représenter une progression plutôt qu�
 
 ## 8.5 Identification des écarts
 
-L’évaluation met en évidence les écarts entre la situation observée et les principes du référentiel. Ces écarts peuvent concerner un choix de conception, une organisation, une convention d’usage, une capacité industrielle, la qualité des données ou la représentation économique des composants.
-
-L’analyse recherche également les conséquences de chaque écart sur les autres piliers. Cette lecture systémique permet de distinguer un manque local d’une faiblesse susceptible de limiter l’ensemble du modèle et d’orienter les actions vers les points les plus structurants.
+L’évaluation met en évidence les écarts entre la situation observée et les principes du référentiel. Ces écarts peuvent concerner un choix de conception, une organisation, une convention d’usage, une capacité industrielle, la qualité des données ou la représentation économique des composants. L’analyse recherche également les conséquences de chaque écart sur les autres piliers. Cette lecture systémique permet de distinguer un manque local d’une faiblesse susceptible de limiter l’ensemble du modèle et d’orienter les actions vers les points les plus structurants.
 
 ## 8.6 Trajectoire de transformation
 
@@ -1073,7 +1116,9 @@ La trajectoire de transformation traduit l’évaluation en actions progressives
 
 ## 8.7 Indicateurs transversaux
 
-Les indicateurs transversaux observent les résultats produits par l’interaction des quatre piliers. Ils peuvent suivre la durée réelle des actifs et des composants, leur nombre de cycles d’usage, la fréquence et le coût des interventions, les temps d’immobilisation, la valeur résiduelle, le coût total de possession et la part des opérations réalisées dans les boucles de maintenance, de réparation, de réemploi et de remanufacture. Les indicateurs retenus dépendent du bien, de l’usage et du contexte industriel. Ils privilégient des données mesurables dans le temps et permettent de comparer la trajectoire d’un même système à différents stades de sa transformation.
+Les indicateurs transversaux observent les résultats produits par l’interaction des quatre piliers. Ils peuvent suivre la durée réelle des actifs et des composants, leur nombre de cycles d’usage, la fréquence et le coût des interventions, les temps d’immobilisation, la valeur résiduelle, le coût total de possession et la part des opérations réalisées dans les boucles de maintenance, de réparation, de réemploi et de remanufacture.
+
+Les indicateurs retenus dépendent du bien, de l’usage et du contexte industriel. Ils privilégient des données mesurables dans le temps et permettent de comparer la trajectoire d’un même système à différents stades de sa transformation.
 
 ## 8.8 Conditions d’utilisation éventuelle de la marque collective
 
@@ -1113,7 +1158,9 @@ Le caractère systémique de la PPC impose une interconnexion entre les groupes 
 
 ## 9.4 Contributions des experts
 
-L’association peut associer à ses travaux des experts, chercheurs, professionnels, institutions et représentants d’organisations disposant de compétences scientifiques, techniques, méthodologiques, juridiques, économiques, comptables ou industrielles utiles. Leur contribution apporte des connaissances, des analyses et des retours d’expérience aux groupes et comités concernés. L’expertise éclaire la construction du référentiel dans un cadre collectif placé sous la responsabilité de l’association.
+L’association peut associer à ses travaux des experts, chercheurs, professionnels, institutions et représentants d’organisations disposant de compétences scientifiques, techniques, méthodologiques, juridiques, économiques, comptables ou industrielles utiles.
+
+Leur contribution apporte des connaissances, des analyses et des retours d’expérience aux groupes et comités concernés. L’expertise éclaire la construction du référentiel dans un cadre collectif placé sous la responsabilité de l’association.
 
 ## 9.5 Processus de proposition et de consolidation
 
@@ -1121,9 +1168,7 @@ Une proposition d’évolution peut provenir des groupes de travail, des comité
 
 ## 9.6 Relecture scientifique
 
-La relecture scientifique contribue à la robustesse du référentiel. Elle examine les fondements mobilisés, la cohérence des raisonnements, la qualité des données et la distinction entre connaissances établies, résultats expérimentaux et propositions prospectives.
-
-Cette relecture peut mobiliser les chercheurs, experts et compétences nécessaires aux sujets concernés. Elle contribue à rendre les méthodes explicites, discutables et reproductibles lorsque leur nature le permet.
+La relecture scientifique contribue à la robustesse du référentiel. Elle examine les fondements mobilisés, la cohérence des raisonnements, la qualité des données et la distinction entre connaissances établies, résultats expérimentaux et propositions prospectives. Cette relecture peut mobiliser les chercheurs, experts et compétences nécessaires aux sujets concernés. Elle contribue à rendre les méthodes explicites, discutables et reproductibles lorsque leur nature le permet.
 
 ## 9.7 Validation par les instances de l’association
 
