@@ -146,6 +146,7 @@ Ce contenu :
 - reste distinct du corps du Référentiel consulté dans `/referentiel/ppc`.
 
 La page `/referentiel` peut adapter uniquement la mise en forme nécessaire à l'interface, sans réécrire ni reformuler ce contenu.
+Le préambule est maintenu explicitement dans le frontmatter du Markdown courant. La commande d'import le conserve à l'identique et ne tente pas de le réextraire du PDF.
 
 ### 3.3 Sommaire
 
@@ -352,7 +353,7 @@ export du PDF officiel versionné
     ↓
 placement dans le dépôt et import contrôlé
     ↓
-extraction du préambule et génération du Markdown
+exclusion du contenu antérieur au chapitre 1 et génération du Markdown
     ↓
 rendu Web
 ```
@@ -375,7 +376,7 @@ Le fichier contient uniquement :
 
 Tout contenu situé avant le chapitre 1 dans le document source officiel est exclu du Markdown du lecteur Web.
 
-Ce préambule est utilisé séparément pour alimenter la page `/referentiel`.
+Le préambule conservé dans le frontmatter est utilisé séparément pour alimenter la page `/referentiel`.
 
 ### 7.4 Anciennes versions Markdown
 
@@ -441,8 +442,8 @@ Le processus cible est :
 3. export manuel du Google Docs au format PDF officiel versionné ;
 4. ajout de ce PDF dans `public/documents/referentiels/referentiel-ppc/` ;
 5. exécution d'une commande d'import documentée ;
-6. extraction du préambule situé avant le chapitre 1 pour alimenter `/referentiel` ;
-7. conversion en Markdown du contenu **à partir du chapitre 1 inclus** ;
+6. exclusion du contenu situé avant le chapitre 1 ;
+7. conversion en Markdown du contenu **à partir du chapitre 1 inclus**, sans modification du préambule existant ;
 8. écrasement du Markdown courant ;
 9. injection ou maintien des ancres principales stables ;
 10. écriture des métadonnées explicites de version ;
@@ -516,7 +517,7 @@ La conversion doit viser la conservation fidèle, **à partir du chapitre 1 incl
 - des emphases lorsqu'elles sont sémantiquement utiles ;
 - des citations ou autres structures présentes dans la source officielle.
 
-Tout contenu situé avant le chapitre 1 doit être exclu du Markdown du lecteur et traité comme préambule destiné à `/referentiel`.
+Tout contenu situé avant le chapitre 1 doit être exclu du Markdown du lecteur. La commande d'import ignore ce contenu et préserve le préambule déjà enregistré dans le frontmatter pour `/referentiel`.
 
 Les éléments purement liés à la pagination PDF ou à la mise en page bureautique ne doivent pas polluer le Markdown.
 
@@ -660,7 +661,7 @@ La fonctionnalité est considérée comme conforme lorsque :
 - [ ] la canonical du lecteur reste `/referentiel/ppc` quelle que soit l'ancre.
 - [ ] les routes pertinentes figurent dans le sitemap.
 - [ ] un seul Markdown courant est utilisé comme source technique du corps officiel à partir du chapitre 1.
-- [ ] le préambule situé avant le chapitre 1 est exclu du Markdown et alimente `/referentiel`.
+- [ ] le préambule est exclu du corps Markdown, alimente `/referentiel` et reste inchangé lors d'un import.
 - [ ] les anciennes versions Markdown ne sont pas dupliquées dans le repo.
 - [ ] tous les PDFs versionnés restent dans `public/documents/referentiels/referentiel-ppc/`.
 - [ ] les métadonnées de la version courante sont explicites dans le frontmatter.
@@ -676,13 +677,13 @@ La fonctionnalité est considérée comme conforme lorsque :
 
 ## 16. Traitement du préambule avant le chapitre 1
 
-Le contenu situé avant le chapitre 1 dans le document source officiel est traité comme **préambule de présentation** (en ignorant la table des matières).
+Le contenu de présentation situé avant le chapitre 1 dans le document source officiel sert de référence éditoriale au **préambule de présentation**.
 
 Règle de publication :
 
 - ce contenu est **ignoré lors de la génération du Markdown du lecteur** ;
 - le fichier Markdown courant commence au chapitre 1 ;
-- le préambule est extrait séparément lors de l'import ;
+- le préambule existant est maintenu explicitement dans le frontmatter et n'est pas modifié lors de l'import ;
 - il alimente la page `/referentiel` ;
 - il ne crée aucun chapitre supplémentaire dans `/referentiel/ppc` ;
 - il n'apparaît pas dans la table des matières du lecteur ;

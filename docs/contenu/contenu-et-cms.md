@@ -418,7 +418,7 @@ l'architecture publique.
 
 Le corps officiel courant est stocké dans l'unique fichier
 `contenu/referentiels/ppc/courant.md`. Son frontmatter contient le titre, le
-résumé, le préambule structuré extrait avant le chapitre 1, la référence
+résumé, le préambule structuré maintenu explicitement et préservé par l'import, la référence
 explicite à la version courante et l'historique des PDF publiés. Son corps
 commence au chapitre 1 et contient les dix chapitres officiels.
 

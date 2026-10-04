@@ -78,7 +78,6 @@ async function executer(): Promise<void> {
 
   const donnees = schemaReferentiel.parse({
     ...courant.donnees,
-    preambule: conversion.preambule,
     version_courante: idVersion,
     versions: versionExistante ? courant.donnees.versions : [...courant.donnees.versions, nouvelleVersion],
   });

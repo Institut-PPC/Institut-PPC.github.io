@@ -19,6 +19,7 @@ interface FragmentPdf {
   texte: string;
   taille: number;
   x: number;
+  y: number;
   largeur: number;
 }
 
@@ -50,21 +51,22 @@ export async function extrairePagesPdf(cheminPdf: string): Promise<PagePdf[]> {
     const contenu = await page.getTextContent();
     const lignes: LignePdf[] = [];
     let fragments: FragmentPdf[] = [];
-    let separationAvant = true;
+    let lignePrecedente: { y: number; taille: number } | undefined;
 
     const terminerLigne = () => {
       const texte = fragments.map((fragment) => fragment.texte).join('').trim();
       if (texte) {
+        const taille = Math.max(...fragments.map((fragment) => fragment.taille));
+        const y = fragments[0]!.y;
+        const ecartVertical = lignePrecedente ? lignePrecedente.y - y : Number.POSITIVE_INFINITY;
         lignes.push({
           texte,
-          taille: Math.max(...fragments.map((fragment) => fragment.taille)),
+          taille,
           page: numero,
-          separationAvant,
+          separationAvant: ecartVertical > Math.max(lignePrecedente?.taille ?? 0, taille) * 1.8,
           colonnes: colonnesDeLigne(fragments),
         });
-        separationAvant = false;
-      } else {
-        separationAvant = true;
+        lignePrecedente = { y, taille };
       }
       fragments = [];
     };
@@ -73,13 +75,13 @@ export async function extrairePagesPdf(cheminPdf: string): Promise<PagePdf[]> {
       if (!('str' in item)) continue;
       if (item.str === '' && item.hasEOL) {
         if (fragments.length > 0) terminerLigne();
-        separationAvant = true;
         continue;
       }
       fragments.push({
         texte: item.str,
         taille: Math.hypot(item.transform[0], item.transform[1]),
         x: item.transform[4],
+        y: item.transform[5],
         largeur: item.width,
       });
       if (item.hasEOL) terminerLigne();

@@ -1,4 +1,3 @@
-import type { Referentiel } from '../modeles/referentiel.ts';
 import { extrairePagesPdf, type LignePdf, type PagePdf } from './pdf-referentiel.ts';
 
 const TITRE_CHAPITRE_1 = '1. Introduction : comprendre la Pérennité Programmée Circulaire';
@@ -6,11 +5,11 @@ const TITRE_CHAPITRE_1 = '1. Introduction : comprendre la Pérennité Programmé
 interface BlocPdf {
   texte: string;
   taille: number;
+  pageFin: number;
   colonnes?: string[][];
 }
 
 export interface ConversionReferentielPdf {
-  preambule: Referentiel['preambule'];
   corps: string;
   messages: string[];
 }
@@ -40,8 +39,11 @@ function regrouperLignes(lignes: LignePdf[]): BlocPdf[] {
     const liste = /^\d+[.)]\s+|^[•●▪◦]\s*/u.test(ligne.texte);
     const tableau = ligne.colonnes.length >= 2;
     const nouvelleStructure = titre || liste || tableau;
+    const continuationPage = courant
+      && ligne.page !== courant.pageFin
+      && !/[.!?…]["»”’)]*$/u.test(courant.texte);
     const compatible = courant
-      && !ligne.separationAvant
+      && (!ligne.separationAvant || continuationPage)
       && !nouvelleStructure
       && !courant.colonnes
       && courant.taille < 14;
@@ -53,14 +55,15 @@ function regrouperLignes(lignes: LignePdf[]): BlocPdf[] {
 
     if (compatible || titreMultiligne) {
       courant!.texte = reunir(courant!.texte, ligne.texte);
+      courant!.pageFin = ligne.page;
       continue;
     }
 
     terminer();
     if (tableau) {
-      courant = { texte: ligne.texte, taille: ligne.taille, colonnes: [ligne.colonnes] };
+      courant = { texte: ligne.texte, taille: ligne.taille, pageFin: ligne.page, colonnes: [ligne.colonnes] };
     } else {
-      courant = { texte: ligne.texte, taille: ligne.taille };
+      courant = { texte: ligne.texte, taille: ligne.taille, pageFin: ligne.page };
     }
   }
   terminer();
@@ -76,30 +79,6 @@ function convertirTableau(lignes: string[][]): string {
     ligneMarkdown(Array.from({ length: largeur }, () => '---')),
     ...cellules.slice(1).map(ligneMarkdown),
   ].join('\n');
-}
-
-function preambuleDepuisBlocs(blocs: BlocPdf[]): Referentiel['preambule'] {
-  const utiles = blocs.filter(({ texte }) => (
-    !/^Référentiel de la Pérennité Programmée Circulaire$/i.test(texte)
-    && !/^Version\b/i.test(texte)
-  ));
-  const sections: Referentiel['preambule'] = [];
-  let section: Referentiel['preambule'][number] | undefined;
-
-  for (let index = 0; index < utiles.length; index += 1) {
-    const bloc = utiles[index]!;
-    const suivant = utiles[index + 1];
-    const titreProbable = bloc.texte.split(/\s+/).length <= 8
-      && !/[.!?;:]$/.test(bloc.texte)
-      && Boolean(suivant && suivant.texte.split(/\s+/).length > 8);
-    if (titreProbable) {
-      section = { titre: bloc.texte, paragraphes: [] };
-      sections.push(section);
-    } else if (section) {
-      section.paragraphes.push(bloc.texte);
-    }
-  }
-  return sections.filter(({ paragraphes }) => paragraphes.length > 0);
 }
 
 function markdownDepuisBlocs(blocs: BlocPdf[], messages: string[]): string {
@@ -125,19 +104,14 @@ export function convertirPagesPdf(pages: PagePdf[]): ConversionReferentielPdf {
   const occurrences = blocs
     .map((bloc, index) => ({ bloc, index }))
     .filter(({ bloc }) => bloc.texte.startsWith(TITRE_CHAPITRE_1));
-  const debutSommaire = occurrences[0]?.index;
   const debutChapitre = occurrences.find(({ bloc }) => bloc.taille >= 18)?.index;
   if (debutChapitre === undefined) {
     throw new Error('Impossible d’identifier le chapitre 1 dans le PDF officiel. Vérifier que sa couche texte et sa hiérarchie de titres sont exploitables.');
   }
 
-  const finPreambule = debutSommaire === undefined ? debutChapitre : debutSommaire;
-  const preambule = preambuleDepuisBlocs(blocs.slice(0, finPreambule));
-  if (preambule.length === 0) throw new Error('Impossible d’extraire un préambule structuré avant le chapitre 1 du PDF officiel.');
-
   const messages: string[] = [];
   const corps = markdownDepuisBlocs(blocs.slice(debutChapitre), messages);
-  return { preambule, corps, messages: [...new Set(messages)] };
+  return { corps, messages: [...new Set(messages)] };
 }
 
 export async function convertirPdf(cheminPdf: string): Promise<ConversionReferentielPdf> {

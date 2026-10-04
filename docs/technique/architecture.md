@@ -240,7 +240,8 @@ Aucun connecteur AssoConnect, HelloAsso ou autre SI associatif n'est implément�
 
 Le Référentiel PPC constitue l'import officiel implémenté : `pdfjs-dist`
 extrait le texte, les positions et les tailles depuis le PDF officiel publié.
-La logique PPC sépare le préambule, reconstruit les titres, paragraphes, listes
+La logique PPC ignore le contenu antérieur au chapitre 1, préserve le préambule
+existant dans le frontmatter, puis reconstruit les titres, paragraphes, listes
 et tableaux récupérables, contrôle les dix chapitres, applique la table d'ancres
 au rendu et met à jour l'historique. Le même extracteur alimente la comparaison
 textuelle PDF ↔ Markdown, qui émet un warning non bloquant en cas d'écart.
