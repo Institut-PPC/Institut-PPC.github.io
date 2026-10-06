@@ -7,6 +7,9 @@ import remarkReferentielPpc from './src/lib/remark-referentiel-ppc.ts';
 export default defineConfig({
   output: 'static',
   site: 'https://www.perennite-programmee-circulaire.org',
+  redirects: {
+    '/nous-soutenir-adhesion': '/association/nous-soutenir/',
+  },
   integrations: [
     sitemap({
       filter: (page) => {

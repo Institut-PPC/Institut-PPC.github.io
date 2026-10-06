@@ -87,6 +87,27 @@ verifier(
   ![...cheminsPublics].some((chemin) => chemin.startsWith('/marque-collective/referentiels')),
   'Le sitemap ne doit plus contenir les anciennes routes /marque-collective/referentiels.',
 );
+verifier(
+  !cheminsPublics.has('/nous-soutenir-adhesion'),
+  'Le sitemap ne doit pas contenir l’ancienne route /nous-soutenir-adhesion.',
+);
+
+const redirectionNousSoutenir = await lireFichier('nous-soutenir-adhesion/index.html');
+const cibleNousSoutenir = '/association/nous-soutenir/';
+const rafraichissementNousSoutenir = trouverMeta(redirectionNousSoutenir, 'http-equiv', 'refresh');
+verifier(
+  extraireAttribut(rafraichissementNousSoutenir ?? '', 'content') === `0;url=${cibleNousSoutenir}`,
+  `dist/nous-soutenir-adhesion/index.html doit rediriger immédiatement vers ${cibleNousSoutenir}.`,
+);
+verifier(
+  extraireAttribut(trouverLien(redirectionNousSoutenir, 'canonical') ?? '', 'href')
+    === `${origineCanonique}${cibleNousSoutenir}`,
+  'La redirection /nous-soutenir-adhesion doit déclarer sa cible comme URL canonique.',
+);
+verifier(
+  extraireAttribut(trouverMeta(redirectionNousSoutenir, 'name', 'robots') ?? '', 'content') === 'noindex',
+  'La redirection /nous-soutenir-adhesion doit être exclue de l’indexation.',
+);
 
 const robots = await lireFichier('robots.txt');
 verifier(/^User-agent: \*$/m.test(robots), 'robots.txt doit cibler tous les robots.');
