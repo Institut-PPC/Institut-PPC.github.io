@@ -2,13 +2,13 @@
 
 ## Statut
 
-Spécification fonctionnelle du POC du site PPC. Elle décrit les comportements attendus du produit sans figer les détails d'implémentation du CMS ou des schémas techniques.
+Spécification fonctionnelle du site PPC en production. Elle décrit les comportements attendus du produit sans figer les détails d'implémentation du CMS ou des schémas techniques.
 
 Les modèles de contenu normatifs sont détaillés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). Le sitemap et le rôle des pages sont définis dans [`architecture-information.md`](architecture-information.md).
 
 ## Périmètre fonctionnel
 
-| Fonction | Orientation POC |
+| Fonction | Périmètre actuel |
 |---|---|
 | Gestion structurée des contenus via CMS | Requise |
 | Actualités | Requises |
@@ -20,9 +20,9 @@ Les modèles de contenu normatifs sont détaillés dans [`../contenu/contenu-et-
 | Paramètres éditoriaux globaux | Requis sous forme de singleton |
 | Présentation de la marque collective | Requise |
 | Contact | Page statique, sans formulaire runtime |
-| Adhésion à l'association | Lien externe |
-| Dons | Lien externe |
-| Newsletter | CTA externe uniquement |
+| Adhésion à l'association | Pages locales, formulaires HelloAsso par période et liens directs de repli |
+| Dons | Page locale, formulaire HelloAsso et lien direct de repli |
+| Newsletter | CTA externe uniquement lorsqu’une destination est configurée |
 | Présentation de l'association et de sa gouvernance | Requise |
 | Membres fondateurs | Page dédiée requise |
 | Annuaire public complet | Non requis |
@@ -50,7 +50,7 @@ Exigences :
 - tri fondé sur la date de publication ;
 - les anciennes actualités restent accessibles ;
 - les actualités affichées sur la page d'accueil sont les **dernières actualités publiées**, sélectionnées automatiquement par le site ;
-- aucun système de catégories, tags, auteur ou épinglage n'est requis dans le POC.
+- aucun système de catégories, tags, auteur ou épinglage n’est requis dans le périmètre actuel.
 
 ## Événements
 
@@ -63,7 +63,7 @@ Exigences :
 - conservation des événements passés comme archive ;
 - les prochains événements publiés affichés sur la page d'accueil sont sélectionnés automatiquement.
 
-Le POC n'introduit pas de taxonomie détaillée de rôles événementiels sans besoin produit documenté.
+Le site n'introduit pas de taxonomie détaillée de rôles événementiels sans besoin produit documenté.
 
 ## Personnes, organisations et gouvernance
 
@@ -75,7 +75,7 @@ Exigences :
 - les pages institutionnelles de gouvernance doivent dériver leur affichage des rôles des `Personne`, sans recopier les noms dans les pages ;
 - la page Gouvernance ne répète pas sur chaque carte le rôle principal déjà fourni par le titre du bloc ; elle affiche les rôles complémentaires contrôlés, notamment `co-tresorier` (« Co-trésorerie ») et `conseil-administration-representant-vivant` (« Représentation du vivant »), et accepte leur cumul ;
 - un changement de co-présidence, de Conseil d'administration ou d'équipe opérationnelle doit pouvoir être reflété en modifiant les entités `Personne` concernées ;
-- il n'existe pas de page publique générique `/personnes/<slug>` ou `/organisations/<slug>` dans le POC.
+- il n'existe pas de page publique générique `/personnes/<slug>` ou `/organisations/<slug>`.
 
 Pour les personnes exposées comme :
 - co-présidence ;
@@ -83,7 +83,7 @@ Pour les personnes exposées comme :
 - membre du Conseil d'administration ;
 - membre fondateur ;
 
-la photo et le lien LinkedIn sont requis dans le POC. Cette complétude doit pouvoir être contrôlée automatiquement.
+un visuel et le lien LinkedIn sont requis. `placeholder-personne.webp` est accepté comme visuel normal lorsqu’aucune photo n’est disponible. Cette complétude doit pouvoir être contrôlée automatiquement.
 
 ### Membres fondateurs
 
@@ -166,7 +166,7 @@ Règles de sélection des contenus :
 - textes et visuels éditoriaux utiles : modifiables via `Accueil` lorsque leur granularité le justifie ;
 - structure des blocs et composants : code.
 
-Aucun mécanisme d'épinglage des actualités ou événements n'est requis dans le POC.
+Aucun mécanisme d'épinglage des actualités ou événements n'est requis dans le périmètre actuel.
 
 ## Paramètres éditoriaux globaux
 
@@ -194,7 +194,7 @@ Ne pas ajouter de backend ou de service de formulaire externe uniquement pour pr
 
 ## Adhésion, dons et newsletter
 
-Pour le POC :
+Fonctionnement actuel :
 - les routes `/association/adherer` et `/association/faire-un-don` présentent le contexte éditorial avant la transaction ;
 - les formulaires d'adhésion et de don sont intégrés depuis HelloAsso, qui reste seul opérateur du formulaire et du paiement ;
 - chaque widget conserve un lien direct vers le formulaire HelloAsso afin que le parcours reste possible si l'intégration ne charge pas ;
@@ -210,7 +210,7 @@ Le modèle de stockage est hybride :
 - fichiers PPC légers, canoniques et utiles durablement au site : stockage possible dans le dépôt ;
 - médias lourds ou contenus tiers naturellement hébergés ailleurs : URL externe.
 
-Il n'existe pas de collection générique `Document` dans le POC. Un fichier est rattaché au contenu qui lui donne son sens, par exemple :
+Il n'existe pas de collection générique `Document`. Un fichier est rattaché au contenu qui lui donne son sens, par exemple :
 - PDF d'un référentiel → version du `Référentiel` ;
 - livre blanc → `Ressource` ;
 - statuts → page institutionnelle appropriée.
@@ -219,7 +219,7 @@ Le dépôt ne doit pas devenir une GED généraliste.
 
 ## Recherche
 
-Aucune recherche dans le POC.
+Aucun moteur de recherche interne n’est implémenté.
 
 Les contenus et métadonnées doivent être structurés de façon à permettre ultérieurement l'ajout d'une recherche légère sans restructuration majeure.
 
@@ -231,7 +231,7 @@ L'éco-conception constitue une exigence transversale durable. Toute nouvelle fo
 
 ## Analytics
 
-Aucun analytics dans le POC.
+Aucun analytics n’est implémenté.
 
 L'architecture ne doit pas empêcher l'ajout futur d'une solution légère et respectueuse de la vie privée si l'équipe PPC décide que la mesure d'audience est utile.
 
@@ -239,11 +239,11 @@ L'architecture ne doit pas empêcher l'ajout futur d'une solution légère et re
 
 Une prévisualisation pendant l'édition est souhaitable mais non obligatoire au fonctionnement du produit.
 
-Pour le POC avec DecapCMS, la preview sert d'aide éditoriale. Elle n'a pas à reproduire pixel-perfect le rendu Astro et ne doit pas justifier une duplication importante de la logique de rendu ou une infrastructure disproportionnée.
+La preview Decap peut servir d’aide éditoriale. Les previews des collections sont actuellement désactivées dans la configuration ; elles ne sont pas nécessaires au fonctionnement du site. Elle n'a pas à reproduire pixel-perfect le rendu Astro et ne doit pas justifier une duplication importante de la logique de rendu ou une infrastructure disproportionnée.
 
 ## Gestion des erreurs
 
-Prévoir une page 404 personnalisée, sobre et utile, compatible avec GitHub Pages.
+Le site fournit une page 404 personnalisée, sobre et utile, compatible avec GitHub Pages.
 
 Aucune migration exhaustive des redirections Odoo n'est requise.
 

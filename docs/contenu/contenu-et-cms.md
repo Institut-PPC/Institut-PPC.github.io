@@ -2,7 +2,7 @@
 
 ## Statut et rôle de ce document
 
-Cette spécification est la référence normative principale pour la couche **contenu et édition** du POC du site PPC.
+Cette spécification est la référence normative principale pour la couche **contenu et édition** du site PPC en production.
 
 Elle définit :
 - les principes de contenu ;
@@ -12,7 +12,7 @@ Elle définit :
 - les règles de publication ;
 - la politique Markdown et médias ;
 - l'expérience éditoriale attendue ;
-- DecapCMS comme CMS retenu pour le POC et les contraintes qui en découlent.
+- DecapCMS comme interface d’édition actuelle et les contraintes qui en découlent.
 
 Les routes et le rôle des pages sont décrits dans [`../product/architecture-information.md`](../product/architecture-information.md). L'organisation technique des collections, leur chargement par Astro, la validation et le pipeline sont détaillés dans [`../technique/architecture.md`](../technique/architecture.md).
 
@@ -24,14 +24,14 @@ Les routes et le rôle des pages sont décrits dans [`../product/architecture-in
 4. Le CMS est une **interface d'édition**, pas le propriétaire ni la base de données faisant autorité.
 5. Les modèles de contenu sont indépendants du CMS. Si Decap et le modèle canonique PPC entrent en tension, Decap doit s'adapter au modèle, pas l'inverse.
 6. Les mêmes contenus doivent pouvoir être lus et modifiés par Astro, par le CMS ou par des scripts.
-7. Le POC évite la sur-modélisation : aucun champ ou mécanisme n'est ajouté sans besoin identifié.
-8. La V1/POC est uniquement en français.
+7. Le site évite la sur-modélisation : aucun champ ou mécanisme n'est ajouté sans besoin identifié.
+8. Le site PPC est uniquement en français.
 9. Les contenus éditoriaux longs utilisent du **Markdown standard et sobre**, sans MDX accessible aux contributeurs ni page builder.
 10. Une information devient un champ structuré lorsqu'elle a une sémantique fonctionnelle pour le site ; sinon elle reste un contenu éditorial simple.
 
 ## Familles de contenus et de configuration
 
-| Famille | Exemples | Pilotage cible |
+| Famille | Exemples | Pilotage actuel |
 |---|---|---|
 | Contenus récurrents structurés | Actualités, événements, personnes, organisations, ressources | CMS + fichiers versionnés dans Git |
 | Référentiel PPC officiel | PDF officiel, Markdown courant, préambule et historique PDF | Import PDF contrôlé + fichiers versionnés dans Git, hors CMS |
@@ -39,7 +39,7 @@ Les routes et le rôle des pages sont décrits dans [`../product/architecture-in
 | Paramètres éditoriaux globaux | Contact, réseaux sociaux, adhésion, don, newsletter | Singleton éditorial via CMS |
 | Structure du produit | Routes, navigation, composants, logique de rendu, design, configuration Astro | Code uniquement |
 
-Aucune collection générique `Document` ni système générique de blocs de page n'est introduit dans le POC.
+Aucune collection générique `Document` ni système générique de blocs de page n'est introduit.
 
 
 ## Organisation physique et formats canoniques
@@ -160,7 +160,7 @@ Les corps éditoriaux utilisent un sous-ensemble volontairement restreint de Mar
 
 Le `H1` appartient au template Astro et ne doit pas être saisi dans le corps éditorial.
 
-Ne pas introduire dans le POC :
+Ne pas introduire sans besoin produit explicite :
 - HTML brut éditorial ;
 - MDX ;
 - composants ou shortcodes dans le corps ;
@@ -204,7 +204,7 @@ Dans les tableaux ci-dessous, « identifiant stable » désigne la propriété c
 | Contenu | obligatoire | Markdown standard |
 | `publie` | obligatoire | Visibilité publique |
 
-Règles POC :
+Règles du modèle :
 - pas de catégories, tags, auteur ou mécanisme d'épinglage sans besoin démontré ;
 - la homepage affiche automatiquement les dernières actualités publiées ;
 - les anciennes actualités restent accessibles.
@@ -235,7 +235,7 @@ Règles POC :
 | Personnes liées | facultatif, multiple | Références vers `Personne` |
 | `publie` | obligatoire | Visibilité publique |
 
-Règles POC :
+Règles du modèle :
 - le caractère à venir / passé est dérivé des dates, jamais saisi manuellement ;
 - les événements passés restent accessibles comme archive ;
 - la homepage affiche automatiquement les prochains événements publiés ;
@@ -247,7 +247,7 @@ Règles POC :
 
 `Personne` n'est pas la base exhaustive des adhérents de l'Association. Un éventuel SI associatif reste la source complète des données de membres ; le dépôt Web ne contient que les personnes et informations destinées à l'exposition publique du site.
 
-**Exposition publique :** aucune page générique `/personnes/<slug>` dans le POC. Les personnes apparaissent dans les contextes qui les utilisent : gouvernance, membres fondateurs, événements, etc.
+**Exposition publique :** aucune page générique `/personnes/<slug>`. Les personnes apparaissent dans les contextes qui les utilisent : gouvernance, membres fondateurs, événements, etc.
 
 | Champ | Statut | Règle |
 |---|---|---|
@@ -264,7 +264,7 @@ Aucun champ biographique supplémentaire n'est ajouté sans besoin éditorial id
 
 #### Rôles PPC contrôlés
 
-Liste initiale :
+Vocabulaire actuel :
 - `co-presidence`
 - `co-tresorier` — libellé public « Co-trésorerie »
 - `conseil-administration`
@@ -276,17 +276,19 @@ Liste initiale :
 
 Une personne peut porter plusieurs rôles simultanément. Les identifiants sont techniques et stables ; les libellés visibles sont pilotés par le site.
 
-Pour le POC, `roles_ppc` décrit **la situation actuelle**. Aucun historique fonctionnel de mandat ou dates de début/fin n'est modélisé.
+`roles_ppc` décrit **la situation actuelle**. Aucun historique fonctionnel de mandat ou dates de début/fin n'est modélisé.
 
 #### Complétude selon le contexte
 
-Photo et LinkedIn sont requis dans le POC pour les personnes présentées comme :
+Un visuel dans le champ `photo` et un lien LinkedIn sont requis pour les personnes présentées comme :
 - co-présidence ;
 - co-trésorerie ;
 - membre du Conseil d'administration ;
 - membre fondateur.
 
-Ces contraintes doivent être contrôlées par les schémas ou le build lorsque le CMS ne les garantit pas suffisamment.
+Le champ `photo` peut référencer `placeholder-personne.webp` lorsqu’aucune photo n’est disponible. Ce visuel est un fonctionnement normal du site et satisfait l’exigence de complétude.
+
+Ces contraintes sont contrôlées par les schémas et la validation du dépôt.
 
 Sur la page Gouvernance, le titre de chaque bloc fournit le rôle principal. Les cartes ne le répètent pas : elles affichent uniquement les rôles complémentaires explicitement prévus, comme « Représentation du vivant » ou « Co-trésorerie ». Une même carte peut afficher plusieurs de ces libellés lorsque la personne cumule les rôles correspondants.
 
@@ -308,7 +310,7 @@ Les scripts éventuels doivent pouvoir effectuer des mises à jour idempotentes.
 
 **Rôle :** entité canonique réutilisable représentant une organisation utile au contenu public : organisation d'appartenance d'une personne, partenaire, mécène, organisation liée à un événement, etc.
 
-**Exposition publique :** aucune page générique `/organisations/<slug>` ni rubrique d'annuaire organisations / partenaires dans le POC.
+**Exposition publique :** aucune page générique `/organisations/<slug>` ni rubrique d'annuaire organisations / partenaires.
 
 | Champ | Statut | Règle |
 |---|---|---|
@@ -317,15 +319,15 @@ Les scripts éventuels doivent pouvoir effectuer des mises à jour idempotentes.
 | Site Web | facultatif | |
 | Logo | facultatif | |
 | Courte description | facultatif | Seulement lorsqu'elle est utile |
-| Rôles PPC | facultatif, multiple | `partenaire` ou `mecene` uniquement pour le POC |
+| Rôles PPC | facultatif, multiple | `partenaire` ou `mecene` uniquement |
 
-Pour le POC, le vocabulaire contrôlé de `Organisation.roles_ppc` est exactement :
+Le vocabulaire contrôlé actuel de `Organisation.roles_ppc` est exactement :
 - `partenaire` ;
 - `mecene`.
 
 Une `Organisation` peut ne porter aucun rôle PPC. Ce champ décrit uniquement les rôles publics transverses réellement portés par l'Organisation ; il ne représente pas une relation déjà modélisée ailleurs. Une Organisation liée à un Événement est référencée par `Événement.organisations_liees`. L'Organisation d'appartenance ou représentée par une Personne est référencée par `Personne.organisation`.
 
-Aucune autre valeur, notamment `membre`, `utilisateur-marque`, `consortium`, `organisateur-evenement` ou `beneficiaire`, n'est introduite dans le POC sans besoin fonctionnel public explicite. Ce vocabulaire pourra être étendu ultérieurement si un nouveau besoin produit apparaît.
+Aucune autre valeur, notamment `membre`, `utilisateur-marque`, `consortium`, `organisateur-evenement` ou `beneficiaire`, n'est introduite sans besoin fonctionnel public explicite. Ce vocabulaire pourra être étendu ultérieurement si un nouveau besoin produit apparaît.
 
 Une `Personne` peut référencer une `Organisation`.
 
@@ -482,7 +484,7 @@ un intitulé technique et une liste de paragraphes ; le formulaire Decap suit ce
 
 Les pages `adherer.md` et `faire-un-don.md` sont des singletons éditoriaux dédiés. Les URLs HelloAsso y sont stockées avec le formulaire qu'elles décrivent : la page d'adhésion porte une liste de périodes, chacune avec des URLs de widget et de lien direct facultatives mais indissociables, tandis que la page de don porte un formulaire unique. Cette localisation évite de réduire plusieurs périodes d'adhésion à une URL globale ambiguë. Une période sans URLs reste valide et visible sans formulaire.
 
-La page 404 reste dans le code pour le POC, sauf apparition ultérieure d'un besoin réel d'édition via CMS.
+La page 404 reste dans le code, sauf apparition ultérieure d'un besoin réel d'édition via CMS.
 
 ### Singleton `Accueil`
 
@@ -496,7 +498,7 @@ Règles :
 - ressources : liste **manuelle et ordonnée de références vers `Ressource`** ;
 - toute Ressource explicitement sélectionnée doit exister et être publiée.
 
-Aucun mécanisme d'épinglage des actualités ou événements n'est introduit dans le POC.
+Aucun mécanisme d'épinglage des actualités ou événements n'est introduit.
 
 ### Singleton de paramètres éditoriaux globaux
 
@@ -524,7 +526,7 @@ Les URLs propres à une période d'adhésion ou au formulaire présenté sur une
 
 ### Pas de collection générique `Document`
 
-Aucune collection générique `Document` n'existe dans le POC.
+Aucune collection générique `Document` n'existe.
 
 Un fichier est rattaché au contenu qui lui donne son sens :
 - PDF d'un référentiel → version du `Référentiel` ;
@@ -589,7 +591,7 @@ Les images insérées dans le corps Markdown portent leur alternative dans la sy
 
 ## SEO éditorial
 
-Le POC n'introduit aucun champ d'override SEO spécifique.
+Le modèle actuel ne comporte aucun champ d'override SEO spécifique.
 
 Par défaut :
 - titre du contenu → titre SEO ;
@@ -630,15 +632,15 @@ contrôle ensuite le diff, le warning de comparaison PDF et le rendu avant commi
 
 Le contributeur ouvre le singleton connu et modifie uniquement les champs et contenus éditoriaux prévus. Les listes dérivées d'autres collections ne sont pas recopiées dans la page.
 
-## CMS retenu pour le POC : DecapCMS
+## CMS actuel : DecapCMS
 
 ### Positionnement
 
-**DecapCMS est retenu pour le POC.**
+**DecapCMS est l’interface d’édition du site PPC.**
 
 Decap est une interface d'édition au-dessus des fichiers du dépôt Git. Il ne devient ni la source canonique ni le propriétaire des contenus. Le site public doit continuer à fonctionner si Decap est supprimé.
 
-L'interface CMS est servie sous `/admin`, depuis les fichiers dédiés placés dans `public/admin/`.
+L'interface CMS est servie sous `/admin`, depuis la page `src/pages/admin/index.astro` et les fichiers de configuration dédiés placés dans `public/admin/`.
 
 ### Mapping des modèles PPC
 
@@ -676,11 +678,11 @@ Google Docs → PDF officiel versionné → import contrôlé.
 
 ### Rich text
 
-Le POC utilise le widget Decap **`richtext`**, avec modes visuel et Markdown brut, et une barre d'outils limitée au sous-ensemble Markdown PPC : H2-H4, gras, italique, liens, listes, citations et images.
+Le site utilise le widget Decap **`richtext`**, avec modes visuel et Markdown brut, et une barre d'outils limitée au sous-ensemble Markdown PPC : H2-H4, gras, italique, liens, listes, citations et images.
 
 Ne pas exposer les fonctions exclues par le contrat Markdown, notamment H1, H5/H6, blocs de code et constructions propriétaires.
 
-Avant de considérer l'intégration éditoriale comme terminée, exécuter un **smoke test de round-trip** sur un corpus représentatif : ouverture, sauvegarde sans modification, modifications visuelles, bascule visuel ↔ brut, liens, titres, listes, citations, images/alt et caractères français. Le critère est la préservation sémantique et la lisibilité du diff Git, pas l'identité octet par octet.
+Lors d’une évolution du widget richtext ou de sa configuration, exécuter un **smoke test de round-trip** sur un corpus représentatif : ouverture, sauvegarde sans modification, modifications visuelles, bascule visuel ↔ brut, liens, titres, listes, citations, images/alt et caractères français. Le critère est la préservation sémantique et la lisibilité du diff Git, pas l'identité octet par octet.
 
 Le widget `richtext` étant encore susceptible d'évoluer, épingler la version de Decap ayant passé ce smoke test plutôt que dépendre d'une version flottante.
 
@@ -688,15 +690,15 @@ Le widget `richtext` étant encore susceptible d'évoluer, épingler la version 
 
 La configuration médias doit permettre à Decap d'écrire les images dans `contenu/medias/images/...` tout en enregistrant dans les contenus une référence exploitable par Astro. Privilégier la configuration média au niveau collection lorsque cela simplifie les chemins relatifs.
 
-Un **smoke test médias** doit vérifier au démarrage de l'implémentation la chaîne exacte Decap → chemin enregistré → Content Layer → optimisation Astro. Si une friction technique réelle apparaît, elle doit être résolue sans déformer les modèles fonctionnels.
+Lors d’une évolution de la configuration médias, un **smoke test médias** doit vérifier la chaîne exacte Decap → chemin enregistré → Content Layer → optimisation Astro. Si une friction technique réelle apparaît, elle doit être résolue sans déformer les modèles fonctionnels.
 
 ### Preview
 
-La preview Decap est une aide éditoriale légère et non pixel-perfect. Elle peut reproduire utilement : titre, résumé, image, métadonnées importantes, corps Markdown et lien principal lorsqu'il existe.
+Les previews des collections sont actuellement désactivées dans `public/admin/config.yml`. Une éventuelle preview reste une aide éditoriale légère et non pixel-perfect. Elle peut reproduire utilement : titre, résumé, image, métadonnées importantes, corps Markdown et lien principal lorsqu'il existe.
 
 Elle ne doit pas dupliquer le header, footer, navigation, responsive exact, SEO ou toute la logique des données dérivées. Pour l'Accueil, les blocs automatiques peuvent être représentés par des indications simples plutôt que recalculés dans Decap.
 
-La preview est prioritaire pour Actualité, Événement, Ressource, Référentiel et pages institutionnelles. Aucune preview spécifique n'est requise au départ pour Personne, Organisation ou la configuration globale.
+Une éventuelle preview peut concerner Actualité, Événement, Ressource et les pages institutionnelles. Le Référentiel reste hors Decap. Aucune preview spécifique n’est requise pour Personne, Organisation ou la configuration globale.
 
 Une régression mineure de preview ne doit pas bloquer le build public.
 
@@ -710,7 +712,7 @@ Git Gateway n'est pas utilisé.
 
 Decap utilise le mode simple et écrit directement sur `main`. Chaque sauvegarde produit un commit Git et déclenche la CI.
 
-Le POC n'active pas `editorial_workflow`. `publie` reste la seule notion métier de visibilité.
+Decap n'active pas `editorial_workflow`. `publie` reste la seule notion métier de visibilité.
 
 Pour une modification courte d'un contenu déjà publié, le flux normal Decap convient. Pour une refonte longue ou sensible qui doit laisser l'ancienne version publique jusqu'à validation, utiliser exceptionnellement une branche Git et une Pull Request hors du workflow Decap normal plutôt que créer un double modèle de contenu.
 
@@ -729,7 +731,7 @@ Un remplacement Decap → Sveltia devrait porter principalement sur :
 
 et non sur une migration structurante des contenus.
 
-Sveltia n'est pas un composant de l'architecture du POC.
+Sveltia n'est pas un composant de l'architecture actuelle.
 
 ## Détails laissés à l'implémentation
 
@@ -742,7 +744,7 @@ Les décisions structurantes de contenu et de CMS sont fermées. Restent volonta
 - éventuels scripts futurs de synchronisation avec un SI associatif ;
 - limites de taille des médias uniquement si des mesures réelles en démontrent le besoin.
 
-Deux smoke tests font partie de la définition de terminé de l'intégration CMS :
+Deux smoke tests protègent les évolutions de l’intégration CMS :
 1. round-trip `richtext` ↔ Markdown PPC ;
 2. chemin média Decap ↔ `contenu/medias/images/` ↔ pipeline image Astro.
 

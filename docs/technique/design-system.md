@@ -2,28 +2,28 @@
 
 ## Statut
 
-Spécification normative de l'identité visuelle **transitoire** et du design system du POC du site PPC.
+Spécification normative de l'identité visuelle **transitoire** et du design system du site PPC en production.
 
-Cette identité est volontairement simple et réversible : une initiative distincte de conception de l'identité de la **marque PPC** doit pouvoir la remplacer ultérieurement sans restructurer les pages ni les composants. Les valeurs définies ici sont normatives pour le POC tant qu'une nouvelle charte n'a pas été validée.
+Cette identité est volontairement simple et réversible : une initiative distincte de conception de l'identité de la **marque PPC** doit pouvoir la remplacer ultérieurement sans restructurer les pages ni les composants. Les valeurs définies ici sont normatives pour le site actuel tant qu'une nouvelle charte n'a pas été validée.
 
 La présente spécification complète [`architecture.md`](architecture.md) et [`qualite-accessibilite-seo.md`](qualite-accessibilite-seo.md). Les règles produit et de hiérarchie de marque restent définies dans les documents sous `docs/product/`.
 
 ## Références visuelles transitoires
 
-Deux éléments existants servent de point d'ancrage pour le POC :
+Deux éléments existants servent de point d'ancrage pour l’identité actuelle :
 
 - le logo actuel de l'**Association pour la Pérennité Programmée Circulaire**, dessiné par Christian Bruère : `https://www.perennite-programmee-circulaire.com/web/image/website/1/logo/AssoPPC` ;
 - l'illustration **« Révéler la valeur invisible »**, déjà utilisée dans des présentations PPC : `https://www.perennite-programmee-circulaire.com/web/image/1890-9fc31beb/R%C3%A9v%C3%A9ler%20la%20valeur%20invisible.webp`.
 
 Ces références guident l'identité transitoire ; elles ne constituent pas une charte de marque définitive.
 
-Le logo de l'Association ne doit pas être chargé à l'exécution depuis le site Odoo actuel. Lors de l'implémentation, utiliser un asset local approuvé, idéalement le fichier source vectoriel lorsqu'il est disponible, sous `src/assets/identite/`. L'illustration « Révéler la valeur invisible » est une référence stylistique et n'a pas à être intégrée automatiquement au futur site.
+Le site utilise l’asset local `src/assets/identite/logo-association-ppc.webp`. Le logo de l’Association ne doit pas être chargé à l’exécution depuis l’ancien site Odoo ; un fichier source vectoriel approuvé peut remplacer l’asset actuel lorsqu’il est disponible. L’illustration « Révéler la valeur invisible » reste une référence stylistique, sans obligation d’intégration dans les pages.
 
 Le site reste avant tout le site de **PPC**. L'Association est l'organisation qui porte et protège PPC ; son logo actuel ne doit pas conduire à faire de l'Association l'identité conceptuelle englobante de toutes les rubriques.
 
 ## Direction visuelle : « Ingénierie sensible »
 
-La direction retenue pour le POC est **Ingénierie sensible**.
+La direction actuellement utilisée en production est **Ingénierie sensible**.
 
 Principes directeurs :
 
@@ -35,7 +35,7 @@ Principes directeurs :
 
 Positionnement indicatif :
 
-| Axe | Position du POC |
+| Axe | Position actuelle |
 | --- | --- |
 | Institutionnel ↔ militant | plutôt institutionnel, sans froideur |
 | Technique ↔ humain | technique avec une dimension humaine perceptible |
@@ -53,7 +53,7 @@ Formule de référence pour l'implémentation :
 
 ### Choix retenu
 
-Le POC utilise la doctrine suivante :
+Le site utilise la doctrine suivante :
 
 > design tokens centraux + Tailwind CSS pour la composition courante + CSS Astro scopé lorsque cela améliore réellement la lisibilité ou exprime une logique propre au composant.
 
@@ -61,7 +61,7 @@ Tailwind constitue la couche utilitaire de composition de l'interface. Il sert n
 
 Les couleurs, typographies, rayons, espacements de charte et autres décisions de marque restent centralisés dans les design tokens PPC. Les composants et utilitaires Tailwind consomment ces tokens ou leurs mappings plutôt que de répéter des valeurs de marque arbitraires dans les templates.
 
-Le projet n'ajoute pas de framework d'utilitaires maison en parallèle. Tailwind et les composants Astro restent le socle du POC ; aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être introduit uniquement pour accélérer la réalisation de composants simples. Une bibliothèque spécialisée pourra être réévaluée ultérieurement si un besoin réel apparaît.
+Le projet n'ajoute pas de framework d'utilitaires maison en parallèle. Tailwind et les composants Astro restent le socle du site ; aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être introduit uniquement pour accélérer la réalisation de composants simples. Une bibliothèque spécialisée pourra être réévaluée ultérieurement si un besoin réel apparaît.
 
 ### Compatibilité et amélioration progressive
 
@@ -80,7 +80,7 @@ Le rendu peut être moins élaboré sur un navigateur ancien sans devenir inutil
 
 ## Architecture des styles
 
-Organisation cible :
+Organisation actuelle :
 
 ```text
 src/
@@ -88,7 +88,8 @@ src/
 │   └── identite/               # logo et assets d'interface liés à l'identité
 ├── styles/
 │   ├── tokens.css              # fondations et tokens sémantiques centraux
-│   └── global.css              # règles réellement globales
+│   ├── global.css              # règles réellement globales
+│   └── tailwind.css            # intégration Tailwind et exposition des tokens PPC
 └── components/
     └── ...                     # composants Astro et styles scopés lorsque pertinents
 ```
@@ -143,7 +144,7 @@ Les composants consomment en priorité des tokens **sémantiques** (`--color-tex
 
 Une valeur arbitraire reste acceptable lorsqu'elle décrit réellement la structure locale d'un composant, par exemple `aspect-ratio: 3 / 2` ou `grid-template-columns: 2fr 1fr`. Les couleurs hexadécimales, familles typographiques, espacements de charte et rayons ne doivent pas être répétés localement sans justification.
 
-## Tokens du POC
+## Tokens du site
 
 Les noms ci-dessous constituent le vocabulaire de départ. Il peut être étendu lorsqu'un besoin réel apparaît ; ne pas créer de token spéculatif.
 
@@ -180,7 +181,7 @@ Les combinaisons utilisées dans l'interface doivent respecter au minimum les cr
 
 ### Typographie
 
-Aucun fichier de police n'est téléchargé pour le POC.
+Aucun fichier de police n’est téléchargé par le site.
 
 ```css
 :root {
@@ -300,13 +301,13 @@ Ces ratios décrivent le rendu ; ils ne doivent pas dégrader le fichier source 
 
 ### Iconographie
 
-Ne pas installer de grande bibliothèque d'icônes pour le POC. Utiliser de petits SVG locaux cohérents, de préférence au trait et avec `currentColor`, pour les besoins réels comme menu, lien externe ou LinkedIn.
+Ne pas installer de grande bibliothèque d'icônes sans besoin concret. Utiliser de petits SVG locaux cohérents, de préférence au trait et avec `currentColor`, pour les besoins réels comme menu, lien externe ou LinkedIn.
 
 Réévaluer une bibliothèque uniquement si un nombre significatif d'icônes devient réellement nécessaire.
 
 ### Mouvement
 
-Le POC n'utilise pas d'animation au scroll, parallaxe, carrousel automatique ou transition de page décorative.
+Le site n'utilise pas d'animation au scroll, parallaxe, carrousel automatique ou transition de page décorative.
 
 Les transitions CSS courtes peuvent accompagner un retour d'interaction sur couleur, fond ou bordure. Elles ne sont jamais nécessaires à la compréhension et doivent être neutralisées ou réduites lorsque `prefers-reduced-motion` le demande.
 
@@ -316,7 +317,7 @@ Les transitions CSS courtes peuvent accompagner un retour d'interaction sur coul
 
 Le site est **mobile-first**, principalement fluide et intrinsèque. La petite largeur constitue le cas de conception de référence : elle doit être conçue comme une interface à part entière, et non comme une version desktop simplement empilée. Le rendu de base fonctionne sur petite largeur ; les media queries enrichissent la composition lorsque l'espace disponible le permet.
 
-Une largeur de l'ordre de **360 à 390 CSS px** fait partie des vérifications manuelles ordinaires du POC. Cette référence de conception ne remplace pas les exigences d'accessibilité et de reflow applicables aux largeurs plus faibles, au zoom et à l'agrandissement du texte.
+Une largeur de l'ordre de **360 à 390 CSS px** fait partie des vérifications manuelles ordinaires du site. Cette référence de conception ne remplace pas les exigences d'accessibilité et de reflow applicables aux largeurs plus faibles, au zoom et à l'agrandissement du texte.
 
 Grid et Flexbox doivent résoudre les adaptations naturelles avant d'ajouter une media query.
 
@@ -355,7 +356,7 @@ Sur petite largeur, l'ordre logique est : titre, texte, CTA, visuel explicatif. 
 
 ## Socle minimal de composants
 
-La bibliothèque du POC reste volontairement petite. La granularité attendue est :
+La bibliothèque de composants reste volontairement petite. La granularité attendue est :
 
 ### Structure
 
@@ -384,7 +385,7 @@ Un lien reste un élément `<a>` et une action reste un `<button>`, même si leu
 
 Ne pas créer un composant universel `Card` sur-configurable uniquement parce que ces composants partagent une forme rectangulaire. Ils consomment les mêmes tokens mais gardent leur structure métier propre. Factoriser un invariant réel lorsqu'il est identifié par l'implémentation, pas avant.
 
-Le `Hero` répond aux besoins réels du POC : titre, texte, un ou deux CTA et visuel explicatif. Ne pas en faire un page builder ou un composant à de nombreuses variantes spéculatives.
+Le `Hero` répond aux besoins réels du site : titre, texte, un ou deux CTA et visuel explicatif. Ne pas en faire un page builder ou un composant à de nombreuses variantes spéculatives.
 
 Les blocs éditoriaux ordinaires doivent pouvoir rester du HTML sémantique simple ; ne pas créer un composant Astro pour chaque section textuelle.
 
@@ -493,9 +494,9 @@ La future identité de marque PPC doit pouvoir modifier principalement :
 
 Ces évolutions doivent être concentrées dans `tokens.css`, `global.css`, les assets d'identité et, lorsque le langage graphique change structurellement, un petit nombre de primitives/composants. Une refonte de charte ne doit pas nécessiter de parcourir toutes les pages pour remplacer des valeurs de couleur, de police, de rayon ou d'espacement codées en dur.
 
-## Critères d'acceptation lors de l'implémentation
+## Critères de conformité du design system
 
-Avant de considérer le front du POC conforme à cette spécification :
+Avant de considérer le front du site conforme à cette spécification :
 
 - `tokens.css` et `global.css` existent et respectent leurs responsabilités ;
 - Tailwind est utilisé comme couche utilitaire de composition sans devenir la source de vérité de la charte ;
@@ -511,4 +512,4 @@ Avant de considérer le front du POC conforme à cette spécification :
 - `prefers-reduced-motion` est respecté ;
 - le site reste compréhensible sans animation et sans hover ;
 - le logo utilisé par le site est un asset local, pas un hotlink vers l'ancien site ;
-- aucune police distante ni script d'interface tiers n'est nécessaire au rendu de la charte du POC.
+- aucune police distante ni script d'interface tiers n'est nécessaire au rendu de la charte actuelle.

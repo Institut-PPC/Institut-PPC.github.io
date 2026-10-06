@@ -335,3 +335,11 @@ Le journal des décisions est rédigé en français.
 **Décision :** Rendre publique la démarche d'éco-conception du site et évaluer toute nouvelle fonctionnalité ou dépendance selon sa valeur fonctionnelle, son coût en ressources, son poids, ses dépendances techniques, sa compatibilité dans le temps et son impact sur la maintenabilité. Utiliser les mesures externes comme des indicateurs datés, jamais comme des certifications.
 
 **Pourquoi :** Empêcher que les évolutions successives ne dégradent silencieusement la sobriété, la compatibilité, la maintenabilité, la réversibilité et la transmissibilité recherchées pour le site PPC.
+
+### 2026-10-06 — Site PPC en production et documentation de l’état courant
+
+**Statut :** Acceptée
+
+**Décision :** Considérer désormais le site PPC comme un site en production. La documentation normative décrit l’état courant du produit et ses choix validés, sans cadrage POC ni notion générique de V1 du site. Les anciennes hypothèses POC sont considérées comme des choix validés par défaut, sauf remise en question explicite future. Les décisions passées liées au POC restent conservées comme historique, sans réécriture rétroactive. L’identité visuelle actuelle « Ingénierie sensible », utilisée en production, reste transitoire et réversible en attendant une éventuelle identité de marque PPC définitive.
+
+**Pourquoi :** Donner aux mainteneurs et aux agents un contexte fidèle au site exploité, retirer les travaux déjà réalisés des perspectives et conserver la traçabilité des arbitrages passés sans les confondre avec le périmètre actuel.

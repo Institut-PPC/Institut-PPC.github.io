@@ -2,11 +2,9 @@
 
 ## Statut
 
-Spécification normative de l'architecture de l'information du POC du site PPC.
+Spécification normative de l'architecture de l'information du site PPC en production.
 
-Ce document formalise les arbitrages validés lors de la phase de conception de l'architecture de l'information. Il distingue explicitement :
-- les **principes et décisions durables**, qui forment le socle à préserver sauf raison structurante ;
-- les **hypothèses propres au POC**, qui doivent être testées et peuvent évoluer sans remettre en cause l'ensemble de l'architecture.
+Ce document décrit l’architecture actuelle du site : sitemap, navigation, rôle des pages et parcours principaux. Ces choix sont validés. Leur évolution doit répondre à un besoin explicite tout en préservant les principes structurants.
 
 Il ne définit pas de règles métier de la Pérennité Programmée Circulaire, de la marque collective, du consortium ou de l'association qui ne seraient pas déjà documentées ailleurs.
 
@@ -20,7 +18,7 @@ Il doit permettre une découverte progressive :
 
 L'Association pour la Pérennité Programmée Circulaire doit être clairement identifiable comme l'organisation qui porte, protège et développe PPC et sa marque collective, mais elle reste un univers du site parmi d'autres.
 
-## Sitemap du POC
+## Sitemap actuel
 
 ```text
 /
@@ -58,9 +56,9 @@ L'Association pour la Pérennité Programmée Circulaire doit être clairement i
 └── /404
 ```
 
-### Éléments volontairement absents du POC
+### Éléments hors du périmètre actuel
 
-Le POC ne comporte pas :
+Le site ne comporte pas :
 - de rubrique autonome « Consortium » ;
 - de rubrique « Partenaires / Écosystème » ;
 - de parcours autonome « Adopter la PPC » ;
@@ -73,7 +71,7 @@ L'organisation des contenus et les URL ne doivent toutefois pas empêcher l'ajou
 
 ### Navigation principale de l’en-tête
 
-Ordre retenu pour le POC :
+Ordre actuel :
 
 1. **Comprendre la PPC**
 2. **Référentiel**
@@ -91,7 +89,7 @@ Le logo renvoie à l'accueil.
 
 ### Sous-menus
 
-Les sous-menus sont présents dès le POC lorsqu'une rubrique possède de vraies pages filles.
+Les sous-menus sont présents lorsqu'une rubrique possède de vraies pages filles.
 
 **Association** :
 - Présentation ;
@@ -131,7 +129,7 @@ L'accueil n'est ni un portail exhaustif ni une version condensée de toutes les 
 
 Grande page pédagogique et narrative destinée à expliquer PPC de manière progressive.
 
-La progression éditoriale du POC présente la démarche, le changement de logique,
+La progression éditoriale présente la démarche, le changement de logique,
 les quatre piliers indissociables, leur articulation, les effets recherchés, puis
 la traduction de la démarche en référentiel et le rôle de la marque collective
 et de l'Association. Les piliers apparaissent immédiatement après le changement
@@ -175,7 +173,7 @@ hiérarchique.
 
 Constituer le centre d'approfondissement PPC.
 
-Cette page peut agréger des ressources internes et externes, par exemple le Grand Cours Sator, le livre de Christian Bruère, des vidéos, des publications ou des travaux PPC. Le POC utilise une organisation simple par grands types, sans moteur de recherche ni filtres avancés.
+Cette page peut agréger des ressources internes et externes, par exemple le Grand Cours Sator, le livre de Christian Bruère, des vidéos, des publications ou des travaux PPC. Le site utilise une organisation simple par grands types, sans moteur de recherche ni filtres avancés.
 
 Le modèle est hybride :
 - certaines ressources renvoient directement vers une URL externe ou un fichier local ;
@@ -220,7 +218,7 @@ Cette page ne doit pas transformer l'Association en identité englobante du site
 
 Présenter la gouvernance actuelle de l'Association.
 
-Pour le POC :
+Présentation actuelle :
 - co-présidence et Conseil d'administration avec **photo, nom, rôle et lien LinkedIn** ;
 - ces listes sont dérivées des entités `Personne` et de leurs rôles PPC contrôlés, sans duplication des noms dans le contenu de la page ;
 - les représentants du vivant et autres rôles de gouvernance sont également dérivés des rôles lorsque leur présentation est requise.
@@ -228,7 +226,7 @@ Pour le POC :
 - les cartes ne répètent pas le rôle principal indiqué par le titre du bloc et peuvent afficher plusieurs rôles complémentaires ;
 - l'équipe opérationnelle est présentée avec photo, nom et lien LinkedIn, à partir du rôle `equipe-operationnelle` des entités `Personne`.
 
-Les personnes portant le rôle `co-tresorier` disposent, comme les autres rôles de gouvernance concernés, d'une photo et d'un lien LinkedIn.
+Les personnes portant le rôle `co-tresorier` disposent, comme les autres rôles de gouvernance concernés, d’un visuel dans le champ `photo` et d’un lien LinkedIn. `placeholder-personne.webp` est utilisé normalement lorsqu’aucune photo n’est disponible ; cette règle s’applique également aux membres fondateurs.
 
 Les règles de gouvernance elles-mêmes ne sont pas définies par le site : le contenu publié doit refléter les sources institutionnelles de l'Association.
 
@@ -244,7 +242,7 @@ La page `/association` présente synthétiquement le rôle du collège des membr
 
 Expliquer les possibilités de soutien à l'Association et orienter vers les pages dédiées à l'adhésion et au don.
 
-Le site ne réimplémente pas dans le POC les transactions gérées par ces services externes.
+Le site ne réimplémente pas les transactions gérées par ces services externes.
 
 ### `/association/adherer` — Adhérer
 
@@ -278,7 +276,7 @@ La page fournit :
 
 ### `/mentions-legales` — Mentions légales
 
-Porter les mentions légales du site. Le texte juridique final peut être complété avant la production ; la route fait partie de l'architecture du POC.
+Porter les mentions légales publiées du site, notamment les informations sur l’éditeur et l’hébergement, les droits applicables et le lien vers les statuts de l’Association.
 
 ### `/politique-de-confidentialite` — Politique de confidentialité
 
@@ -286,7 +284,7 @@ Expliquer de manière claire les traitements de données applicables au site. Le
 
 ### `/accessibilite` — Accessibilité
 
-Présenter les informations publiques relatives à l'accessibilité du site et, lorsque cela sera pertinent, l'état de conformité ou les moyens de signaler une difficulté. Le POC ne prétend pas à une certification formelle tant qu'elle n'a pas été réalisée.
+Présenter les informations publiques relatives à l'accessibilité du site et, lorsque cela sera pertinent, l'état de conformité ou les moyens de signaler une difficulté. Le site ne prétend pas à une certification formelle tant qu'elle n'a pas été réalisée.
 
 ### `/eco-conception` — Éco-conception
 
@@ -300,7 +298,7 @@ Fournir une sortie d'erreur sobre et utile, permettant de revenir vers des pages
 
 ## Structure fonctionnelle de la page d'accueil
 
-La structure suivante est l'**hypothèse fonctionnelle retenue pour le POC**. Le rôle général de la page d'accueil est durable ; l'ordre, la présence et la forme exacte de ses blocs ne le sont pas.
+La structure suivante décrit les **blocs actuels de la page d’accueil**. Le rôle général de la page est durable ; sa composition peut évoluer selon les besoins éditoriaux validés.
 
 1. **Hero**
    - proposition PPC courte ;
@@ -335,9 +333,9 @@ La structure suivante est l'**hypothèse fonctionnelle retenue pour le POC**. Le
 8. **Association / soutien**
    - présence plus discrète en bas de page.
 
-L'implémentation doit permettre de déplacer, ajouter ou supprimer ces blocs sans refonte structurelle après les tests du POC.
+Les blocs restent des composants définis dans le code, afin de permettre des évolutions de composition sans refonte structurelle.
 
-La homepage n'est pas un page builder : sa structure et ses composants restent dans le code. Les contenus éditoriaux utiles sont pilotés par le singleton `Accueil`. Les Actualités et Événements ne portent aucun champ d'épinglage dans le POC ; les Ressources ne portent aucun champ `mise_en_avant_accueil`.
+La homepage n'est pas un page builder : sa structure et ses composants restent dans le code. Les contenus éditoriaux utiles sont pilotés par le singleton `Accueil`. Les Actualités et Événements ne portent aucun champ d'épinglage ; les Ressources ne portent aucun champ `mise_en_avant_accueil`.
 
 ## Parcours utilisateurs principaux
 
@@ -370,10 +368,10 @@ Une compréhension suffisante pour reformuler l'idée générale de PPC et ident
 - poursuite vers Marque collective si l'utilisateur cherche la formalisation du concept ;
 - poursuite vers Travailler avec nous ou Contact si une intention de contribution apparaît.
 
-**Hypothèses POC à observer**
-- efficacité du couple Accueil → Comprendre la PPC ;
-- utilité et discrétion de la navigation par ancres ;
-- capacité des éléments visuels à expliquer sans alourdir la page.
+**Choix actuels du parcours**
+- l’accueil oriente prioritairement vers Comprendre la PPC ;
+- les ancres offrent un accès direct aux sections pédagogiques ;
+- les visuels servent l’explication et restent proportionnés au contenu.
 
 ### P2 — Entreprise ou organisation souhaitant contribuer
 
@@ -403,10 +401,10 @@ Une prise de contact qualifiée, sans prétendre automatiser un processus de can
 - entrée depuis une actualité, un événement ou une ressource ;
 - passage par le Référentiel si l'intérêt porte d'abord sur le cadre formel.
 
-**Hypothèses POC à observer**
-- pertinence de garder Travailler avec nous hors navigation principale ;
-- capacité de la page à qualifier suffisamment l'intention avant le contact ;
-- compréhension du lien avec les travaux collectifs en cours sans créer artificiellement une rubrique Consortium.
+**Choix actuels du parcours**
+- Travailler avec nous reste hors navigation principale et accessible par les CTA et liens contextuels ;
+- la page apporte le contexte de collaboration avant la prise de contact ;
+- les travaux collectifs sont présentés sans rubrique Consortium autonome.
 
 ### P3 — Chercher le cadre formel de PPC
 
@@ -435,9 +433,9 @@ Accès au document ou à l'information normative recherchée, avec un contexte s
 - accès direct au lecteur depuis Ressources ou une autre page ;
 - contact si l'utilisateur a une question sur la marque ou les référentiels.
 
-**Hypothèses POC à observer**
-- lisibilité du lecteur Web à chapitre unique côté client et du repli linéaire sans JavaScript ;
-- clarté de la distinction entre ressources d'approfondissement et documents normatifs.
+**Choix actuels du parcours**
+- le lecteur Web affiche un chapitre à la fois avec JavaScript et conserve une lecture linéaire sans JavaScript ;
+- les documents normatifs sont séparés des ressources d’approfondissement.
 
 ### P4 — Suivre l'activité de PPC
 
@@ -467,9 +465,9 @@ Compréhension de l'activité récente ou passée de PPC et possibilité d'appro
 - arrivée depuis un réseau social ou un lien externe directement sur le détail ;
 - consultation d'un événement passé comme archive de l'activité.
 
-**Hypothèses POC à observer**
-- lisibilité d'une page centrale unique regroupant deux types de contenus distincts ;
-- lisibilité de la remontée automatique des dernières actualités publiées et des prochains événements publiés sur l'accueil.
+**Choix actuels du parcours**
+- un hub unique regroupe les actualités et les événements en conservant leur distinction ;
+- l’accueil présente automatiquement les dernières actualités publiées et les prochains événements publiés.
 
 ### P5 — Connaître ou soutenir l'Association
 
@@ -506,10 +504,10 @@ Accès à l'information institutionnelle recherchée ou à la page locale de sou
 - accès direct à la gouvernance depuis un lien institutionnel ;
 - passage par Contact pour une question ne relevant ni de l'adhésion ni du don.
 
-**Hypothèses POC à observer**
-- absence de CTA Adhérer / faire un don dans l’en-tête ;
-- lisibilité de l'articulation entre Association, Gouvernance et page dédiée des membres fondateurs ;
-- équilibre entre visibilité de l'Association et primauté de PPC dans l'identité globale du site.
+**Choix actuels du parcours**
+- l’en-tête ne comporte pas de CTA Adhérer / faire un don ;
+- Association, Gouvernance et Membres fondateurs disposent de pages distinctes reliées entre elles ;
+- l’Association est identifiable tout en préservant PPC comme identité principale du site.
 
 ## Règles d'architecture durables
 
@@ -526,13 +524,13 @@ Les règles suivantes doivent être considérées comme structurantes :
 9. **Préserver l'évolutivité sans sur-concevoir.** L'architecture doit permettre d'ajouter plus tard des parcours ou rubriques justifiés, sans implémenter aujourd'hui des structures spéculatives.
 10. **Sobriété, accessibilité, performance et pérennité restent des contraintes transversales.** Les choix de navigation, de médias et d'interaction doivent respecter les spécifications techniques et qualité du dépôt.
 
-## Hypothèses spécifiques au POC à tester
+## Choix actuels de navigation et de composition
 
-Les éléments suivants sont validés comme hypothèses de mise en œuvre du POC, mais doivent pouvoir être réévalués à partir des retours de la co-présidence et des premiers tests :
+Les choix suivants s’appliquent au site en production :
 
 - présence de **Référentiel** au premier niveau du menu ;
 - présence de **Ressources** au premier niveau du menu ;
-- utilisation de sous-menus dès le POC ;
+- utilisation de sous-menus pour les rubriques possédant des pages filles ;
 - absence de **Adhérer / faire un don** dans l’en-tête ;
 - maintien de **Travailler avec nous** hors navigation principale ;
 - navigation interne par ancres de **Comprendre la PPC** ;
@@ -540,13 +538,13 @@ Les éléments suivants sont validés comme hypothèses de mise en œuvre du POC
 - absence d'une page autonome **Consortium** ;
 - absence d'une page **Partenaires / Écosystème**.
 
-Faire évoluer un de ces éléments à la suite d'un test ne constitue pas, à lui seul, une remise en cause du principe directeur ou des règles d'architecture durables.
+Ces choix peuvent évoluer à la suite d’un besoin produit ou d’un retour d’usage explicite, dans le respect du principe directeur et des règles d’architecture durables.
 
-## Frontière avec les phases suivantes
+## Articulation avec les autres spécifications
 
 Cette spécification fixe l'architecture de l'information. Les modèles de contenu et le CMS retenu sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md), leur conception technique dans [`../technique/architecture.md`](../technique/architecture.md), et le design system dans [`../technique/design-system.md`](../technique/design-system.md).
 
 Ce document d'architecture de l'information ne redéfinit donc pas les chemins physiques, formats de fichiers, la configuration Decap ou les règles visuelles détaillées, désormais normés ailleurs. Restent hors de son périmètre :
-- le contenu éditorial final de chaque page ;
+- la rédaction éditoriale de chaque page ;
 - les mécanismes métier futurs d'attribution, de candidature, de contrôle ou d'audit de la marque collective ;
 - un éventuel parcours futur « Adopter la PPC ».

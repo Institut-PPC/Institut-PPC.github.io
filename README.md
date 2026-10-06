@@ -2,30 +2,30 @@
 
 Site public de la **Pérennité Programmée Circulaire (PPC)**.
 
-Ce dépôt a vocation à contenir la source de vérité complète et maintenable du site : code, configuration, contenus structurés, ressources pertinentes, spécifications, documentation d'exploitation, tests et historique des décisions.
+Ce dépôt contient la source de vérité complète et maintenable du site : code, configuration, contenus structurés, ressources pertinentes, spécifications, documentation d'exploitation, tests et historique des décisions.
 
 ## Langue
 
-La documentation du projet et les contenus de la V1/POC sont rédigés en **français**. Les termes techniques imposés par les outils ou langages peuvent rester en anglais lorsque cela améliore la clarté.
+La documentation du projet et les contenus du site PPC sont rédigés en **français**. Les termes techniques imposés par les outils ou langages peuvent rester en anglais lorsque cela améliore la clarté.
 
 ## État du projet
 
-Le projet est actuellement au stade **POC front fonctionnel**. Les spécifications et la conception technique détaillée sont terminées. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements et ressources publiés. Le Référentiel PPC dispose de sa rubrique autonome, de sa version Web officielle et d'un workflow d'import PDF contrôlé.
+Le site PPC est **en production**, publié sur GitHub Pages à l’adresse `https://www.perennite-programmee-circulaire.org/`. Les spécifications décrivent son périmètre et ses choix actuels. Le socle Astro, l’ensemble des modèles canoniques récurrents, les fondations CSS du design system avec Tailwind, le shell commun et les parcours éditoriaux principaux sont implémentés. Les listings et routes dynamiques prennent en charge les actualités, événements et ressources publiés. Le Référentiel PPC dispose de sa rubrique autonome, de sa version Web officielle et d'un workflow d'import PDF contrôlé.
 
-L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. Le build et le déploiement GitHub Pages par GitHub Actions sont en place pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Decap CMS est intégré pour l’édition locale des contenus canoniques. Le dépôt sépare sous `netlify/` le projet OAuth de production et le projet de redirection permanente des domaines secondaires ; aucun des deux ne construit ni n'héberge le site Astro. Les opérations manuelles sont documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) et [`docs/exploitation/redirects-netlify.md`](docs/exploitation/redirects-netlify.md). Les textes présents dans le POC démontrent la structure et l’expérience du site ; ils ne constituent pas la rédaction éditoriale définitive.
+L’accueil, les pages éditoriales fixes remplies et la configuration éditoriale globale sont désormais alimentés depuis leurs singletons canoniques sous `contenu/` via le Content Layer Astro. La validation transverse couvre notamment les relations entre Personnes, Organisations et Événements. GitHub Actions valide et construit le site pour les push sur `main`, les Pull Requests vers `main`, les lancements manuels et le rebuild quotidien à 01:00 `Europe/Paris`. Les exécutions sur Pull Request ne déploient pas ; les autres publient sur GitHub Pages après validation. Decap CMS permet l’édition des contenus canoniques en production via le backend GitHub et le service OAuth, ainsi qu’en local via le proxy de développement. Le dépôt sépare sous `netlify/` le projet OAuth de production et le projet de redirection permanente des domaines secondaires ; aucun des deux ne construit ni n'héberge le site Astro. Les opérations manuelles sont documentées dans [`docs/exploitation/oauth-decap-netlify.md`](docs/exploitation/oauth-decap-netlify.md) et [`docs/exploitation/redirects-netlify.md`](docs/exploitation/redirects-netlify.md).
 
-Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pour pouvoir, s'il est validé, être complété puis mis en production plutôt que reconstruit.
+L’identité visuelle actuelle « Ingénierie sensible » est utilisée en production et reste transitoire et réversible, en attendant une éventuelle charte de marque PPC définitive.
 
-## Socle prévu
+## Socle actuel
 
 - Astro
 - GitHub
 - GitHub Pages
 - GitHub Actions pour validation, build et déploiement
 - contenus structurés versionnés dans Git
-- DecapCMS comme CMS du POC, avec contenus indépendants du CMS, backend GitHub direct et OAuth via deux Netlify Functions minimales
+- DecapCMS comme interface d’édition du site, avec contenus indépendants du CMS, backend GitHub direct et OAuth via deux Netlify Functions minimales
 - deux projets Netlify techniques et indépendants : OAuth Decap et redirection des domaines secondaires
-- V1/POC uniquement en français
+- site PPC uniquement en français
 - architecture statique, sobre, accessible et durable
 - design tokens PPC centraux, Tailwind CSS pour la composition courante et CSS Astro scopé lorsque pertinent
 - identité visuelle transitoire « Ingénierie sensible », conçue pour être remplacée facilement par la future identité de marque PPC
@@ -35,7 +35,7 @@ Le POC n'est pas jetable : il doit être suffisamment proche d'une V1 finale pou
 
 Commencer par [`AGENTS.md`](AGENTS.md).
 
-Les spécifications normatives se trouvent sous `docs/`. Le design system du POC est décrit dans [`docs/technique/design-system.md`](docs/technique/design-system.md). L'historique des décisions est volontairement séparé dans `docs/decisions/`.
+Les spécifications normatives se trouvent sous `docs/`. Le design system actuel est décrit dans [`docs/technique/design-system.md`](docs/technique/design-system.md). L'historique des décisions est volontairement séparé dans `docs/decisions/`.
 
 ## Front actuellement implémenté
 
@@ -43,9 +43,9 @@ Tailwind CSS 4 est compilé par `@tailwindcss/vite` dans la configuration Astro.
 
 Le Header utilise un panneau modal natif en dessous de **80 rem**, tablette comprise. Ce seuil local laisse la place aux cinq rubriques et au CTA sur une ligne en mode desktop. Une seule navigation est déplacée entre le panneau et le Header par `src/components/navigation.ts`, sans framework ni hydratation. Le panneau gère le focus, le défilement et le retour au bouton Menu ; Échap ferme d’abord une sous-rubrique ouverte, puis le panneau. Sur desktop, les sous-menus se ferment aussi au clic extérieur ou lorsque le focus les quitte. Sans JavaScript ou sans support de `showModal`, un menu HTML `details` donne accès aux mêmes liens.
 
-Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment un parcours démontrable. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources, uniquement lorsque leur modèle demande une page interne. Le Référentiel PPC est publié sous `/referentiel` et `/referentiel/ppc` ; son corps officiel n'est pas éditable dans Decap.
+Les routes fixes proposent désormais une composition éditoriale responsive conforme à l’architecture d’information. La page d’accueil, les pages pédagogiques et institutionnelles, les états vides et la page 404 forment les parcours publics du site. Les routes dynamiques sont générées uniquement pour les contenus publiés et, pour les ressources, uniquement lorsque leur modèle demande une page interne. Le Référentiel PPC est publié sous `/referentiel` et `/referentiel/ppc` ; son corps officiel n'est pas éditable dans Decap.
 
-Le Header utilise temporairement un asset local du logo actuel de l’Association, en attendant le travail sur l’identité de marque PPC. Les coordonnées publiques, liens d’adhésion et de don, mentions juridiques complètes et profils institutionnels réels restent volontairement absents tant que leurs données validées ne sont pas disponibles dans le dépôt.
+Le Header utilise temporairement un asset local du logo actuel de l’Association, en attendant le travail sur l’identité de marque PPC. Les coordonnées publiques, les formulaires HelloAsso, les mentions légales et les profils institutionnels sont alimentés par les contenus canoniques. Une absence de donnée est rendue explicitement sans information inventée ; `placeholder-personne.webp` est le visuel normal lorsqu’aucune photo de personne n’est disponible.
 
 ## Développement
 

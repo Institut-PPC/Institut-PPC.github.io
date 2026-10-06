@@ -2,9 +2,9 @@
 
 ## Statut
 
-Spécification normative de l'architecture technique du POC du site PPC.
+Spécification normative de l'architecture technique du site PPC en production.
 
-La conception technique détaillée est stabilisée. Les choix laissés à l'implémentation concernent la factorisation interne du code et le choix précis de certains outils de test, pas l'architecture des contenus, le workflow éditorial, l'authentification, la validation ou le déploiement.
+L’architecture technique est implémentée. Les choix laissés à l'implémentation concernent la factorisation interne du code et le choix précis de certains outils de test, pas l'architecture des contenus, le workflow éditorial, l'authentification, la validation ou le déploiement.
 
 Les modèles fonctionnels de contenu sont définis dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). L'identité visuelle, les design tokens, l'architecture CSS et les primitives de rendu sont normés dans [`design-system.md`](design-system.md).
 
@@ -45,7 +45,7 @@ Sur la page d'adhésion, les périodes sont associées à des onglets et panneau
 
 ## Structure physique du dépôt
 
-Organisation cible :
+Organisation actuelle :
 
 ```text
 /
@@ -71,7 +71,8 @@ Organisation cible :
 │   ├── components/
 │   ├── styles/
 │   │   ├── tokens.css
-│   │   └── global.css
+│   │   ├── global.css
+│   │   └── tailwind.css
 │   ├── assets/
 │   │   └── identite/
 │   └── ... schémas et validation
@@ -87,7 +88,7 @@ Organisation cible :
 │   └── redirects/                # redirection 301 des domaines secondaires
 │
 ├── scripts/                     # validation et automatisations ponctuelles
-├── tests/                       # lorsque des fixtures/tests hors src le justifient
+├── tests/                       # tests et fixtures de validation
 └── docs/                        # spécifications et exploitation
 ```
 
@@ -124,7 +125,7 @@ Déclarer dans `src/content.config.ts` une collection logique par modèle :
 - `accueil` ;
 - `configurationSite`.
 
-Utiliser les loaders officiels Astro, principalement `glob()`. Aucun loader personnalisé n'est introduit dans le POC.
+Utiliser les loaders officiels Astro, principalement `glob()`. Aucun loader personnalisé n'est introduit.
 
 Les collections récurrentes utilisent `glob()` sur leur dossier. Les singletons YAML `accueil.yaml` et `site.yaml` utilisent également un `glob()` ciblé sur leur fichier unique, plutôt que `file()`, car chaque fichier représente une seule entrée.
 
@@ -208,7 +209,7 @@ Sur GitHub Pages, ces redirections sont générées statiquement par Astro ; ell
 
 Les images éditoriales locales vivent dans `contenu/medias/images/`. Les champs de contenu référencent le fichier source ; Astro est responsable de leur import, de leur validation et de leur optimisation au build.
 
-L'intégration initiale doit effectuer un smoke test de la chaîne :
+Les évolutions de la configuration médias doivent être vérifiées par un smoke test de la chaîne :
 
 ```text
 Decap → chemin média enregistré → Content Layer → image Astro optimisée
@@ -236,7 +237,7 @@ Tout script écrivant dans `contenu/` doit :
 
 Les scripts modifient le **working tree** uniquement. Ils ne créent pas automatiquement de commit, ne poussent pas sur GitHub et ne fusionnent pas de branche. L'opérateur examine le `git diff` avant commit.
 
-Aucun connecteur AssoConnect, HelloAsso ou autre SI associatif n'est implémenté dans le POC.
+Aucun connecteur de synchronisation avec AssoConnect, HelloAsso ou un autre SI associatif n’est implémenté. L’intégration publique des formulaires HelloAsso décrite plus haut ne constitue pas une synchronisation de données.
 
 Le Référentiel PPC constitue l'import officiel implémenté : `pdfjs-dist`
 extrait le texte, les positions et les tailles depuis le PDF officiel publié.
@@ -254,15 +255,15 @@ Decap lit et modifie les mêmes fichiers canoniques que le site. Sa configuratio
 
 L'interface est disponible sous `/admin` et sa configuration mappe directement les collections et singletons décrits dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md).
 
-Le backend cible est `github`, branche `main`, en mode simple. Les utilisateurs Decap doivent posséder les droits GitHub leur permettant de pousser sur le dépôt.
+Le backend configuré est `github`, branche `main`, en mode simple. Les utilisateurs Decap doivent posséder les droits GitHub leur permettant de pousser sur le dépôt.
 
 ## Authentification du CMS
 
-L'architecture cible est :
+L’architecture actuelle est :
 
 **DecapCMS + backend GitHub direct + deux Netlify Functions OAuth minimales**.
 
-Le dépôt étant public, le flux OAuth demande uniquement le scope GitHub nécessaire aux repositories publics, cible `public_repo`, sans scope général `repo` pour les dépôts privés.
+Le dépôt étant public, le flux OAuth demande uniquement le scope GitHub nécessaire aux repositories publics, `public_repo`, sans scope général `repo` pour les dépôts privés.
 
 ### Rôle des fonctions
 
@@ -319,7 +320,7 @@ Decap écrit directement sur `main` en mode simple :
 
 Chaque sauvegarde déclenche donc la CI, y compris pour `publie: false`.
 
-Le POC n'active pas `editorial_workflow`. La protection de branche ne doit pas imposer une Pull Request d'une manière qui empêcherait le fonctionnement normal de Decap pour les contributeurs autorisés.
+Decap n'active pas `editorial_workflow`. La protection de branche ne doit pas imposer une Pull Request d'une manière qui empêcherait le fonctionnement normal de Decap pour les contributeurs autorisés.
 
 Les conflits d'édition simultanée restent des conflits Git ordinaires ; aucun système PPC de fusion collaborative n'est construit.
 
@@ -344,7 +345,7 @@ Sur un dépôt public, GitHub peut désactiver automatiquement les workflows pla
 
 ### Jobs
 
-Le workflow cible sépare au moins :
+Le workflow sépare deux jobs :
 
 1. **qualité et build**, avec uniquement des droits de lecture : checkout, installation reproductible, validation des contenus, tests, contrôles Astro/TypeScript, build statique, contrôles du site généré, puis création de l'artefact Pages ;
 2. **déploiement**, dépendant du premier job et seul détenteur des permissions GitHub Pages nécessaires.
@@ -356,7 +357,7 @@ structurelles restent bloquantes via `npm run validate`; la comparaison
 Markdown ↔ PDF signale les divergences significatives sans bloquer seule le
 déploiement, conformément à l'obligation de revue humaine.
 
-Les commandes utilisées dans la CI doivent être reproductibles localement. Le gestionnaire de paquets exact peut être choisi à l'implémentation, mais un seul gestionnaire et son lockfile doivent être committés.
+Les commandes utilisées dans la CI sont reproductibles localement via `npm run ci`. Le projet utilise npm et versionne `package-lock.json` ; conserver un seul gestionnaire de paquets et son lockfile.
 
 ## Sobriété, dépendances et design
 
@@ -367,8 +368,8 @@ Le site doit rester léger côté client comme en infrastructure :
 - images optimisées ;
 - aucun tracker par défaut ;
 - pas de fournisseur de polices externe par défaut ;
-- polices système pour le POC ; si la future identité de marque impose une police spécifique, privilégier l'auto-hébergement si la licence le permet ;
-- Tailwind CSS comme couche utilitaire de composition du POC, sans en faire la source de vérité de l'identité visuelle ;
+- polices système ; si la future identité de marque impose une police spécifique, privilégier l'auto-hébergement si la licence le permet ;
+- Tailwind CSS comme couche utilitaire de composition du site, sans en faire la source de vérité de l'identité visuelle ;
 - design tokens centraux dans `src/styles/tokens.css`, règles réellement globales dans `src/styles/global.css` et styles spécifiques scopés dans les composants Astro lorsque cela améliore la lisibilité ou exprime une logique propre au composant ;
 - CSS produit limité aux règles réellement nécessaires au site.
 
@@ -376,17 +377,17 @@ Toute nouvelle fonctionnalité ou dépendance doit être évaluée non seulement
 
 Aucun budget chiffré arbitraire de JavaScript, poids de page ou score Lighthouse n'est fixé avant mesure de pages représentatives.
 
-Tailwind et les composants Astro constituent le socle du POC. Aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être ajouté uniquement pour accélérer des composants simples ; une bibliothèque spécialisée ne peut être réévaluée que face à un besoin réel.
+Tailwind et les composants Astro constituent le socle du site. Aucune bibliothèque de composants UI n'est obligatoire. Bootstrap, Material UI, DaisyUI ou un design system tiers ne doit pas être ajouté uniquement pour accélérer des composants simples ; une bibliothèque spécialisée ne peut être réévaluée que face à un besoin réel.
 
 Les règles détaillées de centralisation, responsive, langage graphique et réversibilité de la charte sont définies dans [`design-system.md`](design-system.md). Une future identité de marque doit pouvoir être appliquée principalement via les tokens, les assets d'identité et un petit nombre de primitives, sans réécriture page par page.
 
 ## Environnements
 
-Pas de staging dédié initialement. Le développement et la vérification se font localement ; les Pull Requests peuvent fournir un contexte de validation sans devenir obligatoires pour l'édition courante.
+Aucun staging dédié actuellement. Le développement et la vérification se font localement ; les Pull Requests peuvent fournir un contexte de validation sans devenir obligatoires pour l'édition courante.
 
 ## Analytics, cookies et vie privée
 
-Aucun analytics dans le POC. Ne pas introduire indirectement de tracking via une dépendance. Réévaluer les implications juridiques lors de toute future intégration tierce.
+Aucun analytics n’est implémenté. Ne pas introduire indirectement de tracking via une dépendance. Réévaluer les implications juridiques lors de toute future intégration tierce.
 
 ## Navigateurs et terminaux
 

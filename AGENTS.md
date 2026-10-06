@@ -2,7 +2,7 @@
 
 ## Objet
 
-Ce dépôt est la source de vérité du site public de la **Pérennité Programmée Circulaire (PPC)**.
+Ce dépôt est la source de vérité du site public en production de la **Pérennité Programmée Circulaire (PPC)**.
 
 Un humain comme une IA doit pouvoir comprendre, modifier, tester, déployer et reprendre le projet à partir du seul contenu de ce dépôt.
 
@@ -15,7 +15,7 @@ Cela inclut notamment :
 - la documentation technique et d'exploitation ;
 - les commentaires destinés à expliquer des choix non évidents ;
 - le journal des décisions ;
-- les contenus éditoriaux du site pour la V1/POC ;
+- les contenus éditoriaux du site PPC ;
 - les instructions destinées aux humains et aux agents IA.
 
 Les noms imposés par les outils, langages, bibliothèques, API, commandes ou conventions techniques peuvent naturellement rester en anglais lorsque les traduire serait artificiel ou nuisible à la compréhension.
@@ -39,7 +39,7 @@ Consulter `docs/decisions/DECISIONS.md` uniquement lorsque l'historique ou la ju
 
 ## Autorité et cohérence
 
-Les spécifications courantes décrivent l'état souhaité actuel du site.
+Les spécifications courantes décrivent le périmètre et les exigences du site en production. Les choix actuels sont validés ; leur évolution nécessite un besoin ou une remise en question explicite.
 
 Une ancienne décision du journal ne prévaut jamais sur une spécification actuelle. Si le code, la configuration et les spécifications divergent, cette divergence doit être résolue explicitement.
 
@@ -66,15 +66,15 @@ Si une spécification décrit une cible qui n'est pas encore implémentée, cela
 - Source, configuration et contenus : **dépôt Git hébergé sur GitHub**
 - Hébergement public : **GitHub Pages**
 - CI/CD : **GitHub Actions**
-- CMS du POC : **DecapCMS**, utilisé comme interface d’édition au-dessus des contenus Git.
-- Authentification CMS cible : backend GitHub direct complété par **deux Netlify Functions OAuth minimales** ; **Git Gateway n’est pas retenu**.
+- CMS actuel : **DecapCMS**, utilisé comme interface d’édition au-dessus des contenus Git.
+- Authentification CMS : backend GitHub direct complété par **deux Netlify Functions OAuth minimales** ; **Git Gateway n’est pas retenu**.
 - Alternative future crédible : **Sveltia CMS**, sans migration structurante des contenus si un remplacement devient utile.
-- Langue de la V1/POC : **français**
-- Styles du POC : **design tokens PPC centraux + Tailwind CSS pour la composition courante + CSS Astro scopé lorsque cela améliore la lisibilité ou exprime une logique propre au composant**. `src/styles/tokens.css` reste la source de vérité de la charte.
-- Identité visuelle du POC : **« Ingénierie sensible »**, volontairement transitoire et réversible en vue de la future identité de marque PPC.
-- Analytics : **aucun dans le POC**
-- Environnement de staging dédié : **aucun initialement**
-- Pull Requests : **facultatives initialement**
+- Langue du site : **français**
+- Styles du site : **design tokens PPC centraux + Tailwind CSS pour la composition courante + CSS Astro scopé lorsque cela améliore la lisibilité ou exprime une logique propre au composant**. `src/styles/tokens.css` reste la source de vérité de la charte.
+- Identité visuelle actuelle du site : **« Ingénierie sensible »**, volontairement transitoire et réversible en vue de la future identité de marque PPC.
+- Analytics : **aucun**
+- Environnement de staging dédié : **aucun actuellement**
+- Pull Requests : **facultatives**
 - Decap écrit directement sur `main` en mode simple ; les branches/PR restent disponibles pour les changements longs ou sensibles.
 - GitHub Actions rebuild et redéploie également le site **tous les jours à 01:00 `Europe/Paris`** afin d’actualiser les contenus dépendants de la date.
 - Les tests locaux constituent le mode normal de vérification avant publication.
@@ -92,6 +92,7 @@ Avant l'implémentation :
 Pendant l'implémentation :
 - conserver des modèles de contenu structurés et portables ;
 - garder le rendu essentiel statique autant que possible ;
+- considérer `placeholder-personne.webp` comme le visuel normal d’une personne sans photo disponible ;
 - ne pas introduire sans justification de scripts tiers à l'exécution ;
 - ne jamais exposer d'identifiants ou secrets côté client ;
 - ne jamais ajouter dans le dépôt de secrets, mots de passes, ou données sensibles similaires ;

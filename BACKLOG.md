@@ -3,23 +3,17 @@
 ## 🟠 Fonctionnel / contenu / produit
 
 ### NOW
-* [ ] Revoir la page **Comprendre la PPC** pour mettre plus en évidence les 4 pilliers
-* [ ] Elaborer une **courte charte éditoriale** (ton de la voix, vocabulaire, ...)
-* [ ] Faire une **passe éditoriale finale** (placeholders, textes génériques, traces POC...)
-* [ ] Finaliser les **mentions légales** et y ajouter le PDF des statuts de l'asso
 * [ ] Tester le **parcours d’adhésion** et les règles associées
-* [ ] Page comprendre la PPC : mettre en valeur (visuel) **les 4 piliers de la PPC**
 
 
 ### NEXT
 * [ ] Finaliser les **illustrations de la page « Comprendre la PPC »**
 * [ ] Finaliser le **parcours de don / mécénat**
-* [ ] Publier les **référentiels PPC** et définir leur présentation/versionnement
-* [ ] Définir les règles de **publication et de licence des contenus PPC**
+* [ ] Publier les **prochaines versions des référentiels PPC** selon le workflow et le versionnement existants
+* [ ] Préciser les **licences applicables à chaque contenu PPC** dans le cadre des règles de publication existantes
 * [ ] Prévoir la représentation des futurs **comités techniques et de leurs travaux**
 
 ### LATER
-* [ ] Faire **remonter les actus/évènements dans la homepage** - éléments plus dynamiques
 * [ ] Compléter / affiner **l’identité visuelle** - dépendance par rapport aux travaux sur la Brand Identity de PPC
 * [ ] Décider si un **outil d’analytics** est nécessaire et quels usages on souhaite mesurer
 * [ ] Discuter de l'***intégration de la veille Sindup** - à voir en fonction du niveau d'accès qu'on souhaite donner
@@ -40,7 +34,7 @@
 
 ### LATER
 * [ ] Faire une passe **accessibilité technique**
-* [ ] Faire une passe **SEO technique** (metadata, sitemap, Open Graph, données structurées...)
+* [ ] Évaluer les éventuels besoins **SEO complémentaires** aux métadonnées, au sitemap et à Open Graph déjà en place
 * [ ] Faire une passe **performance Web** (images, bundles, chargement...)
 * [ ] Implémenter l’éventuel **analytics** retenu
 * [ ] Implémenter les éventuelles **synchronisations SI / données**

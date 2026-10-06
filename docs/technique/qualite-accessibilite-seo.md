@@ -2,7 +2,7 @@
 
 ## Philosophie qualité
 
-La qualité du POC repose sur des protections proportionnées aux risques concrets du site, pas sur une couverture artificielle ou une suite de tests exhaustive.
+La qualité du site PPC repose sur des protections proportionnées aux risques concrets du site, pas sur une couverture artificielle ou une suite de tests exhaustive.
 
 Les objectifs sont :
 - empêcher les contenus incohérents d'être publiés ;
@@ -88,7 +88,7 @@ Aucun seuil minimal de couverture de code n'est imposé. Les règles capables de
 
 ## Commandes locales
 
-L'implémentation doit fournir des commandes simples permettant de reproduire localement les contrôles de la CI, conceptuellement :
+Le dépôt fournit les commandes suivantes pour les contrôles locaux :
 
 ```text
 npm run dev
@@ -96,9 +96,10 @@ npm run validate
 npm run test
 npm run build
 npm run check
+npm run ci
 ```
 
-Les noms exacts peuvent varier avec le gestionnaire de paquets retenu, mais une commande agrégée de contrôle local doit fournir une réponse proche de la CI.
+`npm run ci` agrège les tests, la validation des contenus, la comparaison du Référentiel, le contrôle Astro/TypeScript, le build et les contrôles sur le site généré.
 
 ## Markdown
 
@@ -168,7 +169,7 @@ Le domaine public canonique `https://www.perennite-programmee-circulaire.org` do
 
 Les contenus `publie: false` ne génèrent aucune route et ne doivent donc pas être gérés via `noindex`.
 
-### Métadonnées dérivées dans le POC
+### Métadonnées dérivées des contenus
 
 Aucun override SEO générique n'est ajouté :
 - titre de contenu → titre SEO ;
@@ -214,7 +215,7 @@ Principes :
 - dimensions d'images connues lorsque possible pour limiter les décalages de mise en page ;
 - lazy-loading hors contenus prioritaires lorsque pertinent ;
 - aucun tracker tiers par défaut ;
-- polices système pour le POC, conformément à [`design-system.md`](design-system.md) ;
+- polices système, conformément à [`design-system.md`](design-system.md) ;
 - si la future identité de marque rend une police spécifique nécessaire, privilégier l'auto-hébergement sous réserve de sa licence ;
 - Tailwind CSS limité à son rôle de couche utilitaire de composition, avec un CSS produit limité au nécessaire ;
 - design tokens PPC centralisés comme source de vérité de la charte et CSS Astro scopé lorsque pertinent ;
@@ -222,7 +223,7 @@ Principes :
 
 Toute évolution fonctionnelle ou technique doit mettre en balance sa valeur attendue avec son coût en ressources, son poids transféré, les dépendances qu'elle ajoute, sa compatibilité dans le temps et son impact sur la maintenabilité. Une mesure externe, telle qu'EcoIndex, constitue un indicateur daté pour guider cette amélioration continue ; elle n'est ni une certification ni une garantie permanente.
 
-Une fois des pages représentatives disponibles :
+Sur des pages représentatives du site :
 1. mesurer ;
 2. identifier les vrais goulets d'étranglement ;
 3. décider seulement alors si des budgets explicites de poids, JavaScript ou performance améliorent réellement la maintenabilité.
@@ -242,11 +243,11 @@ Aucune limite de poids globale arbitraire n'est imposée. Un warning non bloquan
 
 ## Page 404
 
-Prévoir une page 404 personnalisée, accessible, utile et légère, compatible avec GitHub Pages. Elle reste dans le code pour le POC.
+Le site fournit une page 404 personnalisée, accessible, utile et légère, compatible avec GitHub Pages. Elle reste dans le code.
 
 ## Pages légales et vie privée
 
-Le POC doit prévoir :
+Le site comporte :
 - mentions légales ;
 - politique de confidentialité ;
 - page Accessibilité cohérente avec le niveau réel de conformité et les démarches effectivement menées.

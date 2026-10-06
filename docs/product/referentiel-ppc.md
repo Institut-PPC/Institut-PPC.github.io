@@ -360,15 +360,13 @@ rendu Web
 
 ### 7.3 Fichier Markdown courant
 
-Pour cette première version de la fonctionnalité, le corps du Référentiel courant est stocké dans **un seul fichier Markdown**.
+Le corps du Référentiel courant est stocké dans **un seul fichier Markdown**.
 
-Emplacement cible :
+Emplacement canonique :
 
 ```text
-contenu/referentiels/ppc/
+contenu/referentiels/ppc/courant.md
 ```
-
-Le nom exact du fichier à l'intérieur de ce répertoire peut être fixé par l'implémentation, à condition qu'il soit unique, explicite et documenté.
 
 Le fichier contient uniquement :
 - le frontmatter technique nécessaire ;
@@ -433,9 +431,9 @@ L'automatisation doit prendre en charge les opérations mécaniques et les contr
 
 La validation finale de fidélité au document officiel reste humaine.
 
-### 9.2 Séquence cible
+### 9.2 Séquence de publication
 
-Le processus cible est :
+Le processus actuel est :
 
 1. rédaction et collaboration dans Google Docs ;
 2. validation de la nouvelle version par l'association ;
@@ -454,13 +452,13 @@ Le processus cible est :
 
 ### 9.3 Commande unique
 
-Le repo fournit une commande unique et documentée pour lancer l'import, par exemple conceptuellement :
+Le dépôt fournit une commande unique et documentée pour lancer l’import :
 
 ```text
-npm run referentiel:import -- public/documents/referentiels/referentiel-ppc/<fichier.pdf> ...
+npm run referentiel:import -- public/documents/referentiels/referentiel-ppc/<fichier.pdf> --version <X.Y> --date <YYYY-MM-DD>
 ```
 
-La syntaxe finale est un détail d'implémentation, mais la commande doit :
+La syntaxe et la procédure de revue sont détaillées dans [`../exploitation/publication-referentiel.md`](../exploitation/publication-referentiel.md). La commande doit :
 - être simple à exécuter ;
 - prendre en entrée le même PDF officiel que celui publié dans le dépôt ;
 - recevoir explicitement les métadonnées nécessaires qui ne doivent pas être inférées ;
@@ -544,7 +542,7 @@ Les contrôles structurants doivent arrêter l'import ou faire échouer la valid
 - les ancres principales attendues ne peuvent pas être établies ;
 - l'historique des versions ne peut pas être mis à jour de manière cohérente.
 
-La liste exacte peut être enrichie lors de l'implémentation sans réduire ces garanties.
+La liste exacte peut être enrichie au fil des évolutions sans réduire ces garanties.
 
 ### 11.2 Comparaison Markdown ↔ PDF
 
