@@ -5,7 +5,7 @@ resume: Un nouveau site pour mieux présenter la Pérennité Programmée Circula
 date_publication: 2026-09-29
 image_principale: ../medias/images/actualites/2026-09-nouveau-site-web.png
 image_alt: Le nouveau site Web de la Pérennité Programmée Circulaire
-publie: false
+publie: true
 ---
 
 Le nouveau site de la **Pérennité Programmée Circulaire** est en ligne !
