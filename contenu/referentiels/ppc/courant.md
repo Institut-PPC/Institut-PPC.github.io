@@ -11,7 +11,7 @@ preambule:
         l’intégrité, la crédibilité, l’indépendance et la vocation d’intérêt général. Les statuts
         distinguent les contenus conceptuels, pédagogiques et explicatifs, qui peuvent être diffusés
         sous licence Creative Commons de type CC BY-NC-SA, de la marque collective, de son règlement
-        d’usage, des référentiels techniques et des documents normatifs opposables, qui demeurent
+        d’usage, des documents techniques et des documents normatifs opposables, qui demeurent
         protégés.
   - titre: Statut
     paragraphes:
