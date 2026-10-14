@@ -10,7 +10,7 @@ date_fin: 2026-09-14T19:00:00+02:00
 relation_ppc: evenement-externe
 lieu: "Sénat 15 Rue de Vaugirard Paris 75006 "
 lien_externe: https://www.eventbrite.com/e/billets-economie-de-la-fonctionnalite-quelles-perspectives-pour-2027-1989893280368
-image: ../medias/images/evenements/economie-fonctionnalite-perspectives-2027.jpg
+image: ../medias/images/evenements/2026-09-14-economie-fonctionnalite-perspectives-2027.jpg
 image_alt: Illustration de l'événement « Économie de la fonctionnalité - quelles
   perspectives pour 2027 ? »
 publie: true

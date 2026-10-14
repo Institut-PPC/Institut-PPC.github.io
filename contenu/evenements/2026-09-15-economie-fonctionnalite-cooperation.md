@@ -11,7 +11,7 @@ relation_ppc: evenement-externe
 lieu: Centre de conférences Pierre Mendès France, Ministères économiques et
   financiers, 139 rue de Bercy, 75012 Paris
 lien_externe: https://evenium.events/l-economie-de-la-fonctionnalite-et-de-la-cooperation
-image: ../medias/images/evenements/economie-fonctionnalite-cooperation.jpg
+image: ../medias/images/evenements/2026-09-15-economie-fonctionnalite-cooperation.jpg
 image_alt: Illustration de l'événement « L'économie de la fonctionnalité et de
   la coopération - allier compétitivité et pérennité »
 publie: true
