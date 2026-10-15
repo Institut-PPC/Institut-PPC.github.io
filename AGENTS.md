@@ -126,11 +126,22 @@ En particulier :
 
 Le nettoyage fait partie intégrante de la tâche et doit être effectué même en cas d'échec d'un test ou d'une vérification.
 
-## Skill de création des évènements
+## Skills
+
+### Skill de création des évènements
 
 Pour créer une fiche évènement à partir d'une URL et éventuellement d'un visuel, lire
 `.agents/skills/creer-evenement-ppc/SKILL.md` et suivre ses instructions.
 Le skill produit un Markdown sous `contenu/evenements/` et un WebP de 300 ko maximum
 sous `contenu/medias/images/evenements/`, avec `publie: true`.
 Il peut être invoqué par `$creer-evenement-ppc` dans les assistants compatibles ;
+sinon, demander explicitement à l'assistant de lire le fichier `SKILL.md`.
+
+### Skill de création des actualités
+
+Pour créer une actualité à partir d'une URL et éventuellement d'un visuel, lire
+`.agents/skills/creer-actualite-ppc/SKILL.md` et suivre ses instructions.
+Le skill produit un Markdown sous `contenu/actualites/` et un WebP de 300 ko maximum
+sous `contenu/medias/images/actualites/`, avec `publie: true`.
+Il peut être invoqué par `$creer-actualite-ppc` dans les assistants compatibles ;
 sinon, demander explicitement à l'assistant de lire le fichier `SKILL.md`.

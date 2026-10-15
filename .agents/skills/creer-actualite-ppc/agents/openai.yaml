@@ -1,0 +1,4 @@
+interface:
+  display_name: "Créer une actualité PPC"
+  short_description: "Créer une actualité et son visuel WebP pour PPC"
+  default_prompt: "Utilise $creer-actualite-ppc pour créer une actualité à partir de cette URL et du visuel joint si présent."
