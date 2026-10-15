@@ -1,0 +1,16 @@
+---
+import { lignesDateNotice, type Notice } from '../lib/agenda';
+interface Props { notice: Notice; evenement?: boolean }
+const {notice: n, evenement = false} = Astro.props;
+const Titre = evenement ? 'h4' : 'h3';
+---
+<article class:list={['agenda-notice', evenement ? 'event-row' : 'news-card']}>
+  {!evenement && n.image && <img src={n.image.src} width={n.image.width} height={n.image.height} alt={n.image.alt} loading="lazy" decoding="async" />}
+  <p class="notice-date"><time datetime={n.date}>{lignesDateNotice(n, evenement).map((ligne, index) => <Fragment>{index > 0 && <br />}{ligne}</Fragment>)}</time></p>
+  <div class="notice-content">
+    <Titre><a href={`/${evenement ? 'evenements' : 'actualites'}/${n.slug}`}>{n.titre}</a></Titre>
+    {evenement && n.lieu && <p class="notice-place">{n.lieu}</p>}
+    <p>{n.resume}</p>
+    {evenement && <p class="notice-relation">{n.relation}</p>}
+  </div>
+</article>

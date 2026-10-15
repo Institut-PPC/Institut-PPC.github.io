@@ -197,6 +197,14 @@ Les deux familles restent distinctes :
 
 PPC peut publier des événements externes auxquels elle participe. Les événements passés restent accessibles afin de constituer une archive de l'activité.
 
+La page commune utilise les onglets partageables `#actualites` (défaut) et
+`#evenements`. Les actualités sont des cartes progressives ; les événements
+proposent une liste progressive séparant rendez-vous à venir/en cours et passés,
+ou un calendrier mensuel. L’accueil et les fils d’Ariane des fiches rejoignent
+l’onglet de leur famille. Aucune nouvelle rubrique ni archive séparée n’est créée.
+Les interactions, URL et règles de dates sont définies dans
+[`exigences-fonctionnelles.md`](exigences-fonctionnelles.md).
+
 ### `/actualites/<slug>` — Détail d'une actualité
 
 Présenter une publication éditoriale individuelle et permettre, lorsque pertinent, de poursuivre vers une ressource ou une prise de contact.

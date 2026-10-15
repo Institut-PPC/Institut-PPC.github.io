@@ -74,6 +74,22 @@ Aucune suite E2E lourde couvrant tout le site n'est introduite par défaut. Le s
 
 Un navigateur automatisé peut être ajouté ponctuellement lorsqu'un comportement concret le justifie.
 
+### Actualités & événements
+
+`tests/agenda.test.ts` protège filtrage publié, tris stables, classification,
+changements d’heure, jours de Paris, durées sur plusieurs mois, grille du lundi,
+URL et restauration indépendante des lots. Contrôler aussi dans un navigateur
+les onglets au clavier, les liens du calendrier, les listes progressives, le
+retour depuis une fiche et le rendu à 320–375 px sans débordement, avec mois
+vide, journée vide et plusieurs événements quotidiens. Les jeux de contrôle
+temporaires ne doivent pas devenir des contenus publiés. `check:dist` contrôle
+les notices JSON générées, leurs fiches et images locales ainsi que les liens
+HTML vers toutes les notices, y compris hors du premier lot.
+
+Sans JavaScript, toutes les fiches restent reliées par le HTML du hub et les
+contrôles interactifs restent masqués. Les dates utilisent des éléments `time` ;
+les points du calendrier ont un équivalent dans les noms accessibles des jours.
+
 ### Decap
 
 Ne pas automatiser toute l'interface Decap en CI. Les deux smoke tests de conception/acceptation sont :

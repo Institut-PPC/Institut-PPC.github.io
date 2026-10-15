@@ -417,6 +417,15 @@ Ne jamais supprimer l'outline sans fournir un indicateur de focus au moins aussi
 
 Dans un texte courant, un lien doit être identifiable autrement que par sa couleur seule, par exemple avec un soulignement visible. Navigation et CTA peuvent utiliser d'autres conventions lorsque leur contexte les identifie sans ambiguïté.
 
+### Actions de navigation contextuelle
+
+Les commandes d’un composant peuvent adopter un traitement plus discret que
+les onglets et CTA : fond transparent, sans cadre, avec icône explicite ou
+libellé souligné. C’est le cas des commandes mois précédent, mois suivant et
+« Aujourd’hui » du calendrier. Elles restent des éléments `button`, avec noms
+accessibles, focus visible et cibles d’au moins 44 × 44 px. Le survol peut
+renforcer leur visibilité sans conditionner leur compréhension.
+
 ### Cibles interactives
 
 Viser des zones d'activation confortables, de l'ordre de **44 × 44 CSS px** lorsque le type de contrôle le permet, notamment pour la navigation mobile et les contrôles iconographiques. Une petite icône ne doit pas constituer seule une minuscule zone cliquable.

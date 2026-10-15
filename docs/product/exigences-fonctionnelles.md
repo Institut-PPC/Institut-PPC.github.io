@@ -57,13 +57,75 @@ Exigences :
 Exigences :
 - hub commun `/actualites-evenements` ;
 - détail sous `/evenements/<slug>` ;
-- distinction explicite entre événement organisé par PPC et événement externe auquel PPC participe ;
+- distinction explicite entre événement organisé par l'institut PPC et événement externe auquel l'institut PPC participe ;
 - possibilité de référencer des `Personne` et `Organisation` existantes ;
 - caractère à venir / passé dérivé des dates, jamais saisi manuellement ;
 - conservation des événements passés comme archive ;
 - les prochains événements publiés affichés sur la page d'accueil sont sélectionnés automatiquement.
 
 Le site n'introduit pas de taxonomie détaillée de rôles événementiels sans besoin produit documenté.
+
+### Consultation du hub Actualités & événements
+
+La route unique `/actualites-evenements` propose deux onglets accessibles au
+clavier (flèches gauche/droite, Début/Fin), avec états et panneaux associés.
+`#actualites` est le choix par défaut ; `#evenements` ouvre directement les
+événements, notamment depuis l’accueil. Les fiches conservent leurs URL.
+Les onglets ne sont pas soulignés par une barre horizontale. Le titre et
+l’introduction communs suffisent : les titres des deux panneaux restent
+accessibles mais masqués visuellement, sans introduction répétée par famille.
+
+Les actualités publiées sont triées par date de publication décroissante puis
+identifiant stable en cas d’égalité. Leurs cartes présentent image facultative,
+date, titre lié et résumé, sur une, deux ou trois colonnes selon la largeur.
+Neuf cartes sont affichées, puis neuf supplémentaires par action.
+
+La vue Liste des événements est sélectionnée par défaut. Le sélecteur de vue
+utilise deux boutons à icônes (liste et calendrier), alignés à droite sur la
+même ligne que les onglets et visibles uniquement dans l’onglet Événements.
+Chaque bouton possède un nom accessible, une infobulle native et un état actif
+visible ; les cibles restent d’au moins 44 × 44 px. Les lignes compactes
+présentent période, titre lié, lieu facultatif, résumé et relation à PPC.
+Pour un événement sur une même journée en heure de Paris, la date apparaît
+sur une première ligne et le créneau horaire sur une seconde, sans répéter la
+date ; sans fin, seule l’heure de début est indiquée. Pour plusieurs jours,
+les dates et heures complètes de début et de fin restent affichées. Ce format
+s’applique aux lignes de la liste et aux événements sous le calendrier.
+« À venir » regroupe les événements futurs et en cours, par début croissant ;
+le titre devient « En cours et à venir » si nécessaire. « Événements passés »
+utilise le début décroissant. Les égalités sont départagées par slug stable.
+Chaque groupe affiche six lignes puis des lots de six indépendants. Les boutons
+disparaissent quand tout est visible ; les absences sont indiquées explicitement.
+
+La vue Calendrier affiche le mois courant, du lundi au dimanche, en français,
+avec mois précédent/suivant, « Aujourd’hui » et repère accessible du jour courant.
+Elle utilise tous les événements publiés sans séparation passé/futur.
+Sur ordinateur, chaque jour concerné contient les titres liés à leurs fiches,
+sans limite masquant des événements : les cases grandissent si nécessaire.
+Les événements de plusieurs jours sont répétés sur chaque jour de leur durée,
+y compris entre semaines et mois. Sur mobile, un point et un nombre accessible
+signalent les jours occupés ; la liste du mois est immédiatement présente sous
+la grille. La sélection d’un jour filtre cette liste ; « Tout le mois » annule
+la sélection. Un mois ou une journée vide possède un message explicite.
+
+L’URL partage l’onglet par fragment, la vue par `vue=calendrier`, le mois par
+`mois=YYYY-MM` et, si sélectionnée, la journée par `jour=YYYY-MM-DD`.
+Les changements d’onglet, vue, mois ou journée créent une entrée d’historique.
+Les nombres déjà affichés et le défilement sont conservés dans l’entrée courante
+avec `history.replaceState`, sans entrée par lot ni préférence persistante entre
+visites. Le retour navigateur depuis une fiche restaure ce contexte.
+
+La comparaison des instants respecte les décalages des dates sources. Un
+événement reste dans le premier groupe jusqu’à sa fin incluse ; sans fin,
+son début sert de fin, sans durée inventée. Les libellés et jours du calendrier
+utilisent `Europe/Paris`. Les jours de début et de fin éditoriales sont inclus,
+même pour une fin à minuit ; aucun intervalle technique exclusif n’est appliqué.
+La classification des listes reste calculée au build et actualisée par le rebuild
+quotidien existant à 01:00 Europe/Paris.
+
+Sans JavaScript, les deux rubriques présentent leurs premiers lots et des listes
+compactes de liens vers tous les autres contenus. Aucun contrôle inactif n’est
+visible. Aucune page de rubrique ou d’archive supplémentaire n’est créée.
 
 ## Personnes, organisations et gouvernance
 

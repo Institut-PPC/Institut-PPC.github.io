@@ -239,6 +239,7 @@ Règles du modèle :
 - le caractère à venir / passé est dérivé des dates, jamais saisi manuellement ;
 - les événements passés restent accessibles comme archive ;
 - la homepage affiche automatiquement les prochains événements publiés ;
+- pour l’affichage, les instants sont comparés avec leurs décalages sources et les jours sont présentés en `Europe/Paris` ; sans fin, le début tient lieu de fin, et les dates éditoriales de début et de fin sont incluses dans le calendrier ;
 - aucune taxonomie détaillée de rôles événementiels n'est introduite sans besoin documenté.
 
 ### Personne

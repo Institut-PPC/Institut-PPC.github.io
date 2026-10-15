@@ -188,6 +188,29 @@ for (const page of pages) {
   }
 }
 
+// Le hub doit relier toutes les notices, y compris celles hors du premier lot.
+const hub = await lireFichier('actualites-evenements/index.html');
+try {
+  const agenda = JSON.parse(await lireFichier('actualites-evenements.json'));
+  for (const famille of ['actualites', 'evenements']) {
+    verifier(Array.isArray(agenda[famille]), `Les notices ${famille} doivent être une liste.`);
+    for (const notice of agenda[famille] ?? []) {
+      const cible = `/${famille}/${notice.slug}`;
+      verifier(hub.includes(`href="${cible}"`), `Le hub sans JavaScript doit relier ${cible}.`);
+      verifier(!('body' in notice) && !('contenu' in notice), `La notice ${cible} ne doit pas embarquer le corps de la fiche.`);
+      try { await access(path.join(racineDist, cible, 'index.html')); }
+      catch { erreurs.push(`La fiche ${cible} est absente de dist/.`); }
+      if (notice.image) {
+        verifier(notice.image.width > 0 && notice.image.height > 0, `L’image de ${cible} doit réserver ses dimensions.`);
+        try { await access(path.join(racineDist, notice.image.src)); }
+        catch { erreurs.push(`L’image de ${cible} est absente de dist/.`); }
+      }
+    }
+  }
+} catch (erreur) {
+  erreurs.push(`Données statiques du hub invalides : ${erreur.message}`);
+}
+
 if (erreurs.length > 0) {
   console.error(`Contrôle du site généré en échec (${erreurs.length} erreur${erreurs.length > 1 ? 's' : ''}) :`);
   for (const erreur of erreurs) console.error(`- ${erreur}`);

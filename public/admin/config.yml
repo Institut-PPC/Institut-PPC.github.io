@@ -118,8 +118,8 @@ collections:
         name: relation_ppc
         widget: select
         options:
-          - { label: Organisé par PPC, value: organise-par-ppc }
-          - { label: Événement externe auquel PPC participe, value: evenement-externe }
+          - { label: Organisé par l'institut PPC, value: organise-par-ppc }
+          - { label: Événement externe auquel l'institut PPC participe, value: evenement-externe }
       - { label: Lieu, name: lieu, widget: string, required: false }
       - { label: Lien externe, name: lien_externe, widget: string, required: false, hint: URL complète en http ou https. }
       - { label: Image, name: image, widget: image, required: false }

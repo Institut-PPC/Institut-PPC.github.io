@@ -33,6 +33,29 @@ Le site n'est pas une SPA, ne reçoit pas d'hydratation globale et n'introduit a
 
 Le site public canonique ne dépend à l'exécution ni de DecapCMS, ni de Netlify, ni du composant OAuth. Seuls les domaines secondaires dépendent du projet Netlify Redirects pour atteindre le domaine canonique.
 
+### Hub Actualités & événements
+
+Le Content Layer alimente au build le HTML initial et la ressource statique
+`/actualites-evenements.json`. Celle-ci ne contient que les notices des contenus
+publiés (titre, résumé, dates, slug, lieu, relation PPC et image optimisée des
+actualités), jamais les corps Markdown. Les deux sorties utilisent le même
+chargeur `src/lib/agenda-contenus.ts` et les règles `src/lib/agenda.ts`.
+
+Le module TypeScript `src/components/agenda.ts` charge cette ressource locale
+puis active onglets, pagination et calendrier sans framework ni bibliothèque
+supplémentaire. Seuls les lots demandés sont créés dans le DOM ; les autres
+images ne sont pas rendues ou chargées. Le HTML initial conserve des liens
+compacts vers tous les contenus au-delà des premiers lots, sans JavaScript.
+Si le chargement échoue, ce HTML reste utilisable. Les notices créées côté
+client utilisent `textContent`, sans interprétation HTML des textes éditoriaux.
+Les styles de cette interface, partagés par le rendu Astro et le DOM client,
+sont isolés dans `src/styles/agenda.css` et consomment les tokens PPC.
+
+L’URL porte onglet, vue, mois et journée ; l’état de chaque entrée d’historique
+porte les trois compteurs et le défilement. Aucun stockage persistant ne force
+un choix ancien lors d’une nouvelle ouverture. Les règles temporelles et la
+convention de fin incluse sont détaillées dans les exigences fonctionnelles.
+
 ### Intégration publique HelloAsso
 
 Les pages d'adhésion et de don utilisent un composant Astro réutilisable qui rend une `iframe` HelloAsso et un lien direct de repli. HelloAsso est une dépendance d'exécution limitée à ces formulaires : son indisponibilité ne doit empêcher ni le chargement du reste de la page, ni l'accès aux explications éditoriales, ni l'utilisation du lien direct lorsqu'il reste joignable.

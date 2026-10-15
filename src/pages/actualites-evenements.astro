@@ -1,19 +1,71 @@
 ---
-import { getCollection } from 'astro:content';
-import ActualiteItem from '../components/ActualiteItem.astro';
-import EmptyState from '../components/EmptyState.astro';
-import EvenementItem from '../components/EvenementItem.astro';
 import PageIntro from '../components/PageIntro.astro';
+import AgendaNotice from '../components/AgendaNotice.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { evenementAVenir } from '../lib/contenus';
-const actualites=(await getCollection('actualites',({data})=>data.publie)).sort((a,b)=>b.data.date_publication.localeCompare(a.data.date_publication));
-const evenements=(await getCollection('evenements',({data})=>data.publie)).sort((a,b)=>b.data.date_debut.localeCompare(a.data.date_debut));
-const aVenir=evenements.filter(({data})=>evenementAVenir(data.date_fin,data.date_debut)).reverse();
-const passes=evenements.filter(({data})=>!evenementAVenir(data.date_fin,data.date_debut));
+import { chargerAgenda } from '../lib/agenda-contenus';
+import { classerEvenements, statutEvenement } from '../lib/agenda';
+import '../styles/agenda.css';
+const agenda = await chargerAgenda();
+const {avenir, passes} = classerEvenements(agenda.evenements, agenda.maintenant);
 ---
 <BaseLayout title="Actualités & événements — PPC" description="Suivre les publications et les rendez-vous de la Pérennité Programmée Circulaire.">
   <PageIntro eyebrow="PPC en mouvement" title="Actualités & événements" intro="Retrouvez ici les actualités de l’Association, les avancées des travaux PPC et les événements auxquels l’écosystème de la Pérennité Programmée Circulaire participe." />
-  <section class="stream" aria-labelledby="actualites"><h2 id="actualites">Actualités</h2><p class="intro">Publications, avancées des travaux, initiatives et informations liées au développement de la Pérennité Programmée Circulaire.</p>{actualites.length?actualites.map((actualite)=><ActualiteItem actualite={actualite}/>):<EmptyState title="Aucune actualité pour le moment" message="Les actualités de PPC seront présentées ici dès leur publication." />}</section>
-  <section class="stream" aria-labelledby="evenements"><h2 id="evenements">Événements</h2><p class="intro">Conférences, rencontres et rendez-vous permettant d’échanger autour de PPC et des sujets qu’elle adresse : durabilité, économie de la fonctionnalité, circularité, industrie et préservation de la valeur dans le temps.</p>{aVenir.length>0&&<><h3 class="subheading">À venir</h3>{aVenir.map((evenement)=><EvenementItem evenement={evenement}/>)}</>}{passes.length>0&&<><h3 class="subheading">Événements passés</h3>{passes.map((evenement)=><EvenementItem evenement={evenement}/>)}</>}{!evenements.length&&<EmptyState title="Aucun événement annoncé" message="Aucun événement n’est annoncé pour le moment." />}</section>
+  <div data-agenda>
+    <div class="agenda-toolbar">
+    <nav class="agenda-tabs" aria-label="Type de contenu">
+      <a id="onglet-actualites" href="#actualites">Actualités</a>
+      <a id="onglet-evenements" href="#evenements">Événements</a>
+    </nav>
+    <div hidden data-view-controls class="view-controls" role="group" aria-label="Présentation des événements">
+      <button data-view="liste" aria-pressed="true" aria-label="Vue liste" title="Vue liste" aria-controls="evenements">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" /></svg>
+      </button>
+      <button data-view="calendrier" aria-pressed="false" aria-label="Vue calendrier" title="Vue calendrier" aria-controls="evenements">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" /></svg>
+      </button>
+    </div>
+    </div>
+    <section id="actualites" class="agenda-panel" aria-labelledby="onglet-actualites">
+      <h2 class="visually-hidden">Actualités</h2>
+      <div data-list="actualites" class="news-grid">{agenda.actualites.slice(0,9).map(n => <AgendaNotice notice={n} />)}</div>
+      {!agenda.actualites.length && <p>Aucune actualité pour le moment. Les publications de PPC seront présentées ici.</p>}
+      <button hidden data-more="actualites">Afficher plus d’actualités</button>
+      {agenda.actualites.length > 9 && <div data-fallback><h3>Toutes les actualités</h3><ul>{agenda.actualites.slice(9).map(n => <li><a href={`/actualites/${n.slug}`}>{n.titre}</a></li>)}</ul></div>}
+    </section>
+    <section id="evenements" class="agenda-panel" aria-labelledby="onglet-evenements">
+      <h2 class="visually-hidden">Événements</h2>
+      <div data-event-list>
+        <section aria-labelledby="titre-avenir"><h3 id="titre-avenir">{avenir.some(e => statutEvenement(e, agenda.maintenant) === 'encours') ? 'En cours et à venir' : 'À venir'}</h3>
+          <div data-list="avenir">{avenir.slice(0,6).map(n => <AgendaNotice notice={n} evenement />)}</div>
+          {!avenir.length && <p>Aucun événement à venir pour le moment.</p>}
+          <button hidden data-more="avenir">Afficher plus d’événements à venir</button>
+        </section>
+        <section aria-labelledby="titre-passes"><h3 id="titre-passes">Événements passés</h3>
+          <div data-list="passes">{passes.slice(0,6).map(n => <AgendaNotice notice={n} evenement />)}</div>
+          {!passes.length && <p>Aucun événement passé.</p>}
+          <button hidden data-more="passes">Afficher plus d’événements passés</button>
+        </section>
+      </div>
+      <section hidden data-calendar aria-label="Calendrier mensuel">
+        <div class="calendar-toolbar">
+          <button data-month="-1" aria-label="Mois précédent">←</button>
+          <h3 data-month-title aria-live="polite"></h3>
+          <button data-month="1" aria-label="Mois suivant">→</button>
+          <button data-today>Aujourd’hui</button>
+        </div>
+        <div class="calendar-grid" data-calendar-grid></div>
+        <div class="calendar-agenda">
+          <button data-whole-month>Tout le mois</button>
+          <h3 data-selection-title></h3>
+          <div data-calendar-list></div>
+        </div>
+      </section>
+      {(avenir.length > 6 || passes.length > 6) && <div data-fallback><h3>Autres événements</h3><ul>{[...avenir.slice(6),...passes.slice(6)].map(n => <li><a href={`/evenements/${n.slug}`}>{n.titre}</a></li>)}</ul></div>}
+    </section>
+    <p data-announcement class="visually-hidden" role="status"></p>
+  </div>
+  <script>
+    import { initialiserAgenda } from '../components/agenda';
+    initialiserAgenda();
+  </script>
 </BaseLayout>
-<style>.stream{padding-block:var(--space-section);border-top:var(--border-width) solid var(--color-border)}.stream>h2{color:var(--color-brand);font-family:var(--font-display);font-weight:400}.intro{margin-bottom:var(--space-7);font-size:var(--font-size-lg);color:var(--color-text-muted)}.subheading{margin-top:var(--space-7);font-size:var(--font-size-lg);text-transform:uppercase;letter-spacing:.06em}</style>
