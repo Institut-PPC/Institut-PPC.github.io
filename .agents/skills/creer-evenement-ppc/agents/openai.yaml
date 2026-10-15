@@ -1,0 +1,4 @@
+interface:
+  display_name: "Créer un évènement PPC"
+  short_description: "Créer une fiche évènement et son visuel WebP"
+  default_prompt: "Utilise $creer-evenement-ppc pour créer une fiche à partir de cette URL et du visuel joint si présent."
