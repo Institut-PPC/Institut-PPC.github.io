@@ -299,6 +299,16 @@ Ratios de référence lorsqu'ils facilitent la cohérence :
 
 Ces ratios décrivent le rendu ; ils ne doivent pas dégrader le fichier source éditorial.
 
+Sur les fiches individuelles d’actualités et d’événements, l’image principale est
+centrée horizontalement et affichée intégralement dans ses proportions originales,
+sans recadrage ni agrandissement au-delà des dimensions du fichier source. Sa
+largeur reste limitée à l’espace disponible et sa hauteur à `min(300px, 60vh)`,
+puis `min(450px, 60vh)` à partir de `48rem`. Les dimensions d’affichage restent
+automatiques, sans cadre de taille fixe ni espace vide réservé aux petites images.
+L’optimisation Astro, les attributs de dimensions et les alternatives textuelles
+sont conservés. Ces règles ne concernent ni les cartes, ni l’accueil, ni les
+images du corps éditorial.
+
 ### Iconographie
 
 Ne pas installer de grande bibliothèque d'icônes sans besoin concret. Utiliser de petits SVG locaux cohérents, de préférence au trait et avec `currentColor`, pour les besoins réels comme menu, lien externe ou LinkedIn.
