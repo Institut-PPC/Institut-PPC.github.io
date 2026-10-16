@@ -17,6 +17,8 @@ export default defineConfig({
         return (
           pathname !== '/admin'
           && !pathname.startsWith('/admin/')
+          && pathname !== '/relecture'
+          && !pathname.startsWith('/relecture/')
           && !['/404', '/404/', '/404.html'].includes(pathname)
         );
       },

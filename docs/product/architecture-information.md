@@ -69,6 +69,13 @@ L'organisation des contenus et les URL ne doivent toutefois pas empêcher l'ajou
 
 ## Navigation globale
 
+Exception temporaire hors sitemap public : `/relecture/<identifiant>/` affiche
+un mini-livre blanc à relire. L’identifiant aléatoire est une chaîne de six
+chiffres. Aucune page `/relecture/`, liste publique, entrée de
+menu, de pied de page, de flux ou d’index de recherche ne doit référencer ces pages.
+Elles portent `noindex`, restent explorables et sont exclues du sitemap XML.
+Posséder le lien suffit à y accéder ; ce mécanisme ne fournit aucune authentification.
+
 ### Navigation principale de l’en-tête
 
 Ordre actuel :

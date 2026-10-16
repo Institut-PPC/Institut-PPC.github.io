@@ -1,5 +1,6 @@
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { verifierRelectures } from '../src/relecture/verifier-dist.mjs';
 
 const racineDist = path.resolve('dist');
 const origineCanonique = 'https://www.perennite-programmee-circulaire.org';
@@ -210,6 +211,8 @@ try {
 } catch (erreur) {
   erreurs.push(`Données statiques du hub invalides : ${erreur.message}`);
 }
+
+erreurs.push(...await verifierRelectures(racineDist));
 
 if (erreurs.length > 0) {
   console.error(`Contrôle du site généré en échec (${erreurs.length} erreur${erreurs.length > 1 ? 's' : ''}) :`);

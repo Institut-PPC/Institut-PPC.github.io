@@ -52,6 +52,7 @@ if (!configuration) {
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="fr_FR" />
     {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#contenu-principal">Aller au contenu principal</a>

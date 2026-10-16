@@ -3,12 +3,14 @@ interface Props {
   href: string;
   secondary?: boolean;
   current?: boolean;
+  newTab?: boolean;
 }
-const { href, secondary = false, current = false } = Astro.props;
+const { href, secondary = false, current = false, newTab = false } = Astro.props;
 ---
 
 <a class:list={['action inline-flex items-center justify-center gap-3 px-5 py-3 min-h-control', { secondary }]}
-  href={href} aria-current={current ? 'page' : undefined}>
+  href={href} aria-current={current ? 'page' : undefined}
+  target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener noreferrer' : undefined}>
   <slot />
 </a>
 

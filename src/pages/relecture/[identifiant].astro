@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageRelecture from '../../relecture/PageRelecture.astro';
+import { lireRelectures, type Relecture } from '../../relecture/contenus';
+
+export function getStaticPaths() {
+  const fichiers = import.meta.glob('../../../contenu/relectures/*.yaml', {
+    query: '?raw', import: 'default', eager: true,
+  }) as Record<string, string>;
+  return lireRelectures(fichiers).map((livre) => ({
+    params: { identifiant: livre.identifiant }, props: { livre },
+  }));
+}
+
+interface Props { livre: Relecture; }
+const { livre } = Astro.props;
+---
+<BaseLayout title={livre.titre} description="Relecture d’un mini-livre blanc PPC et retours approuvés par l’association.">
+  <meta slot="head" name="robots" content="noindex" />
+  <PageRelecture livre={livre} />
+</BaseLayout>

@@ -133,7 +133,15 @@ Principes techniques :
 
 ## Content Layer Astro
 
-Tous les contenus canoniques sont consommés par l'application à travers le **Content Layer Astro**. Le code de rendu ne lit pas directement les YAML/Markdown avec `fs` ou un parseur parallèle.
+Les contenus canoniques sont consommés par l'application à travers le **Content Layer Astro**, sauf l’exception temporaire des relectures ci-dessous. Le reste du code de rendu ne lit pas directement les YAML/Markdown avec `fs` ou un parseur parallèle.
+
+La relecture temporaire utilise `src/pages/relecture/[identifiant].astro` et
+`src/relecture/` : lecture locale `import.meta.glob` des YAML bruts, validation
+Zod au build (avec refus des identifiants dupliqués), modèle partagé et petit
+script de disclosure. Elle réutilise le layout et les tokens existants ; le slot
+`head` du layout reçoit `noindex`. Le filtre sitemap exclut tout `/relecture/`.
+Google Forms n’est chargé qu’à la demande. Aucune collection globale, dépendance,
+configuration CMS ou intégration serveur n’est ajoutée.
 
 ### Collections
 

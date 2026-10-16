@@ -1,0 +1,66 @@
+---
+import ActionLink from '../components/ActionLink.astro';
+import EmptyState from '../components/EmptyState.astro';
+import type { Relecture } from './contenus';
+interface Props { livre: Relecture; }
+const { livre } = Astro.props;
+const formulaireDirect = new URL(livre.url_formulaire);
+formulaireDirect.searchParams.delete('embedded');
+---
+<article class="max-w-reading mx-auto">
+  <header class="mb-7">
+    <h1>{livre.titre}</h1>
+  </header>
+  <section aria-labelledby="consignes" class="consignes mb-7 p-5 sm:p-6">
+    <p class="consignes-signal">Important — Consignes de relecture</p>
+    {livre.consignes.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+    <ActionLink href={livre.url_pdf} newTab>Ouvrir le PDF</ActionLink>
+  </section>
+  <section aria-labelledby="contribuer" class="mb-7" data-relecture-formulaire>
+    <p>Votre retour intégral et votre nom pourront être publiés ici après relecture par l’association. Les adresses email restent privées.</p>
+    <button type="button" hidden aria-expanded="false" aria-controls="formulaire-relecture">Transmettre votre retour</button>
+    <p class="mt-4"><em>ou <a href={formulaireDirect.href} target="_blank" rel="noopener noreferrer">ouvrir le formulaire dans un nouvel onglet</a> si vous préférez</em></p>
+    <div id="formulaire-relecture" hidden>
+      <iframe data-src={livre.url_formulaire} title={`Formulaire de relecture — ${livre.titre}`} width="640" height="900" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+  </section>
+  <section aria-labelledby="retours">
+    <h3 id="retours">Commentaires de relecture</h3>
+    {livre.commentaires.length === 0
+      ? <EmptyState title="Aucun retour publié" message="Les retours approuvés seront ajoutés ici après relecture par l’association." />
+      : livre.commentaires.map((commentaire) => (
+        <article class="retour py-5">
+          <h4>{commentaire.auteur}</h4>
+          {commentaire.texte.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+        </article>
+      ))}
+  </section>
+</article>
+
+<script>
+  for (const section of document.querySelectorAll<HTMLElement>('[data-relecture-formulaire]')) {
+    const bouton = section.querySelector('button');
+    const panneau = section.querySelector<HTMLElement>('#formulaire-relecture');
+    const cadre = section.querySelector('iframe');
+    if (bouton && panneau && cadre) {
+      bouton.hidden = false;
+      bouton.addEventListener('click', () => {
+        const afficher = bouton.getAttribute('aria-expanded') !== 'true';
+        if (afficher && !cadre.hasAttribute('src')) cadre.src = cadre.dataset.src!;
+        panneau.hidden = !afficher;
+        bouton.setAttribute('aria-expanded', String(afficher));
+        bouton.textContent = afficher ? 'Masquer le formulaire' : 'Afficher le formulaire';
+      });
+    }
+  }
+</script>
+
+<style>
+  .consignes { background: var(--color-accent-soft); border-left: var(--space-1) solid var(--color-accent); border-radius: var(--radius-surface); }
+  .consignes-signal { color: var(--color-brand); font-weight: var(--font-weight-interface); margin-bottom: var(--space-2); }
+  .texte-integral { white-space: pre-wrap; }
+  .retour { border-top: var(--border-width) solid var(--color-border); }
+  iframe { display: block; width: 100%; max-width: 100%; border: var(--border-width) solid var(--color-border); background: var(--color-surface); }
+  button { min-height: var(--size-control); padding: var(--space-3) var(--space-5); border: var(--border-width) solid var(--color-brand); border-radius: var(--radius-control); color: var(--color-on-brand); background: var(--color-brand); font-weight: var(--font-weight-interface); cursor: pointer; }
+  button:hover { background: var(--color-link-hover); }
+</style>

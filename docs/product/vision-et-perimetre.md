@@ -105,6 +105,11 @@ Les actualités importantes de PPC doivent exister comme contenus durables du si
 
 ## Travaux futurs
 
+Une fonctionnalité temporaire de relecture de mini-livres blancs est disponible
+hors navigation publique, par liens aléatoires sans authentification. Son
+périmètre est décrit dans les exigences fonctionnelles et sa procédure dans
+[`../exploitation/relecture-livres-blancs.md`](../exploitation/relecture-livres-blancs.md).
+
 L'architecture de l'information détaillée, le sitemap, la navigation, le rôle des pages et les parcours principaux sont désormais spécifiés dans [`architecture-information.md`](architecture-information.md).
 
 Les modèles de contenu structurés et le choix du CMS sont spécifiés dans [`../contenu/contenu-et-cms.md`](../contenu/contenu-et-cms.md). La conception technique détaillée est désormais spécifiée dans [`../technique/architecture.md`](../technique/architecture.md), le design system et l'identité visuelle transitoire actuelle dans [`../technique/design-system.md`](../technique/design-system.md), les exigences qualité dans [`../technique/qualite-accessibilite-seo.md`](../technique/qualite-accessibilite-seo.md), et l'exploitation dans [`../exploitation/exploitation.md`](../exploitation/exploitation.md).

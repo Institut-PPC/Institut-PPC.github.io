@@ -213,6 +213,14 @@ Markdown et du rendu demeure obligatoire.
 
 ## URL et redirections
 
+Les relectures temporaires `/relecture/<identifiant>/` portent `noindex` et sont
+absentes du sitemap et de toute liste publique, sans blocage dans `robots.txt`.
+Le contrôle post-build vérifie ces propriétés, l’absence d’index `/relecture/`
+et de reprise d’identifiant dans les autres fichiers textuels générés. La
+validation de leurs YAML est locale au build ; l’exemple `.yaml.example` ne
+génère pas de page. Le lien Forms reste utilisable sans JavaScript ; le bouton
+natif expose l’état développé et pilote un cadre titré chargé au premier clic.
+
 Les slugs sont considérés stables après première publication. Un changement exceptionnel nécessite une redirection explicite de l'ancienne route vers la nouvelle.
 
 La CI doit pouvoir détecter les redirections incohérentes ou dont la cible n'existe pas. Sur GitHub Pages, une redirection statique générée par Astro n'est pas présentée comme une garantie de réponse HTTP serveur 301.

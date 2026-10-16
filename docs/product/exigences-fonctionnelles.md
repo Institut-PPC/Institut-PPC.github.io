@@ -41,6 +41,23 @@ Les contenus qui portent un état de visibilité utilisent un booléen léger `p
 
 Cet état ne constitue ni un workflow d'approbation, ni un système de révisions, ni une version de travail d'un contenu déjà publié.
 
+## Relecture temporaire des mini-livres blancs
+
+Une page par livre présente titre, consignes, lien PDF Google Drive, bouton
+accessible affichant un Google Forms distinct et retours approuvés manuellement
+avec le nom de l’auteur et le texte intégral. Les consignes apparaissent dans
+un encadré de couleur distincte, signalé « Important — Lisez-moi ». Le lien PDF
+s’ouvre dans un nouvel onglet et annonce ce comportement dans son libellé.
+Les paragraphes et sauts de ligne
+sont conservés, le HTML est échappé, aucun email ne doit être publié. Un état
+vide explique l’absence de retour. Le cadre possède un titre et un lien direct
+vers un nouvel onglet reste toujours disponible. Il se charge au premier clic.
+
+Cette exception temporaire est éditée dans Git, sans CMS, authentification,
+connexion aux réponses, versionnement métier, base, serveur ou automatisation.
+Les pages sont accessibles aux détenteurs du lien aléatoire, sans index public.
+Voir la [procédure](../exploitation/relecture-livres-blancs.md).
+
 ## Actualités
 
 Exigences :
