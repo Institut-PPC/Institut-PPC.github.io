@@ -44,7 +44,7 @@ Cet état ne constitue ni un workflow d'approbation, ni un système de révision
 ## Relecture temporaire des mini-livres blancs
 
 Une page par livre guide le relecteur en trois étapes numérotées, à suivre dans
-l’ordre : 1) lire les consignes, dans un encadré de couleur distincte ; 2) ouvrir
+l’ordre : 1) « Consignes de relecture », dans un encadré de couleur distincte, repliable via un bouton « J’ai compris » (qui devient « Relire les consignes » une fois replié ; sans JavaScript, les consignes restent affichées) ; 2) « Relecture du livre blanc » : ouvrir
 le livre blanc (lien PDF Google Drive, dans un nouvel onglet, avec un rappel de
 revenir sur la page pour donner son retour) ; 3) donner son retour via un bouton
 accessible affichant un Google Forms distinct. Les retours approuvés manuellement

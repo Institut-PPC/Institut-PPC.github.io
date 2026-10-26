@@ -12,12 +12,15 @@ formulaireDirect.searchParams.delete('embedded');
     <h1>{livre.titre}</h1>
     <p class="mt-3">Merci de votre aide ! La relecture se fait en trois étapes, à suivre dans l’ordre.</p>
   </header>
-  <section aria-labelledby="consignes" class="etape consignes mb-7 p-5 sm:p-6">
-    <h2 id="consignes" class="etape-titre"><span class="etape-numero" aria-hidden="true">1</span>Lisez d’abord les consignes</h2>
-    {livre.consignes.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+  <section aria-labelledby="consignes" class="etape consignes mb-7 p-5 sm:p-6" data-consignes>
+    <h2 id="consignes" class="etape-titre"><span class="etape-numero" aria-hidden="true">1</span>Consignes de relecture</h2>
+    <div id="consignes-contenu">
+      {livre.consignes.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+    </div>
+    <button type="button" hidden aria-expanded="true" aria-controls="consignes-contenu" class="bouton-consignes mt-4">J’ai compris</button>
   </section>
   <section aria-labelledby="lecture" class="etape mb-7 p-5 sm:p-6">
-    <h2 id="lecture" class="etape-titre"><span class="etape-numero" aria-hidden="true">2</span>Lisez le livre blanc</h2>
+    <h2 id="lecture" class="etape-titre"><span class="etape-numero" aria-hidden="true">2</span>Relecture du livre blanc</h2>
     <p>Une fois les consignes lues, ouvrez le livre blanc. Il s’ouvre dans un nouvel onglet : pensez à revenir ensuite sur cette page pour donner votre retour.</p>
     <ActionLink href={livre.url_pdf} newTab>Ouvrir le Livre Blanc</ActionLink>
   </section>
@@ -44,6 +47,20 @@ formulaireDirect.searchParams.delete('embedded');
 </article>
 
 <script>
+  for (const section of document.querySelectorAll<HTMLElement>('[data-consignes]')) {
+    const bouton = section.querySelector('button');
+    const contenu = section.querySelector<HTMLElement>('#consignes-contenu');
+    if (bouton && contenu) {
+      bouton.hidden = false;
+      bouton.addEventListener('click', () => {
+        const afficher = bouton.getAttribute('aria-expanded') !== 'true';
+        contenu.hidden = !afficher;
+        bouton.setAttribute('aria-expanded', String(afficher));
+        bouton.textContent = afficher ? 'J’ai compris' : 'Relire les consignes';
+        bouton.classList.toggle('replie', !afficher);
+      });
+    }
+  }
   for (const section of document.querySelectorAll<HTMLElement>('[data-relecture-formulaire]')) {
     const bouton = section.querySelector('button');
     const panneau = section.querySelector<HTMLElement>('#formulaire-relecture');
@@ -71,5 +88,7 @@ formulaireDirect.searchParams.delete('embedded');
   .retour { border-top: var(--border-width) solid var(--color-border); }
   iframe { display: block; width: 100%; max-width: 100%; border: var(--border-width) solid var(--color-border); background: var(--color-surface); }
   button { min-height: var(--size-control); padding: var(--space-3) var(--space-5); border: var(--border-width) solid var(--color-brand); border-radius: var(--radius-control); color: var(--color-on-brand); background: var(--color-brand); font-weight: var(--font-weight-interface); cursor: pointer; }
+  button.replie { color: var(--color-brand); background: transparent; }
+  button.replie:hover { color: var(--color-on-brand); background: var(--color-brand); }
   button:hover { background: var(--color-link-hover); }
 </style>
