@@ -27,6 +27,11 @@ describe('relectures temporaires', () => {
     expect(() => lireRelectures({ 'a.yaml': stringify(livre), 'b.yaml': stringify(livre) })).toThrow('b.yaml');
   });
 
+  it('accepte une relecture sans commentaires', () => {
+    const { commentaires: _, ...sansCommentaires } = livre;
+    expect(lireRelectures({ 'test.yaml': stringify(sansCommentaires) })).toEqual([{ ...sansCommentaires, commentaires: [] }]);
+  });
+
   it('refuse les destinations non prévues et les URL exécutables', () => {
     for (const url_formulaire of ['', 'pas-une-url', 'javascript:alert(1)', 'https://docs.google.com.example.org/forms/d/e/test/viewform?embedded=true', 'https://docs.google.com/forms/d/e/test/edit', 'https://docs.google.com/forms/d/e/test/viewform']) {
       expect(schemaRelecture.safeParse({ ...livre, url_formulaire }).success).toBe(false);

@@ -20,7 +20,7 @@ export const schemaRelecture = z.strictObject({
       && /^\/forms\/d\/(?:e\/)?[^/]+\/viewform$/.test(url.pathname)
       && url.searchParams.get('embedded') === 'true');
   }, 'URL Google Forms viewform avec embedded=true requise'),
-  commentaires: z.array(z.strictObject({ auteur: texte, texte: paragraphes })),
+  commentaires: z.array(z.strictObject({ auteur: texte, texte: paragraphes })).default([]),
 });
 
 export type Relecture = z.infer<typeof schemaRelecture>;

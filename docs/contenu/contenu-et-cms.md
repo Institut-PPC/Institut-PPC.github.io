@@ -79,7 +79,7 @@ Les fichiers `contenu/relectures/*.yaml` sont chargés localement au build, hors
 Content Layer et CMS. Ils contiennent uniquement `identifiant` (chaîne de six
 chiffres générés aléatoirement), `titre`, `consignes` (liste
 ordonnée de paragraphes), `url_pdf` (HTTPS Drive), `url_formulaire` (HTTPS Google Forms,
-`viewform?embedded=true`) et `commentaires` (liste de `{ auteur, texte }` approuvés).
+`viewform?embedded=true`) et `commentaires` (facultatif ; liste de `{ auteur, texte }` approuvés).
 `consignes` et le `texte` de chaque commentaire sont des listes non vides de
 chaînes non vides : chaque entrée génère un `<p>`, avec ses retours à la ligne conservés.
 Le nom du fichier est libre ; ici l’identifiant de route est explicitement dans
