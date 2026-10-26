@@ -30,13 +30,13 @@ formulaireDirect.searchParams.delete('embedded');
     <button type="button" hidden aria-expanded="false" aria-controls="formulaire-relecture">Transmettre votre retour</button>
     <p class="mt-4"><em>ou <a href={formulaireDirect.href} target="_blank" rel="noopener noreferrer">ouvrir le formulaire dans un nouvel onglet</a> si vous préférez</em></p>
     <div id="formulaire-relecture" hidden>
-      <iframe data-src={livre.url_formulaire} title={`Formulaire de relecture — ${livre.titre}`} width="640" height="1300" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <iframe data-src={livre.url_formulaire} title={`Formulaire de lecture — ${livre.titre}`} width="640" height="1300" loading="lazy" referrerpolicy="no-referrer"></iframe>
     </div>
   </section>
   <section aria-labelledby="retours">
-    <h2 id="retours">Commentaires de relecture</h2>
+    <h2 id="retours">Commentaires de lecture</h2>
     {livre.commentaires.length === 0
-      ? <EmptyState title="Aucun retour publié" message="Les retours approuvés seront ajoutés ici après relecture par l’association." />
+      ? <EmptyState title="Aucun retour publié" message="Les retours approuvés seront ajoutés ici après relecture par l’équipe de rédaction." />
       : livre.commentaires.map((commentaire) => (
         <article class="retour py-5">
           <h3>{commentaire.auteur}</h3>
