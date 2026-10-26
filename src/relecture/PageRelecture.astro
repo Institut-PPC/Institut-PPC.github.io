@@ -10,14 +10,20 @@ formulaireDirect.searchParams.delete('embedded');
 <article class="max-w-reading mx-auto">
   <header class="mb-7">
     <h1>{livre.titre}</h1>
+    <p class="mt-3">Merci de votre aide ! La relecture se fait en trois étapes, à suivre dans l’ordre.</p>
   </header>
-  <section aria-labelledby="consignes" class="consignes mb-7 p-5 sm:p-6">
-    <p class="consignes-signal">Important — Consignes de relecture</p>
+  <section aria-labelledby="consignes" class="etape consignes mb-7 p-5 sm:p-6">
+    <h2 id="consignes" class="etape-titre"><span class="etape-numero" aria-hidden="true">1</span>Lisez d’abord les consignes</h2>
     {livre.consignes.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+  </section>
+  <section aria-labelledby="lecture" class="etape mb-7 p-5 sm:p-6">
+    <h2 id="lecture" class="etape-titre"><span class="etape-numero" aria-hidden="true">2</span>Lisez le livre blanc</h2>
+    <p>Une fois les consignes lues, ouvrez le livre blanc. Il s’ouvre dans un nouvel onglet : pensez à revenir ensuite sur cette page pour donner votre retour.</p>
     <ActionLink href={livre.url_pdf} newTab>Ouvrir le Livre Blanc</ActionLink>
   </section>
-  <section aria-labelledby="contribuer" class="mb-7" data-relecture-formulaire>
-    <p>Votre retour intégral et votre nom pourront être publiés ici après relecture par l’association. Les adresses email restent privées.</p>
+  <section aria-labelledby="contribuer" class="etape mb-7 p-5 sm:p-6" data-relecture-formulaire>
+    <h2 id="contribuer" class="etape-titre"><span class="etape-numero" aria-hidden="true">3</span>Donnez-nous votre retour</h2>
+    <p>Votre avis compte, même court ! Vous pouvez envoyer plusieurs contributions. Votre retour intégral et votre nom pourront être publiés ici après relecture par l’association. Les adresses email restent privées.</p>
     <button type="button" hidden aria-expanded="false" aria-controls="formulaire-relecture">Transmettre votre retour</button>
     <p class="mt-4"><em>ou <a href={formulaireDirect.href} target="_blank" rel="noopener noreferrer">ouvrir le formulaire dans un nouvel onglet</a> si vous préférez</em></p>
     <div id="formulaire-relecture" hidden>
@@ -25,12 +31,12 @@ formulaireDirect.searchParams.delete('embedded');
     </div>
   </section>
   <section aria-labelledby="retours">
-    <h3 id="retours">Commentaires de relecture</h3>
+    <h2 id="retours">Commentaires de relecture</h2>
     {livre.commentaires.length === 0
       ? <EmptyState title="Aucun retour publié" message="Les retours approuvés seront ajoutés ici après relecture par l’association." />
       : livre.commentaires.map((commentaire) => (
         <article class="retour py-5">
-          <h4>{commentaire.auteur}</h4>
+          <h3>{commentaire.auteur}</h3>
           {commentaire.texte.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
         </article>
       ))}
@@ -49,15 +55,18 @@ formulaireDirect.searchParams.delete('embedded');
         if (afficher && !cadre.hasAttribute('src')) cadre.src = cadre.dataset.src!;
         panneau.hidden = !afficher;
         bouton.setAttribute('aria-expanded', String(afficher));
-        bouton.textContent = afficher ? 'Masquer le formulaire' : 'Afficher le formulaire';
+        bouton.textContent = afficher ? 'Masquer le formulaire' : 'Transmettre votre retour';
       });
     }
   }
 </script>
 
 <style>
-  .consignes { background: var(--color-accent-soft); border-left: var(--space-1) solid var(--color-accent); border-radius: var(--radius-surface); }
-  .consignes-signal { color: var(--color-brand); font-weight: var(--font-weight-interface); margin-bottom: var(--space-2); }
+  .etape { background: var(--color-surface); border: var(--border-width) solid var(--color-border); border-radius: var(--radius-surface); }
+  .consignes { background: var(--color-accent-soft); border-color: var(--color-accent); border-left-width: var(--space-1); }
+  .etape-titre { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); font-size: var(--font-size-xl); }
+  .etape-numero { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; color: var(--color-on-brand); background: var(--color-brand); font-family: var(--font-body); font-size: var(--font-size-md); font-weight: var(--font-weight-interface); }
+  .etape :global(.action) { margin-top: var(--space-4); }
   .texte-integral { white-space: pre-wrap; }
   .retour { border-top: var(--border-width) solid var(--color-border); }
   iframe { display: block; width: 100%; max-width: 100%; border: var(--border-width) solid var(--color-border); background: var(--color-surface); }

@@ -43,11 +43,12 @@ Cet état ne constitue ni un workflow d'approbation, ni un système de révision
 
 ## Relecture temporaire des mini-livres blancs
 
-Une page par livre présente titre, consignes, lien PDF Google Drive, bouton
-accessible affichant un Google Forms distinct et retours approuvés manuellement
-avec le nom de l’auteur et le texte intégral. Les consignes apparaissent dans
-un encadré de couleur distincte, signalé « Important — Lisez-moi ». Le lien PDF
-s’ouvre dans un nouvel onglet et annonce ce comportement dans son libellé.
+Une page par livre guide le relecteur en trois étapes numérotées, à suivre dans
+l’ordre : 1) lire les consignes, dans un encadré de couleur distincte ; 2) ouvrir
+le livre blanc (lien PDF Google Drive, dans un nouvel onglet, avec un rappel de
+revenir sur la page pour donner son retour) ; 3) donner son retour via un bouton
+accessible affichant un Google Forms distinct. Les retours approuvés manuellement
+suivent, avec le nom de l’auteur et le texte intégral.
 Les paragraphes et sauts de ligne
 sont conservés, le HTML est échappé, aucun email ne doit être publié. Un état
 vide explique l’absence de retour. Le cadre possède un titre et un lien direct
