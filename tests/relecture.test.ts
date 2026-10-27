@@ -9,7 +9,6 @@ import { verifierRelectures } from '../src/relecture/verifier-dist.mjs';
 
 const livre = {
   identifiant: String(randomInt(0, 1_000_000)).padStart(6, '0'), titre: 'Test de relecture',
-  consignes: ['Première ligne\nDeuxième ligne', 'Deuxième paragraphe'],
   url_pdf: 'https://drive.google.com/file/d/test/view',
   url_formulaire: 'https://docs.google.com/forms/d/e/test/viewform?embedded=true',
   commentaires: [{ auteur: 'Nom de test', texte: ['<script>test</script>', 'Autre paragraphe'] }],
@@ -39,9 +38,12 @@ describe('relectures temporaires', () => {
     expect(schemaRelecture.safeParse({ ...livre, url_pdf: 'http://drive.google.com/file/d/test/view' }).success).toBe(false);
   });
 
-  it('exige des listes non vides de paragraphes non vides pour les deux champs', () => {
+  it('refuse un champ consignes : les consignes sont communes et écrites dans le template', () => {
+    expect(schemaRelecture.safeParse({ ...livre, consignes: ['Texte'] }).success).toBe(false);
+  });
+
+  it('exige des listes non vides de paragraphes non vides pour le texte des commentaires', () => {
     for (const valeur of ['Ancien texte simple', [], [''], ['  ']]) {
-      expect(schemaRelecture.safeParse({ ...livre, consignes: valeur }).success).toBe(false);
       expect(schemaRelecture.safeParse({ ...livre, commentaires: [{ auteur: 'Nom', texte: valeur }] }).success).toBe(false);
     }
   });

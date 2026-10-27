@@ -77,13 +77,13 @@ Les images et documents sont détaillés plus loin dans ce document et dans [`..
 
 Les fichiers `contenu/relectures/*.yaml` sont chargés localement au build, hors
 Content Layer et CMS. Ils contiennent uniquement `identifiant` (chaîne de six
-chiffres générés aléatoirement), `titre`, `consignes` (liste
-ordonnée de paragraphes), `url_pdf` (HTTPS Drive), `url_formulaire` (HTTPS Google Forms,
+chiffres générés aléatoirement), `titre`, `url_pdf` (HTTPS Drive), `url_formulaire` (HTTPS Google Forms,
 `viewform?embedded=true`) et `commentaires` (facultatif ; liste de `{ auteur, texte }` approuvés).
-`consignes` et le `texte` de chaque commentaire sont des listes non vides de
+Le `texte` de chaque commentaire est une liste non vide de
 chaînes non vides : chaque entrée génère un `<p>`, avec ses retours à la ligne conservés.
 Le nom du fichier est libre ; ici l’identifiant de route est explicitement dans
-le fichier. Les textes ne sont pas interprétés en Markdown ou HTML. Aucun email
+le fichier. Les consignes de relecture, communes à toutes les pages, sont écrites
+en HTML dans `src/relecture/PageRelecture.astro`, pas dans les fichiers YAML. Les textes ne sont pas interprétés en Markdown ou HTML. Aucun email
 ne doit y être copié. Chaque `.yaml` valide génère sa page ; l’exemple
 `exemple.yaml.example` est exclu sans champ `publie` supplémentaire.
 Voir la [procédure](../exploitation/relecture-livres-blancs.md).

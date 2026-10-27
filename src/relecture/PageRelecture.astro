@@ -10,19 +10,45 @@ formulaireDirect.searchParams.delete('embedded');
 <article class="max-w-reading mx-auto">
   <header class="mb-7">
     <h1>{livre.titre}</h1>
-    <p class="mt-3">Merci de votre aide ! Vous faîtes partie du comité de lecture du livre blanc de la Pérennité Programmée Circulaire. La lecture se fait en trois étapes, à suivre dans l’ordre.</p>
+    <p class="mt-3">
+        Vous faites partie du comité de lecture des cas d’étude de la Pérennité Programmée Circulaire qui nourriront le livre blanc à paraitre 
+        “Les milliards invisibles de l’économie servicielle”).
+        <br>
+        Nous vous en remercions. 
+    </p>
   </header>
   <section aria-labelledby="consignes" class="etape consignes mb-7 p-5 sm:p-6" data-consignes>
     <h2 id="consignes" class="etape-titre"><span class="etape-numero" aria-hidden="true">1</span>Consignes de lecture et de contribution</h2>
     <div id="consignes-contenu">
-      {livre.consignes.map((paragraphe) => <p class="texte-integral">{paragraphe}</p>)}
+      <p>Ces cas d’étude du livre blanc ne sont pas des audits. Ils cherchent les causes systémiques d’un problème complexe : nos règles comptables et financières nuisent à l’habitabilité de la planète et à la désirabilité de notre modèle de société, en invisibilisant d’un point de vue comptable la valeur des actifs matériels et immatériels générant pourtant de la durabilité et de la robustesse sur le temps long. Nous ne nous demandons pas si les propositions sont applicables avec les règles actuelles, mais ce qu’il faudrait changer pour qu’elles le deviennent. Nous nous adressons donc au chercheur qui est en vous plutôt qu’à l’expert.</p>
+      <p>Chaque cas d’étude, à partir des données et informations publiques, suit la logique suivante :</p>
+      <ul>
+        <li>estimation des actifs pérennes et durables qui pourraient être valorisés dans les comptes (catégorisation en MPP / GCP / SOP et évaluation), cf. « Méthodologie » ;</li>
+        <li>réflexion libre sur les bénéfices de cette valorisation comptable des actifs durables.</li>
+      </ul>
+      <p><br>Vos retours les plus utiles portent sur :</p>
+      <ul>
+        <li>la clarté du propos et la solidité de l’analyse ;</li>
+        <li>les risques, réserves et impensés ;</li>
+        <li>ce qui n’existe pas encore mais pourrait être rendu possible, et par quelles étapes ;</li>
+        <li>ce qui donnerait envie aux entreprises étudiées, et à d’autres qui pourraient s’en inspirer, de lancer un pilote afin de convaincre l’Autorité des normes comptables (ANC).</li>
+      </ul>
+      <p>Nous nous appuyons uniquement sur des données publiques, complétées par des hypothèses détaillées en annexe. Si vous repérez une erreur, signalez-la.</p>
+      <p><strong>Règles pratiques</strong></p>
+      <ul>
+        <li>Les cas d’étude du livre blanc sont soumis au comité de lecture à partir du 27 octobre 2026, puis chaque mardi et jeudi, pour couvrir 15 à 20 grandes entreprises françaises. Vous pouvez lire et commenter ceux que vous voulez.</li>
+        <li>Le lien de cette page est personnel : merci de ne pas le diffuser. Vous souhaitez proposer quelqu’un pour le comité de lecture ? Avec plaisir : envoyez-nous ses coordonnées, nous l’ajouterons au comité de lecture et lui enverrons rapidement l’invitation et l’ensemble des travaux réalisés.</li>
+        <li>Vous pouvez envoyer plusieurs contributions, nominatives ou anonymes.</li>
+        <li>Les contributions sont lues par l’équipe de rédaction de l’association avant publication sur cette page, selon vos consignes de publication (nominatives ou anonymes). Les adresses email ne sont jamais publiées. Publier un retour ne signifie pas l’intégrer au livre blanc.</li>
+        <li>Le comité de lecture ferme le 15 décembre 2026. Les cas d’étude du livre blanc seront publiés le 18 janvier 2027.</li>
+      </ul>
     </div>
     <button type="button" hidden aria-expanded="true" aria-controls="consignes-contenu" class="bouton-consignes mt-4">J’ai compris</button>
   </section>
   <section aria-labelledby="lecture" class="etape mb-7 p-5 sm:p-6">
-    <h2 id="lecture" class="etape-titre"><span class="etape-numero" aria-hidden="true">2</span>Lecture du livre blanc</h2>
-    <p>Une fois les consignes lues, ouvrez le livre blanc. Il s’ouvre dans un nouvel onglet : pensez à revenir ensuite sur cette page pour donner votre retour.</p>
-    <ActionLink href={livre.url_pdf} newTab>Ouvrir le Livre Blanc</ActionLink>
+    <h2 id="lecture" class="etape-titre"><span class="etape-numero" aria-hidden="true">2</span>Lecture du cas d'étude</h2>
+    <p>Une fois les consignes lues, ouvrez le document du cas d'étude. Il s’ouvre dans un nouvel onglet : pensez à revenir ensuite sur cette page pour donner votre retour.</p>
+    <ActionLink href={livre.url_pdf} newTab>Ouvrir le cas d'étude</ActionLink>
   </section>
   <section aria-labelledby="contribuer" class="etape mb-7 p-5 sm:p-6" data-relecture-formulaire>
     <h2 id="contribuer" class="etape-titre"><span class="etape-numero" aria-hidden="true">3</span>Donnez-nous votre retour</h2>
@@ -84,6 +110,9 @@ formulaireDirect.searchParams.delete('embedded');
   .etape-titre { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); font-size: var(--font-size-xl); }
   .etape-numero { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; color: var(--color-on-brand); background: var(--color-brand); font-family: var(--font-body); font-size: var(--font-size-md); font-weight: var(--font-weight-interface); }
   .etape :global(.action) { margin-top: var(--space-4); }
+  #consignes-contenu ul { list-style: disc; padding-left: var(--space-5); margin-block: var(--space-3); }
+  #consignes-contenu li + li { margin-top: var(--space-2); }
+  #consignes-contenu p + p { margin-top: var(--space-3); }
   .texte-integral { white-space: pre-wrap; }
   .retour { border-top: var(--border-width) solid var(--color-border); }
   iframe { display: block; width: 100%; max-width: 100%; border: var(--border-width) solid var(--color-border); background: var(--color-surface); }

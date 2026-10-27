@@ -12,7 +12,6 @@ const urlHttps = z.url().refine((valeur) => {
 export const schemaRelecture = z.strictObject({
   identifiant: z.string().regex(/^[0-9]{6}$/, 'Identifiant aléatoire de 6 chiffres requis (chaîne de caractères)'),
   titre: texte,
-  consignes: paragraphes,
   url_pdf: urlHttps.refine((valeur) => URL.parse(valeur)?.hostname === 'drive.google.com', 'URL Google Drive requise'),
   url_formulaire: urlHttps.refine((valeur) => {
     const url = URL.parse(valeur);
